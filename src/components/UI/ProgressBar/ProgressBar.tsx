@@ -1,6 +1,16 @@
 import React from 'react';
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
+type SizeType = 'xxl' | 'xl' | 'lz' | 'md' | 'sm' | 'xs';
+
+interface IProps {
+  isDisplayContent: boolean;
+  barWidth: string;
+  barHeight: string;
+  value: string;
+  size: SizeType;
+}
+
 function ProgressBar({
   isDisplayContent = true,
   barWidth = '100%',
@@ -27,8 +37,6 @@ function ProgressBar({
   );
 }
 
-type SizeType = 'xxl' | 'xl' | 'lz' | 'md' | 'sm' | 'xs';
-
 const SIZES: { [key in SizeType]: FlattenSimpleInterpolation } = {
   xxl: css`
     --progress-font-size: var(--font-size-xxl);
@@ -49,14 +57,6 @@ const SIZES: { [key in SizeType]: FlattenSimpleInterpolation } = {
     --progress-font-size: var(--font-size-xs);
   `,
 };
-
-interface IProps {
-  isDisplayContent: boolean;
-  barWidth: string;
-  barHeight: string;
-  value: string;
-  size: SizeType;
-}
 
 const Container = styled.div<{ barWidth: string }>`
   display: flex;
