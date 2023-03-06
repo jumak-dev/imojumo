@@ -16,14 +16,11 @@ function CarouselList({ banners, activeIndex }: IProps) {
 
   return (
     <List>
-      {banners.map((banner) => {
-        const { alt, url } = banner;
-        return (
-          <Item key={alt} nextTransform={nextTransform}>
-            <img src={url} alt={alt} />
-          </Item>
-        );
-      })}
+      {banners.map(({ alt, url }) => (
+        <Item key={alt} nextTransform={nextTransform}>
+          <img src={url} alt={alt} />
+        </Item>
+      ))}
     </List>
   );
 }
@@ -39,6 +36,7 @@ const Item = styled.li<{ nextTransform: number }>`
   flex: 1 0 100%;
   transform: translateX(-${({ nextTransform }) => nextTransform}%);
   transition: 200ms ease;
+
   > img {
     object-fit: cover;
     object-position: center;
