@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 import { RiArrowDropLeftLine, RiArrowDropRightLine } from 'react-icons/ri';
 
+interface IProps {
+  pos: 'left' | 'right';
+  handleClick: () => void;
+}
+
 function CarouselArrowButton({ pos, handleClick }: IProps) {
   return (
     <ArrowButton pos={pos} onClick={handleClick}>
@@ -12,11 +17,6 @@ function CarouselArrowButton({ pos, handleClick }: IProps) {
       }
     </ArrowButton>
   );
-}
-
-interface IProps {
-  pos: 'left' | 'right';
-  handleClick: () => void;
 }
 
 const ArrowButton = styled.button<{ pos: 'left' | 'right' }>`

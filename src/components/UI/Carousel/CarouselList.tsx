@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Banner } from '../../../@type/banner';
+
+export interface Banner {
+  alt: string;
+  url: string;
+}
 
 interface IProps {
   banners: Banner[];

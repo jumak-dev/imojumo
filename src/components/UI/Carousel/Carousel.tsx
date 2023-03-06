@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Banner } from '../../../@type/banner';
 import CarouselArrowButton from './CarouselArrowButton';
-import CarouselList from './CarouselList';
+import CarouselList, { Banner } from './CarouselList';
+
+interface IProps {
+  banners: Banner[];
+  style?: React.CSSProperties;
+  isDisplayArrowButton?: boolean;
+  interval?: number;
+}
 
 function Carousel({
   banners,
@@ -42,13 +48,6 @@ function Carousel({
       )}
     </Container>
   );
-}
-
-interface IProps {
-  banners: Banner[];
-  style?: React.CSSProperties;
-  isDisplayArrowButton?: boolean;
-  interval?: number;
 }
 
 const Container = styled.section`
