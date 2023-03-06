@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
 
@@ -9,7 +9,8 @@ interface Data {
   title: string;
   userId: number;
 }
-export default function Pagination() {
+
+function Pagination() {
   const [posts, setPosts] = useState<Data[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 15;
@@ -60,8 +61,7 @@ export default function Pagination() {
           <ButtonNav
             key={num}
             onClick={() => paginate(num)}
-            num={num}
-            currentPage={currentPage}
+            isCurrentPage={num === currentPage}
           >
             {num}
           </ButtonNav>
@@ -77,21 +77,25 @@ export default function Pagination() {
   );
 }
 
-const flex = styled.div`
+const Flex = css`
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: var(--font-size-sm);
 `;
 
-const PaginationBlock = styled(flex)`
+const PaginationBlock = styled.div`
+  ${Flex}
   margin: 20px;
 `;
 
-const PageButton = styled(flex)`
+const PageButton = styled.button`
+  ${Flex}
   padding: 5px;
   width: 30px;
   height: 30px;
+  border: 0;
+  background-color: transparent;
   border: 1px solid #c4c4c497;
 
   &:hover {
@@ -99,10 +103,12 @@ const PageButton = styled(flex)`
   }
 `;
 
-const ButtonNav = styled(PageButton)<{ num: number; currentPage: number }>`
-  background-color: ${({ num, currentPage }) =>
-    num === currentPage ? 'var(--color-primary-pink)' : 'white'};
+const ButtonNav = styled(PageButton)<{ isCurrentPage: boolean }>`
+  background-color: ${({ isCurrentPage }) =>
+    isCurrentPage ? 'var(--color-primary-pink)' : 'white'};
 
-  color: ${({ num, currentPage }) =>
-    num === currentPage ? 'white' : 'var(--color-primary-pink)'};
+  color: ${({ isCurrentPage }) =>
+    isCurrentPage ? 'white' : 'var(--color-primary-pink)'};
 `;
+
+export default Pagination;
