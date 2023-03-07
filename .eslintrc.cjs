@@ -38,6 +38,7 @@ module.exports = {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-use-before-define': 'off',
+    'no-console': 'off',
   },
   settings: {
     'import/resolver': {
