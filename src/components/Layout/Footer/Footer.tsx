@@ -8,7 +8,7 @@ function Footer() {
       <FooterWrapper>
         <FooterSignature>
           <LogoContainer>
-            <AiFillHome size={40} />
+            <AiFillHome size={38} />
             <LogoTitle>이모저모</LogoTitle>
           </LogoContainer>
           <CopyrightText>
@@ -59,6 +59,7 @@ const LogoContainer = styled.div`
 `;
 
 const LogoTitle = styled.span`
+  margin-left: 8px;
   font-size: var(--font-size-xxl);
   font-weight: bold;
 `;
