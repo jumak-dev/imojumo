@@ -1,7 +1,12 @@
-import React from 'react';
+import GlobalStyle from './styles/GlobalStyle';
 
 function App() {
-  return <div>App 최초 배포입니다</div>;
+  return (
+    <>
+      <GlobalStyle />
+      <div>App 최초 배포입니다</div>
+    </>
+  );
 }
 
 export default App;
