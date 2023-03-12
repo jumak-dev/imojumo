@@ -1,57 +1,35 @@
+import React from 'react';
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
-type ButtonType = 'button' | 'btnL' | 'btnR';
-type VariantType = 'mint' | 'pink' | 'white';
-
-//  https://gisastudy.tistory.com/117
-//  위의 사이트를 참고해서 isBold 사용
+type ButtonType = 'button' | 'buttonLeft' | 'buttonRight';
+type ButtonColorType = 'mint' | 'pink' | 'white';
+type ButtonSizeType = 'xl' | 'l' | 'm' | 'sm' | 'xs';
 
 interface ButtonProps {
   buttonType: ButtonType;
-  variant: VariantType;
-  width: number;
-  height: number;
-  fontSize: string;
-  fontColor: string;
-  text?: string;
+  buttonColor: ButtonColorType;
+  buttonSize: ButtonSizeType;
   isBold?: boolean;
-  outline?: boolean;
+  children: React.ReactNode;
 }
 
-// props로 받는 게 너무 많아서 props로만 적고 할지 고민입니다.
-// 사용 시 props.width와 같이 받는 게 나을까요?!
 function Button({
   buttonType,
-  variant,
-  width,
-  height,
-  text,
-  fontSize,
-  fontColor,
+  buttonColor,
+  buttonSize,
   isBold,
-  outline,
+  children,
 }: ButtonProps) {
   return (
-    <>
-      {/* 
-        //! 문제 props 로 버튼의 type을 불러와서 
-        각 버튼에 맞는 type을 주려고 했으나 안 먹는다...!
-      */}
-
-      <ButtonBox
-        type="button"
-        buttonType={buttonType}
-        variant={variant}
-        width={width}
-        height={height}
-        fontSize={fontSize}
-        fontColor={fontColor}
-        isBold={isBold}
-        outline={outline}
-      >
-        {text}
-      </ButtonBox>
-    </>
+    <ButtonBox
+      type="button"
+      buttonType={buttonType}
+      buttonColor={buttonColor}
+      buttonSize={buttonSize}
+      isBold={isBold}
+    >
+      {children}
+    </ButtonBox>
   );
 }
 
@@ -61,65 +39,109 @@ const ButtonTypeCSS: {
   button: css`
     border-radius: 5px;
   `,
-  btnL: css`
+  buttonLeft: css`
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   `,
-  btnR: css`
+  buttonRight: css`
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
   `,
 };
 
-const VariantCSS: { [key in VariantType]: FlattenSimpleInterpolation } = {
+const ButtonColorCSS: {
+  [key in ButtonColorType]: FlattenSimpleInterpolation;
+} = {
   mint: css`
-    background: var(--color-primary-mint);
+    background-color: var(--color-primary-mint);
+    background: linear-gradient(
+      to bottom,
+      #65cfcc 2%,
+      var(--color-primary-mint) 100%
+    );
+    border: 1px solid var(--color-primary-mint);
+    box-shadow: inset 0px 1px 0px 0px #dcecfb;
+
+    &:hover {
+      background-color: var(--color-primary-mint);
+      background: linear-gradient(
+        to bottom,
+        #6bc7c4 2%,
+        var(--color-primary-mint) 100%
+      );
+    }
   `,
   pink: css`
-    background: var(--color-primary-pink);
+    background-color: var(--color-primary-pink);
+    background: linear-gradient(
+      to bottom,
+      #fd8181 2%,
+      var(--color-primary-pink) 100%
+    );
+    border: 1px solid var(--color-primary-pink);
+    box-shadow: inset 0px 1px 0px 0px #fdc7c7;
+
+    &:hover {
+      background-color: var(--color-primary-pink);
+      background: linear-gradient(
+        to bottom,
+        #ee7070 2%,
+        var(--color-primary-pink) 100%
+      );
+    }
   `,
   white: css`
-    background: var(--white);
+    border: 1px solid var(--color-inputbox-line);
+
+    &:hover {
+      background: linear-gradient(to bottom, #f3f3f3 1%, var(--white) 100%);
+    }
   `,
 };
 
-// 아이콘이 들어간 버튼을 위해 export 추가
+const ButtonSizeCss: { [key in ButtonSizeType]: FlattenSimpleInterpolation } = {
+  xl: css`
+    width: 360px;
+    height: 40px;
+    font-size: var(--font-size-l);
+  `,
+  l: css`
+    width: 234px;
+    height: 55px;
+    font-size: var(--font-size-l);
+  `,
+  m: css`
+    width: 161px;
+    height: 46px;
+    font-size: var(--font-size-m);
+  `,
+  sm: css`
+    width: 80px;
+    height: 32px;
+    font-size: var(--font-size-m);
+  `,
+  xs: css`
+    width: 70px;
+    height: 36px;
+    font-size: var(--font-size-m);
+  `,
+};
+
 export const ButtonBox = styled.button<ButtonProps>`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  box-shadow: 0 1.8px 0 -1px rgba(0, 0, 0, 0.13) inset;
+  color: var(--white);
 
-  ${({ buttonType }) => ButtonTypeCSS[buttonType]}
-  ${({ variant }) => VariantCSS[variant]}
-
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  color: ${({ fontColor }) => fontColor};
+  ${({ buttonType }) => ButtonTypeCSS[buttonType]};
+  ${({ buttonColor }) => ButtonColorCSS[buttonColor]};
+  ${({ buttonSize }) => ButtonSizeCss[buttonSize]};
   font-weight: ${({ isBold }) => (isBold ? 'bold' : undefined)};
-  outline: ${({ outline }) =>
-    outline ? '1px solid var(--color-inputbox-line)' : undefined};
-  font-size: ${({ fontSize }) =>
-    fontSize === 'L' ? 'var(--font-size-l)' : 'var(--font-size-m)'};
-
-  .icon {
-    margin-right: 10px;
-  }
-
-  &:hover {
-    filter: brightness(107%);
-  }
 
   &:active {
-    top: 1px;
-    border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89),
-      0 1px rgba(0, 0, 0, 0.05) inset;
     position: relative;
+    top: 1px;
   }
-
-  /* 확인용으로 적용한 코드입니다 */
-  margin-bottom: 5%;
 `;
 
 export default Button;
