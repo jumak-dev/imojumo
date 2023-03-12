@@ -9,6 +9,7 @@ interface Props {
 }
 
 function ModalPortal({ onClose, children }: Props) {
+  const el = document.getElementById('modal-root') as HTMLElement;
   return createPortal(
     <Overlay onClick={onClose}>
       <Content onClick={(event) => event.stopPropagation()}>
@@ -16,7 +17,7 @@ function ModalPortal({ onClose, children }: Props) {
         {children}
       </Content>
     </Overlay>,
-    document.body,
+    el,
   );
 }
 
@@ -30,16 +31,39 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: end;
 `;
 
-export const Content = styled.div`
-  background-color: white;
+export const Content = styled.section`
+  background-color: var(--white);
   border-radius: 5px;
+  border-color: var(--color-borderbox-line);
   padding: 20px;
   max-width: 90%;
   max-height: 90%;
   overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  svg {
+    align-self: end;
+  }
+
+  h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: var(--font-size-m);
+    color: var(--color-content-text);
+    margin-bottom: 20px;
+  }
+
+  button + button {
+    margin-left: 30px;
+  }
 `;
 
 export default ModalPortal;

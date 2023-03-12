@@ -1,31 +1,37 @@
-import { useState } from 'react';
-import ModalPortal from './ModalPortal';
+import React, { useState } from 'react';
+import ModalTemplate from './ModalTemplate';
 
-// 콜백펑션을 받아서 연결시
-function ModalExample() {
+export default function ModalExample() {
+  // default
   const [showModal, setShowModal] = useState(false);
 
+  // default
   const handleShowModal = () => {
     setShowModal(true);
   };
 
+  // default
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
+  function yesCallback() {
+    console.log('yes');
+  }
+
   return (
-    <div>
+    <>
+      {/* default */}
       <button type="button" onClick={handleShowModal}>
-        Show Modal
+        모달 보이기
       </button>
-      {showModal && (
-        <ModalPortal onClose={handleCloseModal}>
-          <h1>Modal Content</h1>
-          <p>This is the content of the modal.</p>
-        </ModalPortal>
-      )}
-    </div>
+      <ModalTemplate
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        title="로그인 하시겠습니까?"
+        content="로그인 하시면 조금 더 편리하게 문의를 남기실 수 있습니다"
+        yesCallback={() => yesCallback()}
+      />
+    </>
   );
 }
-
-export default ModalExample;
