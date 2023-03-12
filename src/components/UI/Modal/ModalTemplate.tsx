@@ -5,7 +5,7 @@ interface Props {
   content: string;
   showModal: boolean;
   yesCallback?: () => void;
-  noCallack?: () => void;
+  noCallback?: () => void;
   handleCloseModal: () => void;
 }
 
@@ -14,7 +14,7 @@ function ModalTemplate({
   content,
   showModal,
   yesCallback,
-  noCallack,
+  noCallback,
   handleCloseModal,
 }: Props) {
   function onClickYesButton() {
@@ -25,8 +25,8 @@ function ModalTemplate({
   }
 
   function onClickNoButton() {
-    if (noCallack) {
-      noCallack();
+    if (noCallback) {
+      noCallback();
     }
     handleCloseModal();
   }
