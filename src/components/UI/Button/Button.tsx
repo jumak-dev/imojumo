@@ -10,7 +10,7 @@ interface ButtonProps {
   buttonType: ButtonType;
   variant: VariantType;
   width: number;
-  heigth: number;
+  height: number;
   fontSize: string;
   fontColor: string;
   text?: string;
@@ -24,7 +24,7 @@ function Button({
   buttonType,
   variant,
   width,
-  heigth,
+  height,
   text,
   fontSize,
   fontColor,
@@ -43,7 +43,7 @@ function Button({
         buttonType={buttonType}
         variant={variant}
         width={width}
-        heigth={heigth}
+        height={height}
         fontSize={fontSize}
         fontColor={fontColor}
         isBold={isBold}
@@ -94,7 +94,7 @@ export const ButtonBox = styled.button<ButtonProps>`
   ${({ variant }) => VariantCSS[variant]}
 
   width: ${({ width }) => width}px;
-  height: ${({ heigth }) => heigth}px;
+  height: ${({ height }) => height}px;
   color: ${({ fontColor }) => fontColor};
   font-weight: ${({ isBold }) => (isBold ? 'bold' : undefined)};
   outline: ${({ outline }) =>

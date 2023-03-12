@@ -11,7 +11,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="mint"
         width={360}
-        heigth={40}
+        height={40}
         text="로그인 하기"
         fontSize="M"
         fontColor="white"
@@ -21,7 +21,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="pink"
         width={360}
-        heigth={40}
+        height={40}
         text="구글 로그인"
         fontSize="M"
         fontColor="white"
@@ -33,7 +33,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="pink"
         width={234}
-        heigth={55}
+        height={55}
         text="등록하기"
         fontSize="L"
         fontColor="white"
@@ -43,7 +43,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="mint"
         width={80}
-        heigth={36}
+        height={36}
         text="토론하기"
         fontSize="M"
         fontColor="white"
@@ -54,7 +54,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="pink"
         width={70}
-        heigth={36}
+        height={36}
         text="선택"
         fontSize="M"
         fontColor="white"
@@ -66,7 +66,7 @@ function ButtonPractice() {
           buttonType="btnL"
           variant="mint"
           width={120}
-          heigth={40}
+          height={40}
           text="찬성"
           fontSize="M"
           fontColor="white"
@@ -75,7 +75,7 @@ function ButtonPractice() {
           buttonType="btnR"
           variant="pink"
           width={120}
-          heigth={40}
+          height={40}
           text="반대"
           fontSize="M"
           fontColor="white"
@@ -86,7 +86,7 @@ function ButtonPractice() {
         buttonType="btnR"
         variant="white"
         width={75}
-        heigth={40}
+        height={40}
         text="등록"
         fontSize="M"
         fontColor="black"
@@ -96,7 +96,7 @@ function ButtonPractice() {
         buttonType="btnR"
         variant="white"
         width={75}
-        heigth={40}
+        height={40}
         text="찾기"
         fontSize="M"
         fontColor="black"
@@ -110,7 +110,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="mint"
         width={161}
-        heigth={46}
+        height={46}
         fontSize="M"
         fontColor="white"
         isBold
@@ -124,7 +124,7 @@ function ButtonPractice() {
         buttonType="button"
         variant="pink"
         width={161}
-        heigth={46}
+        height={46}
         fontSize="M"
         fontColor="white"
         isBold
