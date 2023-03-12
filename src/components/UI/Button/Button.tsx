@@ -6,11 +6,13 @@ type ButtonColorType = 'mint' | 'pink' | 'white';
 type ButtonSizeType = 'xl' | 'l' | 'm' | 'sm' | 'xs';
 
 interface ButtonProps {
+  type: string;
   buttonType: ButtonType;
   buttonColor: ButtonColorType;
   buttonSize: ButtonSizeType;
   isBold?: boolean;
   children: React.ReactNode;
+  [rest: string]: any;
 }
 
 function Button({
@@ -19,14 +21,15 @@ function Button({
   buttonSize,
   isBold,
   children,
+  ...rest
 }: ButtonProps) {
   return (
     <ButtonBox
-      type="button"
       buttonType={buttonType}
       buttonColor={buttonColor}
       buttonSize={buttonSize}
       isBold={isBold}
+      {...rest}
     >
       {children}
     </ButtonBox>
