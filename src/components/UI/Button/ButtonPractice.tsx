@@ -30,65 +30,143 @@ function ButtonPractice() {
   return (
     <ButtonPracticeWrap>
       <h1>ButtonSizeType이 xl인 버튼</h1>
-      <Button buttonType="button" buttonColor="mint" buttonSize="xl">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="submit"
+        buttonType="button"
+        buttonColor="mint"
+        buttonSize="xl"
+      >
         로그인 하기
       </Button>
       <br />
-      <Button buttonType="button" buttonColor="pink" buttonSize="xl">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="submit"
+        buttonType="button"
+        buttonColor="pink"
+        buttonSize="xl"
+      >
         구글 로그인
       </Button>
       <hr />
       <h1>ButtonSizeType이 l인 버튼</h1>
-      <Button buttonType="button" buttonColor="pink" buttonSize="l">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="button"
+        buttonType="button"
+        buttonColor="pink"
+        buttonSize="l"
+      >
         등록하기
       </Button>
       <hr />
       <h1>ButtonSizeType이 m인 버튼 + 아이콘 </h1>
-      <Button buttonType="button" buttonColor="mint" buttonSize="m">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="submit"
+        buttonType="button"
+        buttonColor="mint"
+        buttonSize="m"
+      >
         <BsFillImageFill size={17} />
         이미지 업로드
       </Button>
       <br />
-      <Button buttonType="button" buttonColor="pink" buttonSize="m">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="button"
+        buttonType="button"
+        buttonColor="pink"
+        buttonSize="m"
+      >
         <BiTrash size={22} />
         이미지 제거
       </Button>
       <hr />
       <h1>ButtonSizeType이 sm인 버튼 </h1>
-      <Button buttonType="button" buttonColor="mint" buttonSize="sm">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="button"
+        buttonType="button"
+        buttonColor="mint"
+        buttonSize="sm"
+      >
         토론하기
       </Button>
       <hr />
       <h1>ButtonSizeType이 xs인 버튼 </h1>
-      <Button buttonType="button" buttonColor="pink" buttonSize="xs">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <Button
+        type="button"
+        buttonType="button"
+        buttonColor="pink"
+        buttonSize="xs"
+      >
         선택
       </Button>
       <hr />
       <h1> 두 개가 붙어있는 버튼 </h1>
       <Flex>
-        <AButton buttonType="buttonLeft" buttonColor="mint" buttonSize="m">
+        {/* 타입은 수정해서 지정해 주세요 */}
+        <AButton
+          type="button"
+          buttonType="buttonLeft"
+          buttonColor="mint"
+          buttonSize="m"
+        >
           찬성
         </AButton>
-        <AButton buttonType="buttonRight" buttonColor="pink" buttonSize="m">
+        {/* 타입은 수정해서 지정해 주세요 */}
+        <AButton
+          type="button"
+          buttonType="buttonRight"
+          buttonColor="pink"
+          buttonSize="m"
+        >
           반대
         </AButton>
       </Flex>
       <br />
       <Flex>
-        <BButton buttonType="buttonLeft" buttonColor="mint" buttonSize="m">
+        {/* 타입은 수정해서 지정해 주세요 */}
+        <BButton
+          type="button"
+          buttonType="buttonLeft"
+          buttonColor="mint"
+          buttonSize="m"
+        >
           찬성
         </BButton>
-        <BButton buttonType="buttonRight" buttonColor="pink" buttonSize="m">
+        {/* 타입은 수정해서 지정해 주세요 */}
+        <BButton
+          type="button"
+          buttonType="buttonRight"
+          buttonColor="pink"
+          buttonSize="m"
+        >
           반대
         </BButton>
       </Flex>
       <hr />
       <h1> 글씨가 Black이고 배경이 하얀 버튼 </h1>
-      <CButton buttonType="buttonRight" buttonColor="white" buttonSize="sm">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <CButton
+        type="button"
+        buttonType="buttonRight"
+        buttonColor="white"
+        buttonSize="sm"
+      >
         등록
       </CButton>
       <br />
-      <DButton buttonType="buttonRight" buttonColor="white" buttonSize="sm">
+      {/* 타입은 수정해서 지정해 주세요 */}
+      <DButton
+        type="button"
+        buttonType="buttonRight"
+        buttonColor="white"
+        buttonSize="sm"
+      >
         찾기
       </DButton>
     </ButtonPracticeWrap>
