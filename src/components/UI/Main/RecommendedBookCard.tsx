@@ -74,8 +74,6 @@ const BookTitle = styled.h2`
 const BookPublicationDate = styled.p`
   ${justifyEnd}
   margin: 5px 0;
-  display: flex;
-  justify-content: end;
 `;
 
 const BookAuthor = styled(BookPublicationDate)`
