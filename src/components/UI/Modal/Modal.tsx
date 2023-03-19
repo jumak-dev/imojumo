@@ -5,16 +5,14 @@ interface Props {
   content: string;
   showModal: boolean;
   yesCallback?: () => void;
-  noCallback?: () => void;
   handleCloseModal: () => void;
 }
 
-function ModalTemplate({
+function Modal({
   title,
   content,
   showModal,
   yesCallback,
-  noCallback,
   handleCloseModal,
 }: Props) {
   function onClickYesButton() {
@@ -25,9 +23,6 @@ function ModalTemplate({
   }
 
   function onClickNoButton() {
-    if (noCallback) {
-      noCallback();
-    }
     handleCloseModal();
   }
 
@@ -51,4 +46,4 @@ function ModalTemplate({
   );
 }
 
-export default ModalTemplate;
+export default Modal;

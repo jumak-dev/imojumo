@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ModalTemplate from './ModalTemplate';
+import Modal from './Modal';
 
 export default function ModalExample() {
   // default
@@ -25,7 +25,7 @@ export default function ModalExample() {
       <button type="button" onClick={handleShowModal}>
         모달 보이기
       </button>
-      <ModalTemplate
+      <Modal
         showModal={showModal}
         handleCloseModal={handleCloseModal}
         title="로그인 하시겠습니까?"
