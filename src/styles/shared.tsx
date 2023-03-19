@@ -18,7 +18,6 @@ export const JustifyEnd = css`
 
 export const RowFlex = css`
   display: flex;
-  flex-direction: row;
 `;
 
 export const RowFlexCenter = css`
