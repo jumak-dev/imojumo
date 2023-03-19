@@ -6,6 +6,16 @@ export const Flex = css`
   align-items: center;
 `;
 
+export const AlignCenter = css`
+  display: flex;
+  align-items: center;
+`;
+
+export const justifyEnd = css`
+  display: flex;
+  justify-content: end;
+`;
+
 export const RowFlex = css`
   display: flex;
   flex-direction: row;
