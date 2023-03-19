@@ -22,7 +22,7 @@ function RecommendedBookCard() {
           <BookDescription>
             여기에는 책 설명이 들어갈껀데 길면 짤리게 하는게 좋을거 같은데
             무슨말인지 알죠 오케이 가나다라 마바사아자카타파하이요 여기부터는
-            조금 큼직하게 카드 작고 길게 하면 5줄로 해도 좋을거 같은데짤릴껄요?{' '}
+            조금 큼직하게 카드 작고 길게 하면 5줄로 해도 좋을거 같은데짤릴껄요?
           </BookDescription>
           <BookComment>좋아요 205 댓글 3K</BookComment>
         </BookInfoContainer>
