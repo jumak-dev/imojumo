@@ -12,8 +12,7 @@ export const RowFlex = css`
 `;
 
 export const RowFlexCenter = css`
-  display: flex;
-  flex-direction: row;
+  ${RowFlex}
   justify-content: center;
 `;
 
@@ -23,7 +22,6 @@ export const ColFlex = css`
 `;
 
 export const ColFlexCenter = css`
-  display: flex;
-  flex-direction: column;
+  ${ColFlex}
   justify-content: center;
 `;
