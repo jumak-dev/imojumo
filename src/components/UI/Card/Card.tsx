@@ -1,13 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-interface CardProps {
-  width: string;
-  height: string;
-  margin?: string;
-  radius?: string;
-}
-
 interface SpacerProps {
   margin?: string;
   marginTop?: string;
@@ -19,6 +12,13 @@ interface SpacerProps {
   paddingRight?: string;
   paddingBottom?: string;
   paddingLeft?: string;
+}
+
+interface CardProps extends SpacerProps {
+  width: string;
+  height: string;
+  margin?: string;
+  radius?: string;
 }
 
 const spacer = (props: SpacerProps) => ({
