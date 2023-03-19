@@ -1,12 +1,9 @@
-import GlobalStyle from './styles/GlobalStyle';
+import { RouterProvider } from 'react-router-dom';
+
+import rotue from './Routes';
 
 function App() {
-  return (
-    <>
-      <GlobalStyle />
-      <div>App 최초 배포입니다</div>
-    </>
-  );
+  return <RouterProvider router={rotue} />;
 }
 
 export default App;
