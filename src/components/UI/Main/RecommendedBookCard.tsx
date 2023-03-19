@@ -3,7 +3,7 @@ import {
   RowFlexCenter,
   RowFlex,
   AlignCenter,
-  justifyEnd,
+  JustifyEnd,
 } from '../../../styles/shared';
 
 function RecommendedBookCard() {
@@ -72,7 +72,7 @@ const BookTitle = styled.h2`
 `;
 
 const BookPublicationDate = styled.p`
-  ${justifyEnd}
+  ${JustifyEnd}
   margin: 5px 0;
 `;
 
@@ -88,7 +88,7 @@ const BookDescription = styled.p`
 `;
 
 const BookComment = styled.p`
-  ${justifyEnd}
+  ${JustifyEnd}
   font-weight: bold;
 `;
 

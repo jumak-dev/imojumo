@@ -11,7 +11,7 @@ export const AlignCenter = css`
   align-items: center;
 `;
 
-export const justifyEnd = css`
+export const JustifyEnd = css`
   display: flex;
   justify-content: end;
 `;
