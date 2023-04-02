@@ -7,11 +7,12 @@ import SignupPage from '../pages/SignupPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import LikeListPage from '../pages/LikeListPage';
-
+import BookDetailPage from '../pages/BookDetailPage';
 import BookDiscussionPage from '../pages/BookDiscussionPage';
 import BookDiscussionDetailPage from '../pages/BookDiscussionDetailPage';
 import ProConDiscussionPage from '../pages/ProConDiscussionPage';
 import ProConDiscussionDetailPage from '../pages/ProConDiscussionDetailPage';
+import PostNewPage from '../pages/PostNewPage';
 
 export default createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export default createBrowserRouter([
         element: <LikeListPage />,
       },
       {
+        path: '/books/:bookId',
+        element: <BookDetailPage />,
+      },
+      {
         path: '/book-dissscusion',
         element: <BookDiscussionPage />,
       },
@@ -51,7 +56,7 @@ export default createBrowserRouter([
       },
       {
         path: '/posts/new',
-        element: <BookDiscussionPage />,
+        element: <PostNewPage />,
       },
     ],
   },
