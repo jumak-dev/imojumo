@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Form from '../components/LoginSignupForm/Form';
+import { useLocation } from 'react-router-dom';
+import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
 
 function LoginPage() {
+  const location = useLocation();
+  const { pathname } = location;
+
   return (
     <PageContainer>
       <TextVectorContainer>
@@ -11,7 +15,7 @@ function LoginPage() {
         <p>자유롭게 토론해보세요.</p>
         <Img alt="bookImg" src="src/assets/bookVector.png" />
       </TextVectorContainer>
-      <Form />
+      <FormBox pathname={pathname} />
     </PageContainer>
   );
 }

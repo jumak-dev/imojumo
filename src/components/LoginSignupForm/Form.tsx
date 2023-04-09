@@ -1,10 +1,18 @@
 import React, { useId, useState } from 'react';
 import styled from 'styled-components';
+import { Form, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 
-function Form() {
+interface FormProps {
+  pathname: string;
+}
+
+function FormBox({ pathname }: FormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [checkPassword, setCheckPassword] = useState('');
+  const isLogin = pathname.includes('login');
+  const navigate = useNavigate();
 
   const emailId = useId();
   const passwordId = useId();
@@ -14,14 +22,41 @@ function Form() {
       setEmail(e.target.value);
       return;
     }
-    setPassword(e.target.value);
+    if (e.target.name === 'password') {
+      setPassword(e.target.value);
+      return;
+    }
+    setCheckPassword(e.target.value);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const buttonValue = (e.target as HTMLButtonElement).value;
+    const path = buttonValue;
+    if (path === pathname) {
+      return;
+    }
+    navigate(path);
   };
 
   return (
     <FormContainer>
       <ButtonsWrapper>
-        <PathChangeButton type="button">로그인</PathChangeButton>
-        <PathChangeButton type="button">회원가입</PathChangeButton>
+        <PathChangeButton
+          onClick={handleClick}
+          isLogin={isLogin}
+          value="/login"
+          type="button"
+        >
+          로그인
+        </PathChangeButton>
+        <PathChangeButton
+          onClick={handleClick}
+          isLogin={isLogin}
+          value="/signup"
+          type="button"
+        >
+          회원가입
+        </PathChangeButton>
       </ButtonsWrapper>
       <StyledForm>
         <InnerForm>
@@ -43,6 +78,15 @@ function Form() {
             placeholder="비밀번호를 입력하세요"
             onChange={onChange}
           />
+          {!isLogin && (
+            <Input
+              type="password"
+              name="checkPassword"
+              value={checkPassword}
+              placeholder="비밀번호를 확인하세요"
+              onChange={onChange}
+            />
+          )}
 
           <Button
             buttonType="button"
@@ -51,7 +95,7 @@ function Form() {
             buttonColor="mint"
             margin="0 0 24px 0"
           >
-            로그인 하기
+            {isLogin ? '로그인 하기' : '회원가입 하기'}
           </Button>
           <Button
             type="button"
@@ -60,7 +104,7 @@ function Form() {
             buttonColor="pink"
             margin="0 0 36px 0"
           >
-            구글 로그인
+            {isLogin ? '구글 로그인' : '구글 회원가입'}
           </Button>
         </InnerForm>
       </StyledForm>
@@ -83,18 +127,23 @@ const ButtonsWrapper = styled.section`
   border-radius: 20px 20px 0 0;
 `;
 
-const PathChangeButton = styled.button`
+interface PathChangeButtonProps {
+  isLogin: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const PathChangeButton = styled.button<PathChangeButtonProps>`
   width: 50%;
   height: 72px;
   border-radius: 20px 20px 0 0;
   font-size: var(--font-size-l);
 
-  &:nth-child(1) {
+  &:nth-child(${(props) => (props.isLogin ? '1' : '2')}) {
     background-color: var(--white);
   }
 `;
 
-const StyledForm = styled.form`
+const StyledForm = styled(Form)`
   width: 460px;
   border: 1px solid var(--color-inputbox-line);
   border-top: none;
@@ -123,4 +172,4 @@ const Input = styled.input`
   margin-bottom: 24px;
 `;
 
-export default Form;
+export default FormBox;
