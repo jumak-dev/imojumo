@@ -5,7 +5,6 @@ const MainContainer = styled.main`
   max-width: 1120px;
   width: 100%;
   margin: auto;
-  background-color: blue;
 `;
 
 export default MainContainer;
