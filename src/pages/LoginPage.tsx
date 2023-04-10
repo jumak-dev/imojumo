@@ -13,7 +13,7 @@ function LoginPage() {
       <TextVectorContainer>
         <p>이모저모에 오신 것을 환영합니다.</p>
         <p>자유롭게 토론해보세요.</p>
-        <Img alt="bookImg" src="src/assets/bookVector.png" />
+        <Img alt="bookLogo" src="src/assets/bookVector.png" />
       </TextVectorContainer>
       <FormBox pathname={pathname} />
     </PageContainer>
