@@ -18,15 +18,16 @@ function FormBox({ pathname }: FormProps) {
   const passwordId = useId();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'email') {
-      setEmail(e.target.value);
+    const { value, name } = e.target;
+    if (name === 'email') {
+      setEmail(value);
       return;
     }
-    if (e.target.name === 'password') {
-      setPassword(e.target.value);
+    if (name === 'password') {
+      setPassword(value);
       return;
     }
-    setCheckPassword(e.target.value);
+    setCheckPassword(value);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
