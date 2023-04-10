@@ -30,8 +30,7 @@ function FormBox({ pathname }: FormProps) {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const buttonValue = (e.target as HTMLButtonElement).value;
-    const path = buttonValue;
+    const path = (e.target as HTMLButtonElement).value;
     if (path === pathname) {
       return;
     }
