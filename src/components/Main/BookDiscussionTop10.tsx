@@ -13,7 +13,7 @@ function BookDiscussionTop10() {
   const imageUrl =
     'https://image.aladin.co.kr/product/28448/6/cover500/k212835618_2.jpg';
 
-  const clickLikeHandler = (e: React.MouseEvent) => {
+  const handleLikeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsLiked(!isLiked);
   };
@@ -27,11 +27,11 @@ function BookDiscussionTop10() {
       margin="5px"
     >
       {!isLiked ? (
-        <LikeIconWrap onClick={clickLikeHandler}>
+        <LikeIconWrap onClick={handleLikeClick}>
           <FiHeart size={25} />
         </LikeIconWrap>
       ) : (
-        <LikedIconWrap onClick={clickLikeHandler}>
+        <LikedIconWrap onClick={handleLikeClick}>
           <FaHeart size={25} />
         </LikedIconWrap>
       )}
