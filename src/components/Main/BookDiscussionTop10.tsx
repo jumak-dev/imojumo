@@ -70,7 +70,7 @@ const CardTitle = styled.p`
   margin: 5px 10px;
 `;
 
-const LikeIconWrap = styled.i`
+const LikeIconWrap = styled.button`
   color: var(--white);
   position: absolute;
   right: 15px;
