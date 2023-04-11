@@ -65,9 +65,13 @@ const CardTitleWrap = styled.div`
 `;
 
 const CardTitle = styled.p`
-  font-size: var(--font-size-m);
-  font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   margin: 5px 10px;
+  font-weight: bold;
+  font-size: var(--font-size-m);
 `;
 
 const UnlikeIconWrap = styled.button`
