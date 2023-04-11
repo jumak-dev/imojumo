@@ -27,13 +27,13 @@ function BookDiscussionTop10() {
       margin="5px"
     >
       {!isLiked ? (
-        <LikeIconWrap onClick={handleLikeClick}>
+        <UnlikeIconWrap onClick={handleLikeClick}>
           <FiHeart size={25} />
-        </LikeIconWrap>
+        </UnlikeIconWrap>
       ) : (
-        <LikedIconWrap onClick={handleLikeClick}>
+        <LikeIconWrap onClick={handleLikeClick}>
           <FaHeart size={25} />
-        </LikedIconWrap>
+        </LikeIconWrap>
       )}
       <CardImage src={imageUrl} />
       <CardTitleWrap>
@@ -70,7 +70,7 @@ const CardTitle = styled.p`
   margin: 5px 10px;
 `;
 
-const LikeIconWrap = styled.button`
+const UnlikeIconWrap = styled.button`
   color: var(--white);
   position: absolute;
   right: 15px;
@@ -82,7 +82,7 @@ const LikeIconWrap = styled.button`
   }
 `;
 
-const LikedIconWrap = styled(LikeIconWrap)`
+const LikeIconWrap = styled(UnlikeIconWrap)`
   color: var(--color-heart);
 
   &:hover {
