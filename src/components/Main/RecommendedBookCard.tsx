@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex, RowFlex, AlignCenter, JustifyEnd } from '../../../styles/shared';
+import { Flex, RowFlex, AlignCenter, JustifyEnd } from '../../styles/shared';
 
 function RecommendedBookCard() {
   // 임시 이미지 Url
