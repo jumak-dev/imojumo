@@ -1,9 +1,9 @@
 import { RouterProvider } from 'react-router-dom';
 
-import rotue from './Routes';
+import route from './Routes';
 
 function App() {
-  return <RouterProvider router={rotue} />;
+  return <RouterProvider router={route} />;
 }
 
 export default App;
