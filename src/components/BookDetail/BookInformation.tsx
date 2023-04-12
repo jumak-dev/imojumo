@@ -14,7 +14,7 @@ function BookInformation() {
   };
 
   return (
-    <BookInformationLayout>
+    <InformationContainer>
       <BookImage src={imageUrl} alt="미드나잇 라이브러리" />
       <BookInfoContainer>
         <TitleContainer>
@@ -29,23 +29,33 @@ function BookInformation() {
             토론하기
           </Button>
         </TitleContainer>
-        <BookInfoBox>
-          <BookInfoTitle>
-            <InfoTitle>저자</InfoTitle>
-            <InfoTitle>역자</InfoTitle>
-            <InfoTitle>출판사</InfoTitle>
-            <InfoTitle>발행일</InfoTitle>
-            <InfoTitle>페이지</InfoTitle>
-            <InfoTitle>정가</InfoTitle>
-            <InfoTitle>설명</InfoTitle>
-          </BookInfoTitle>
-          <BookInfoDetail>
-            <InfoDetail>매트 헤이그</InfoDetail>
-            <InfoDetail>노진선</InfoDetail>
-            <InfoDetail>인플루엔셜</InfoDetail>
-            <InfoDetail>2021년 04년 28일</InfoDetail>
-            <InfoDetail>408</InfoDetail>
-            <InfoDetail>15,800원</InfoDetail>
+        <BookInfoList>
+          <BookInfoItem>
+            <InfoLabel>저자</InfoLabel>
+            <InfoText>매트 헤이그</InfoText>
+          </BookInfoItem>
+          <BookInfoItem>
+            <InfoLabel>역자</InfoLabel>
+            <InfoText>노진선</InfoText>
+          </BookInfoItem>
+          <BookInfoItem>
+            <InfoLabel>출판사</InfoLabel>
+            <InfoText>인플루엔셜</InfoText>
+          </BookInfoItem>
+          <BookInfoItem>
+            <InfoLabel>발행일</InfoLabel>
+            <InfoText>2021년 04년 28일</InfoText>
+          </BookInfoItem>
+          <BookInfoItem>
+            <InfoLabel>페이지</InfoLabel>
+            <InfoText>408</InfoText>
+          </BookInfoItem>
+          <BookInfoItem>
+            <InfoLabel>정가</InfoLabel>
+            <InfoText>15,800원</InfoText>
+          </BookInfoItem>
+          <BookInfoItem>
+            <InfoLabel>설명</InfoLabel>
             <BookDescription>
               매트 헤이그의 소설 《미드나잇 라이브러리》는 2021년 4월 출간 이후
               10개월 만에 30만 독자의 마음을 사로잡으며 눈물과 웃음, 가슴 뭉클한
@@ -55,14 +65,14 @@ function BookInformation() {
               찾는 모험을 따라가며 ‘살아 있음’과 ‘살아가는 것’에 대한 깊은
               통찰을 보여준다.
             </BookDescription>
-          </BookInfoDetail>
-        </BookInfoBox>
+          </BookInfoItem>
+        </BookInfoList>
       </BookInfoContainer>
-    </BookInformationLayout>
+    </InformationContainer>
   );
 }
 
-const BookInformationLayout = styled.div`
+const InformationContainer = styled.div`
   ${RowFlex}
   margin: 24px 0;
   padding: 0 24px;
@@ -85,37 +95,32 @@ const TitleContainer = styled.div`
 `;
 
 const BookTitle = styled.h2`
-  margin-right: 40px;
+  margin-right: 24px;
   font-weight: bold;
   font-size: var(--font-size-xxl);
 `;
 
-const BookInfoBox = styled.div`
-  ${RowFlex}
+const BookInfoList = styled.ul`
+  ${ColFlex}
 `;
 
-const BookInfoTitle = styled.div`
-  ${ColFlex}
+const BookInfoItem = styled.li`
+  ${RowFlex}/* margin-bottom: 8px; */
+`;
+
+const InfoLabel = styled.strong`
   width: 48px;
   margin-right: 16px;
-`;
-
-const BookInfoDetail = styled.div`
-  ${ColFlex}
-  max-width: 720px;
-`;
-
-const InfoTitle = styled.span`
-  margin-bottom: 8px;
   font-weight: 600;
 `;
 
-const InfoDetail = styled.span`
+const InfoText = styled.p`
   margin-bottom: 8px;
 `;
 
-const BookDescription = styled.span`
+const BookDescription = styled.p`
   line-height: 20px;
+  max-width: 720px;
 `;
 
 export default BookInformation;
