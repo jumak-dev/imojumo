@@ -77,7 +77,7 @@ const CardTitle = styled.p`
 const UnlikeIconWrap = styled.button`
   color: var(--white);
   position: absolute;
-  right: 15px;
+  right: 10px;
   top: 15px;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
 
