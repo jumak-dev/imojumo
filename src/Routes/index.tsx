@@ -39,19 +39,19 @@ export default createBrowserRouter([
         element: <BookDetailPage />,
       },
       {
-        path: '/book-dissscusion',
+        path: '/book-discussion',
         element: <BookDiscussionPage />,
       },
       {
-        path: '/book-dissscusion/:postId',
+        path: '/book-discussion/:postId',
         element: <BookDiscussionDetailPage />,
       },
       {
-        path: '/pro-con-dissscusion',
+        path: '/pro-con-discussion',
         element: <ProConDiscussionPage />,
       },
       {
-        path: '/pro-con-dissscusion/:postId',
+        path: '/pro-con-discussion/:postId',
         element: <ProConDiscussionDetailPage />,
       },
       {
