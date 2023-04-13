@@ -31,6 +31,7 @@ const CardContainer = styled.div`
   ${Flex}
   width: 330px;
   height: 215px;
+  margin: 0 20px;
 `;
 
 const BookInfoContainer = styled.div`
