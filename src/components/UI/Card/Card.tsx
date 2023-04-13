@@ -15,9 +15,6 @@ interface SpacerProps {
 }
 
 interface CardProps extends SpacerProps {
-  width: string;
-  height: string;
-  margin?: string;
   radius?: string;
 }
 
@@ -34,11 +31,8 @@ const spacer = (props: SpacerProps) => ({
   paddingLeft: props.paddingLeft,
 });
 
-const Card = css<CardProps>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+export const Card = css<CardProps>`
   border-radius: ${(props) => props.radius || '20px'};
-  margin: ${(props) => props.margin};
   border: 1px solid var(--color-borderbox-line);
   ${spacer}
 `;
