@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
-import { LinkCardContainer } from '../UI/Card/Card';
+import { Card } from '../UI/Card/Card';
 import { ColFlex, Flex } from '../../styles/shared';
 
 function BookDiscussionTop10() {
@@ -19,13 +20,7 @@ function BookDiscussionTop10() {
   };
 
   return (
-    <CardContainer
-      to="/book-dissscusion"
-      width="175px"
-      height="240px"
-      radius="20px"
-      margin="5px"
-    >
+    <CardContainer to="/book-dissscusion" radius="20px" margin="5px">
       {!isLiked ? (
         <UnlikeIcon onClick={handleLikeClick} />
       ) : (
@@ -33,17 +28,18 @@ function BookDiscussionTop10() {
       )}
       <CardImage src={imageUrl} />
       <CardTitleWrap>
-        <CardTitle>
-          {title.length > 30 ? `${title.slice(0, 28)}...` : title}
-        </CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardTitleWrap>
     </CardContainer>
   );
 }
 
-const CardContainer = styled(LinkCardContainer)`
+const CardContainer = styled(Link)`
+  ${Card}
   ${ColFlex}
   border: none;
+  width: 175px;
+  height: 240px;
   margin: 10px 15px;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px, rgba(0, 0, 0, 0.12) 0px 1px 2px;
