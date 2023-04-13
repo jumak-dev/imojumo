@@ -105,7 +105,7 @@ const BookInfoList = styled.ul`
 `;
 
 const BookInfoItem = styled.li`
-  ${RowFlex}/* margin-bottom: 8px; */
+  ${RowFlex}
 `;
 
 const InfoLabel = styled.strong`
@@ -115,7 +115,7 @@ const InfoLabel = styled.strong`
 `;
 
 const InfoText = styled.p`
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 `;
 
 const BookDescription = styled.p`
