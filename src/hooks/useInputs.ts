@@ -6,11 +6,11 @@ function useInputs<T extends Record<string, any>>(initialForm: T) {
     setForm(initialForm);
   }, [initialForm]);
 
-  const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setForm((preState) => ({ ...preState, [name]: value }));
-  }, []);
+  };
 
   return [form, onChange, reset] as const;
 }
