@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 import { LinkCardContainer } from '../UI/Card/Card';
@@ -27,13 +27,9 @@ function BookDiscussionTop10() {
       margin="5px"
     >
       {!isLiked ? (
-        <UnlikeIconWrap onClick={handleLikeClick}>
-          <FiHeart size={25} />
-        </UnlikeIconWrap>
+        <UnlikeIcon onClick={handleLikeClick} />
       ) : (
-        <LikeIconWrap onClick={handleLikeClick}>
-          <FaHeart size={25} />
-        </LikeIconWrap>
+        <LikeIcon onClick={handleLikeClick} />
       )}
       <CardImage src={imageUrl} />
       <CardTitleWrap>
@@ -74,19 +70,25 @@ const CardTitle = styled.p`
   font-size: var(--font-size-m);
 `;
 
-const UnlikeIconWrap = styled.button`
-  color: var(--white);
+const IconCSS = css`
   position: absolute;
+  font-size: 25px;
   right: 10px;
   top: 15px;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+`;
+
+const UnlikeIcon = styled(FiHeart)`
+  ${IconCSS}
+  color: var(--white);
 
   &:hover {
     color: var(--color-heart);
   }
 `;
 
-const LikeIconWrap = styled(UnlikeIconWrap)`
+const LikeIcon = styled(FaHeart)`
+  ${IconCSS}
   color: var(--color-heart);
 
   &:hover {
