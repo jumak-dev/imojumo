@@ -106,7 +106,7 @@ const SearchBookTitle = styled.h3`
   width: 100%;
   text-align: center;
   font-weight: 700;
-  font-size: 24px;
+  font-size: var(--font-size-xl);
   line-height: 29px;
   letter-spacing: -0.02em;
   color: #1d1d1b;
