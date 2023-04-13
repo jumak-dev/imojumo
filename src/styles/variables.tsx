@@ -13,7 +13,7 @@ const variables = css`
     --color-inputbox-line: #d0d0d0;
     --color-inputbox-bg: #efefef;
     --color-borderbottom-color: #bdbdbd;
-    --color-subtitle-bg-color: #ff3c3c;
+    --color-subtitle-bg-color: #f8f8f8;
 
     --font-size-xxl: 30px;
     --font-size-xl: 24px;

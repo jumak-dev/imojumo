@@ -34,6 +34,7 @@ const spacer = (props: SpacerProps) => ({
 export const Card = css<CardProps>`
   border-radius: ${(props) => props.radius || '20px'};
   border: 1px solid var(--color-borderbox-line);
+  overflow: hidden;
   ${spacer}
 `;
 

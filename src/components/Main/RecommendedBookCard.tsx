@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex, RowFlex, AlignCenter, JustifyEnd } from '../../../styles/shared';
+import { Flex, RowFlex, AlignCenter, JustifyEnd } from '../../styles/shared';
 
 function RecommendedBookCard() {
   // 임시 이미지 Url
@@ -31,6 +31,7 @@ const CardContainer = styled.div`
   ${Flex}
   width: 330px;
   height: 215px;
+  margin: 0 20px;
 `;
 
 const BookInfoContainer = styled.div`

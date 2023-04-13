@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-m);
   }
 
   a {
