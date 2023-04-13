@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
-type SizeType = 'xl' | 'lz' | 'md' | 'sm';
+type SizeType = 'xl' | 'lz' | 'md' | 'sm' | 'xs';
 
 interface IProps {
   size: SizeType;
@@ -42,8 +42,13 @@ const SIZES: { [key in SizeType]: FlattenSimpleInterpolation } = {
     --profile-image-size: 90px;
   `,
   sm: css`
-    --profile-font-size: var(--font-size-sm);
+    --profile-font-size: var(--font-size-m);
     --profile-image-size: 70px;
+  `,
+
+  xs: css`
+    --profile-font-size: var(--font-size-sm);
+    --profile-image-size: 46px;
   `,
 };
 
@@ -66,6 +71,7 @@ const UserAvatar = styled.img`
 
 const UserNickname = styled.div`
   font-size: var(--profile-font-size);
+  font-weight: bold;
 `;
 
 export default UserProfile;

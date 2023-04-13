@@ -10,6 +10,7 @@ interface ButtonProps {
   buttonType: ButtonType;
   buttonColor: ButtonColorType;
   buttonSize: ButtonSizeType;
+  margin?: string;
   isBold?: boolean;
   children: React.ReactNode;
   [rest: string]: any;
@@ -19,6 +20,7 @@ function Button({
   buttonType,
   buttonColor,
   buttonSize,
+  margin,
   isBold,
   children,
   ...rest
@@ -29,6 +31,7 @@ function Button({
       buttonColor={buttonColor}
       buttonSize={buttonSize}
       isBold={isBold}
+      margin={margin}
       {...rest}
     >
       {children}
@@ -140,6 +143,7 @@ export const ButtonBox = styled.button<ButtonProps>`
   ${({ buttonColor }) => ButtonColorCSS[buttonColor]};
   ${({ buttonSize }) => ButtonSizeCss[buttonSize]};
   font-weight: ${({ isBold }) => (isBold ? 'bold' : undefined)};
+  margin: ${({ margin }) => margin};
 
   &:active {
     position: relative;
