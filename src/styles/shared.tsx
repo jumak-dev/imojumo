@@ -34,3 +34,17 @@ export const ColFlexCenter = css`
   ${ColFlex}
   justify-content: center;
 `;
+
+export const InputCSS = css`
+  background-color: var(--color-inputbox-bg);
+  border: 1px solid var(--color-inputbox-line);
+  border-radius: 5px;
+  font-size: var(--font-size-m);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 19px;
+
+  &::placeholder {
+    color: var(--color-placeholder);
+  }
+`;
