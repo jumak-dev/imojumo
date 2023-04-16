@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import useModal from '../../../hooks/useModal';
 import Modal from './Modal';
 
 export default function ModalExample() {
   // default
-  const [showModal, setShowModal] = useState(false);
-
-  // default
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
-
-  // default
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
 
   function yesCallback() {
     console.log('yes');
