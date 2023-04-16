@@ -133,7 +133,7 @@ function MyPage() {
         </ImageSection>
         <InfoSection>
           <InfoTop>
-            <NickName>유아유아짱</NickName>
+            <Nickname>유아유아짱</Nickname>
             <EditButton type="button">수정</EditButton>
           </InfoTop>
           <InfoBottom>
@@ -349,7 +349,7 @@ const InfoTop = styled.div`
   margin-bottom: 28px;
 `;
 
-const NickName = styled.span`
+const Nickname = styled.span`
   font-size: var(--font-size-xxl);
   font-weight: 600;
   margin-bottom: 4px;
