@@ -436,13 +436,13 @@ const HiddenContent = styled.div<HiddenContentProps>`
 `;
 
 const InputContainer = styled.div`
-  label {
-    margin-bottom: 13px;
-  }
-
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+
+  label {
+    margin-bottom: 13px;
+  }
 `;
 
 const Input = styled.input`
