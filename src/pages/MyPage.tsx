@@ -12,7 +12,7 @@ import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
 import useVisibles from '../hooks/useVisibles';
 import useInputs from '../hooks/useInputs';
-import { InputCSS } from '../styles/shared';
+import { InputCSS, AlignCenter } from '../styles/shared';
 import Modal from '../components/UI/Modal/Modal';
 
 // dummyData
@@ -374,8 +374,7 @@ const IndexContainer = styled.section`
 `;
 
 const IndexBar = styled.div`
-  display: flex;
-  align-items: center;
+  ${AlignCenter};
   width: 100%;
   height: 50px;
   padding-left: 46px;
@@ -389,8 +388,7 @@ const IndexBar = styled.div`
 `;
 
 const IndexBarTitle = styled.div`
-  display: flex;
-  align-items: center;
+  ${AlignCenter};
 `;
 
 const ContentContainer = styled.li`
@@ -401,9 +399,8 @@ const ContentContainer = styled.li`
 `;
 
 const ContentTop = styled.div`
-  display: flex;
+  ${AlignCenter};
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 13px;
 `;
 
@@ -412,8 +409,7 @@ const ContentBottom = styled.div`
 `;
 
 const ContentLikeBox = styled.div`
-  display: flex;
-  align-items: center;
+  ${AlignCenter};
 `;
 
 const ContentLink = styled(Link)`
