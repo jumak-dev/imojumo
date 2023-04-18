@@ -366,9 +366,7 @@ const EditButton = styled.button`
 
 const InfoBottom = styled.div`
   display: flex;
-  button + button {
-    margin-left: 32px;
-  }
+  gap: 32px;
 `;
 
 const IndexContainer = styled.section`
