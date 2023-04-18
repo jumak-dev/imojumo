@@ -66,7 +66,7 @@ const data = {
 };
 
 interface ContentListProps {
-  array: Array<{
+  articles: Array<{
     path: string;
     title: string;
     likes?: number;
@@ -75,10 +75,10 @@ interface ContentListProps {
   }>;
 }
 
-function ContentList({ array }: ContentListProps) {
+function ContentList({ articles }: ContentListProps) {
   return (
     <ul>
-      {array.map((obj) => (
+      {articles.map((obj) => (
         <ContentContainer key={obj.id}>
           <ContentTop>
             <ContentLink to={obj.path}>{obj.title}</ContentLink>
@@ -166,7 +166,7 @@ function MyPage() {
           </IndexBarTitle>
           <button type="button">더보기 &gt;</button>
         </IndexBar>
-        <ContentList array={data.bookDiscussion} />
+        <ContentList articles={data.bookDiscussion} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -176,7 +176,7 @@ function MyPage() {
           </IndexBarTitle>
           <button type="button">더보기 &gt;</button>
         </IndexBar>
-        <ContentList array={data.proConDiscussion} />
+        <ContentList articles={data.proConDiscussion} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -186,7 +186,7 @@ function MyPage() {
           </IndexBarTitle>
           <button type="button">더보기 &gt;</button>
         </IndexBar>
-        <ContentList array={data.myComent} />
+        <ContentList articles={data.myComent} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
