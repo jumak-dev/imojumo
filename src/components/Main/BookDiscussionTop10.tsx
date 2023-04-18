@@ -26,7 +26,7 @@ function BookDiscussionTop10() {
       ) : (
         <LikeIcon onClick={handleLikeClick} />
       )}
-      <CardImage src={imageUrl} />
+      <CardImage src={imageUrl} alt="독서토론 도서 이미지" />
       <CardTitleWrap>
         <CardTitle>{title}</CardTitle>
       </CardTitleWrap>

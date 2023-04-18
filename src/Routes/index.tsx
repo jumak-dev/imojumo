@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Root, LoginRoot } from './route';
+import { Root, LoginRoot, Home } from './route';
 
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
@@ -18,10 +18,6 @@ export default createBrowserRouter([
   {
     element: <Root />,
     children: [
-      {
-        path: '/',
-        element: <HomePage />,
-      },
       {
         path: '/mypage',
         element: <MyPage />,
@@ -57,6 +53,15 @@ export default createBrowserRouter([
       {
         path: '/posts/new',
         element: <PostNewPage />,
+      },
+    ],
+  },
+  {
+    element: <Home />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
       },
     ],
   },
