@@ -285,43 +285,43 @@ function MyPage() {
   );
 }
 
-const icon = css`
+const iconCSS = css`
   margin-left: 8px;
   font-size: 24px;
 `;
 
 const BookIcon = styled(GoBook)`
-  ${icon};
+  ${iconCSS};
   color: var(--color-primary-mint);
 `;
 
 const DiscussionIcon = styled(GiDiscussion)`
-  ${icon};
+  ${iconCSS};
   color: var(--color-primary-pink);
 `;
 
 const ChatIcon = styled(BsChatLeftDots)`
-  ${icon};
+  ${iconCSS};
   color: var(--black);
 `;
 
 const HeartIcon = styled(AiFillHeart)`
-  ${icon};
+  ${iconCSS};
   color: var(--color-heart);
 `;
 
 const PasswordEditIcon = styled(FaUserLock)`
-  ${icon};
+  ${iconCSS};
   color: var(--black);
 `;
 
 const DownWardIcon = styled(IoIosArrowDown)`
-  ${icon};
+  ${iconCSS};
   color: var(--black);
 `;
 
 const DeleteAccountIcon = styled(FaUserAltSlash)`
-  ${icon};
+  ${iconCSS};
   color: var(--black);
 `;
 
