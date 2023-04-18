@@ -9,7 +9,7 @@ function RecommendedBookCard() {
     <CardContainer>
       <CardSideBlock />
       <CardBolck>
-        <BookCover src={imageUrl} />
+        <BookCover src={imageUrl} alt="추천 도서 이미지" />
         <BookInfoContainer>
           <BookTitle>개발자의 글쓰기</BookTitle>
           <BookAuthor>정미나 저 / 정정수 역</BookAuthor>

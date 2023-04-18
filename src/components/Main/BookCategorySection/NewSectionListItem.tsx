@@ -15,7 +15,7 @@ interface ItemProps {
 function NewSectionListItem({ item }: ItemProps) {
   return (
     <ListItem>
-      <ListItemThumnail src={item.imageUrl} />
+      <ListItemThumnail src={item.imageUrl} alt="썸네일 이미지" />
       <ListItemInfo>
         <ListItemTitle>{item.title}</ListItemTitle>
         <ListItemDescription>{item.description}</ListItemDescription>

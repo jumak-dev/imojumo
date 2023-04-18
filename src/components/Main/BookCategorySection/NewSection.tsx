@@ -32,7 +32,7 @@ function NewSection({ subtitle, isProConDiscussion }: NewSectionProps) {
   return (
     <NewSectionContainer>
       <Subtitle>{subtitle}</Subtitle>
-      <ThumnailImage src={image} />
+      <ThumnailImage src={image} alt="썸네일 이미지" />
       <ListContainer>
         {isProConDiscussion
           ? proConDiscussionList.map((item) => (
