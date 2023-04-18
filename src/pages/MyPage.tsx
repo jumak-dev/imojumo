@@ -5,9 +5,9 @@ import { BiTrash } from 'react-icons/bi';
 import { AiFillHeart } from 'react-icons/ai';
 import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
+import { IoIosArrowDown } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { useId, useState } from 'react';
-import DownWardImg from '../assets/downward_arrow.png';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
 import useVisibles from '../hooks/useVisibles';
@@ -195,7 +195,7 @@ function MyPage() {
             <PasswordEditIcon />
           </IndexBarTitle>
           <button type="button" onClick={togglePasswordVisible}>
-            <DownWardIcon src={DownWardImg} alt="DownWardImage" />
+            <DownWardIcon />
           </button>
         </IndexBar>
         <HiddenContent visible={passwordVisible}>
@@ -249,7 +249,7 @@ function MyPage() {
             <DeleteAccountIcon />
           </IndexBarTitle>
           <button type="button" onClick={toggleDeleteAccountVisible}>
-            <DownWardIcon src={DownWardImg} alt="DownWardImage" />
+            <DownWardIcon />
           </button>
         </IndexBar>
         <HiddenContent visible={deleteAccountVisible}>
@@ -315,12 +315,15 @@ const PasswordEditIcon = styled(FaUserLock)`
   color: var(--black);
 `;
 
-const DeleteAccountIcon = styled(FaUserAltSlash)`
+const DownWardIcon = styled(IoIosArrowDown)`
   ${icon};
   color: var(--black);
 `;
 
-const DownWardIcon = styled.img``;
+const DeleteAccountIcon = styled(FaUserAltSlash)`
+  ${icon};
+  color: var(--black);
+`;
 
 const ProfileContianer = styled.section`
   display: flex;
