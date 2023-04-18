@@ -332,7 +332,7 @@ const ProfileContianer = styled.section`
 `;
 
 const ImageSection = styled.section`
-  border-right: 1px solid black;
+  border-right: 1px solid var(--color-inputbox-line);
 
   img {
     width: 128px;
