@@ -55,7 +55,7 @@ const NewSectionContainer = styled.section`
   margin: 60px 20px;
 `;
 
-const Subtitle = styled.p`
+const Subtitle = styled.h3`
   ${Flex}
   height: 10%;
   margin: 10px 0;
