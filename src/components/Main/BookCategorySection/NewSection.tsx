@@ -36,10 +36,13 @@ function NewSection({ subtitle, isProConDiscussion }: NewSectionProps) {
       <ListContainer>
         {isProConDiscussion
           ? proConDiscussionList.map((item) => (
-              <ProConDiscussionListItem key={item.id} item={item} />
+              <ProConDiscussionListItem
+                key={item.id}
+                proConDiscussionInfo={item}
+              />
             ))
           : list.map((item) => (
-              <NewSectionListItem key={item.id} item={item} />
+              <NewSectionListItem key={item.id} bookInfo={item} />
             ))}
       </ListContainer>
     </NewSectionContainer>

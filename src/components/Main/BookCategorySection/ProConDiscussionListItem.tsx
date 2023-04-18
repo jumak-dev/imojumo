@@ -4,21 +4,23 @@ import { ColFlex } from '../../../styles/shared';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { ListItem, ListItemTitle } from './NewSectionListItem';
 
-interface ProConDiscussion {
+interface ProConDiscussionInfo {
   id: number;
   title: string;
 }
 
-interface ProConDiscussionList {
-  item: ProConDiscussion;
+interface ProConDiscussionListItemProps {
+  proConDiscussionInfo: ProConDiscussionInfo;
 }
 
-function ProConDiscussionListItem({ item }: ProConDiscussionList) {
+function ProConDiscussionListItem({
+  proConDiscussionInfo,
+}: ProConDiscussionListItemProps) {
   return (
     <ListItem>
       <UserIcon type="pro" />
       <ListItemInfo>
-        <ListItemTitle>{item.title}</ListItemTitle>
+        <ListItemTitle>{proConDiscussionInfo.title}</ListItemTitle>
         <ProgressBar
           isDisplayContent
           barWidth="100%"

@@ -1,24 +1,24 @@
 import styled, { css } from 'styled-components';
 import { Flex } from '../../../styles/shared';
 
-interface List {
+interface BookInfo {
   id: number;
   imageUrl: string;
   title: string;
   description: string;
 }
 
-interface ItemProps {
-  item: List;
+interface NewSectionListItemProps {
+  bookInfo: BookInfo;
 }
 
-function NewSectionListItem({ item }: ItemProps) {
+function NewSectionListItem({ bookInfo }: NewSectionListItemProps) {
   return (
     <ListItem>
-      <ListItemThumnail src={item.imageUrl} alt="썸네일 이미지" />
+      <ListItemThumnail src={bookInfo.imageUrl} alt="썸네일 이미지" />
       <ListItemInfo>
-        <ListItemTitle>{item.title}</ListItemTitle>
-        <ListItemDescription>{item.description}</ListItemDescription>
+        <ListItemTitle>{bookInfo.title}</ListItemTitle>
+        <ListItemDescription>{bookInfo.description}</ListItemDescription>
       </ListItemInfo>
     </ListItem>
   );
