@@ -18,7 +18,7 @@ function ProConDiscussionListItem({
 }: ProConDiscussionListItemProps) {
   return (
     <ListItem>
-      <UserIcon type="pro" />
+      <UserIcon isPro />
       <ListItemInfo>
         <ListItemTitle>{proConDiscussionInfo.title}</ListItemTitle>
         <ProgressBar
@@ -29,20 +29,16 @@ function ProConDiscussionListItem({
           size="sm"
         />
       </ListItemInfo>
-      <UserIcon type="con" />
+      <UserIcon isPro={false} />
     </ListItem>
   );
 }
 
-type UserType = 'pro' | 'con';
-
-const UserIcon = styled(FiUser)<{ type: UserType }>`
+const UserIcon = styled(FiUser)<{ isPro: boolean }>`
   margin: 0 10px;
   font-size: 45px;
-  color: ${({ type }) =>
-    type === 'pro'
-      ? 'var(--color-primary-mint)'
-      : ' var(--color-primary-pink)'};
+  color: ${({ isPro }) =>
+    isPro ? 'var(--color-primary-mint)' : ' var(--color-primary-pink)'};
 `;
 
 const ListItemInfo = styled.div`
