@@ -332,13 +332,13 @@ const ProfileContianer = styled.section`
 `;
 
 const ImageSection = styled.section`
+  border-right: 1px solid black;
+
   img {
     width: 128px;
     border-radius: 50%;
     margin-right: 27px;
   }
-
-  border-right: 1px solid black;
 `;
 
 const InfoSection = styled.section`
