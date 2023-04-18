@@ -254,13 +254,13 @@ function MyPage() {
         </IndexBar>
         <HiddenContent visible={deleteAccountVisible}>
           <ContentContainer>
-            <P>
+            <Paragraph>
               사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.
-            </P>
-            <P>
+            </Paragraph>
+            <Paragraph>
               탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니
               신중하게 선택하시기 바랍니다.
-            </P>
+            </Paragraph>
             <Button
               type="button"
               buttonType="button"
@@ -452,7 +452,7 @@ const Input = styled.input`
   padding-left: 10px;
 `;
 
-const P = styled.p`
+const Paragraph = styled.p`
   margin-bottom: 10px;
 `;
 
