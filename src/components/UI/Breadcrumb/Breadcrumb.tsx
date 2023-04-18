@@ -35,8 +35,6 @@ function Breadcrumb({ items = dummyData }: BreadcrumbProps) {
   );
 }
 
-export default Breadcrumb;
-
 const Ol = styled.ol`
   display: flex;
   font-weight: 600;
@@ -45,3 +43,5 @@ const Ol = styled.ol`
     margin-left: 5px;
   }
 `;
+
+export default Breadcrumb;
