@@ -12,7 +12,7 @@ function DiscussionInfomation() {
 
   const [isLike, setIsLike] = useState(false);
 
-  const clickLike = () => {
+  const handleLikeClick = () => {
     setIsLike(!isLike);
   };
 
@@ -35,9 +35,9 @@ function DiscussionInfomation() {
             <Button>수정</Button>
             <BsDot />
             <Button>삭제</Button>
-            <PostLike onClick={clickLike}>
+            <PostLikeButton onClick={handleLikeClick}>
               {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
-            </PostLike>
+            </PostLikeButton>
           </ButtonContainer>
         </DiscussionHeader>
         <DiscussionContent>
@@ -94,7 +94,7 @@ const Button = styled.button`
   color: var(--color-content-text);
 `;
 
-const PostLike = styled.button`
+const PostLikeButton = styled.button`
   padding: 0 4px;
   font-size: 25px;
   color: var(--color-heart);
