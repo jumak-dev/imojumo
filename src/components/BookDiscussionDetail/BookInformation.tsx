@@ -34,6 +34,7 @@ const InformationContainer = styled.section`
 `;
 
 const BookImage = styled.img`
+  flex-shrink: 0;
   width: 100px;
   height: 120px;
   border-radius: 8px;
