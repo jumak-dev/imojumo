@@ -40,7 +40,7 @@ const ListItemThumnail = styled.img`
   object-fit: cover;
 `;
 
-const TruncateTextCSS = css`
+export const TruncateTextCSS = css`
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
