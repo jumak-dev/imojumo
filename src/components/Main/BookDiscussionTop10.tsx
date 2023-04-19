@@ -5,6 +5,7 @@ import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 import { Card } from '../UI/Card/Card';
 import { ColFlex, Flex } from '../../styles/shared';
+import { TruncateTextCSS } from './BookCategorySection/NewSectionListItem';
 
 function BookDiscussionTop10() {
   const [isLiked, setIsLiked] = useState(false);
@@ -57,25 +58,23 @@ const CardTitleWrap = styled.div`
 `;
 
 const CardTitle = styled.p`
-  display: -webkit-box;
+  ${TruncateTextCSS}
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   margin: 5px 10px;
   font-weight: bold;
   font-size: var(--font-size-m);
 `;
 
-const IconCSS = css`
+const iconCSS = css`
   position: absolute;
   font-size: 25px;
-  right: 10px;
+  right: 13px;
   top: 15px;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
 `;
 
-const UnlikeIcon = styled(FiHeart)`
-  ${IconCSS}
+export const UnlikeIcon = styled(FiHeart)`
+  ${iconCSS}
   color: var(--white);
 
   &:hover {
@@ -83,8 +82,8 @@ const UnlikeIcon = styled(FiHeart)`
   }
 `;
 
-const LikeIcon = styled(FaHeart)`
-  ${IconCSS}
+export const LikeIcon = styled(FaHeart)`
+  ${iconCSS}
   color: var(--color-heart);
 
   &:hover {
