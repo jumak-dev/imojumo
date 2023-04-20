@@ -35,8 +35,9 @@ const dummyData: BookDiscussionData = {
     {
       id: '1',
       author: 'wjdwjdtn92',
-      title: '미드나잇',
-      content: '랄라라라라라라라라라라라랄랄랄',
+      title: '미드나잇 라이브러리',
+      content:
+        '랄라라라라라라라라라라라랄랄랄랄라라라라라라라라라라라랄랄랄랄라라라라라라라라라라라랄랄랄랄라라라라라라라라라라라랄랄랄랄라라라라라라라라라라라랄랄랄랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
       updatedAt: '2023.02.03 18:51:09 GMT+0900',
@@ -44,7 +45,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '2',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
@@ -53,7 +54,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '3',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
@@ -62,7 +63,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '4',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
@@ -71,7 +72,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '5',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
@@ -80,7 +81,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '6',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
@@ -89,7 +90,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '7',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
@@ -98,7 +99,7 @@ const dummyData: BookDiscussionData = {
     {
       id: '8',
       author: 'yua77',
-      title: '미드나잇',
+      title: '미드나잇 라이브러리',
       content: '랄라라라라라라라라라라라랄랄랄',
       like: 10,
       createdAt: '2023.02.03 18:51:09 GMT+0900',
