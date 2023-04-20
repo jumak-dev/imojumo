@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import useInputs from '../../hooks/useInputs';
-import { ColFlexCenter } from '../../styles/shared';
+import { ScreenReaderTextCSS } from '../../styles/shared';
 import Button from '../UI/Button/Button';
 import DiscussionInputs from './DiscussionInputs';
+import PostNewForm from './PostNewForm';
 import SearchBook from './SearchBook';
 
 interface PostFormProps {
@@ -30,13 +31,14 @@ function BookDiscussionFrom({ onSubmit }: PostFormProps) {
     'https://image.aladin.co.kr/product/27222/22/cover500/e822538010_1.jpg';
 
   return (
-    <PostFormContainer>
+    <PostNewForm title="독서 토론 작성 입력폼">
       <SearchBook onSearch={handleSearch} />
       <DiscussionInputs
         avatar={avatar}
         title={title}
         content={content}
         onChange={onChange}
+        containerHeight="300px"
       />
 
       <SubmitButton
@@ -48,16 +50,9 @@ function BookDiscussionFrom({ onSubmit }: PostFormProps) {
       >
         등록하기
       </SubmitButton>
-    </PostFormContainer>
+    </PostNewForm>
   );
 }
-
-const PostFormContainer = styled.form`
-  max-width: 970px;
-  padding: 32px;
-  gap: 60px;
-  ${ColFlexCenter}
-`;
 
 const SubmitButton = styled(Button)`
   align-self: center;
