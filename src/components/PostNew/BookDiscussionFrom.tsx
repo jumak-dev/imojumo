@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import useInputs from '../../hooks/useInputs';
 import { ColFlexCenter } from '../../styles/shared';
 import Button from '../UI/Button/Button';
