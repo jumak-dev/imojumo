@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColFlex } from '../../styles/shared';
+import { ColFlex, Flex, ScreenReaderTextCSS } from '../../styles/shared';
+import { ButtonBox } from '../UI/Button/Button';
 import { Card } from '../UI/Card/Card';
 import Input from '../UI/Input/Input';
 import Textarea from '../UI/Textarea/Textarea';
@@ -10,6 +11,10 @@ interface DiscussionInputsProps {
   avatar: string;
   title: string;
   content: string;
+  containerHeight: string;
+  isProConDiscussion?: boolean;
+  onProButtonClick?: () => void;
+  onConButtonClick?: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,10 +22,16 @@ function DiscussionInputs({
   avatar,
   title,
   content,
+  containerHeight,
+  onProButtonClick,
+  onConButtonClick,
   onChange,
+  isProConDiscussion = false,
 }: DiscussionInputsProps) {
   return (
-    <DiscussionContainer>
+    <DiscussionInputListContainer containerHeight={containerHeight}>
+      <DiscussionInputListTitle>토론 정보 입력하기</DiscussionInputListTitle>
+
       <UserProfile
         avatar={avatar}
         alt="프로필 이미지"
@@ -29,6 +40,28 @@ function DiscussionInputs({
         size="sm"
       />
       <DiscussionInputContainer>
+        {isProConDiscussion ? (
+          <ButtonContainer>
+            <ProConButton
+              type="button"
+              buttonType="buttonLeft"
+              buttonColor="mint"
+              buttonSize="m"
+              onClick={onProButtonClick}
+            >
+              찬성
+            </ProConButton>
+            <ProConButton
+              type="button"
+              buttonType="buttonRight"
+              buttonColor="pink"
+              buttonSize="m"
+              onClick={onConButtonClick}
+            >
+              반대
+            </ProConButton>
+          </ButtonContainer>
+        ) : null}
         <DiscussionTitleInput
           name="title"
           value={title}
@@ -42,12 +75,16 @@ function DiscussionInputs({
           onChange={onChange}
         />
       </DiscussionInputContainer>
-    </DiscussionContainer>
+    </DiscussionInputListContainer>
   );
 }
 
-const DiscussionContainer = styled.section`
+const DiscussionInputListContainer = styled.section<{
+  containerHeight: string;
+}>`
+  flex: 1 1 0;
   width: 100%;
+  min-height: ${({ containerHeight }) => containerHeight};
   gap: 22px;
   display: flex;
   align-items: flex-start;
@@ -56,8 +93,23 @@ const DiscussionContainer = styled.section`
   ${Card}
 `;
 
+const DiscussionInputListTitle = styled.h4`
+  ${ScreenReaderTextCSS};
+`;
+
+const ButtonContainer = styled.div`
+  ${Flex};
+  justify-content flex-start;
+`;
+
+const ProConButton = styled(ButtonBox)`
+  width: 120px;
+  height: 40px;
+`;
+
 const DiscussionInputContainer = styled.div`
   flex: 1 1 0;
+  height: 100%;
   gap: 22px;
 
   ${ColFlex}
@@ -68,7 +120,7 @@ const DiscussionTitleInput = styled(Input)`
 `;
 
 const DiscussionContentInput = styled(Textarea)`
-  min-height: 162px;
+  flex: 1 1 0;
 `;
 
 export default DiscussionInputs;
