@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import MainContainer from '../styles/layout';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 
-interface PageInfo {
+export interface PageInfo {
   page: number;
   totalPage: number;
   totalCount: number;
@@ -141,7 +141,7 @@ function BookDiscussion() {
       <Subtitle>독서토론</Subtitle>
       <BookDiscussionCardContainer>
         {dummyData.data.map((data) => (
-          <BookDiscussionCard bookDiscussionData={data} />
+          <BookDiscussionCard bookDiscussionData={data} key={data.id} />
         ))}
       </BookDiscussionCardContainer>
       {/* 페이지네이션 */}
@@ -149,7 +149,7 @@ function BookDiscussion() {
   );
 }
 
-const Subtitle = styled.h2`
+export const Subtitle = styled.h2`
   font-size: var(--font-size-l);
   font-weight: bold;
   margin: 60px 10px;
