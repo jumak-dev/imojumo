@@ -51,7 +51,7 @@ const SerachBookContainer = styled.section`
   padding: 32px;
 `;
 
-const SearchBookTitle = styled.h3`
+const SearchBookTitle = styled.h4`
   width: 100%;
   text-align: center;
   font-weight: 700;
