@@ -12,8 +12,8 @@ interface PostNewPageProps {
 
 function PostNewPage({ discussionType }: PostNewPageProps) {
   const title = {
-    proCon: '찬반 토론 게신글 작성하기',
-    book: '독서 토론 게신글 작성하기',
+    proCon: '찬반 토론 게시글 작성하기',
+    book: '독서 토론 게시글 작성하기',
   }[discussionType];
 
   const handleSubmit = () => {};
