@@ -42,7 +42,7 @@ const DiscussionTabNav = styled.nav`
 const DiscussionTabLink = styled(NavLink)`
   ${Flex}
   text-align: center;
-  color: var(--blck);
+  color: var(--black);
   padding: 8px 24px;
   gap: 36px;
 
