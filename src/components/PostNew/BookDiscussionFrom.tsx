@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import useInputs from '../../hooks/useInputs';
-import { ScreenReaderTextCSS } from '../../styles/shared';
 import Button from '../UI/Button/Button';
 import DiscussionInputs from './DiscussionInputs';
 import PostNewForm from './PostNewForm';
@@ -42,8 +41,8 @@ function BookDiscussionFrom({ onSubmit }: PostFormProps) {
       />
 
       <SubmitButton
-        type="button"
-        buttonType="submit"
+        type="submit"
+        buttonType="button"
         buttonColor="pink"
         buttonSize="l"
         onClick={handleFormSubmit}
