@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import useInputs from '../../hooks/useInputs';
-import Button, { ButtonBox } from '../UI/Button/Button';
+import Button from '../UI/Button/Button';
 import DiscussionInputs from './DiscussionInputs';
 import PostNewForm from './PostNewForm';
 
@@ -39,8 +39,8 @@ function ProConDiscussionFrom({ onSubmit }: PostFormProps) {
       />
 
       <SubmitButton
-        type="button"
-        buttonType="submit"
+        type="submit"
+        buttonType="button"
         buttonColor="pink"
         buttonSize="l"
         onClick={handleFormSubmit}
