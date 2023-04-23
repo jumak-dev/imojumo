@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookDiscussionFrom from '../components/PostNew/BookDiscussionFrom';
+import BookDiscussionForm from '../components/PostNew/BookDiscussionForm';
 import DiscussionTab from '../components/PostNew/DiscussionTab';
-import ProConDiscussionFrom from '../components/PostNew/ProConDiscussionFrom';
+import ProConDiscussionForm from '../components/PostNew/ProConDiscussionForm';
 import MainContainer from '../styles/layout';
 import { Flex, ScreenReaderTextCSS } from '../styles/shared';
 
@@ -25,8 +25,8 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
         <DiscussionTab />
         {
           {
-            proCon: <ProConDiscussionFrom onSubmit={handleSubmit} />,
-            book: <BookDiscussionFrom onSubmit={handleSubmit} />,
+            proCon: <ProConDiscussionForm onSubmit={handleSubmit} />,
+            book: <BookDiscussionForm onSubmit={handleSubmit} />,
           }[discussionType]
         }
       </PostNewPageContainer>
