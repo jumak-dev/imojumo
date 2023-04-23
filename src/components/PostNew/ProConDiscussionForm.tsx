@@ -9,7 +9,7 @@ interface PostFormProps {
   onSubmit: () => void;
 }
 
-function ProConDiscussionFrom({ onSubmit }: PostFormProps) {
+function ProConDiscussionForm({ onSubmit }: PostFormProps) {
   const [{ title, content }, onChange] = useInputs({
     title: '',
     content: '',
@@ -55,4 +55,4 @@ const SubmitButton = styled(Button)`
   align-self: center;
 `;
 
-export default ProConDiscussionFrom;
+export default ProConDiscussionForm;
