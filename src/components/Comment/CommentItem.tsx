@@ -1,0 +1,186 @@
+import { useState } from 'react';
+import styled, { css } from 'styled-components';
+import {
+  AiFillDislike,
+  AiFillLike,
+  AiOutlineDislike,
+  AiOutlineLike,
+} from 'react-icons/ai';
+import { BsDot } from 'react-icons/bs';
+import { AlignCenter, ColFlex, Flex } from '../../styles/shared';
+
+interface Comment {
+  id: number;
+  author: string;
+  content: string;
+  like: number;
+  dislike: number;
+  createdAt: string;
+  updatedAt: string;
+  isPro?: boolean;
+}
+
+interface CommentItemProps {
+  comment: Comment;
+  isProConDiscussion?: boolean;
+}
+
+function CommentItem({
+  comment,
+  isProConDiscussion = false,
+}: CommentItemProps) {
+  const imageUrl =
+    'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
+
+  const [isLike, setIsLike] = useState(false);
+  const [isDislike, setIsDislike] = useState(false);
+
+  const handleLikeClick = () => {
+    setIsLike(!isLike);
+  };
+
+  const handleDislikeClick = () => {
+    setIsDislike(!isDislike);
+  };
+
+  return (
+    <CommentListItem>
+      <CommentInfomation>
+        <InformationContainer>
+          <Profile src={imageUrl} alt="프로필 이미지" />
+          <InformationWrapper>
+            <UserInfoBox>
+              <Nickname>{comment.author}</Nickname>
+              {isProConDiscussion &&
+                (comment.isPro ? (
+                  <ProSide>찬성측</ProSide>
+                ) : (
+                  <ConSide>반대측</ConSide>
+                ))}
+            </UserInfoBox>
+            <CommentDate>{comment.updatedAt}</CommentDate>
+          </InformationWrapper>
+        </InformationContainer>
+        <ButtonContainer>
+          <Button>수정</Button>
+          <BsDot />
+          <Button>삭제</Button>
+        </ButtonContainer>
+      </CommentInfomation>
+      <CommentContent>{comment.content}</CommentContent>
+      <ButtonContainer>
+        <LikeButton onClick={handleLikeClick}>
+          {isLike ? <AiFillLike /> : <AiOutlineLike />}
+        </LikeButton>
+        <CountText>{comment.like}</CountText>
+        <DislikeButton onClick={handleDislikeClick}>
+          {isDislike ? <AiFillDislike /> : <AiOutlineDislike />}
+        </DislikeButton>
+        <CountText>{comment.dislike}</CountText>
+      </ButtonContainer>
+    </CommentListItem>
+  );
+}
+
+const CommentListItem = styled.li`
+  ${ColFlex}
+  gap: 16px;
+  border-bottom: 1px solid var(--color-borderbottom-color);
+  &:last-child {
+    border: none;
+  }
+`;
+
+const CommentInfomation = styled.div`
+  ${AlignCenter}
+  justify-content: space-between;
+`;
+
+const InformationContainer = styled.div`
+  ${AlignCenter}
+  gap: 16px;
+`;
+
+const Profile = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+`;
+
+const InformationWrapper = styled.div`
+  ${ColFlex}
+  gap: 8px;
+`;
+
+const UserInfoBox = styled.div`
+  ${AlignCenter}
+  gap: 8px;
+`;
+
+const Nickname = styled.strong`
+  font-weight: bold;
+  font-size: var(--font-size-l);
+`;
+
+const CommentDate = styled.p`
+  font-size: var(--font-size-sm);
+  color: var(--color-content-text);
+`;
+
+const proConCSS = css`
+  ${Flex}
+  width: 48px;
+  height: 24px;
+  color: white;
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
+`;
+
+const ProSide = styled.span`
+  ${proConCSS}
+  background-color: var(--color-primary-mint);
+`;
+
+const ConSide = styled.span`
+  ${proConCSS}
+  background-color: var(--color-primary-pink);
+`;
+
+const ButtonContainer = styled.div`
+  ${AlignCenter}
+  justify-content: flex-end;
+`;
+
+const Button = styled.button`
+  padding: 2px;
+  color: var(--color-content-text);
+`;
+
+const CommentContent = styled.p`
+  line-height: 20px;
+  color: var(--color-content-text);
+`;
+
+const CountText = styled.p`
+  margin-left: 4px;
+  font-weight: 600;
+`;
+
+const likesCSS = css`
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+`;
+
+const LikeButton = styled.button`
+  ${likesCSS}
+  color: var(--color-primary-mint);
+`;
+
+const DislikeButton = styled.button`
+  ${likesCSS}
+  margin-left: 12px;
+  color: var(--color-primary-pink);
+`;
+
+export default CommentItem;
