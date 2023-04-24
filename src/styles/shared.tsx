@@ -49,6 +49,7 @@ export const InputCSS = css`
   }
 `;
 
+
 export const ScreenReaderTextCSS = css`
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
@@ -60,4 +61,18 @@ export const ScreenReaderTextCSS = css`
   position: absolute;
   width: 1px;
   word-wrap: normal !important;
+
+export const truncateTextCSS = css`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+export const likeIconCSS = css`
+  position: absolute;
+  font-size: 25px;
+  right: 13px;
+  top: 15px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
 `;
