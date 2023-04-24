@@ -55,3 +55,11 @@ export const truncateTextCSS = css`
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
+
+export const likeIconCSS = css`
+  position: absolute;
+  font-size: 25px;
+  right: 13px;
+  top: 15px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+`;
