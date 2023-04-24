@@ -4,16 +4,15 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import { Card } from '../UI/Card/Card';
-import { AlignCenter } from '../../styles/shared';
+import { AlignCenter, truncateTextCSS } from '../../styles/shared';
 import { LikeIcon, UnlikeIcon } from '../Main/BookDiscussionTop10';
 import { BookDiscussionInfo } from '../../pages/BookDiscussionPage';
-import { TruncateTextCSS } from '../Main/BookCategorySection/NewSectionListItem';
 
 // 임시로 사용하는 이미지 URL입니다!
-const imageUrl =
+export const imageUrl =
   'https://image.aladin.co.kr/product/28448/6/cover500/k212835618_2.jpg';
 
-const profileUrl =
+export const profileUrl =
   'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
 
 function BookDiscussionCard({
@@ -95,7 +94,7 @@ const UserInfoBox = styled.div`
 `;
 
 const DiscussionTitle = styled.h3`
-  ${TruncateTextCSS}
+  ${truncateTextCSS}
   height: 20%;
   font-size: var(--font-size-l);
   font-weight: bold;
@@ -103,7 +102,7 @@ const DiscussionTitle = styled.h3`
 `;
 
 const DiscussionDescroption = styled.p`
-  ${TruncateTextCSS}
+  ${truncateTextCSS}
   -webkit-line-clamp: 3;
   font-size: var(--font-size-m);
   color: var(--color-content-text);
