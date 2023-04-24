@@ -4,8 +4,9 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import { Card } from '../UI/Card/Card';
+import LikeIcon from '../UI/Icon/LikeIcon';
+import UnlikeIcon from '../UI/Icon/UnlikeIcon';
 import { AlignCenter, truncateTextCSS } from '../../styles/shared';
-import { LikeIcon, UnlikeIcon } from '../Main/BookDiscussionTop10';
 import { BookDiscussionInfo } from '../../pages/BookDiscussionPage';
 
 // 임시로 사용하는 이미지 URL입니다!
@@ -45,9 +46,9 @@ function BookDiscussionCard({
       <DiscussionInfoContainer>
         <DiscussionInfoBox>
           <DiscussionTitle>{bookDiscussionData.title}</DiscussionTitle>
-          <DiscussionDescroption>
+          <DiscussionDescription>
             {bookDiscussionData.content}
-          </DiscussionDescroption>
+          </DiscussionDescription>
           <DiscussionDate>{bookDiscussionDate}</DiscussionDate>
         </DiscussionInfoBox>
         <UserInfoBox>
@@ -101,7 +102,7 @@ const DiscussionTitle = styled.h3`
   margin-bottom: 20px;
 `;
 
-const DiscussionDescroption = styled.p`
+const DiscussionDescription = styled.p`
   ${truncateTextCSS}
   -webkit-line-clamp: 3;
   font-size: var(--font-size-m);
