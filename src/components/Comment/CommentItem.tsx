@@ -44,7 +44,7 @@ function CommentItem({
   };
 
   return (
-    <CommentListItem>
+    <CommentItemContainer>
       <CommentInfomation>
         <InformationContainer>
           <Profile src={imageUrl} alt="프로필 이미지" />
@@ -78,11 +78,11 @@ function CommentItem({
         </DislikeButton>
         <CountText>{comment.dislike}</CountText>
       </ButtonContainer>
-    </CommentListItem>
+    </CommentItemContainer>
   );
 }
 
-const CommentListItem = styled.li`
+const CommentItemContainer = styled.li`
   ${ColFlex}
   gap: 16px;
   border-bottom: 1px solid var(--color-borderbottom-color);
