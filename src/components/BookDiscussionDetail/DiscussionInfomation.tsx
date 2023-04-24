@@ -35,7 +35,7 @@ function DiscussionInfomation() {
             <Button>수정</Button>
             <BsDot />
             <Button>삭제</Button>
-            <PostLikeButton onClick={handleLikeClick}>
+            <PostLikeButton aria-label="찜하기" onClick={handleLikeClick}>
               {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
             </PostLikeButton>
           </ButtonContainer>

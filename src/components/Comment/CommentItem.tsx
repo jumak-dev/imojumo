@@ -69,11 +69,11 @@ function CommentItem({
       </CommentInfomation>
       <CommentContent>{comment.content}</CommentContent>
       <ButtonContainer>
-        <LikeButton onClick={handleLikeClick}>
+        <LikeButton aria-label="좋아요" onClick={handleLikeClick}>
           {isLike ? <AiFillLike /> : <AiOutlineLike />}
         </LikeButton>
         <CountText>{comment.like}</CountText>
-        <DislikeButton onClick={handleDislikeClick}>
+        <DislikeButton aria-label="싫어요" onClick={handleDislikeClick}>
           {isDislike ? <AiFillDislike /> : <AiOutlineDislike />}
         </DislikeButton>
         <CountText>{comment.dislike}</CountText>
