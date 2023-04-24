@@ -4,8 +4,7 @@ import styled, { css } from 'styled-components';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 import { Card } from '../UI/Card/Card';
-import { ColFlex, Flex } from '../../styles/shared';
-import { TruncateTextCSS } from './BookCategorySection/NewSectionListItem';
+import { ColFlex, Flex, truncateTextCSS } from '../../styles/shared';
 
 function BookDiscussionTop10() {
   const [isLiked, setIsLiked] = useState(false);
@@ -58,7 +57,7 @@ const CardTitleWrap = styled.div`
 `;
 
 const CardTitle = styled.p`
-  ${TruncateTextCSS}
+  ${truncateTextCSS}
   -webkit-line-clamp: 3;
   margin: 5px 10px;
   font-weight: bold;
