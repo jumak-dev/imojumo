@@ -49,7 +49,6 @@ export const InputCSS = css`
   }
 `;
 
-
 export const ScreenReaderTextCSS = css`
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
@@ -61,6 +60,7 @@ export const ScreenReaderTextCSS = css`
   position: absolute;
   width: 1px;
   word-wrap: normal !important;
+`;
 
 export const truncateTextCSS = css`
   display: -webkit-box;
