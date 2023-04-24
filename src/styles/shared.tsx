@@ -48,3 +48,10 @@ export const InputCSS = css`
     color: var(--color-placeholder);
   }
 `;
+
+export const truncateTextCSS = css`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
