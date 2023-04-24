@@ -82,11 +82,11 @@ const ProConDiscussionTabLink = styled(DiscussionTabLink)`
 `;
 
 const DiscussionTabLinkText = styled.p`
+  ${AlignCenter}
+
   font-size: var(--font-size-l);
   line-height: 24px;
   letter-spacing: -0.02em;
-
-  ${AlignCenter}
 `;
 
 export default DiscussionTab;

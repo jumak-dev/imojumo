@@ -82,15 +82,14 @@ function DiscussionInputs({
 const DiscussionInputListContainer = styled.section<{
   containerHeight: string;
 }>`
+  ${Card}
   flex: 1 1 0;
   width: 100%;
   min-height: ${({ containerHeight }) => containerHeight};
-  gap: 22px;
   display: flex;
   align-items: flex-start;
+  gap: 22px;
   padding: 32px;
-
-  ${Card}
 `;
 
 const DiscussionInputListTitle = styled.h4`
@@ -108,11 +107,10 @@ const ProConButton = styled(ButtonBox)`
 `;
 
 const DiscussionInputContainer = styled.div`
+  ${ColFlex}
   flex: 1 1 0;
   height: 100%;
   gap: 22px;
-
-  ${ColFlex}
 `;
 
 const DiscussionTitleInput = styled(Input)`

@@ -41,13 +41,13 @@ function SearchBook({ onSearch }: SearchBookProps) {
 }
 
 const SerachBookContainer = styled.section`
-  width: 100%;
-  height: 171px;
-  align-items: center;
-  gap: 16px;
-
   ${Card}
   ${ColFlexCenter}
+
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 171px;
   padding: 32px;
 `;
 

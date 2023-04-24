@@ -17,11 +17,10 @@ function PostNewForm({ title, children }: PostNewFormProps) {
 }
 
 const PostFormContainer = styled.form`
-  width: 100%;
-  gap: 60px;
-  max-width: 970px;
-
   ${ColFlexCenter}
+  gap: 60px;
+  width: 100%;
+  max-width: 970px;
 `;
 
 const PostNewFormTitle = styled.h3`
