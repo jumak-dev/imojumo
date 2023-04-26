@@ -1,13 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
-
-export interface PageInfo {
-  page: number;
-  totalPage: number;
-  totalCount: number;
-  currentCount: number;
-}
+import Pagination, { PageInfo } from '../components/UI/Pagination/Pagination';
 
 export interface BookDiscussionInfo {
   id: string;
@@ -136,15 +131,44 @@ const dummyData: BookDiscussionData = {
 };
 
 function BookDiscussion() {
+  const [posts] = useState<BookDiscussionInfo[]>(dummyData.data);
+  const [paginate, setPaginate] = useState(1);
+  const [paginationInfo] = useState<PageInfo>(dummyData.pageInfo);
+
+  /* 9개씩 가지고 옴
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // params에 현재 page 쪽수, 보여질 게시물 개수인 limit 담기
+        const res = await fetch('').then((res) => res.json());
+        const postData = res.data;
+        const paginationData: PageInfo = res.pageInfo;
+        
+        // setPosts 만들어서
+        setPosts(postData);
+        // setPosts 만들어서
+        setPaginationInfo(postData)
+      } catch (e) {
+        console.log(e)
+      }
+        
+    };
+  }, [paginate]); // paginate 쪽수 변경할 때마다 새로운 데이터 가지고 오게 의존성 추가
+  */
+
   return (
     <MainContainer>
       <Subtitle>독서토론</Subtitle>
       <BookDiscussionCardContainer>
-        {dummyData.data.map((data) => (
-          <BookDiscussionCard bookDiscussionData={data} key={data.id} />
+        {posts.map((post) => (
+          <BookDiscussionCard bookDiscussionData={post} key={post.id} />
         ))}
       </BookDiscussionCardContainer>
-      {/* 페이지네이션 */}
+      <Pagination
+        paginate={paginate}
+        setPaginate={setPaginate}
+        paginationInfo={paginationInfo}
+      />
     </MainContainer>
   );
 }
