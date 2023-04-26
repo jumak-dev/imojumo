@@ -1,9 +1,15 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { BsDot } from 'react-icons/bs';
 import { Card } from '../UI/Card/Card';
 import UserProfile from '../UI/UserProfile/UserProfile';
 import ProgressBar from '../UI/ProgressBar/ProgressBar';
-import { AlignCenter, ColFlex, Flex, RowFlexCenter } from '../../styles/shared';
+import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
+import {
+  ColFlex,
+  AlignCenter,
+  RowFlexCenter,
+  profileBoxCSS,
+} from '../../styles/shared';
 
 function DiscussionInformation() {
   const userImageUrl =
@@ -20,7 +26,9 @@ function DiscussionInformation() {
       </ButtonContainer>
       <DiscussionInfoContainer>
         <ProfileBox>
-          <ProLeader>찬성측</ProLeader>
+          <ProConLeaderTag isAgree tagSize="m">
+            찬성측
+          </ProConLeaderTag>
           <UserProfile
             avatar={noneImageUrl}
             alt="찬성측 프로필 이미지"
@@ -41,7 +49,9 @@ function DiscussionInformation() {
           />
         </DiscussionInfo>
         <ProfileBox>
-          <ConLeader>반대측</ConLeader>
+          <ProConLeaderTag isAgree={false} tagSize="m">
+            반대측
+          </ProConLeaderTag>
           <UserProfile
             avatar={userImageUrl}
             alt="반대측 프로필 이미지"
@@ -95,28 +105,7 @@ const Button = styled.button`
 `;
 
 const ProfileBox = styled.div`
-  ${ColFlex}
-  align-items: center;
-  flex-shrink: 0;
-  gap: 24px;
-`;
-
-const proConCSS = css`
-  ${Flex}
-  width: 60px;
-  height: 30px;
-  color: white;
-  border-radius: 20px;
-`;
-
-const ProLeader = styled.span`
-  ${proConCSS}
-  background-color: var(--color-primary-mint);
-`;
-
-const ConLeader = styled.span`
-  ${proConCSS}
-  background-color: var(--color-primary-pink);
+  ${profileBoxCSS}
 `;
 
 export default DiscussionInformation;

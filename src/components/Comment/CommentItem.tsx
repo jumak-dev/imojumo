@@ -7,7 +7,8 @@ import {
   AiOutlineLike,
 } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
-import { AlignCenter, ColFlex, Flex } from '../../styles/shared';
+import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
+import { AlignCenter, ColFlex } from '../../styles/shared';
 
 interface Comment {
   id: number;
@@ -53,9 +54,13 @@ function CommentItem({
               <Nickname>{comment.author}</Nickname>
               {isProConDiscussion &&
                 (comment.isPro ? (
-                  <ProSide>찬성측</ProSide>
+                  <ProConLeaderTag isAgree tagSize="sm">
+                    찬성측
+                  </ProConLeaderTag>
                 ) : (
-                  <ConSide>반대측</ConSide>
+                  <ProConLeaderTag isAgree tagSize="sm">
+                    반대측
+                  </ProConLeaderTag>
                 ))}
             </UserInfoBox>
             <CommentDate>{comment.updatedAt}</CommentDate>
@@ -125,25 +130,6 @@ const Nickname = styled.strong`
 const CommentDate = styled.p`
   font-size: var(--font-size-sm);
   color: var(--color-content-text);
-`;
-
-const proConCSS = css`
-  ${Flex}
-  width: 48px;
-  height: 24px;
-  color: white;
-  border-radius: 20px;
-  font-size: var(--font-size-sm);
-`;
-
-const ProSide = styled.span`
-  ${proConCSS}
-  background-color: var(--color-primary-mint);
-`;
-
-const ConSide = styled.span`
-  ${proConCSS}
-  background-color: var(--color-primary-pink);
 `;
 
 const ButtonContainer = styled.div`

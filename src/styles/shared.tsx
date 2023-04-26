@@ -76,3 +76,16 @@ export const likeIconCSS = css`
   top: 15px;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
 `;
+
+export const proConCSS = css`
+  ${Flex}
+  color: white;
+  border-radius: 20px;
+`;
+
+export const profileBoxCSS = css`
+  ${ColFlex}
+  align-items: center;
+  flex-shrink: 0;
+  gap: 24px;
+`;
