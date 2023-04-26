@@ -1,102 +1,82 @@
-import { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
+import { Flex } from '../../../styles/shared';
 
-interface Data {
-  body: string;
-  id: number;
-  title: string;
-  userId: number;
+export interface PageInfo {
+  page: number;
+  totalPage: number;
+  totalCount: number;
+  currentCount: number;
 }
 
-function Pagination() {
-  const [posts, setPosts] = useState<Data[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 15;
+interface PaginationProps {
+  paginationInfo: PageInfo;
+  paginate: number;
+  setPaginate: React.Dispatch<React.SetStateAction<number>>;
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const data = await fetch(
-        'https://jsonplaceholder.typicode.com/posts',
-      ).then((res) => res.json());
-      setPosts(data);
-    };
-
-    fetchPosts();
-  }, []);
-
-  const indexOfLastPost = currentPage * postsPerPage; // 페이지의 마지막 게시물 위치
-  const indexOfFirstPost = indexOfLastPost - postsPerPage; // 페이지의 첫번째 게시물 위치
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost); // 보여져야 하는 게시물만큼 Slice
-
-  const pageNumbers = [];
-  const page = Math.ceil(posts.length / postsPerPage);
-
-  for (let i: number = 1; i <= page; i += 1) {
-    pageNumbers.push(i);
-  }
-
-  const paginate = (pageNumber: number) => {
-    if (pageNumber === 0) return;
-    if (pageNumber > page) return;
-    setCurrentPage(pageNumber);
-  };
+function Pagination({
+  paginate,
+  setPaginate,
+  paginationInfo,
+}: PaginationProps) {
+  const { page, totalPage } = paginationInfo;
+  const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
 
   return (
-    <>
-      {currentPosts.map((post) => (
-        <div className="post" key={post.id}>
-          {post.body}
-        </div>
+    <PaginationContainer>
+      <PageButton onClick={() => setPaginate(1)}>
+        <RxDoubleArrowLeft size={11} />
+      </PageButton>
+      <PageButton
+        onClick={() =>
+          paginate === 1 ? setPaginate(1) : setPaginate(page - 1)
+        }
+      >
+        <IoIosArrowBack size={11} />
+      </PageButton>
+      {pageNumbers.map((num: number) => (
+        <ButtonNav
+          key={num}
+          onClick={() => setPaginate(num)}
+          isCurrentPage={num === page}
+        >
+          {num}
+        </ButtonNav>
       ))}
-      <PaginationBlock>
-        <PageButton onClick={() => paginate(1)}>
-          <RxDoubleArrowLeft size={11} />
-        </PageButton>
-        <PageButton onClick={() => paginate(currentPage - 1)}>
-          <IoIosArrowBack size={11} />
-        </PageButton>
-        {pageNumbers.map((num: number) => (
-          <ButtonNav
-            key={num}
-            onClick={() => paginate(num)}
-            isCurrentPage={num === currentPage}
-          >
-            {num}
-          </ButtonNav>
-        ))}
-        <PageButton onClick={() => paginate(currentPage + 1)}>
-          <IoIosArrowForward size={11} />
-        </PageButton>
-        <PageButton onClick={() => paginate(page)}>
-          <RxDoubleArrowRight size={11} />
-        </PageButton>
-      </PaginationBlock>
-    </>
+      <PageButton
+        onClick={() =>
+          paginate === totalPage
+            ? setPaginate(totalPage)
+            : setPaginate(page + 1)
+        }
+      >
+        <IoIosArrowForward size={11} />
+      </PageButton>
+      <PageButton onClick={() => setPaginate(totalPage)}>
+        <RxDoubleArrowRight size={11} />
+      </PageButton>
+    </PaginationContainer>
   );
 }
 
-const Flex = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: var(--font-size-sm);
-`;
-
-const PaginationBlock = styled.div`
+const PaginationContainer = styled.div`
   ${Flex}
-  margin: 20px;
+  margin-bottom: 80px;
+  font-size: var(--font-size-sm);
 `;
 
 const PageButton = styled.button`
   ${Flex}
-  padding: 5px;
+  border: 0;
   width: 30px;
   height: 30px;
-  border: 0;
-  background-color: transparent;
+  padding: 5px;
   border: 1px solid #c4c4c497;
+  background-color: transparent;
+  font-size: var(--font-size-sm);
 
   &:hover {
     color: var(--color-primary-pink);
