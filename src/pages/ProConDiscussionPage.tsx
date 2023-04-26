@@ -163,7 +163,7 @@ function ProConDiscussion() {
         ))}
       </ProConDiscussionCardContainer>
       <Pagination
-        paginate={paginate}
+        currentPage={paginate}
         setPaginate={setPaginate}
         paginationInfo={paginationInfo}
       />

@@ -165,7 +165,7 @@ function BookDiscussion() {
         ))}
       </BookDiscussionCardContainer>
       <Pagination
-        paginate={paginate}
+        currentPage={paginate}
         setPaginate={setPaginate}
         paginationInfo={paginationInfo}
       />
