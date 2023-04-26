@@ -13,12 +13,12 @@ export interface PageInfo {
 
 interface PaginationProps {
   paginationInfo: PageInfo;
-  paginate: number;
+  currentPage: number;
   setPaginate: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function Pagination({
-  paginate,
+  currentPage,
   setPaginate,
   paginationInfo,
 }: PaginationProps) {
@@ -32,7 +32,7 @@ function Pagination({
       </PageButton>
       <PageButton
         onClick={() =>
-          paginate === 1 ? setPaginate(1) : setPaginate(page - 1)
+          currentPage === 1 ? setPaginate(1) : setPaginate(page - 1)
         }
       >
         <IoIosArrowBack size={11} />
@@ -48,7 +48,7 @@ function Pagination({
       ))}
       <PageButton
         onClick={() =>
-          paginate === totalPage
+          currentPage === totalPage
             ? setPaginate(totalPage)
             : setPaginate(page + 1)
         }
