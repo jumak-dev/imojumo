@@ -5,6 +5,8 @@ import { ColFlexCenter } from '../../styles/shared';
 import { ButtonBox } from '../UI/Button/Button';
 import { Card } from '../UI/Card/Card';
 import Input from '../UI/Input/Input';
+import BookSearchModal from '../BookSearchModal/BookSearchModal';
+import useModal from '../../hooks/useModal';
 
 interface SearchBookProps {
   onSearch: (bookTitle: string) => void;
@@ -12,9 +14,12 @@ interface SearchBookProps {
 
 function SearchBook({ onSearch }: SearchBookProps) {
   const [{ bookTitle }, onChange] = useInputs({ bookTitle: '' });
+  const [showModal, handleOpenModal, handleCloseModal] = useModal();
 
+  console.log(showModal);
   const handleSearchClick = () => {
     onSearch(bookTitle);
+    handleOpenModal();
   };
   return (
     <SerachBookContainer>
@@ -36,6 +41,7 @@ function SearchBook({ onSearch }: SearchBookProps) {
           찾기
         </BookSearchButton>
       </SearchBookInputContainer>
+      <BookSearchModal showModal={showModal} onClose={handleCloseModal} />
     </SerachBookContainer>
   );
 }
