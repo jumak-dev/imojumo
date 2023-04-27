@@ -90,7 +90,7 @@ export const profileBoxCSS = css`
   gap: 24px;
 `;
 
-export const bookDiscussionCardContainerCSS = css`
+export const discussionCardContainerCSS = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
