@@ -18,6 +18,7 @@ function SearchPage() {
           postCount={1234}
           setCurrentTap={setCurrentTap}
         />
+        <Divider />
         <SubtitleSection
           subtitle="찬반토론"
           postCount={4321}
@@ -35,6 +36,11 @@ function SearchPage() {
 
 const ProConDiscussionSearchCardContainer = styled.section`
   ${Flex}
+`;
+
+const Divider = styled.hr`
+  border: none;
+  border-bottom: 1px solid var(--color-borderbottom-color);
 `;
 
 export default SearchPage;
