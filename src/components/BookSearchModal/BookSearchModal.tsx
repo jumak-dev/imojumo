@@ -6,6 +6,7 @@ import BookSearchList from './BookSearchList';
 import BookSearchListItem from './BookSearchListItem';
 
 import BOOK_DUMY from './BOOK_DUMY';
+import { ScreenReaderTextCSS } from '../../styles/shared';
 
 interface BookSearchModalProps {
   onClose: () => void;
@@ -19,6 +20,7 @@ function BookSearchModal({ onClose, showModal }: BookSearchModalProps) {
 
   return (
     <BookSearchModalCard showModal={showModal}>
+      <BookSearchModlaTitle>인터파크 도서 검색 결과 모달</BookSearchModlaTitle>
       <BookSearchList>
         {BOOK_DUMY.map((book) => (
           <BookSearchListItem
@@ -46,6 +48,10 @@ const BookSearchModalCard = styled(NonContentModal)`
       display: none; /* Chrome, Safari, Opera*/
     }
   }
+`;
+
+const BookSearchModlaTitle = styled.h2`
+  ${ScreenReaderTextCSS}
 `;
 
 export default BookSearchModal;
