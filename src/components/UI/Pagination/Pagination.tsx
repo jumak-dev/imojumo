@@ -27,10 +27,11 @@ function Pagination({
 
   return (
     <PaginationContainer>
-      <PageButton onClick={() => setPaginate(1)}>
+      <PageButton aria-label="처음" onClick={() => setPaginate(1)}>
         <RxDoubleArrowLeft size={11} />
       </PageButton>
       <PageButton
+        aria-label="이전"
         onClick={() =>
           currentPage === 1 ? setPaginate(1) : setPaginate(page - 1)
         }
@@ -39,6 +40,7 @@ function Pagination({
       </PageButton>
       {pageNumbers.map((num: number) => (
         <ButtonNav
+          aria-label={`${num} 페이지`}
           key={num}
           onClick={() => setPaginate(num)}
           isCurrentPage={num === page}
@@ -47,6 +49,7 @@ function Pagination({
         </ButtonNav>
       ))}
       <PageButton
+        aria-label="다음"
         onClick={() =>
           currentPage === totalPage
             ? setPaginate(totalPage)
@@ -55,7 +58,7 @@ function Pagination({
       >
         <IoIosArrowForward size={11} />
       </PageButton>
-      <PageButton onClick={() => setPaginate(totalPage)}>
+      <PageButton aria-label="끝" onClick={() => setPaginate(totalPage)}>
         <RxDoubleArrowRight size={11} />
       </PageButton>
     </PaginationContainer>
