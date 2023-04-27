@@ -66,9 +66,9 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
         </PathChangeButton>
       </ButtonsWrapper>
       <FormWrraper>
-        <ul className="error-messages">
+        <DisplayErrorWrraper>
           {!(displayError.length === 0) && <li>{displayError}</li>}
-        </ul>
+        </DisplayErrorWrraper>
         <InnerForm method="post" onSubmit={handleSubmit}>
           <Lable htmlFor={emailId}>이메일</Lable>
           <Input
@@ -123,6 +123,15 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
     </FormContainer>
   );
 }
+
+const DisplayErrorWrraper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 15px auto;
+  color: var(--color-heart);
+  font-size: var(--font-size-m);
+`;
 
 const FormContainer = styled.article`
   display: flex;
