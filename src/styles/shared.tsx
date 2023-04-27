@@ -89,3 +89,11 @@ export const profileBoxCSS = css`
   flex-shrink: 0;
   gap: 24px;
 `;
+
+export const bookDiscussionCardContainerCSS = css`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
+  gap: 40px;
+  margin-bottom: 60px;
+`;
