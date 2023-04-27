@@ -16,7 +16,6 @@ function SearchBook({ onSearch }: SearchBookProps) {
   const [{ bookTitle }, onChange] = useInputs({ bookTitle: '' });
   const [showModal, handleOpenModal, handleCloseModal] = useModal();
 
-  console.log(showModal);
   const handleSearchClick = () => {
     onSearch(bookTitle);
     handleOpenModal();
