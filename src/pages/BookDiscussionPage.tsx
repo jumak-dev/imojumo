@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
-import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
-import Pagination from '../components/UI/Pagination/Pagination';
 import { BookDiscussionInfo, PageInfo } from '../types';
+import Pagination from '../components/UI/Pagination/Pagination';
+import { bookDiscussionCardContainerCSS } from '../styles/shared';
+import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 import BOOKDISCUSSION_DUMMY from '../components/BookDiscussion/BOOKDISCUSSION_DUMMY';
 
 function BookDiscussion() {
@@ -56,11 +57,7 @@ export const Subtitle = styled.h2`
 `;
 
 const BookDiscussionCardContainer = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  place-items: center;
-  gap: 40px;
-  margin-bottom: 60px;
+  ${bookDiscussionCardContainerCSS}
 `;
 
 export default BookDiscussion;
