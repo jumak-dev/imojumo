@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Book } from '../../types';
 import Button from '../UI/Button/Button';
-import { truncateTextCSS } from '../../styles/shared';
+import { AlignCenter, ColFlex, truncateTextCSS } from '../../styles/shared';
 
 interface BookSearchListItemProps {
   book: Book;
@@ -40,9 +40,7 @@ function BookSearchListItem({ book, onClick }: BookSearchListItemProps) {
 }
 
 const BookItemContainer = styled.li`
-  display: flex;
-  align-items: center;
-
+  ${AlignCenter}
   height: 132px;
   width: 100%;
   gap: 20px;
@@ -59,38 +57,33 @@ const BookImage = styled.img`
 `;
 
 const BookInfoContainer = styled.div`
+  ${ColFlex}
   flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
 `;
 
 const BookInfos = styled.div`
-  display: flex;
-  align-items: center;
+  ${AlignCenter}
   gap: 12px;
 `;
 
 const BookTitle = styled.h2`
+  ${AlignCenter}
   font-weight: 700;
-  font-size: 20px;
+  font-size: var(font-size-l);
   line-height: 24px;
-  display: flex;
-  align-items: center;
   letter-spacing: -0.02em;
 `;
 
 const BookInfo = styled.p`
-  display: flex;
-  align-items: center;
-
-  font-size: 13px;
+  ${AlignCenter}
+  font-size: var(font-size-sm);
   line-height: 16px;
   letter-spacing: -0.02em;
 `;
 
 const BookDescription = styled.p`
   ${truncateTextCSS}
-  font-size: 16px;
+  font-size: var(font-size-m);
   line-height: 19px;
   letter-spacing: -0.02em;
   height: 38px;
