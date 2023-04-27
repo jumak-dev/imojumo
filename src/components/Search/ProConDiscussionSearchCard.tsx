@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Card } from '../UI/Card/Card';
 import { Flex, ColFlex } from '../../styles/shared';
 
 function ProConDiscussionSearchCard() {
@@ -31,7 +30,6 @@ function ProConDiscussionSearchCard() {
 }
 
 const CardContainer = styled(Link)`
-  ${Card}
   ${ColFlex}
   width: 320px;
   height: 275px;
