@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Flex, ColFlex, truncateTextCSS } from '../../styles/shared';
 import { ProConDiscussionInfo } from '../../types';
+import { Flex, ColFlex, truncateTextCSS } from '../../styles/shared';
 
 interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
@@ -56,7 +56,8 @@ const DiscussionTitle = styled.h3`
 `;
 
 const ProConBlockBox = styled.div`
-  ${Flex}flex: 1;
+  ${Flex};
+  flex: 1;
 `;
 
 const ProConBlock = styled.div<{ isPro: boolean }>`
