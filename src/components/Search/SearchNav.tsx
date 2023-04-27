@@ -52,6 +52,7 @@ const NavItem = styled.li<{ isActive: boolean }>`
   cursor: pointer;
   padding: 0 20px;
   font-weight: 700;
+  font-size: var(--font-size-l);
   color: ${({ isActive }) =>
     isActive ? 'var(--color-primary-pink)' : 'var(--black)'};
 
