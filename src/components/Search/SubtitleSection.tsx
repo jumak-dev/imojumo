@@ -5,12 +5,14 @@ import { AlignCenter } from '../../styles/shared';
 interface SubtitleSectionProps {
   subtitle: string;
   postCount: number;
+  currentTap: string;
   setCurrentTap: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function SubtitleSection({
   subtitle,
   postCount,
+  currentTap,
   setCurrentTap,
 }: SubtitleSectionProps) {
   const haldleMoreButton = (type: string) => {
@@ -26,6 +28,7 @@ function SubtitleSection({
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
       <MoreButton
+        isShow={currentTap === 'Search All'}
         aria-label="더 보기"
         onClick={() => haldleMoreButton(subtitle)}
       >
@@ -37,7 +40,7 @@ function SubtitleSection({
 
 const SubtitleBlock = styled.div`
   ${AlignCenter}
-  margin: 50px 10px 20px;
+  margin: 50px 10px;
   position: relative;
 `;
 
@@ -57,11 +60,13 @@ const PostCount = styled.span`
   color: var(--color-primary-mint);
 `;
 
-const MoreButton = styled.button`
+const MoreButton = styled.button<{ isShow: boolean }>`
   ${fontCSS}
   right: 0;
   position: absolute;
   color: var(--color-primary-pink);
+
+  display: ${({ isShow }) => (isShow ? 'block' : 'none')};
 `;
 
 export default SubtitleSection;
