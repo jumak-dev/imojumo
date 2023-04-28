@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
 import { userInfoAtom, jwtAtom, isLoginSelector } from '../recoil/recoil_state';
+import { AlignCenter, ColFlexCenter } from '../styles/shared';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -92,16 +93,13 @@ function LoginPage() {
 }
 
 const PageContainer = styled(MainContainer)`
-  display: flex;
+  ${AlignCenter}
   height: 100vh;
-  align-items: center;
   justify-content: space-evenly;
 `;
 
 const TextVectorContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${ColFlexCenter}
   font-size: var(--font-size-xxl);
 
   p {
