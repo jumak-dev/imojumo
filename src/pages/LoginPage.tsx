@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
-import { userInfoAtom, jwtAtom } from '../recoil/recoil_state';
+import { userInfoAtom, jwtAtom, isLoginSelector } from '../recoil/recoil_state';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -14,7 +14,14 @@ function LoginPage() {
   const navigate = useNavigate();
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setJwt = useSetRecoilState(jwtAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
   const [displayError, setDisplayError] = useState('');
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate(-1);
+    }
+  }, []);
 
   const login = async (email: string, password: string) => {
     let newError = '';
