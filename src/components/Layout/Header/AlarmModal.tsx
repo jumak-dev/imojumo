@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsBell, BsBellFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { ColFlex, RowFlex } from '../../../styles/shared';
 
 function AlarmModal() {
   const [isClick, setIsClick] = useState(false);
@@ -37,7 +38,7 @@ function AlarmModal() {
 }
 
 const AlarmModalContainer = styled.div`
-  display: flex;
+  ${RowFlex}
   position: relative;
   z-index: 1;
 `;
@@ -50,8 +51,7 @@ const AlarmButton = styled.button`
 `;
 
 const AlarmModalCard = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${ColFlex}
   position: absolute;
   overflow: hidden;
   top: 40px;
@@ -63,7 +63,7 @@ const AlarmModalCard = styled.div`
 `;
 
 const AlarmItem = styled.div`
-  display: flex;
+  ${RowFlex}
   justify-content: space-between;
   padding: 16px;
   border-bottom: 1px solid var(--color-borderbottom-color);
@@ -74,8 +74,7 @@ const AlarmItem = styled.div`
 `;
 
 const AlarmContent = styled(Link)`
-  display: flex;
-  flex-direction: column;
+  ${ColFlex}
   gap: 8px;
 `;
 
