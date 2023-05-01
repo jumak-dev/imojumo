@@ -4,7 +4,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
-import { userInfoAtom, jwtAtom, isLoginSelector } from '../recoil/recoil_state';
+import { userInfoAtom, jwtAtom } from '../recoil/atoms';
+import isLoginSelector from '../recoil/seletors';
 import { AlignCenter, ColFlexCenter } from '../styles/shared';
 
 const { VITE_API_URL } = import.meta.env;

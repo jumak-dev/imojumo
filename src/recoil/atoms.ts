@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom: persistUserInfoAtom } = recoilPersist({
@@ -33,12 +33,4 @@ export const jwtAtom = atom<JWT | null>({
   key: 'jwtAtom',
   default: null,
   effects_UNSTABLE: [persistJwtAtom],
-});
-
-export const isLoginSelector = selector({
-  key: 'isLoginSelector',
-  get: ({ get }) => {
-    const jwt = get(jwtAtom);
-    return !!jwt;
-  },
 });
