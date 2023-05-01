@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Flex } from '../../../styles/shared';
+import styled from 'styled-components';
+import { Flex, truncateTextCSS } from '../../../styles/shared';
 
 interface BookInfo {
   id: number;
@@ -40,15 +40,8 @@ const ListItemThumnail = styled.img`
   object-fit: cover;
 `;
 
-const TruncateTextCSS = css`
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
-
 export const ListItemTitle = styled.p`
-  ${TruncateTextCSS}
+  ${truncateTextCSS}
 
   font-size: var(--font-size-m);
   font-weight: bold;
@@ -56,7 +49,7 @@ export const ListItemTitle = styled.p`
 `;
 
 const ListItemDescription = styled.p`
-  ${TruncateTextCSS}
+  ${truncateTextCSS}
   font-size: var(--font-size-sm);
   color: var(--color-content-text);
 `;

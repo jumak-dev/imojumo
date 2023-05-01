@@ -52,7 +52,16 @@ export default createBrowserRouter([
       },
       {
         path: '/posts/new',
-        element: <PostNewPage />,
+        children: [
+          {
+            path: 'pro-con-discussion',
+            element: <PostNewPage discussionType="proCon" />,
+          },
+          {
+            path: 'book-discussion',
+            element: <PostNewPage discussionType="book" />,
+          },
+        ],
       },
     ],
   },
