@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Tab from '../../constants/Tab';
 import { AlignCenter } from '../../styles/shared';
 
 interface SubtitleSectionProps {
@@ -17,9 +18,9 @@ function SubtitleSection({
 }: SubtitleSectionProps) {
   const haldleMoreButton = (type: string) => {
     if (type === '독서토론') {
-      setCurrentTab('BookDiscussion');
+      setCurrentTab(Tab.BookDiscussion);
     } else {
-      setCurrentTab('ProConDiscussion');
+      setCurrentTab(Tab.ProConDiscussion);
     }
   };
 
@@ -28,7 +29,7 @@ function SubtitleSection({
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
       <MoreButton
-        isShow={currentTab === 'Search All'}
+        isShow={currentTab === Tab.All}
         aria-label="더 보기"
         onClick={() => haldleMoreButton(subtitle)}
       >

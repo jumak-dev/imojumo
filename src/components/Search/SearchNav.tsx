@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from '../../styles/shared';
+import Tab from '../../constants/Tab';
 
 interface SearchNavProps {
   currentTab: string;
@@ -12,20 +13,20 @@ function SearchNav({ currentTab, setCurrentTab }: SearchNavProps) {
     <SearchNavContainer>
       <NavList>
         <NavItem
-          isActive={currentTab === 'Search All'}
-          onClick={() => setCurrentTab('Search All')}
+          isActive={currentTab === Tab.All}
+          onClick={() => setCurrentTab(Tab.All)}
         >
           통합검색
         </NavItem>
         <NavItem
-          isActive={currentTab === 'BookDiscussion'}
-          onClick={() => setCurrentTab('BookDiscussion')}
+          isActive={currentTab === Tab.BookDiscussion}
+          onClick={() => setCurrentTab(Tab.BookDiscussion)}
         >
           독서토론
         </NavItem>
         <NavItem
-          isActive={currentTab === 'ProConDiscussion'}
-          onClick={() => setCurrentTab('ProConDiscussion')}
+          isActive={currentTab === Tab.ProConDiscussion}
+          onClick={() => setCurrentTab(Tab.ProConDiscussion)}
         >
           찬반토론
         </NavItem>
