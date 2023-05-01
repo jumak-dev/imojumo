@@ -5,6 +5,7 @@ import Pagination from '../UI/Pagination/Pagination';
 import { BookDiscussionInfo, PageInfo } from '../../types';
 import { discussionCardContainerCSS } from '../../styles/shared';
 import BookDiscussionCard from '../BookDiscussion/BookDiscussionCard';
+import Tab from '../../constants/Tab';
 
 interface BookDiscussionTabProps {
   posts: BookDiscussionInfo[];
@@ -24,7 +25,7 @@ function BookDiscussionTab({
   return (
     <>
       <SubtitleSection
-        subtitle="독서토론"
+        subtitle={Tab.BookDiscussion}
         postCount={1234}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}

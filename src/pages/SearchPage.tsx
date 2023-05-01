@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import Tab from '../constants/Tab';
 import MainContainer from '../styles/layout';
 import SearchNav from '../components/Search/SearchNav';
 import SubtitleSection from '../components/Search/SubtitleSection';
@@ -36,10 +37,10 @@ function SearchPage() {
     <>
       <SearchNav currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <MainContainer>
-        {currentTab === 'Search All' && (
+        {currentTab === Tab.All && (
           <>
             <SubtitleSection
-              subtitle="독서토론"
+              subtitle={Tab.BookDiscussion}
               postCount={1234}
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
@@ -51,7 +52,7 @@ function SearchPage() {
             </BookDiscussionCardContainer>
             <Divider />
             <SubtitleSection
-              subtitle="찬반토론"
+              subtitle={Tab.ProConDiscussion}
               postCount={4321}
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
@@ -66,7 +67,7 @@ function SearchPage() {
             </ProConDiscussionSearchCardContainer>
           </>
         )}
-        {currentTab === 'BookDiscussion' && (
+        {currentTab === Tab.BookDiscussion && (
           <BookDiscussionTab
             posts={bookDiscussionPosts.data}
             paginationInfo={bookDiscussionPosts.pageInfo}
@@ -74,7 +75,7 @@ function SearchPage() {
             setCurrentTab={setCurrentTab}
           />
         )}
-        {currentTab === 'ProConDiscussion' && (
+        {currentTab === Tab.ProConDiscussion && (
           <ProConDiscussionTab
             posts={proConDiscussionPosts.posts}
             paginationInfo={proConDiscussionPosts.pageInfo}

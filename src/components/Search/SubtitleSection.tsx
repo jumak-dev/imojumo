@@ -17,7 +17,7 @@ function SubtitleSection({
   setCurrentTab,
 }: SubtitleSectionProps) {
   const haldleMoreButton = (type: string) => {
-    if (type === '독서토론') {
+    if (type === Tab.BookDiscussion) {
       setCurrentTab(Tab.BookDiscussion);
     } else {
       setCurrentTab(Tab.ProConDiscussion);

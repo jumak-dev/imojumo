@@ -5,6 +5,7 @@ import Pagination from '../UI/Pagination/Pagination';
 import { ProConDiscussionInfo, PageInfo } from '../../types';
 import { discussionCardContainerCSS } from '../../styles/shared';
 import ProConDiscussionSearchCard from './ProConDiscussionSearchCard';
+import Tab from '../../constants/Tab';
 
 interface ProConDiscussionTapProps {
   posts: ProConDiscussionInfo[];
@@ -24,7 +25,7 @@ function ProConDiscussionTap({
   return (
     <>
       <SubtitleSection
-        subtitle="찬반토론"
+        subtitle={Tab.ProConDiscussion}
         postCount={4321}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
