@@ -1,16 +1,18 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
-import { BsBell, BsDot, BsPersonCircle } from 'react-icons/bs';
+import { BsDot } from 'react-icons/bs';
 import Button from '../../UI/Button/Button';
 import { AlignCenter, RowFlex, RowFlexCenter } from '../../../styles/shared';
+import AlarmModal from './AlarmModal';
+import ProfileModal from './ProfileModal';
 
 function Header() {
   const user = true;
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/posts/new');
+    navigate('/posts/new/book-discussion');
   };
 
   return (
@@ -48,9 +50,8 @@ function Header() {
         </Button>
         {user ? (
           <ButtonContainer>
-            <AlarmIcon />
-            <Nickname>유아유아짱</Nickname>
-            <UserIcon />
+            <AlarmModal />
+            <ProfileModal />
           </ButtonContainer>
         ) : (
           <ButtonContainer>
@@ -123,6 +124,7 @@ const NavLinkList = styled.ul`
 const NavLinkItem = styled.li`
   font-size: var(--font-size-l);
 
+  & > a:hover,
   & > a.active {
     font-weight: 600;
   }
@@ -130,7 +132,7 @@ const NavLinkItem = styled.li`
 
 const ButtonContainer = styled.div`
   ${AlignCenter}
-  gap: 12px;
+  gap: 4px;
 `;
 
 const TabLink = styled(Link)`
@@ -138,23 +140,9 @@ const TabLink = styled(Link)`
   font-size: var(--font-size-l);
 `;
 
-const Nickname = styled.span`
-  font-weight: 700;
-  font-size: var(--font-size-l);
-`;
-
 const DotIcon = styled(BsDot)`
   font-size: 18px;
   color: #bdbdbd;
-`;
-
-const AlarmIcon = styled(BsBell)`
-  font-size: 22px;
-  color: var(--color-primary-pink);
-`;
-
-const UserIcon = styled(BsPersonCircle)`
-  font-size: 24px;
 `;
 
 export default Header;
