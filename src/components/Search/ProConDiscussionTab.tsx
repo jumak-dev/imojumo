@@ -9,15 +9,15 @@ import ProConDiscussionSearchCard from './ProConDiscussionSearchCard';
 interface ProConDiscussionTapProps {
   posts: ProConDiscussionInfo[];
   paginationInfo: PageInfo;
-  currentTap: string;
-  setCurrentTap: React.Dispatch<React.SetStateAction<string>>;
+  currentTab: string;
+  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function ProConDiscussionTap({
   posts,
   paginationInfo,
-  currentTap,
-  setCurrentTap,
+  currentTab,
+  setCurrentTab,
 }: ProConDiscussionTapProps) {
   const [paginate, setPaginate] = useState(1);
 
@@ -26,8 +26,8 @@ function ProConDiscussionTap({
       <SubtitleSection
         subtitle="찬반토론"
         postCount={4321}
-        currentTap={currentTap}
-        setCurrentTap={setCurrentTap}
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
       />
       <ProConDiscussionSearchCardContainer>
         {posts.map((post) => (

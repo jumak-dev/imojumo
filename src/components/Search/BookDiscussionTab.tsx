@@ -6,19 +6,19 @@ import { BookDiscussionInfo, PageInfo } from '../../types';
 import { discussionCardContainerCSS } from '../../styles/shared';
 import BookDiscussionCard from '../BookDiscussion/BookDiscussionCard';
 
-interface BookDiscussionTapProps {
+interface BookDiscussionTabProps {
   posts: BookDiscussionInfo[];
   paginationInfo: PageInfo;
-  currentTap: string;
-  setCurrentTap: React.Dispatch<React.SetStateAction<string>>;
+  currentTab: string;
+  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function BookDiscussionTap({
+function BookDiscussionTab({
   posts,
   paginationInfo,
-  currentTap,
-  setCurrentTap,
-}: BookDiscussionTapProps) {
+  currentTab,
+  setCurrentTab,
+}: BookDiscussionTabProps) {
   const [paginate, setPaginate] = useState(1);
 
   return (
@@ -26,8 +26,8 @@ function BookDiscussionTap({
       <SubtitleSection
         subtitle="독서토론"
         postCount={1234}
-        currentTap={currentTap}
-        setCurrentTap={setCurrentTap}
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
       />
       <BookDiscussionCardContainer>
         {posts.map((post) => (
@@ -47,4 +47,4 @@ const BookDiscussionCardContainer = styled.section`
   ${discussionCardContainerCSS}
 `;
 
-export default BookDiscussionTap;
+export default BookDiscussionTab;

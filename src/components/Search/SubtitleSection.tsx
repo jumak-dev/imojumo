@@ -5,21 +5,21 @@ import { AlignCenter } from '../../styles/shared';
 interface SubtitleSectionProps {
   subtitle: string;
   postCount: number;
-  currentTap: string;
-  setCurrentTap: React.Dispatch<React.SetStateAction<string>>;
+  currentTab: string;
+  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function SubtitleSection({
   subtitle,
   postCount,
-  currentTap,
-  setCurrentTap,
+  currentTab,
+  setCurrentTab,
 }: SubtitleSectionProps) {
   const haldleMoreButton = (type: string) => {
     if (type === '독서토론') {
-      setCurrentTap('BookDiscussion');
+      setCurrentTab('BookDiscussion');
     } else {
-      setCurrentTap('ProConDiscussion');
+      setCurrentTab('ProConDiscussion');
     }
   };
 
@@ -28,7 +28,7 @@ function SubtitleSection({
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
       <MoreButton
-        isShow={currentTap === 'Search All'}
+        isShow={currentTab === 'Search All'}
         aria-label="더 보기"
         onClick={() => haldleMoreButton(subtitle)}
       >

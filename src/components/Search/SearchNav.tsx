@@ -3,29 +3,29 @@ import styled from 'styled-components';
 import { Flex } from '../../styles/shared';
 
 interface SearchNavProps {
-  currentTap: string;
-  setCurrentTap: React.Dispatch<React.SetStateAction<string>>;
+  currentTab: string;
+  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SearchNav({ currentTap, setCurrentTap }: SearchNavProps) {
+function SearchNav({ currentTab, setCurrentTab }: SearchNavProps) {
   return (
     <SearchNavContainer>
       <NavList>
         <NavItem
-          isActive={currentTap === 'Search All'}
-          onClick={() => setCurrentTap('Search All')}
+          isActive={currentTab === 'Search All'}
+          onClick={() => setCurrentTab('Search All')}
         >
           통합검색
         </NavItem>
         <NavItem
-          isActive={currentTap === 'BookDiscussion'}
-          onClick={() => setCurrentTap('BookDiscussion')}
+          isActive={currentTab === 'BookDiscussion'}
+          onClick={() => setCurrentTab('BookDiscussion')}
         >
           독서토론
         </NavItem>
         <NavItem
-          isActive={currentTap === 'ProConDiscussion'}
-          onClick={() => setCurrentTap('ProConDiscussion')}
+          isActive={currentTab === 'ProConDiscussion'}
+          onClick={() => setCurrentTab('ProConDiscussion')}
         >
           찬반토론
         </NavItem>
