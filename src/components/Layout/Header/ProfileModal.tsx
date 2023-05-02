@@ -75,6 +75,7 @@ const ProfileModalCard = styled.div`
   top: 40px;
   right: 0;
   width: 300px;
+  padding: 0 8px;
   background-color: var(--white);
   border-radius: 16px;
   border: 1px solid var(--color-borderbottom-color);
