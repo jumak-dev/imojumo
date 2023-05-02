@@ -23,7 +23,7 @@ jobs:
         run: |
           aws s3 sync \
             --region ap-northeast-2 \
-            build s3://imojumo \
+            dist s3://imojumo \
             --delete
         working-directory: ./
       - name: Configure AWS credentials
