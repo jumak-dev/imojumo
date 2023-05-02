@@ -1,6 +1,12 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
+interface UserInfo {
+  avatarUrl: string | null;
+  role: string | null;
+  username: string | null;
+}
+
 const { persistAtom: persistUserInfoAtom } = recoilPersist({
   key: 'recoil-user', // this key is using to store data in local storage
   storage: localStorage, // configurate which stroage will be used to store the data
@@ -10,12 +16,6 @@ const { persistAtom: persistJwtAtom } = recoilPersist({
   key: 'recoil-jwt',
   storage: localStorage,
 });
-
-interface UserInfo {
-  avatarUrl: string | null;
-  role: string | null;
-  username: string | null;
-}
 
 type JWT = string;
 
