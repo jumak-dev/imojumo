@@ -32,6 +32,7 @@ function LoginPage() {
       navigate('/');
     } catch (loginError) {
       console.error(loginError);
+      setDisplayError('서버에서 문제가 발생하였습니다.');
     }
   };
 
