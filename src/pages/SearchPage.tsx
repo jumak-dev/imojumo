@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Tab from '../constants/Tab';
 import MainContainer from '../styles/layout';
@@ -9,6 +9,7 @@ import ProConDiscussionTab from '../components/Search/ProConDiscussionTab';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 import ProConDiscussionSearchCard from '../components/Search/ProConDiscussionSearchCard';
 
+import { TabContext } from '../context/TabContext';
 import { Flex, discussionCardContainerCSS } from '../styles/shared';
 import { BookDiscussionInfo, ProConDiscussionInfo, PageInfo } from '../types';
 
@@ -26,37 +27,27 @@ interface ProConDiscussionData {
 }
 
 function SearchPage() {
+  const { currentTab } = useContext(TabContext);
   const [bookDiscussionPosts] =
     useState<BookDiscussionData>(BOOKDISCUSSION_DUMMY);
   const [proConDiscussionPosts] = useState<ProConDiscussionData>(
     PROCONDISCUSSION_DUMMY,
   );
-  const [currentTab, setCurrentTab] = useState('Search All');
 
   return (
     <>
-      <SearchNav currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <SearchNav />
       <MainContainer>
         {currentTab === Tab.All && (
           <>
-            <SubtitleSection
-              subtitle={Tab.BookDiscussion}
-              postCount={1234}
-              currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
-            />
+            <SubtitleSection subtitle={Tab.BookDiscussion} postCount={1234} />
             <BookDiscussionCardContainer>
               {bookDiscussionPosts.data.slice(0, 3).map((post) => (
                 <BookDiscussionCard bookDiscussionData={post} key={post.id} />
               ))}
             </BookDiscussionCardContainer>
             <Divider />
-            <SubtitleSection
-              subtitle={Tab.ProConDiscussion}
-              postCount={4321}
-              currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
-            />
+            <SubtitleSection subtitle={Tab.ProConDiscussion} postCount={4321} />
             <ProConDiscussionSearchCardContainer>
               {proConDiscussionPosts.posts.slice(0, 3).map((post) => (
                 <ProConDiscussionSearchCard
@@ -71,16 +62,12 @@ function SearchPage() {
           <BookDiscussionTab
             posts={bookDiscussionPosts.data}
             paginationInfo={bookDiscussionPosts.pageInfo}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
           />
         )}
         {currentTab === Tab.ProConDiscussion && (
           <ProConDiscussionTab
             posts={proConDiscussionPosts.posts}
             paginationInfo={proConDiscussionPosts.pageInfo}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
           />
         )}
       </MainContainer>

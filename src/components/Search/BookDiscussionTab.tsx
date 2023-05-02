@@ -1,35 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import Tab from '../../constants/Tab';
 import SubtitleSection from './SubtitleSection';
 import Pagination from '../UI/Pagination/Pagination';
 import { BookDiscussionInfo, PageInfo } from '../../types';
 import { discussionCardContainerCSS } from '../../styles/shared';
 import BookDiscussionCard from '../BookDiscussion/BookDiscussionCard';
-import Tab from '../../constants/Tab';
 
 interface BookDiscussionTabProps {
   posts: BookDiscussionInfo[];
   paginationInfo: PageInfo;
-  currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function BookDiscussionTab({
-  posts,
-  paginationInfo,
-  currentTab,
-  setCurrentTab,
-}: BookDiscussionTabProps) {
+function BookDiscussionTab({ posts, paginationInfo }: BookDiscussionTabProps) {
   const [paginate, setPaginate] = useState(1);
 
   return (
     <>
-      <SubtitleSection
-        subtitle={Tab.BookDiscussion}
-        postCount={1234}
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-      />
+      <SubtitleSection subtitle={Tab.BookDiscussion} postCount={1234} />
       <BookDiscussionCardContainer>
         {posts.map((post) => (
           <BookDiscussionCard bookDiscussionData={post} key={post.id} />

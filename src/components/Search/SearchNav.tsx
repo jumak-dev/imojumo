@@ -1,14 +1,12 @@
-import React from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { Flex } from '../../styles/shared';
 import Tab from '../../constants/Tab';
+import { TabContext } from '../../context/TabContext';
 
-interface SearchNavProps {
-  currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
-}
+function SearchNav() {
+  const { currentTab, setCurrentTab } = useContext(TabContext);
 
-function SearchNav({ currentTab, setCurrentTab }: SearchNavProps) {
   return (
     <SearchNavContainer>
       <NavList>

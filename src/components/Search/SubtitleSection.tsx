@@ -1,21 +1,17 @@
-import React from 'react';
+import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import Tab from '../../constants/Tab';
 import { AlignCenter } from '../../styles/shared';
+import { TabContext } from '../../context/TabContext';
 
 interface SubtitleSectionProps {
   subtitle: string;
   postCount: number;
-  currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SubtitleSection({
-  subtitle,
-  postCount,
-  currentTab,
-  setCurrentTab,
-}: SubtitleSectionProps) {
+function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
+  const { currentTab, setCurrentTab } = useContext(TabContext);
+
   const haldleMoreButton = (type: string) => {
     if (type === Tab.BookDiscussion) {
       setCurrentTab(Tab.BookDiscussion);
