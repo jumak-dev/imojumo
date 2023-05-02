@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
@@ -6,10 +7,23 @@ import Button from '../../UI/Button/Button';
 import { AlignCenter, RowFlex, RowFlexCenter } from '../../../styles/shared';
 import AlarmModal from './AlarmModal';
 import ProfileModal from './ProfileModal';
+import useInputs from '../../../hooks/useInputs';
 
 function Header() {
   const user = true;
   const navigate = useNavigate();
+
+  const [{ query }, onChange] = useInputs({ query: '' });
+
+  const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (query.length === 0) {
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      console.log(query);
+    }
+  };
 
   const handleClick = () => {
     navigate('/posts/new/book-discussion');
@@ -24,7 +38,14 @@ function Header() {
         </HomeLink>
         <SearchContainer>
           <SearchIcon />
-          <SearchInput type="search" placeholder="검색어를 입력하세요" />
+          <SearchInput
+            type="search"
+            name="query"
+            value={query}
+            onChange={onChange}
+            onKeyDown={handleSubmit}
+            placeholder="검색어를 입력하세요"
+          />
         </SearchContainer>
         <NavContainer>
           <NavLinkList>
