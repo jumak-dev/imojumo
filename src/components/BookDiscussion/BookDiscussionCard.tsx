@@ -6,8 +6,8 @@ import { AiFillHeart } from 'react-icons/ai';
 import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
+import { BookDiscussionInfo } from '../../types';
 import { AlignCenter, truncateTextCSS } from '../../styles/shared';
-import { BookDiscussionInfo } from '../../pages/BookDiscussionPage';
 
 interface BookDiscussionCardProps {
   bookDiscussionData: BookDiscussionInfo;

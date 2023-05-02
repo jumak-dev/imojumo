@@ -1,28 +1,36 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Card } from '../UI/Card/Card';
-import { Flex, ColFlex } from '../../styles/shared';
+import { ProConDiscussionInfo } from '../../types';
+import { Flex, ColFlex, truncateTextCSS } from '../../styles/shared';
 
-function ProConDiscussionSearchCard() {
-  const proRate = '45%';
-  const conRate = '55%';
+interface ProConDiscussionSearchCardProps {
+  procondiscussionData: ProConDiscussionInfo;
+}
+
+function ProConDiscussionSearchCard({
+  procondiscussionData,
+}: ProConDiscussionSearchCardProps) {
+  const proCount = procondiscussionData.agreeCount;
+  const conCount = procondiscussionData.disagreeCount;
+  const proRate = String((proCount / (proCount + conCount)) * 100);
+  const conRate = String((conCount / (proCount + conCount)) * 100);
 
   return (
     <CardContainer to="/search">
-      <DiscussionTitle>다나카는 일본인인가?</DiscussionTitle>
+      <DiscussionTitle>{procondiscussionData.title}</DiscussionTitle>
       <ProConBlockBox>
         <ProConBlock isPro>
           <ProConRateText>
             찬성
             <br />
-            {proRate}
+            {`${proRate}%`}
           </ProConRateText>
         </ProConBlock>
         <ProConBlock isPro={false}>
           <ProConRateText>
             반대
             <br />
-            {conRate}
+            {`${conRate}%`}
           </ProConRateText>
         </ProConBlock>
       </ProConBlockBox>
@@ -31,7 +39,6 @@ function ProConDiscussionSearchCard() {
 }
 
 const CardContainer = styled(Link)`
-  ${Card}
   ${ColFlex}
   width: 320px;
   height: 275px;
@@ -41,15 +48,16 @@ const CardContainer = styled(Link)`
 `;
 
 const DiscussionTitle = styled.h3`
-  ${Flex}
-  flex: 2;
+  ${truncateTextCSS}
+  margin: 20px;
   font-weight: 700;
+  text-align: center;
   font-size: var(--font-size-m);
 `;
 
 const ProConBlockBox = styled.div`
-  ${Flex}
-  flex: 8;
+  ${Flex};
+  flex: 1;
 `;
 
 const ProConBlock = styled.div<{ isPro: boolean }>`
@@ -69,6 +77,7 @@ const ProConRateText = styled.p`
   color: var(--white);
   font-weight: 700;
   line-height: 1.5;
+  text-align: center;
 `;
 
 export default ProConDiscussionSearchCard;
