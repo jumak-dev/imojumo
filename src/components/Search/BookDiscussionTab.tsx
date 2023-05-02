@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Tab from '../../constants/Tab';
+import TAB from '../../constants/Tab';
 import SubtitleSection from './SubtitleSection';
 import Pagination from '../UI/Pagination/Pagination';
 import { BookDiscussionInfo, PageInfo } from '../../types';
@@ -17,7 +17,7 @@ function BookDiscussionTab({ posts, paginationInfo }: BookDiscussionTabProps) {
 
   return (
     <>
-      <SubtitleSection subtitle={Tab.BookDiscussion} postCount={1234} />
+      <SubtitleSection subtitle={TAB.BOOK_DISCUSSION} postCount={1234} />
       <BookDiscussionCardContainer>
         {posts.map((post) => (
           <BookDiscussionCard bookDiscussionData={post} key={post.id} />

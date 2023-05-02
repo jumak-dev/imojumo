@@ -5,7 +5,7 @@ import Pagination from '../UI/Pagination/Pagination';
 import { ProConDiscussionInfo, PageInfo } from '../../types';
 import { discussionCardContainerCSS } from '../../styles/shared';
 import ProConDiscussionSearchCard from './ProConDiscussionSearchCard';
-import Tab from '../../constants/Tab';
+import TAB from '../../constants/Tab';
 
 interface ProConDiscussionTapProps {
   posts: ProConDiscussionInfo[];
@@ -20,7 +20,7 @@ function ProConDiscussionTap({
 
   return (
     <>
-      <SubtitleSection subtitle={Tab.ProConDiscussion} postCount={4321} />
+      <SubtitleSection subtitle={TAB.PROCON_DISCUSSION} postCount={4321} />
       <ProConDiscussionSearchCardContainer>
         {posts.map((post) => (
           <ProConDiscussionSearchCard

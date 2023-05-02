@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { Flex } from '../../styles/shared';
-import Tab from '../../constants/Tab';
+import TAB from '../../constants/Tab';
 import { TabContext } from '../../context/TabContext';
 
 function SearchNav() {
@@ -11,20 +11,20 @@ function SearchNav() {
     <SearchNavContainer>
       <NavList>
         <NavItem
-          isActive={currentTab === Tab.All}
-          onClick={() => setCurrentTab(Tab.All)}
+          isActive={currentTab === TAB.ALL}
+          onClick={() => setCurrentTab(TAB.ALL)}
         >
           통합검색
         </NavItem>
         <NavItem
-          isActive={currentTab === Tab.BookDiscussion}
-          onClick={() => setCurrentTab(Tab.BookDiscussion)}
+          isActive={currentTab === TAB.BOOK_DISCUSSION}
+          onClick={() => setCurrentTab(TAB.BOOK_DISCUSSION)}
         >
           독서토론
         </NavItem>
         <NavItem
-          isActive={currentTab === Tab.ProConDiscussion}
-          onClick={() => setCurrentTab(Tab.ProConDiscussion)}
+          isActive={currentTab === TAB.PROCON_DISCUSSION}
+          onClick={() => setCurrentTab(TAB.PROCON_DISCUSSION)}
         >
           찬반토론
         </NavItem>

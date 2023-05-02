@@ -4,7 +4,7 @@ import React, {
   useState,
   useMemo,
 } from 'react';
-import Tab from '../constants/Tab';
+import TAB from '../constants/Tab';
 
 interface TabContextType {
   currentTab: string;
@@ -12,12 +12,12 @@ interface TabContextType {
 }
 
 export const TabContext = createContext<TabContextType>({
-  currentTab: Tab.All,
+  currentTab: TAB.ALL,
   setCurrentTab: () => {},
 });
 
 function TabProvider({ children }: PropsWithChildren<{}>) {
-  const [currentTab, setCurrentTab] = useState<string>(Tab.All);
+  const [currentTab, setCurrentTab] = useState<string>(TAB.ALL);
 
   const value = useMemo(
     () => ({ currentTab, setCurrentTab }),

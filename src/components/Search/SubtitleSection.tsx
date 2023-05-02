@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled, { css } from 'styled-components';
-import Tab from '../../constants/Tab';
+import TAB from '../../constants/Tab';
 import { AlignCenter } from '../../styles/shared';
 import { TabContext } from '../../context/TabContext';
 
@@ -13,10 +13,10 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
   const { currentTab, setCurrentTab } = useContext(TabContext);
 
   const haldleMoreButton = (type: string) => {
-    if (type === Tab.BookDiscussion) {
-      setCurrentTab(Tab.BookDiscussion);
+    if (type === TAB.BOOK_DISCUSSION) {
+      setCurrentTab(TAB.BOOK_DISCUSSION);
     } else {
-      setCurrentTab(Tab.ProConDiscussion);
+      setCurrentTab(TAB.PROCON_DISCUSSION);
     }
   };
 
@@ -25,7 +25,7 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
       <MoreButton
-        isShow={currentTab === Tab.All}
+        isShow={currentTab === TAB.ALL}
         aria-label="더 보기"
         onClick={() => haldleMoreButton(subtitle)}
       >

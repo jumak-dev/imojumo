@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
-import Tab from '../constants/Tab';
+import TAB from '../constants/Tab';
 import MainContainer from '../styles/layout';
 import SearchNav from '../components/Search/SearchNav';
 import SubtitleSection from '../components/Search/SubtitleSection';
@@ -38,16 +38,19 @@ function SearchPage() {
     <>
       <SearchNav />
       <MainContainer>
-        {currentTab === Tab.All && (
+        {currentTab === TAB.ALL && (
           <>
-            <SubtitleSection subtitle={Tab.BookDiscussion} postCount={1234} />
+            <SubtitleSection subtitle={TAB.BOOK_DISCUSSION} postCount={1234} />
             <BookDiscussionCardContainer>
               {bookDiscussionPosts.data.slice(0, 3).map((post) => (
                 <BookDiscussionCard bookDiscussionData={post} key={post.id} />
               ))}
             </BookDiscussionCardContainer>
             <Divider />
-            <SubtitleSection subtitle={Tab.ProConDiscussion} postCount={4321} />
+            <SubtitleSection
+              subtitle={TAB.PROCON_DISCUSSION}
+              postCount={4321}
+            />
             <ProConDiscussionSearchCardContainer>
               {proConDiscussionPosts.posts.slice(0, 3).map((post) => (
                 <ProConDiscussionSearchCard
@@ -58,13 +61,13 @@ function SearchPage() {
             </ProConDiscussionSearchCardContainer>
           </>
         )}
-        {currentTab === Tab.BookDiscussion && (
+        {currentTab === TAB.BOOK_DISCUSSION && (
           <BookDiscussionTab
             posts={bookDiscussionPosts.data}
             paginationInfo={bookDiscussionPosts.pageInfo}
           />
         )}
-        {currentTab === Tab.ProConDiscussion && (
+        {currentTab === TAB.PROCON_DISCUSSION && (
           <ProConDiscussionTab
             posts={proConDiscussionPosts.posts}
             paginationInfo={proConDiscussionPosts.pageInfo}

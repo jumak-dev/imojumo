@@ -1,7 +1,7 @@
-const Tab = {
-  All: 'Search All',
-  BookDiscussion: 'BookDiscussion',
-  ProConDiscussion: 'ProConDiscussion',
+const TAB = {
+  ALL: 'Search All',
+  BOOK_DISCUSSION: 'BookDiscussion',
+  PROCON_DISCUSSION: 'ProConDiscussion',
 } as const;
 
-export default Tab;
+export default TAB;
