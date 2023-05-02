@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsBell, BsBellFill } from 'react-icons/bs';
@@ -21,7 +20,7 @@ function AlarmModal() {
       {showModal && (
         <AlarmModalCard ref={modalRef}>
           <AlarmItem>
-            <AlarmContent to="/">
+            <AlarmContent href="/">
               <AlarmTitle>내 게시글에 댓글이 등록되었습니다.</AlarmTitle>
               <AlarmDate>2023.02.04</AlarmDate>
             </AlarmContent>
@@ -74,7 +73,7 @@ const AlarmItem = styled.div`
   }
 `;
 
-const AlarmContent = styled(Link)`
+const AlarmContent = styled.a`
   ${ColFlex}
   flex: 1;
   gap: 8px;

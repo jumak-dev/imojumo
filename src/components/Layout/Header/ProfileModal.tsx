@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BsPersonCircle } from 'react-icons/bs';
 import UserProfile from '../../UI/UserProfile/UserProfile';
@@ -34,7 +33,7 @@ function ProfileModal() {
               size="md"
             />
           </ProfileBox>
-          <MyPageLink to="/mypage">마이페이지</MyPageLink>
+          <MyPage href="/mypage">마이페이지</MyPage>
           <ProfileItem onClick={handleCloseModal}>로그아웃</ProfileItem>
         </ProfileModalCard>
       )}
@@ -105,7 +104,7 @@ const ProfileItem = styled.div`
   font-size: var(--font-size-l);
 `;
 
-const MyPageLink = styled(Link)`
+const MyPage = styled.a`
   ${RowFlex}
   justify-content: space-between;
   padding: 16px;
