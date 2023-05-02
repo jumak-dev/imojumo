@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsBell, BsBellFill } from 'react-icons/bs';
@@ -6,19 +6,37 @@ import { Link } from 'react-router-dom';
 import { ColFlex, RowFlex } from '../../../styles/shared';
 
 function AlarmModal() {
-  const [isClick, setIsClick] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  const handleAlarmClick = () => {
-    setIsClick(!isClick);
+  const handleAlarmModal = () => {
+    setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(e.target as HTMLElement)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [modalRef]);
 
   return (
     <AlarmModalContainer>
-      <AlarmButton type="button" aria-label="알람" onClick={handleAlarmClick}>
-        {isClick ? <BsBellFill /> : <BsBell />}
+      <AlarmButton type="button" aria-label="알람" onClick={handleAlarmModal}>
+        {isOpen ? <BsBellFill /> : <BsBell />}
       </AlarmButton>
-      {isClick && (
-        <AlarmModalCard>
+      {isOpen && (
+        <AlarmModalCard ref={modalRef}>
           <AlarmItem>
             <AlarmContent to="/">
               <AlarmTitle>내 게시글에 댓글이 등록되었습니다.</AlarmTitle>
@@ -28,7 +46,7 @@ function AlarmModal() {
               <AiOutlineClose />
             </DeleteButton>
           </AlarmItem>
-          <CloseButton type="button" onClick={handleAlarmClick}>
+          <CloseButton type="button" onClick={handleAlarmModal}>
             닫기
           </CloseButton>
         </AlarmModalCard>
@@ -75,6 +93,7 @@ const AlarmItem = styled.div`
 
 const AlarmContent = styled(Link)`
   ${ColFlex}
+  flex: 1;
   gap: 8px;
 `;
 
