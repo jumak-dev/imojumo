@@ -1,41 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsBell, BsBellFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import { ColFlex, RowFlex } from '../../../styles/shared';
+import useModal from '../../../hooks/useModal';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
 function AlarmModal() {
-  const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
 
-  const handleAlarmModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(e.target as HTMLElement)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [modalRef]);
+  useOnClickOutside(modalRef, handleCloseModal);
 
   return (
     <AlarmModalContainer>
-      <AlarmButton type="button" aria-label="알람" onClick={handleAlarmModal}>
-        {isOpen ? <BsBellFill /> : <BsBell />}
+      <AlarmButton type="button" aria-label="알람" onClick={handleShowModal}>
+        {showModal ? <BsBellFill /> : <BsBell />}
       </AlarmButton>
-      {isOpen && (
+      {showModal && (
         <AlarmModalCard ref={modalRef}>
           <AlarmItem>
             <AlarmContent to="/">
@@ -46,7 +29,7 @@ function AlarmModal() {
               <AiOutlineClose />
             </DeleteButton>
           </AlarmItem>
-          <CloseButton type="button" onClick={handleAlarmModal}>
+          <CloseButton type="button" onClick={handleCloseModal}>
             닫기
           </CloseButton>
         </AlarmModalCard>
