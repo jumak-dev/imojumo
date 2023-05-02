@@ -1,28 +1,29 @@
-import { useState } from 'react';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BsPersonCircle } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import UserProfile from '../../UI/UserProfile/UserProfile';
 import { AlignCenter, ColFlex, RowFlex } from '../../../styles/shared';
+import useModal from '../../../hooks/useModal';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
 function ProfileModal() {
   const imageUrl =
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
 
-  const [isClick, setIsClick] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
 
-  const handleAlarmClick = () => {
-    setIsClick(!isClick);
-  };
+  useOnClickOutside(modalRef, handleCloseModal);
 
   return (
     <ProfileModalContainer>
-      <Profile onClick={handleAlarmClick}>
+      <Profile onClick={handleShowModal}>
         <Nickname>유아유아짱</Nickname>
         <UserIcon />
       </Profile>
-      {isClick && (
-        <ProfileModalCard>
+      {showModal && (
+        <ProfileModalCard ref={modalRef}>
           <ProfileBox>
             <ProfileItem>프로필</ProfileItem>
             <UserProfile
@@ -34,7 +35,7 @@ function ProfileModal() {
             />
           </ProfileBox>
           <MyPageLink to="/mypage">마이페이지</MyPageLink>
-          <ProfileItem>로그아웃</ProfileItem>
+          <ProfileItem onClick={handleCloseModal}>로그아웃</ProfileItem>
         </ProfileModalCard>
       )}
     </ProfileModalContainer>
