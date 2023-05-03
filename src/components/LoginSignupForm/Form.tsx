@@ -2,12 +2,15 @@ import React, { useId, useState } from 'react';
 import styled from 'styled-components';
 import { Form, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button/Button';
+import { ColFlex } from '../../styles/shared';
 
 interface FormProps {
   pathname: string;
+  onSubmit: (email: string, password: string) => void;
+  displayError: string;
 }
 
-function FormBox({ pathname }: FormProps) {
+function FormBox({ pathname, onSubmit, displayError }: FormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
@@ -38,6 +41,11 @@ function FormBox({ pathname }: FormProps) {
     navigate(path);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(email, password);
+  };
+
   return (
     <FormContainer>
       <ButtonsWrapper>
@@ -58,8 +66,11 @@ function FormBox({ pathname }: FormProps) {
           회원가입
         </PathChangeButton>
       </ButtonsWrapper>
-      <StyledForm>
-        <InnerForm>
+      <FormWrraper>
+        <DisplayErrorWrraper>
+          {!(displayError.length === 0) && <li>{displayError}</li>}
+        </DisplayErrorWrraper>
+        <InnerForm method="post" onSubmit={handleSubmit}>
           <Lable htmlFor={emailId}>이메일</Lable>
           <Input
             id={emailId}
@@ -67,6 +78,7 @@ function FormBox({ pathname }: FormProps) {
             name="email"
             value={email}
             placeholder="이메일을 입력하세요"
+            required
             onChange={onChange}
           />
           <Lable htmlFor={passwordId}>비밀번호</Lable>
@@ -76,6 +88,7 @@ function FormBox({ pathname }: FormProps) {
             name="password"
             value={password}
             placeholder="비밀번호를 입력하세요"
+            required
             onChange={onChange}
           />
           {!isLogin && (
@@ -107,14 +120,21 @@ function FormBox({ pathname }: FormProps) {
             {isLogin ? '구글 로그인' : '구글 회원가입'}
           </Button>
         </InnerForm>
-      </StyledForm>
+      </FormWrraper>
     </FormContainer>
   );
 }
 
+const DisplayErrorWrraper = styled.ul`
+  ${ColFlex}
+  width: 80%;
+  margin: 15px auto;
+  color: var(--color-heart);
+  font-size: var(--font-size-m);
+`;
+
 const FormContainer = styled.article`
-  display: flex;
-  flex-direction: column;
+  ${ColFlex}
   font-size: var(--font-size-l);
   border-radius: 20px;
 `;
@@ -143,7 +163,7 @@ const PathChangeButton = styled.button<PathChangeButtonProps>`
   }
 `;
 
-const StyledForm = styled(Form)`
+const FormWrraper = styled.section`
   width: 460px;
   border: 1px solid var(--color-inputbox-line);
   border-top: none;
@@ -151,9 +171,8 @@ const StyledForm = styled(Form)`
   padding-top: 24px;
 `;
 
-const InnerForm = styled.form`
-  display: flex;
-  flex-direction: column;
+const InnerForm = styled(Form)`
+  ${ColFlex}
   width: 80%;
   margin: auto;
 `;

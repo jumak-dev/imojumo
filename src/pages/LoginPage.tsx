@@ -1,12 +1,40 @@
-import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
+import { userInfoAtom, jwtAtom } from '../recoil/atoms';
+import isLoginSelector from '../recoil/seletors';
+import { AlignCenter, ColFlexCenter } from '../styles/shared';
+import login from '../apis/auth';
 
 function LoginPage() {
   const location = useLocation();
   const { pathname } = location;
+  const navigate = useNavigate();
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const setJwt = useSetRecoilState(jwtAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
+  const [displayError, setDisplayError] = useState('');
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate(-1);
+    }
+  }, []);
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const { jwt, userInfo } = await login(email, password, setDisplayError);
+      setJwt(jwt);
+      setUserInfo(userInfo);
+      navigate('/');
+    } catch (loginError) {
+      console.error(loginError);
+      setDisplayError('서버에서 문제가 발생하였습니다.');
+    }
+  };
 
   return (
     <PageContainer>
@@ -15,22 +43,23 @@ function LoginPage() {
         <p>자유롭게 토론해보세요.</p>
         <Img alt="bookLogo" src="src/assets/bookVector.png" />
       </TextVectorContainer>
-      <FormBox pathname={pathname} />
+      <FormBox
+        pathname={pathname}
+        onSubmit={handleLogin}
+        displayError={displayError}
+      />
     </PageContainer>
   );
 }
 
 const PageContainer = styled(MainContainer)`
-  display: flex;
+  ${AlignCenter}
   height: 100vh;
-  align-items: center;
   justify-content: space-evenly;
 `;
 
 const TextVectorContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${ColFlexCenter}
   font-size: var(--font-size-xxl);
 
   p {
