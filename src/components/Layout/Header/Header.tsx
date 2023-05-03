@@ -50,13 +50,13 @@ function Header() {
         <NavContainer>
           <NavLinkList>
             <NavLinkItem>
-              <NavLink to="/book-discussion">독서토론</NavLink>
+              <CustomLink to="/book-discussion">독서토론</CustomLink>
             </NavLinkItem>
             <NavLinkItem>
-              <NavLink to="/pro-con-discussion">찬반토론</NavLink>
+              <CustomLink to="/pro-con-discussion">찬반토론</CustomLink>
             </NavLinkItem>
             <NavLinkItem>
-              <NavLink to="/likes">찜 목록</NavLink>
+              <CustomLink to="/likes">찜 목록</CustomLink>
             </NavLinkItem>
           </NavLinkList>
         </NavContainer>
@@ -144,9 +144,11 @@ const NavLinkList = styled.ul`
 
 const NavLinkItem = styled.li`
   font-size: var(--font-size-l);
+`;
 
-  & > a:hover,
-  & > a.active {
+const CustomLink = styled(NavLink)`
+  &:hover,
+  &.active {
     font-weight: 600;
   }
 `;
