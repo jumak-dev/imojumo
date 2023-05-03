@@ -24,7 +24,7 @@ function ProConDiscussion() {
   });
 
   // apis로 뺄 예정
-  const getBookDiscussion = async (
+  const getProConDiscussion = async (
     page: number,
   ): Promise<GetProConDiscussion> => {
     const url = `${VITE_API_URL}pro-con-discussions?page=${page}&limit=4`;
@@ -43,7 +43,7 @@ function ProConDiscussion() {
 
   useEffect(() => {
     try {
-      getBookDiscussion(paginate).then((res) => {
+      getProConDiscussion(paginate).then((res) => {
         setPosts(res.posts);
         setPaginationInfo(res.pageInfo);
       });
