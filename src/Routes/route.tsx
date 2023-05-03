@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import GlobalStyle from '../styles/GlobalStyle';
 import Footer from '../components/Layout/Footer/Footer';
 import Banner from '../components/Main/Banner';
+import TabProvider from '../context/TabContext';
 
 // Header, Footer가 들어간 Page Root
 export function Root() {
@@ -9,7 +10,9 @@ export function Root() {
     <>
       <GlobalStyle />
       {/* Header 추후에 추가 */}
-      <Outlet />
+      <TabProvider>
+        <Outlet />
+      </TabProvider>
       <Footer />
     </>
   );

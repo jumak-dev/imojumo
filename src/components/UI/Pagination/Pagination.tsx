@@ -2,14 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
+import { PageInfo } from '../../../types';
 import { Flex } from '../../../styles/shared';
-
-export interface PageInfo {
-  page: number;
-  totalPage: number;
-  totalCount: number;
-  currentCount: number;
-}
 
 interface PaginationProps {
   paginationInfo: PageInfo;
