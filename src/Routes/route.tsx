@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import GlobalStyle from '../styles/GlobalStyle';
+import Header from '../components/Layout/Header/Header';
 import Footer from '../components/Layout/Footer/Footer';
 import Banner from '../components/Main/Banner';
 import TabProvider from '../context/TabContext';
@@ -9,10 +10,11 @@ export function Root() {
   return (
     <>
       <GlobalStyle />
-      {/* Header 추후에 추가 */}
+      <Header />
       <TabProvider>
         <Outlet />
       </TabProvider>
+      <Outlet />
       <Footer />
     </>
   );
@@ -23,8 +25,8 @@ export function Home() {
   return (
     <>
       <GlobalStyle />
+      <Header />
       <Banner />
-      {/* Header 추후에 추가 */}
       <Outlet />
       <Footer />
     </>
@@ -36,7 +38,7 @@ export function LoginRoot() {
   return (
     <>
       <GlobalStyle />
-      {/* Header 추후에 추가 */}
+      <Header />
       <Outlet />
     </>
   );
