@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FiUser } from 'react-icons/fi';
-import { ColFlex } from '../../../styles/shared';
+import { colFlex } from '../../../styles/shared';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { ListItem, ListItemTitle } from './NewSectionListItem';
 
@@ -42,7 +42,7 @@ const UserIcon = styled(FiUser)<{ isPro: boolean }>`
 `;
 
 const ListItemInfo = styled.div`
-  ${ColFlex}
+  ${colFlex}
   width: 80%;
 `;
 

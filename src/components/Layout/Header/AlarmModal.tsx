@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsBell, BsBellFill } from 'react-icons/bs';
-import { ColFlex, RowFlex } from '../../../styles/shared';
+import { colFlex, rowFlex } from '../../../styles/shared';
 import useModal from '../../../hooks/useModal';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
@@ -38,7 +38,7 @@ function AlarmModal() {
 }
 
 const AlarmModalContainer = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   position: relative;
   z-index: 1;
 `;
@@ -51,7 +51,7 @@ const AlarmButton = styled.button`
 `;
 
 const AlarmModalCard = styled.div`
-  ${ColFlex}
+  ${colFlex}
   position: absolute;
   overflow: hidden;
   top: 40px;
@@ -63,7 +63,7 @@ const AlarmModalCard = styled.div`
 `;
 
 const AlarmItem = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   justify-content: space-between;
   padding: 16px;
   border-bottom: 1px solid var(--color-borderbottom-color);
@@ -74,7 +74,7 @@ const AlarmItem = styled.div`
 `;
 
 const AlarmContent = styled.a`
-  ${ColFlex}
+  ${colFlex}
   flex: 1;
   gap: 8px;
 `;

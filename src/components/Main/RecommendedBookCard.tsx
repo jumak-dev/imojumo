@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex, RowFlex, AlignCenter, JustifyEnd } from '../../styles/shared';
+import { flex, rowFlex, alignCenter, justifyEnd } from '../../styles/shared';
 
 function RecommendedBookCard() {
   // 임시 이미지 Url
@@ -28,7 +28,7 @@ function RecommendedBookCard() {
 }
 
 const CardContainer = styled.div`
-  ${Flex}
+  ${flex}
   width: 330px;
   height: 215px;
   margin: 0 20px;
@@ -49,7 +49,7 @@ const CardSideBlock = styled.div`
 `;
 
 const CardBolck = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   width: 320px;
 `;
 
@@ -59,7 +59,7 @@ const BookCover = styled.img`
 `;
 
 const BookTitle = styled.h2`
-  ${AlignCenter}
+  ${alignCenter}
   height: 20%;
   color: var(--black);
   font-weight: bold;
@@ -67,7 +67,7 @@ const BookTitle = styled.h2`
 `;
 
 const BookPublicationDate = styled.p`
-  ${JustifyEnd}
+  ${justifyEnd}
   margin: 5px 0;
 `;
 
@@ -84,7 +84,7 @@ const BookDescription = styled.p`
 `;
 
 const BookComment = styled.p`
-  ${JustifyEnd}
+  ${justifyEnd}
   font-weight: bold;
 `;
 

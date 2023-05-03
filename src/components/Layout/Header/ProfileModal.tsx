@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { BsPersonCircle } from 'react-icons/bs';
 import UserProfile from '../../UI/UserProfile/UserProfile';
-import { AlignCenter, ColFlex, RowFlex } from '../../../styles/shared';
+import { alignCenter, colFlex, rowFlex } from '../../../styles/shared';
 import useModal from '../../../hooks/useModal';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
@@ -42,13 +42,13 @@ function ProfileModal() {
 }
 
 const ProfileModalContainer = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   position: relative;
   z-index: 1;
 `;
 
 const Profile = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 8px;
 `;
 
@@ -70,7 +70,7 @@ const modalCSS = css`
 `;
 
 const ProfileModalCard = styled.div`
-  ${ColFlex}
+  ${colFlex}
   position: absolute;
   top: 40px;
   right: 0;
@@ -98,7 +98,7 @@ const ProfileBox = styled.div`
 `;
 
 const ProfileItem = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   justify-content: space-between;
   padding: 16px;
   font-weight: 600;
@@ -106,7 +106,7 @@ const ProfileItem = styled.div`
 `;
 
 const MyPage = styled.a`
-  ${RowFlex}
+  ${rowFlex}
   justify-content: space-between;
   padding: 16px;
   border-top: 1px solid var(--color-borderbottom-color);

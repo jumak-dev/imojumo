@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { AlignCenter, ColFlex, RowFlex } from '../../styles/shared';
+import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
 import Button from '../UI/Button/Button';
 
 function BookInformation() {
@@ -73,7 +73,7 @@ function BookInformation() {
 }
 
 const InformationContainer = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   margin: 24px 0;
   padding: 0 24px;
 `;
@@ -85,12 +85,12 @@ const BookImage = styled.img`
 `;
 
 const BookInfoContainer = styled.div`
-  ${ColFlex}
+  ${colFlex}
   margin-left: 48px;
 `;
 
 const TitleContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   margin-bottom: 24px;
 `;
 
@@ -101,11 +101,11 @@ const BookTitle = styled.h2`
 `;
 
 const BookInfoList = styled.ul`
-  ${ColFlex}
+  ${colFlex}
 `;
 
 const BookInfoItem = styled.li`
-  ${RowFlex}
+  ${rowFlex}
 `;
 
 const InfoLabel = styled.strong`

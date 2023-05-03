@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { Flex } from '../../styles/shared';
+import { flex } from '../../styles/shared';
 import TAB from '../../constants/Tab';
 import { TabContext } from '../../context/TabContext';
 
@@ -34,14 +34,14 @@ function SearchNav() {
 }
 
 const SearchNavContainer = styled.nav`
-  ${Flex}
+  ${flex}
   height: 80px;
   background-color: var(--color-subtitle-bg-color);
   border-bottom: 1px solid var(--color-borderbottom-color);
 `;
 
 const NavList = styled.ul`
-  ${Flex}
+  ${flex}
   width: 100%;
   max-width: 1120px;
   justify-content: flex-start;

@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
-import { AlignCenter, ColFlex } from '../../styles/shared';
+import { alignCenter, colFlex } from '../../styles/shared';
 
 interface Comment {
   id: number;
@@ -88,7 +88,7 @@ function CommentItem({
 }
 
 const CommentItemContainer = styled.li`
-  ${ColFlex}
+  ${colFlex}
   gap: 16px;
   border-bottom: 1px solid var(--color-borderbottom-color);
   &:last-child {
@@ -97,12 +97,12 @@ const CommentItemContainer = styled.li`
 `;
 
 const CommentInfomation = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: space-between;
 `;
 
 const InformationContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 16px;
 `;
 
@@ -113,12 +113,12 @@ const Profile = styled.img`
 `;
 
 const InformationWrapper = styled.div`
-  ${ColFlex}
+  ${colFlex}
   gap: 8px;
 `;
 
 const UserInfoBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 8px;
 `;
 
@@ -133,7 +133,7 @@ const CommentDate = styled.p`
 `;
 
 const ButtonContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: flex-end;
 `;
 

@@ -3,7 +3,7 @@ import { GoBook } from 'react-icons/go';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { AlignCenter, Flex } from '../../styles/shared';
+import { alignCenter, flex } from '../../styles/shared';
 
 import { ReactComponent as proConSVG } from '../../assets/icons/proConIcon.svg';
 
@@ -34,13 +34,13 @@ const ProConIcon = styled(proConSVG)`
 `;
 
 const DiscussionTabNav = styled.nav`
-  ${Flex}
+  ${flex}
   max-width: 548px;
   height: 56px;
 `;
 
 const DiscussionTabLink = styled(NavLink)`
-  ${Flex}
+  ${flex}
   text-align: center;
   color: var(--black);
   padding: 8px 24px;
@@ -82,7 +82,7 @@ const ProConDiscussionTabLink = styled(DiscussionTabLink)`
 `;
 
 const DiscussionTabLinkText = styled.p`
-  ${AlignCenter}
+  ${alignCenter}
 
   font-size: var(--font-size-l);
   line-height: 24px;

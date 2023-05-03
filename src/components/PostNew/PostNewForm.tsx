@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColFlexCenter, ScreenReaderTextCSS } from '../../styles/shared';
+import { colFlexCenter, screenReaderTextCSS } from '../../styles/shared';
 
 interface PostNewFormProps {
   title: string;
@@ -17,14 +17,14 @@ function PostNewForm({ title, children }: PostNewFormProps) {
 }
 
 const PostFormContainer = styled.form`
-  ${ColFlexCenter}
+  ${colFlexCenter}
   gap: 60px;
   width: 100%;
   max-width: 970px;
 `;
 
 const PostNewFormTitle = styled.h3`
-  ${ScreenReaderTextCSS};
+  ${screenReaderTextCSS};
 `;
 
 export default PostNewForm;

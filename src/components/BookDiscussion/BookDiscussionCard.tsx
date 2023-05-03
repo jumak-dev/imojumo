@@ -7,7 +7,7 @@ import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
 import { BookDiscussionInfo } from '../../types';
-import { AlignCenter, truncateTextCSS } from '../../styles/shared';
+import { alignCenter, truncateTextCSS } from '../../styles/shared';
 
 interface BookDiscussionCardProps {
   bookDiscussionData: BookDiscussionInfo;
@@ -56,7 +56,9 @@ function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
           <AuthorNickname>{bookDiscussionData.author}</AuthorNickname>
           <DiscussionLikeBox>
             <DiscussionLikeIcon />
-            <DiscussionLikeCount>{bookDiscussionData.like}</DiscussionLikeCount>
+            <DiscussionLikeCount>
+              {bookDiscussionData.likeCount}
+            </DiscussionLikeCount>
           </DiscussionLikeBox>
         </UserInfoBox>
       </DiscussionInfoContainer>
@@ -89,7 +91,7 @@ const DiscussionInfoBox = styled.div`
 `;
 
 const UserInfoBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   height: 25%;
   padding: 10px;
 `;
@@ -130,7 +132,7 @@ const AuthorNickname = styled.span`
 `;
 
 const DiscussionLikeBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   position: absolute;
   right: 10px;
   bottom: 10px;

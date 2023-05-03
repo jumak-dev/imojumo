@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { AiOutlineRise } from 'react-icons/ai';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
-import { Flex, AlignCenter } from '../styles/shared';
+import { flex, alignCenter } from '../styles/shared';
 import MainContainer from '../styles/layout';
 import RecommendedBookCard from '../components/Main/RecommendedBookCard';
 import BookDiscussionTop10 from '../components/Main/BookDiscussionTop10';
@@ -49,7 +49,7 @@ function HomePage() {
 }
 
 const TitleContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
 `;
 
 const Subtitle = styled.h2`
@@ -60,22 +60,22 @@ const Subtitle = styled.h2`
 `;
 
 const FlexContainer = styled.div`
+  ${flex}
   margin: 10px;
-  ${Flex}
 `;
 
-const IconCSS = css`
+const iconCSS = css`
   font-size: 27px;
   margin: 52px 10px 0;
 `;
 
 const BookIcon = styled(GoBook)`
-  ${IconCSS}
+  ${iconCSS}
   color: var(--color-primary-mint);
 `;
 
 const RiseIcon = styled(AiOutlineRise)`
-  ${IconCSS}
+  ${iconCSS}
   color: var(--color-primary-pink);
 `;
 
