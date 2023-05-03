@@ -7,7 +7,7 @@ import MainContainer from '../styles/layout';
 import { userInfoAtom, jwtAtom } from '../recoil/atoms';
 import isLoginSelector from '../recoil/seletors';
 import { AlignCenter, ColFlexCenter } from '../styles/shared';
-import login from '../apis/apis';
+import login from '../apis/auth';
 
 function LoginPage() {
   const location = useLocation();
