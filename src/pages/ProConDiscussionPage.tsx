@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
-import { ColFlex } from '../styles/shared';
+import { colFlex } from '../styles/shared';
 import { Subtitle } from './BookDiscussionPage';
 import { ProConDiscussionInfo, PageInfo } from '../types';
 import Pagination from '../components/UI/Pagination/Pagination';
@@ -54,7 +54,7 @@ function ProConDiscussion() {
 }
 
 const ProConDiscussionCardContainer = styled.section`
-  ${ColFlex}
+  ${colFlex}
   align-items: center;
   margin-bottom: 50px;
 `;
