@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import {
   AiFillDislike,
@@ -9,17 +10,7 @@ import {
 import { BsDot } from 'react-icons/bs';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import { alignCenter, colFlex } from '../../styles/shared';
-
-interface Comment {
-  id: number;
-  author: string;
-  content: string;
-  like: number;
-  dislike: number;
-  createdAt: string;
-  updatedAt: string;
-  isPro?: boolean;
-}
+import { Comment } from '../../types';
 
 interface CommentItemProps {
   comment: Comment;
@@ -32,6 +23,7 @@ function CommentItem({
 }: CommentItemProps) {
   const imageUrl =
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
+  const commentDate = dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm');
 
   const [isLike, setIsLike] = useState(false);
   const [isDislike, setIsDislike] = useState(false);
@@ -63,7 +55,7 @@ function CommentItem({
                   </ProConLeaderTag>
                 ))}
             </UserInfoBox>
-            <CommentDate>{comment.updatedAt}</CommentDate>
+            <CommentDate>{commentDate}</CommentDate>
           </InformationWrapper>
         </InformationContainer>
         <ButtonContainer>
