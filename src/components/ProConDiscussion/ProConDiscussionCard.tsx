@@ -6,8 +6,8 @@ import UserProfile from '../UI/UserProfile/UserProfile';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import ProgressBar from '../UI/ProgressBar/ProgressBar';
 import {
-  Flex,
-  ColFlex,
+  flex,
+  colFlex,
   profileBoxCSS,
   truncateTextCSS,
 } from '../../styles/shared';
@@ -75,7 +75,7 @@ function ProConDiscussionCard({
 
 const CardContainer = styled(Link)`
   ${Card};
-  ${Flex}
+  ${flex}
   gap: 50px;
   width: 970px;
   height: 250px;
@@ -103,7 +103,7 @@ const ProfileBox = styled.div`
 `;
 
 const DiscussionInfoWrap = styled.div`
-  ${ColFlex};
+  ${colFlex};
   gap: 20px;
   align-items: center;
 `;
