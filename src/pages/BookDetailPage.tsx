@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { GrNext } from 'react-icons/gr';
 import MainContainer from '../styles/layout';
-import { AlignCenter } from '../styles/shared';
+import { alignCenter } from '../styles/shared';
 import BookInformation from '../components/BookDetail/BookInformation';
 import RelatedBookDiscussion from '../components/BookDetail/RelatedBookDiscussion';
 
@@ -29,7 +29,7 @@ function BookDetailPage() {
 }
 
 const SubtitleBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: space-between;
   height: 50px;
   padding: 0 24px;
@@ -39,7 +39,7 @@ const SubtitleBox = styled.div`
 `;
 
 const Subtitle = styled.h3`
-  ${AlignCenter}
+  ${alignCenter}
   font-size: var(--font-size-l);
   font-weight: bold;
 `;
@@ -51,7 +51,7 @@ const BookIcon = styled(GoBook)`
 `;
 
 const ShowMoreLink = styled(Link)`
-  ${AlignCenter}
+  ${alignCenter}
 `;
 
 const NextIcon = styled(GrNext)`

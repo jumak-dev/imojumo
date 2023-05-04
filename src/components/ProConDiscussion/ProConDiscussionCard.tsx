@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Card } from '../UI/Card/Card';
-import { Post } from '../../pages/ProConDiscussionPage';
+import { ProConDiscussionInfo } from '../../types';
 import UserProfile from '../UI/UserProfile/UserProfile';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import ProgressBar from '../UI/ProgressBar/ProgressBar';
@@ -13,7 +13,7 @@ import {
 } from '../../styles/shared';
 
 interface ProConDiscussionCardProps {
-  procondiscussionData: Post;
+  procondiscussionData: ProConDiscussionInfo;
 }
 
 const userImageUrl =

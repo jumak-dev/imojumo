@@ -6,7 +6,7 @@ import BookSearchList from './BookSearchList';
 import BookSearchListItem from './BookSearchListItem';
 
 import BOOK_DUMY from './BOOK_DUMY';
-import { ScreenReaderTextCSS } from '../../styles/shared';
+import { screenReaderTextCSS } from '../../styles/shared';
 
 interface BookSearchModalProps {
   onClose: () => void;
@@ -51,7 +51,7 @@ const BookSearchModalCard = styled(NonContentModal)`
 `;
 
 const BookSearchModlaTitle = styled.h2`
-  ${ScreenReaderTextCSS}
+  ${screenReaderTextCSS}
 `;
 
 export default BookSearchModal;

@@ -6,8 +6,8 @@ import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
 import { userInfoAtom, jwtAtom } from '../recoil/atoms';
 import isLoginSelector from '../recoil/seletors';
-import { AlignCenter, ColFlexCenter } from '../styles/shared';
-import { login } from '../apis/auth';
+import { alignCenter, colFlexCenter } from '../styles/shared';
+import login from '../apis/auth';
 
 function LoginPage() {
   const location = useLocation();
@@ -53,13 +53,13 @@ function LoginPage() {
 }
 
 const PageContainer = styled(MainContainer)`
-  ${AlignCenter}
+  ${alignCenter}
   height: 100vh;
   justify-content: space-evenly;
 `;
 
 const TextVectorContainer = styled.section`
-  ${ColFlexCenter}
+  ${colFlexCenter}
   font-size: var(--font-size-xxl);
 
   p {

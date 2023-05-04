@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex, truncateTextCSS } from '../../../styles/shared';
+import { flex, truncateTextCSS } from '../../../styles/shared';
 
 interface BookInfo {
   id: number;
@@ -25,7 +25,7 @@ function NewSectionListItem({ bookInfo }: NewSectionListItemProps) {
 }
 
 export const ListItem = styled.li`
-  ${Flex}
+  ${flex}
   flex: 1;
   border-bottom: 1px solid var(--color-borderbottom-color);
 

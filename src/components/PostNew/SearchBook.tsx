@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import useInputs from '../../hooks/useInputs';
-import { ColFlexCenter } from '../../styles/shared';
+import { colFlexCenter } from '../../styles/shared';
 import { ButtonBox } from '../UI/Button/Button';
 import { Card } from '../UI/Card/Card';
 import Input from '../UI/Input/Input';
@@ -47,7 +46,7 @@ function SearchBook({ onSearch }: SearchBookProps) {
 
 const SerachBookContainer = styled.section`
   ${Card}
-  ${ColFlexCenter}
+  ${colFlexCenter}
 
   align-items: center;
   gap: 16px;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ColFlex, RowFlex } from '../../styles/shared';
+import { colFlex, rowFlex } from '../../styles/shared';
 
 function BookInformation() {
   const imageUrl =
@@ -28,7 +28,7 @@ function BookInformation() {
 }
 
 const InformationContainer = styled.section`
-  ${RowFlex}
+  ${rowFlex}
   gap: 16px;
   margin: 40px 20px;
 `;
@@ -42,7 +42,7 @@ const BookImage = styled.img`
 `;
 
 const BookInfoContainer = styled.div`
-  ${ColFlex}
+  ${colFlex}
   gap: 8px;
 `;
 

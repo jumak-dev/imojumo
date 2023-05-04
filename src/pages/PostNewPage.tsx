@@ -4,7 +4,7 @@ import BookDiscussionForm from '../components/PostNew/BookDiscussionForm';
 import DiscussionTab from '../components/PostNew/DiscussionTab';
 import ProConDiscussionForm from '../components/PostNew/ProConDiscussionForm';
 import MainContainer from '../styles/layout';
-import { Flex, ScreenReaderTextCSS } from '../styles/shared';
+import { flex, screenReaderTextCSS } from '../styles/shared';
 
 interface PostNewPageProps {
   discussionType: 'proCon' | 'book';
@@ -35,7 +35,7 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
 }
 
 const PostNewPageContainer = styled.article`
-  ${Flex}
+  ${flex}
   width: 100%;
   flex-direction: column;
   gap: 48px;
@@ -43,7 +43,7 @@ const PostNewPageContainer = styled.article`
 `;
 
 const PostNewPageTitle = styled.h2`
-  ${ScreenReaderTextCSS};
+  ${screenReaderTextCSS};
 `;
 
 export default PostNewPage;

@@ -5,9 +5,9 @@ import UserProfile from '../UI/UserProfile/UserProfile';
 import ProgressBar from '../UI/ProgressBar/ProgressBar';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import {
-  ColFlex,
-  AlignCenter,
-  RowFlexCenter,
+  colFlex,
+  alignCenter,
+  rowFlexCenter,
   profileBoxCSS,
 } from '../../styles/shared';
 
@@ -67,19 +67,19 @@ function DiscussionInformation() {
 
 const DiscussionContainer = styled.section`
   ${Card}
-  ${ColFlex}
+  ${colFlex}
   padding: 32px;
   margin: 40px 20px;
   gap: 24px;
 `;
 
 const DiscussionInfoContainer = styled.div`
-  ${RowFlexCenter}
+  ${rowFlexCenter}
   gap: 80px;
 `;
 
 const DiscussionInfo = styled.div`
-  ${ColFlex}
+  ${colFlex}
   align-items: center;
   gap: 12px;
 `;
@@ -95,7 +95,7 @@ const DiscussionDate = styled.span`
 `;
 
 const ButtonContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   margin-left: auto;
 `;
 

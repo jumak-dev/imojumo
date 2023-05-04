@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { AiFillHeart } from 'react-icons/ai';
-import { AlignCenter, ColFlexCenter, RowFlex } from '../../styles/shared';
+import { alignCenter, colFlexCenter, rowFlex } from '../../styles/shared';
 
 function RelatedBookDiscussion() {
   return (
@@ -18,7 +18,7 @@ function RelatedBookDiscussion() {
 }
 
 const DiscussionContainer = styled.article`
-  ${RowFlex}
+  ${rowFlex}
   justify-content: space-between;
   height: 100px;
   padding: 0 24px;
@@ -26,7 +26,7 @@ const DiscussionContainer = styled.article`
 `;
 
 const DiscussionBox = styled.div`
-  ${ColFlexCenter}
+  ${colFlexCenter}
 `;
 
 const DiscussionTitle = styled.span`
@@ -39,7 +39,7 @@ const DiscussionDate = styled.span`
 `;
 
 const LikeBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
 `;
 
 const LikeCount = styled.span`

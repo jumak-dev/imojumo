@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AlignCenter } from '../../../styles/shared';
+import { alignCenter } from '../../../styles/shared';
 
 interface SubtitleProps {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ function Subtitle({ children }: SubtitleProps) {
 }
 
 const SubtitleContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: space-between;
   height: 50px;
   padding: 0 24px;
@@ -25,7 +25,7 @@ const SubtitleContainer = styled.div`
 `;
 
 const SubtitleText = styled.h3`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 8px;
   font-weight: bold;
   font-size: var(--font-size-l);

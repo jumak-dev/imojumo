@@ -2,14 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
-import { Flex } from '../../../styles/shared';
-
-export interface PageInfo {
-  page: number;
-  totalPage: number;
-  totalCount: number;
-  currentCount: number;
-}
+import { PageInfo } from '../../../types';
+import { flex } from '../../../styles/shared';
 
 interface PaginationProps {
   paginationInfo: PageInfo;
@@ -66,13 +60,13 @@ function Pagination({
 }
 
 const PaginationContainer = styled.div`
-  ${Flex}
+  ${flex}
   margin-bottom: 80px;
   font-size: var(--font-size-sm);
 `;
 
 const PageButton = styled.button`
-  ${Flex}
+  ${flex}
   border: 0;
   width: 30px;
   height: 30px;
@@ -82,7 +76,8 @@ const PageButton = styled.button`
   font-size: var(--font-size-sm);
 
   &:hover {
-    color: var(--color-primary-pink);
+    background-color: var(--color-primary-pink);
+    color: var(--white);
   }
 `;
 

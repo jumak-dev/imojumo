@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Book } from '../../types';
 import Button from '../UI/Button/Button';
-import { AlignCenter, ColFlex, truncateTextCSS } from '../../styles/shared';
+import { alignCenter, colFlex, truncateTextCSS } from '../../styles/shared';
 
 interface BookSearchListItemProps {
   book: Book;
@@ -40,7 +40,7 @@ function BookSearchListItem({ book, onClick }: BookSearchListItemProps) {
 }
 
 const BookItemContainer = styled.li`
-  ${AlignCenter}
+  ${alignCenter}
   height: 132px;
   width: 100%;
   gap: 20px;
@@ -57,17 +57,17 @@ const BookImage = styled.img`
 `;
 
 const BookInfoContainer = styled.div`
-  ${ColFlex}
+  ${colFlex}
   flex: 1 1 0;
 `;
 
 const BookInfos = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 12px;
 `;
 
 const BookTitle = styled.h2`
-  ${AlignCenter}
+  ${alignCenter}
   font-weight: 700;
   font-size: var(font-size-l);
   line-height: 24px;
@@ -75,7 +75,7 @@ const BookTitle = styled.h2`
 `;
 
 const BookInfo = styled.p`
-  ${AlignCenter}
+  ${alignCenter}
   font-size: var(font-size-sm);
   line-height: 16px;
   letter-spacing: -0.02em;
