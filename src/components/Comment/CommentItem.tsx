@@ -11,6 +11,8 @@ import { BsDot } from 'react-icons/bs';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import { alignCenter, colFlex } from '../../styles/shared';
 import { Comment } from '../../types';
+import Input from '../UI/Input/Input';
+import useInputs from '../../hooks/useInputs';
 
 interface CommentItemProps {
   comment: Comment;
@@ -25,8 +27,27 @@ function CommentItem({
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
   const commentDate = dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm');
 
+  const [{ editComment }, onChange, reset] = useInputs({
+    editComment: comment.content,
+  });
+
+  const [isEdit, setIsEdit] = useState(false);
   const [isLike, setIsLike] = useState(false);
   const [isDislike, setIsDislike] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEdit(!isEdit);
+    reset();
+  };
+
+  const handleCommentSubmit = () => {
+    console.log(editComment);
+    setIsEdit(false);
+  };
+
+  const handleCommentDelete = () => {
+    console.log('삭제');
+  };
 
   const handleLikeClick = () => {
     setIsLike(!isLike);
@@ -59,12 +80,24 @@ function CommentItem({
           </InformationWrapper>
         </InformationContainer>
         <ButtonContainer>
-          <Button>수정</Button>
+          {isEdit ? (
+            <Button onClick={handleCommentSubmit}>등록</Button>
+          ) : (
+            <Button onClick={handleEditClick}>수정</Button>
+          )}
           <BsDot />
-          <Button>삭제</Button>
+          {isEdit ? (
+            <Button onClick={handleEditClick}>취소</Button>
+          ) : (
+            <Button onClick={handleCommentDelete}>삭제</Button>
+          )}
         </ButtonContainer>
       </CommentInfomation>
-      <CommentContent>{comment.content}</CommentContent>
+      {isEdit ? (
+        <Input name="editComment" value={editComment} onChange={onChange} />
+      ) : (
+        <CommentContent>{comment.content}</CommentContent>
+      )}
       <ButtonContainer>
         <LikeButton aria-label="좋아요" onClick={handleLikeClick}>
           {isLike ? <AiFillLike /> : <AiOutlineLike />}
