@@ -4,9 +4,7 @@ import { useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
 import { signup } from '../apis/auth';
-
-const { VITE_API_URL } = import.meta.env;
-console.log(VITE_API_URL);
+import validate from '../utils/auth/signupValidate';
 
 function SignupPage() {
   const location = useLocation();
@@ -14,12 +12,18 @@ function SignupPage() {
   const { pathname } = location;
   const [displayError, setDisplayError] = useState('');
 
-  const handleSignup = async (email: string, password: string) => {
+  const handleSignup = async (
+    email: string,
+    password: string,
+    checkPassword: string,
+  ) => {
     try {
-      await signup(email, password, setDisplayError);
-      navigate('/login');
-    } catch (loginError) {
-      console.error(loginError);
+      if (validate(email, password, checkPassword, setDisplayError)) {
+        await signup(email, password, setDisplayError);
+        navigate('/login');
+      }
+    } catch (signupError) {
+      console.error(signupError);
       setDisplayError('서버에서 문제가 발생하였습니다.');
     }
   };
