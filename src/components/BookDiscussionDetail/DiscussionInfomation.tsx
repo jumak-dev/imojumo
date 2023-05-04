@@ -4,7 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import { Card } from '../UI/Card/Card';
 import UserProfile from '../UI/UserProfile/UserProfile';
-import { AlignCenter, ColFlex, RowFlex } from '../../styles/shared';
+import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
 
 function DiscussionInfomation() {
   const imageUrl =
@@ -51,7 +51,7 @@ function DiscussionInfomation() {
 
 const DiscussionContainer = styled.section`
   ${Card}
-  ${RowFlex}
+  ${rowFlex}
   align-items: flex-start;
   padding: 32px;
   margin: 40px 20px;
@@ -59,19 +59,19 @@ const DiscussionContainer = styled.section`
 `;
 
 const DiscussionInfoContainer = styled.div`
-  ${ColFlex}
+  ${colFlex}
   flex: 1;
   gap: 16px;
   width: 100%;
 `;
 
 const DiscussionHeader = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: space-between;
 `;
 
 const DiscussionInfo = styled.div`
-  ${RowFlex}
+  ${rowFlex}
   align-items: flex-end;
   gap: 12px;
 `;
@@ -86,7 +86,7 @@ const DiscussionDate = styled.span`
 `;
 
 const ButtonContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
 `;
 
 const Button = styled.button`

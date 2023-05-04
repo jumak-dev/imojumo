@@ -14,7 +14,6 @@ export function Root() {
       <TabProvider>
         <Outlet />
       </TabProvider>
-      <Outlet />
       <Footer />
     </>
   );

@@ -2,7 +2,7 @@ import React, { useId, useState } from 'react';
 import styled from 'styled-components';
 import { Form, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button/Button';
-import { ColFlex } from '../../styles/shared';
+import { colFlex } from '../../styles/shared';
 
 interface FormProps {
   pathname: string;
@@ -126,7 +126,7 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
 }
 
 const DisplayErrorWrraper = styled.ul`
-  ${ColFlex}
+  ${colFlex}
   width: 80%;
   margin: 15px auto;
   color: var(--color-heart);
@@ -134,7 +134,7 @@ const DisplayErrorWrraper = styled.ul`
 `;
 
 const FormContainer = styled.article`
-  ${ColFlex}
+  ${colFlex}
   font-size: var(--font-size-l);
   border-radius: 20px;
 `;
@@ -172,7 +172,7 @@ const FormWrraper = styled.section`
 `;
 
 const InnerForm = styled(Form)`
-  ${ColFlex}
+  ${colFlex}
   width: 80%;
   margin: auto;
 `;

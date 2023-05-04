@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../UI/Input/Input';
 import { ButtonBox } from '../UI/Button/Button';
-import { RowFlex } from '../../styles/shared';
+import { rowFlex } from '../../styles/shared';
 
 function CommentForm() {
   return (
@@ -20,7 +20,7 @@ function CommentForm() {
 }
 
 const CommentFormContainer = styled.form`
-  ${RowFlex}
+  ${rowFlex}
   margin: 40px 20px;
 `;
 

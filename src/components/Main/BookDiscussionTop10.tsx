@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
-import { ColFlex, Flex, truncateTextCSS } from '../../styles/shared';
+import { colFlex, flex, truncateTextCSS } from '../../styles/shared';
 
 function BookDiscussionTop10() {
   const [isLiked, setIsLiked] = useState(false);
@@ -36,7 +36,7 @@ function BookDiscussionTop10() {
 
 const CardContainer = styled(Link)`
   ${Card}
-  ${ColFlex}
+  ${colFlex}
   border: none;
   width: 175px;
   height: 240px;
@@ -52,7 +52,7 @@ const CardImage = styled.img`
 `;
 
 const CardTitleWrap = styled.div`
-  ${Flex}
+  ${flex}
   flex: 1;
 `;
 

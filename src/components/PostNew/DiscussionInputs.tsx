@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColFlex, Flex, ScreenReaderTextCSS } from '../../styles/shared';
+import { colFlex, flex, screenReaderTextCSS } from '../../styles/shared';
 import { ButtonBox } from '../UI/Button/Button';
 import { Card } from '../UI/Card/Card';
 import Input from '../UI/Input/Input';
@@ -93,12 +93,12 @@ const DiscussionInputListContainer = styled.section<{
 `;
 
 const DiscussionInputListTitle = styled.h4`
-  ${ScreenReaderTextCSS};
+  ${screenReaderTextCSS};
 `;
 
 const ButtonContainer = styled.div`
-  ${Flex};
-  justify-content flex-start;
+  ${flex};
+  justify-content: flex-start;
 `;
 
 const ProConButton = styled(ButtonBox)`
@@ -107,7 +107,7 @@ const ProConButton = styled(ButtonBox)`
 `;
 
 const DiscussionInputContainer = styled.div`
-  ${ColFlex}
+  ${colFlex}
   flex: 1 1 0;
   height: 100%;
   gap: 22px;

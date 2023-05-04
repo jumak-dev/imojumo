@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProConDiscussionInfo } from '../../types';
-import { Flex, ColFlex, truncateTextCSS } from '../../styles/shared';
+import { flex, colFlex, truncateTextCSS } from '../../styles/shared';
 
 interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
@@ -10,8 +10,7 @@ interface ProConDiscussionSearchCardProps {
 function ProConDiscussionSearchCard({
   procondiscussionData,
 }: ProConDiscussionSearchCardProps) {
-  const proCount = procondiscussionData.agreeCount;
-  const conCount = procondiscussionData.disagreeCount;
+  const { proCount, conCount } = procondiscussionData;
   const proRate = String((proCount / (proCount + conCount)) * 100);
   const conRate = String((conCount / (proCount + conCount)) * 100);
 
@@ -39,7 +38,7 @@ function ProConDiscussionSearchCard({
 }
 
 const CardContainer = styled(Link)`
-  ${ColFlex}
+  ${colFlex}
   width: 320px;
   height: 275px;
   border: none;
@@ -56,12 +55,12 @@ const DiscussionTitle = styled.h3`
 `;
 
 const ProConBlockBox = styled.div`
-  ${Flex};
+  ${flex};
   flex: 1;
 `;
 
 const ProConBlock = styled.div<{ isPro: boolean }>`
-  ${Flex}
+  ${flex}
   flex: 1;
   height: 100%;
 

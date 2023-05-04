@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import TAB from '../../constants/Tab';
-import { AlignCenter } from '../../styles/shared';
+import { alignCenter } from '../../styles/shared';
 import { TabContext } from '../../context/TabContext';
 
 interface SubtitleSectionProps {
@@ -37,7 +37,7 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
 }
 
 const SubtitleBlock = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   margin: 50px 10px;
   position: relative;
 `;

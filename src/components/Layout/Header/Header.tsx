@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import Button from '../../UI/Button/Button';
-import { AlignCenter, RowFlex, RowFlexCenter } from '../../../styles/shared';
+import { alignCenter, rowFlex, rowFlexCenter } from '../../../styles/shared';
 import AlarmModal from './AlarmModal';
 import ProfileModal from './ProfileModal';
 import useInputs from '../../../hooks/useInputs';
@@ -87,14 +87,14 @@ function Header() {
 }
 
 const HeaderLayout = styled.header`
-  ${RowFlexCenter}
+  ${rowFlexCenter}
   width: 100%;
   height: 80px;
   border-bottom: 1px solid var(--color-borderbottom-color);
 `;
 
 const HeaderContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: space-between;
   width: 1120px;
   gap: 16px;
@@ -102,7 +102,7 @@ const HeaderContainer = styled.div`
 `;
 
 const HomeLink = styled(Link)`
-  ${AlignCenter}
+  ${alignCenter}
 `;
 
 const LogoTitle = styled.h1`
@@ -112,7 +112,7 @@ const LogoTitle = styled.h1`
 `;
 
 const SearchContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   width: 440px;
   height: 40px;
   padding: 0 8px;
@@ -134,11 +134,11 @@ const SearchInput = styled.input`
 `;
 
 const NavContainer = styled.nav`
-  ${RowFlex}
+  ${rowFlex}
 `;
 
 const NavLinkList = styled.ul`
-  ${RowFlex}
+  ${rowFlex}
   gap: 16px;
 `;
 
@@ -154,7 +154,7 @@ const CustomLink = styled(NavLink)`
 `;
 
 const ButtonContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 4px;
 `;
 

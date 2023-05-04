@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex, ColFlex } from '../../../styles/shared';
+import { flex, colFlex } from '../../../styles/shared';
 import NewSectionListItem from './NewSectionListItem';
 import ProConDiscussionListItem from './ProConDiscussionListItem';
 
@@ -56,7 +56,7 @@ const NewSectionContainer = styled.section`
 `;
 
 const Subtitle = styled.h3`
-  ${Flex}
+  ${flex}
   height: 10%;
   margin: 10px 0;
   font-weight: bold;
@@ -70,7 +70,7 @@ const ThumnailImage = styled.img`
 `;
 
 const ListContainer = styled.ul`
-  ${ColFlex}
+  ${colFlex}
   height: 60%;
 `;
 
