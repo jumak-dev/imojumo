@@ -1,11 +1,28 @@
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
+import { signup } from '../apis/auth';
+
+const { VITE_API_URL } = import.meta.env;
+console.log(VITE_API_URL);
 
 function SignupPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { pathname } = location;
+  const [displayError, setDisplayError] = useState('');
+
+  const handleSignup = async (email: string, password: string) => {
+    try {
+      await signup(email, password, setDisplayError);
+      navigate('/login');
+    } catch (loginError) {
+      console.error(loginError);
+      setDisplayError('서버에서 문제가 발생하였습니다.');
+    }
+  };
 
   return (
     <PageContainer>
@@ -14,7 +31,11 @@ function SignupPage() {
         <p>자유롭게 토론해보세요.</p>
         <Img alt="bookLogo" src="src/assets/bookVector.png" />
       </TextVectorContainer>
-      <FormBox pathname={pathname} />
+      <FormBox
+        pathname={pathname}
+        displayError={displayError}
+        onSubmit={handleSignup}
+      />
     </PageContainer>
   );
 }
