@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { AiOutlineRise } from 'react-icons/ai';
@@ -7,8 +8,37 @@ import MainContainer from '../styles/layout';
 import RecommendedBookCard from '../components/Main/RecommendedBookCard';
 import BookDiscussionTop10 from '../components/Main/BookDiscussionTop10';
 import NewSection from '../components/Main/BookCategorySection/NewSection';
+import { InterparkBookSearchItem } from '../types';
 
 function HomePage() {
+  const { VITE_ALADIN_API_TTB } = import.meta.env;
+  const [recommendedBook, setRecommendedBook] = useState<
+    InterparkBookSearchItem[]
+  >([]);
+
+  const getRecommendedBook = async (): Promise<InterparkBookSearchItem[]> => {
+    const url = `/api/ItemList.aspx?ttbkey=${VITE_ALADIN_API_TTB}&QueryType=ItemNewSpecial&start=1&MaxResults=3&SearchTarget=Book&output=js&Version=20131101`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    });
+
+    const data = await response.json();
+    return data.item;
+  };
+
+  useEffect(() => {
+    try {
+      getRecommendedBook().then((res) => setRecommendedBook(res));
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   return (
     <MainContainer>
       <TitleContainer>
@@ -16,9 +46,9 @@ function HomePage() {
         <BookIcon />
       </TitleContainer>
       <FlexContainer>
-        <RecommendedBookCard />
-        <RecommendedBookCard />
-        <RecommendedBookCard />
+        {recommendedBook.map((book) => (
+          <RecommendedBookCard recommendedBook={book} key={book.itemId} />
+        ))}
       </FlexContainer>
       <TitleContainer>
         <Subtitle>Top 10 독서토론</Subtitle>
