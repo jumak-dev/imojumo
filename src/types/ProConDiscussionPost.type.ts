@@ -4,11 +4,15 @@ export interface ProConDiscussionInfo {
   title: string;
   content: string;
   views: number;
-  thumbup: number;
   createdAt: string;
   updatedAt: string;
-  agreeCount: number;
-  disagreeCount: number;
-  agreeUser: string;
-  disagreeUser: null | string;
+  proCount: number;
+  conCount: number;
+  proLeader: ProConLeader | null;
+  conLeader: ProConLeader | null;
+}
+
+export interface ProConLeader {
+  username: string;
+  avatarUrl: string | null;
 }

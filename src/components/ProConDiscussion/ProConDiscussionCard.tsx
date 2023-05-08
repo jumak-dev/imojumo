@@ -25,11 +25,11 @@ const noneImageUrl =
 function ProConDiscussionCard({
   procondiscussionData,
 }: ProConDiscussionCardProps) {
-  const proLeader = procondiscussionData.agreeUser;
-  const conLeader = procondiscussionData.disagreeUser;
-  const proCount = procondiscussionData.agreeCount;
+  const proLeader = procondiscussionData.proLeader?.username;
+  const conLeader = procondiscussionData.conLeader?.username;
+  const { proCount } = procondiscussionData;
   const proRate = String(
-    (proCount / (proCount + procondiscussionData.disagreeCount)) * 100,
+    (proCount / (proCount + procondiscussionData.conCount)) * 100,
   );
 
   return (
@@ -76,7 +76,8 @@ function ProConDiscussionCard({
 const CardContainer = styled(Link)`
   ${Card};
   ${flex}
-  gap: 50px;
+
+  gap: 20px;
   width: 970px;
   height: 250px;
   padding: 30px;
@@ -97,6 +98,7 @@ const Content = styled.p`
 
 const ProfileBox = styled.div`
   ${profileBoxCSS}
+  flex: 2;
   height: 100%;
   padding-top: 10px;
   justify-content: flex-start;
@@ -104,7 +106,9 @@ const ProfileBox = styled.div`
 
 const DiscussionInfoWrap = styled.div`
   ${colFlex};
-  gap: 20px;
+
+  flex: 7;
+  gap: 30px;
   align-items: center;
 `;
 
