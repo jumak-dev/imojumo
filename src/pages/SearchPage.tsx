@@ -10,7 +10,7 @@ import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard'
 import ProConDiscussionSearchCard from '../components/Search/ProConDiscussionSearchCard';
 
 import { TabContext } from '../context/TabContext';
-import { Flex, discussionCardContainerCSS } from '../styles/shared';
+import { flex, discussionCardContainerCSS } from '../styles/shared';
 import { BookDiscussionInfo, ProConDiscussionInfo, PageInfo } from '../types';
 
 import BOOKDISCUSSION_DUMMY from '../components/BookDiscussion/BOOKDISCUSSION_DUMMY';
@@ -79,7 +79,7 @@ function SearchPage() {
 }
 
 const ProConDiscussionSearchCardContainer = styled.section`
-  ${Flex}
+  ${flex}
 `;
 
 const Divider = styled.hr`

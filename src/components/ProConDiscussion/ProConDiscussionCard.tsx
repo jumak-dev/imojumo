@@ -76,6 +76,7 @@ function ProConDiscussionCard({
 const CardContainer = styled(Link)`
   ${Card};
   ${flex}
+
   gap: 20px;
   width: 970px;
   height: 250px;
@@ -105,6 +106,7 @@ const ProfileBox = styled.div`
 
 const DiscussionInfoWrap = styled.div`
   ${colFlex};
+
   flex: 7;
   gap: 30px;
   align-items: center;
