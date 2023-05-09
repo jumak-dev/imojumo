@@ -13,48 +13,81 @@ import { alignCenter, colFlex } from '../../styles/shared';
 import { Comment } from '../../types';
 import Input from '../UI/Input/Input';
 import useInputs from '../../hooks/useInputs';
+import useModal from '../../hooks/useModal';
+import Modal from '../UI/Modal/Modal';
 
 interface CommentItemProps {
   comment: Comment;
   isProConDiscussion?: boolean;
+  onUpdate: (id: number, content: string) => void;
+  onDelete: (id: number) => void;
+  onClickLike: (id: number) => void;
+  onCancelLike: (id: number) => void;
+  onClickDislike: (id: number) => void;
+  onCancelDislike: (id: number) => void;
 }
 
 function CommentItem({
   comment,
   isProConDiscussion = false,
+  onUpdate,
+  onDelete,
+  onClickLike,
+  onCancelLike,
+  onClickDislike,
+  onCancelDislike,
 }: CommentItemProps) {
   const imageUrl =
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
   const commentDate = dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm');
 
-  const [{ editComment }, onChange, reset] = useInputs({
-    editComment: comment.content,
+  const [{ content }, onChange, reset] = useInputs({
+    content: comment.content,
   });
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
 
   const [isEdit, setIsEdit] = useState(false);
-  const [isLike, setIsLike] = useState(false);
-  const [isDislike, setIsDislike] = useState(false);
+  const [isLike, setIsLike] = useState(comment.likedByUser);
+  const [isDislike, setIsDislike] = useState(comment.dislikedByUser);
+  const [likeCount, setLikeCount] = useState(comment.like);
+  const [dislikeCount, setDislikeCount] = useState(comment.dislike);
 
-  const handleEditClick = () => {
+  const handleEdit = () => {
     setIsEdit(!isEdit);
     reset();
   };
 
-  const handleCommentSubmit = () => {
-    console.log(editComment);
+  const handleCommentUpdate = () => {
+    onUpdate(comment.id, content);
     setIsEdit(false);
   };
 
-  const handleCommentDelete = () => {
-    console.log('삭제');
+  const handleDelete = () => {
+    onDelete(comment.id);
   };
 
-  const handleLikeClick = () => {
-    setIsLike(!isLike);
+  const handleLike = () => {
+    if (isLike) {
+      onCancelLike(comment.id);
+      setIsLike(false);
+      setLikeCount((prevState) => prevState - 1);
+    } else {
+      onClickLike(comment.id);
+      setIsLike(true);
+      setLikeCount((prevState) => prevState + 1);
+    }
   };
 
-  const handleDislikeClick = () => {
-    setIsDislike(!isDislike);
+  const handleDislike = () => {
+    if (isDislike) {
+      onCancelDislike(comment.id);
+      setIsDislike(false);
+      setDislikeCount((prevState) => prevState - 1);
+    } else {
+      onClickDislike(comment.id);
+      setIsDislike(true);
+      setDislikeCount((prevState) => prevState + 1);
+    }
   };
 
   return (
@@ -81,33 +114,40 @@ function CommentItem({
         </InformationContainer>
         <ButtonContainer>
           {isEdit ? (
-            <Button onClick={handleCommentSubmit}>등록</Button>
+            <Button onClick={handleCommentUpdate}>등록</Button>
           ) : (
-            <Button onClick={handleEditClick}>수정</Button>
+            <Button onClick={handleEdit}>수정</Button>
           )}
           <BsDot />
           {isEdit ? (
-            <Button onClick={handleEditClick}>취소</Button>
+            <Button onClick={handleEdit}>취소</Button>
           ) : (
-            <Button onClick={handleCommentDelete}>삭제</Button>
+            <Button onClick={handleShowModal}>삭제</Button>
           )}
         </ButtonContainer>
       </CommentInfomation>
       {isEdit ? (
-        <Input name="editComment" value={editComment} onChange={onChange} />
+        <Input name="content" value={content} onChange={onChange} />
       ) : (
-        <CommentContent>{comment.content}</CommentContent>
+        <CommentContent>{content}</CommentContent>
       )}
       <ButtonContainer>
-        <LikeButton aria-label="좋아요" onClick={handleLikeClick}>
+        <LikeButton aria-label="좋아요" onClick={handleLike}>
           {isLike ? <AiFillLike /> : <AiOutlineLike />}
         </LikeButton>
-        <CountText>{comment.like}</CountText>
-        <DislikeButton aria-label="싫어요" onClick={handleDislikeClick}>
+        <CountText>{likeCount}</CountText>
+        <DislikeButton aria-label="싫어요" onClick={handleDislike}>
           {isDislike ? <AiFillDislike /> : <AiOutlineDislike />}
         </DislikeButton>
-        <CountText>{comment.dislike}</CountText>
+        <CountText>{dislikeCount}</CountText>
       </ButtonContainer>
+      <Modal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        title="댓글 삭제"
+        content="댓글을 삭제하시겠습니까?"
+        yesCallback={handleDelete}
+      />
     </CommentItemContainer>
   );
 }
