@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import {
@@ -15,6 +17,8 @@ import Input from '../UI/Input/Input';
 import useInputs from '../../hooks/useInputs';
 import useModal from '../../hooks/useModal';
 import Modal from '../UI/Modal/Modal';
+import { userInfoAtom } from '../../recoil/atoms';
+import isLoginSelector from '../../recoil/seletors';
 
 interface CommentItemProps {
   comment: Comment;
@@ -37,20 +41,37 @@ function CommentItem({
   onClickDislike,
   onCancelDislike,
 }: CommentItemProps) {
+  const navigate = useNavigate();
+
+  const isLogin = useRecoilValue(isLoginSelector);
+  const user = useRecoilValue(userInfoAtom);
+  const { username } = user;
+
+  const {
+    id,
+    author,
+    content,
+    like,
+    dislike,
+    updatedAt,
+    likedByUser,
+    dislikedByUser,
+  } = comment;
+
   const imageUrl =
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
-  const commentDate = dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm');
+  const commentDate = dayjs(updatedAt).format('YYYY-MM-DD HH:mm');
 
-  const [{ content }, onChange, reset] = useInputs({
-    content: comment.content,
+  const [{ value }, onChange, reset] = useInputs({
+    value: content,
   });
   const [showModal, handleShowModal, handleCloseModal] = useModal();
 
   const [isEdit, setIsEdit] = useState(false);
-  const [isLike, setIsLike] = useState(comment.likedByUser);
-  const [isDislike, setIsDislike] = useState(comment.dislikedByUser);
-  const [likeCount, setLikeCount] = useState(comment.like);
-  const [dislikeCount, setDislikeCount] = useState(comment.dislike);
+  const [isLike, setIsLike] = useState(likedByUser);
+  const [isDislike, setIsDislike] = useState(dislikedByUser);
+  const [likeCount, setLikeCount] = useState(like);
+  const [dislikeCount, setDislikeCount] = useState(dislike);
 
   const handleEdit = () => {
     setIsEdit(!isEdit);
@@ -58,33 +79,43 @@ function CommentItem({
   };
 
   const handleCommentUpdate = () => {
-    onUpdate(comment.id, content);
+    onUpdate(id, value);
     setIsEdit(false);
   };
 
   const handleDelete = () => {
-    onDelete(comment.id);
+    onDelete(id);
   };
 
   const handleLike = () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     if (isLike) {
-      onCancelLike(comment.id);
+      onCancelLike(id);
       setIsLike(false);
       setLikeCount((prevState) => prevState - 1);
     } else {
-      onClickLike(comment.id);
+      onClickLike(id);
       setIsLike(true);
       setLikeCount((prevState) => prevState + 1);
     }
   };
 
   const handleDislike = () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     if (isDislike) {
-      onCancelDislike(comment.id);
+      onCancelDislike(id);
       setIsDislike(false);
       setDislikeCount((prevState) => prevState - 1);
     } else {
-      onClickDislike(comment.id);
+      onClickDislike(id);
       setIsDislike(true);
       setDislikeCount((prevState) => prevState + 1);
     }
@@ -97,7 +128,7 @@ function CommentItem({
           <Profile src={imageUrl} alt="프로필 이미지" />
           <InformationWrapper>
             <UserInfoBox>
-              <Nickname>{comment.author}</Nickname>
+              <Nickname>{author}</Nickname>
               {isProConDiscussion &&
                 (comment.isPro ? (
                   <ProConLeaderTag isAgree tagSize="sm">
@@ -112,24 +143,26 @@ function CommentItem({
             <CommentDate>{commentDate}</CommentDate>
           </InformationWrapper>
         </InformationContainer>
-        <ButtonContainer>
-          {isEdit ? (
-            <Button onClick={handleCommentUpdate}>등록</Button>
-          ) : (
-            <Button onClick={handleEdit}>수정</Button>
-          )}
-          <BsDot />
-          {isEdit ? (
-            <Button onClick={handleEdit}>취소</Button>
-          ) : (
-            <Button onClick={handleShowModal}>삭제</Button>
-          )}
-        </ButtonContainer>
+        {username === author && (
+          <ButtonContainer>
+            {isEdit ? (
+              <Button onClick={handleCommentUpdate}>등록</Button>
+            ) : (
+              <Button onClick={handleEdit}>수정</Button>
+            )}
+            <BsDot />
+            {isEdit ? (
+              <Button onClick={handleEdit}>취소</Button>
+            ) : (
+              <Button onClick={handleShowModal}>삭제</Button>
+            )}
+          </ButtonContainer>
+        )}
       </CommentInfomation>
       {isEdit ? (
-        <Input name="content" value={content} onChange={onChange} />
+        <Input name="value" value={value} onChange={onChange} />
       ) : (
-        <CommentContent>{content}</CommentContent>
+        <CommentContent>{value}</CommentContent>
       )}
       <ButtonContainer>
         <LikeButton aria-label="좋아요" onClick={handleLike}>
