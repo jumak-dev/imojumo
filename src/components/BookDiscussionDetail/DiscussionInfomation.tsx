@@ -1,19 +1,65 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import { Card } from '../UI/Card/Card';
+import Modal from '../UI/Modal/Modal';
 import UserProfile from '../UI/UserProfile/UserProfile';
 import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
+import useModal from '../../hooks/useModal';
 
-function DiscussionInfomation() {
+interface DiscussionInfomationProps {
+  id: number;
+  author: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  postLikedByUser: boolean;
+  onDelete: () => void;
+  onLike: () => void;
+  onUnlike: () => void;
+}
+
+function DiscussionInfomation({
+  id,
+  author,
+  title,
+  content,
+  createdAt,
+  postLikedByUser,
+  onDelete,
+  onLike,
+  onUnlike,
+}: DiscussionInfomationProps) {
+  const navigate = useNavigate();
+
   const imageUrl =
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
+  const discussionDate = dayjs(createdAt).format('YYYY-MM-DD');
 
-  const [isLike, setIsLike] = useState(false);
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
+  const [isLike, setIsLike] = useState(postLikedByUser);
 
-  const handleLikeClick = () => {
-    setIsLike(!isLike);
+  const handleEdit = () => {
+    console.log(id); // 게시글 수정 path
+    navigate('/posts/new/book-discussion');
+  };
+
+  const handleDelete = () => {
+    onDelete();
+    navigate('/book-discussion');
+  };
+
+  const handleLike = () => {
+    if (isLike) {
+      onUnlike();
+      setIsLike(false);
+    } else {
+      onLike();
+      setIsLike(true);
+    }
   };
 
   return (
@@ -22,29 +68,33 @@ function DiscussionInfomation() {
         avatar={imageUrl}
         alt="프로필 이미지"
         itemGap="10px"
-        nickname="yua77"
+        nickname={author}
         size="lz"
       />
       <DiscussionInfoContainer>
         <DiscussionHeader>
           <DiscussionInfo>
-            <DiscussionTitle>미드나잇 라이브러리 대박</DiscussionTitle>
-            <DiscussionDate>2023.04.10</DiscussionDate>
+            <DiscussionTitle>{title}</DiscussionTitle>
+            <DiscussionDate>{discussionDate}</DiscussionDate>
           </DiscussionInfo>
           <ButtonContainer>
-            <Button>수정</Button>
+            <Button onClick={handleEdit}>수정</Button>
             <BsDot />
-            <Button>삭제</Button>
-            <PostLikeButton aria-label="찜하기" onClick={handleLikeClick}>
+            <Button onClick={handleShowModal}>삭제</Button>
+            <PostLikeButton aria-label="찜하기" onClick={handleLike}>
               {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
             </PostLikeButton>
           </ButtonContainer>
         </DiscussionHeader>
-        <DiscussionContent>
-          울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라
-          울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라솰랄라라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라울랄라솰랄라
-        </DiscussionContent>
+        <DiscussionContent>{content}</DiscussionContent>
       </DiscussionInfoContainer>
+      <Modal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        title="토론 삭제"
+        content="토론을 삭제하시겠습니까?"
+        yesCallback={handleDelete}
+      />
     </DiscussionContainer>
   );
 }
