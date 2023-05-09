@@ -2,16 +2,35 @@ import styled from 'styled-components';
 import Input from '../UI/Input/Input';
 import { ButtonBox } from '../UI/Button/Button';
 import { rowFlex } from '../../styles/shared';
+import useInputs from '../../hooks/useInputs';
 
-function CommentForm() {
+interface CommentFormProps {
+  onSubmit: (content: string) => void;
+}
+
+function CommentForm({ onSubmit }: CommentFormProps) {
+  const [{ content }, onChange, reset] = useInputs({ content: '' });
+
+  const handleSubmit = (event: MouseEvent) => {
+    event.preventDefault();
+    onSubmit(content);
+    reset();
+  };
+
   return (
     <CommentFormContainer>
-      <CommentInput placeholder="댓글을 입력하세요..." />
+      <CommentInput
+        name="content"
+        value={content}
+        onChange={onChange}
+        placeholder="댓글을 입력하세요..."
+      />
       <SubmitButton
         type="submit"
         buttonType="buttonRight"
         buttonColor="white"
         buttonSize="sm"
+        onClick={handleSubmit}
       >
         등록
       </SubmitButton>
