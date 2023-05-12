@@ -3,10 +3,10 @@ import {
   createBookDiscussions,
 } from '../../apis/imojumo/bookDisccusions';
 
-import useMuate from '../useMutate';
+import useMutate from '../useMutate';
 
 const useCreateBookDiscussion = () => {
-  const { mutate, data, error, isLoading } = useMuate<
+  const { mutate, data, error, isLoading } = useMutate<
     CreateBookDiscussionsType,
     any
   >({

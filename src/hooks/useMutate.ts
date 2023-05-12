@@ -6,7 +6,7 @@ interface UseMuateProps<I, T> {
   isErrorBoundary?: boolean;
 }
 
-function useMuate<I, T>({
+function useMutate<I, T>({
   fetchFn,
   isSuspense = false,
   isErrorBoundary = false,
@@ -49,4 +49,4 @@ function useMuate<I, T>({
   };
 }
 
-export default useMuate;
+export default useMutate;

@@ -2,10 +2,10 @@ import {
   CreateProConDiscussionType,
   createProConDiscussion,
 } from '../../apis/imojumo/proConDiscussion';
-import useMuate from '../useMutate';
+import useMutate from '../useMutate';
 
 const useCreateProConDiscussion = () => {
-  const { mutate, data, error, isLoading } = useMuate<
+  const { mutate, data, error, isLoading } = useMutate<
     CreateProConDiscussionType,
     any
   >({
