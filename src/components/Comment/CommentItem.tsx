@@ -93,6 +93,12 @@ function CommentItem({
       return;
     }
 
+    if (isDislike) {
+      onCancelDislike(id);
+      setIsDislike(false);
+      setDislikeCount((prevState) => prevState - 1);
+    }
+
     if (isLike) {
       onCancelLike(id);
       setIsLike(false);
@@ -108,6 +114,12 @@ function CommentItem({
     if (!isLogin) {
       navigate('/login');
       return;
+    }
+
+    if (isLike) {
+      onCancelLike(id);
+      setIsLike(false);
+      setLikeCount((prevState) => prevState - 1);
     }
 
     if (isDislike) {
@@ -146,15 +158,17 @@ function CommentItem({
         {username === author && (
           <ButtonContainer>
             {isEdit ? (
-              <Button onClick={handleCommentUpdate}>등록</Button>
+              <>
+                <Button onClick={handleCommentUpdate}>등록</Button>
+                <BsDot />
+                <Button onClick={handleEdit}>취소</Button>
+              </>
             ) : (
-              <Button onClick={handleEdit}>수정</Button>
-            )}
-            <BsDot />
-            {isEdit ? (
-              <Button onClick={handleEdit}>취소</Button>
-            ) : (
-              <Button onClick={handleShowModal}>삭제</Button>
+              <>
+                <Button onClick={handleEdit}>수정</Button>
+                <BsDot />
+                <Button onClick={handleShowModal}>삭제</Button>
+              </>
             )}
           </ButtonContainer>
         )}
