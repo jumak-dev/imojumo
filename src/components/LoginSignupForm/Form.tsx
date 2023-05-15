@@ -6,7 +6,7 @@ import { colFlex } from '../../styles/shared';
 
 interface FormProps {
   pathname: string;
-  onSubmit: (email: string, password: string) => void;
+  onSubmit: (email: string, password: string, checkPassword: string) => void;
   displayError: string;
 }
 
@@ -43,7 +43,7 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(email, password);
+    onSubmit(email, password, checkPassword);
   };
 
   return (
@@ -131,6 +131,7 @@ const DisplayErrorWrraper = styled.ul`
   margin: 15px auto;
   color: var(--color-heart);
   font-size: var(--font-size-m);
+  line-height: 20px;
 `;
 
 const FormContainer = styled.article`
