@@ -1,4 +1,4 @@
-import defaultAvatarUrl from '../assets/defaultImageUrl';
+import URL from '../constants/URL';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -59,7 +59,11 @@ export const signup = async (
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password, avatarUrl: defaultAvatarUrl }),
+      body: JSON.stringify({
+        email,
+        password,
+        avatarUrl: URL.DEFAULT_AVATA_URL,
+      }),
     });
 
     if (!response.ok) {
