@@ -1,40 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
 import { colFlex } from '../styles/shared';
 import { Subtitle } from './BookDiscussionPage';
-import { ProConDiscussionInfo, PageInfo } from '../types';
+import { PageInfo, ProConDiscussionInfo } from '../types';
 import Pagination from '../components/UI/Pagination/Pagination';
 import ProConDiscussionCard from '../components/ProConDiscussion/ProConDiscussionCard';
-import PROCONDISCUSSION_DUMMY from '../components/ProConDiscussion/PROCONDISCUSSION_DUMMY';
+
+interface GetProConDiscussion {
+  pageInfo: PageInfo;
+  posts: ProConDiscussionInfo[];
+}
 
 function ProConDiscussion() {
-  const [posts] = useState<ProConDiscussionInfo[]>(
-    PROCONDISCUSSION_DUMMY.posts,
-  );
+  const { VITE_API_URL } = import.meta.env;
+  const [posts, setPosts] = useState<ProConDiscussionInfo[]>([]);
   const [paginate, setPaginate] = useState(1);
-  const [paginationInfo] = useState<PageInfo>(PROCONDISCUSSION_DUMMY.pageInfo);
+  const [paginationInfo, setPaginationInfo] = useState<PageInfo>({
+    page: 1,
+    totalPage: 1,
+    totalCount: 1,
+    currentCount: 1,
+  });
 
-  /* 4개씩 가지고 옴
+  // apis로 뺄 예정
+  const getProConDiscussion = async (
+    page: number,
+  ): Promise<GetProConDiscussion> => {
+    const url = `${VITE_API_URL}pro-con-discussions?page=${page}&limit=4`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // params에 현재 page 쪽수, 보여질 게시물 개수인 limit 담기
-        const res = await fetch('').then((res) => res.json());
-        const postData = res.data;
-        const paginationData: PageInfo = res.pageInfo;
-        
-        // setPosts 만들어서
-        setPosts(postData);
-        // setPosts 만들어서
-        setPaginationInfo(postData)
-      } catch (e) {
-        console.log(e)
-      }
-        
-    };
-  }, [paginate]); // paginate 쪽수 변경할 때마다 새로운 데이터 가지고 오게 의존성 추가
-  */
+    try {
+      getProConDiscussion(paginate).then((res) => {
+        setPosts(res.posts);
+        setPaginationInfo(res.pageInfo);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }, [paginate]);
 
   return (
     <MainContainer>

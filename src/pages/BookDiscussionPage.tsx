@@ -1,45 +1,64 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
 import { BookDiscussionInfo, PageInfo } from '../types';
-import Pagination from '../components/UI/Pagination/Pagination';
 import { discussionCardContainerCSS } from '../styles/shared';
+import Pagination from '../components/UI/Pagination/Pagination';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
-import BOOKDISCUSSION_DUMMY from '../components/BookDiscussion/BOOKDISCUSSION_DUMMY';
+
+interface GetBookDiscussion {
+  pageInfo: PageInfo;
+  posts: BookDiscussionInfo[];
+}
 
 function BookDiscussion() {
-  const [posts] = useState<BookDiscussionInfo[]>(BOOKDISCUSSION_DUMMY.data);
+  const { VITE_API_URL } = import.meta.env;
+  const [posts, setPosts] = useState<BookDiscussionInfo[]>([]);
   const [paginate, setPaginate] = useState(1);
-  const [paginationInfo] = useState<PageInfo>(BOOKDISCUSSION_DUMMY.pageInfo);
+  const [paginationInfo, setPaginationInfo] = useState<PageInfo>({
+    page: 1,
+    totalPage: 1,
+    totalCount: 1,
+    currentCount: 1,
+  });
 
-  /* 9개씩 가지고 옴
+  // apis로 뺄 예정
+  const getBookDiscussion = async (
+    page: number,
+  ): Promise<GetBookDiscussion> => {
+    const url = `${VITE_API_URL}book-discussions?page=${page}&limit=9`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // params에 현재 page 쪽수, 보여질 게시물 개수인 limit 담기
-        const res = await fetch('').then((res) => res.json());
-        const postData = res.data;
-        const paginationData: PageInfo = res.pageInfo;
-        
-        // setPosts 만들어서
-        setPosts(postData);
-        // setPosts 만들어서
-        setPaginationInfo(postData)
-      } catch (e) {
-        console.log(e)
-      }
-        
-    };
-  }, [paginate]); // paginate 쪽수 변경할 때마다 새로운 데이터 가지고 오게 의존성 추가
-  */
+    try {
+      getBookDiscussion(paginate).then((res) => {
+        setPosts(res.posts);
+        setPaginationInfo(res.pageInfo);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }, [paginate]);
 
   return (
     <MainContainer>
       <Subtitle>독서토론</Subtitle>
       <BookDiscussionCardContainer>
-        {posts.map((post) => (
-          <BookDiscussionCard bookDiscussionData={post} key={post.id} />
-        ))}
+        {posts &&
+          posts.map((post) => (
+            <BookDiscussionCard bookDiscussionData={post} key={post.id} />
+          ))}
       </BookDiscussionCardContainer>
       <Pagination
         currentPage={paginate}
