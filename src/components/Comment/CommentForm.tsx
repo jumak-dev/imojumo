@@ -17,6 +17,11 @@ function CommentForm({ onSubmit }: CommentFormProps) {
 
   const handleSubmit = (event: MouseEvent) => {
     event.preventDefault();
+
+    if (content.length === 0) {
+      return;
+    }
+
     onSubmit(content);
     reset();
   };
