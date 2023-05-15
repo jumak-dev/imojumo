@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
@@ -9,6 +10,8 @@ import Modal from '../UI/Modal/Modal';
 import UserProfile from '../UI/UserProfile/UserProfile';
 import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
 import useModal from '../../hooks/useModal';
+import { userInfoAtom } from '../../recoil/atoms';
+import isLoginSelector from '../../recoil/seletors';
 
 interface DiscussionInfomationProps {
   id: number;
@@ -35,6 +38,10 @@ function DiscussionInfomation({
 }: DiscussionInfomationProps) {
   const navigate = useNavigate();
 
+  const isLogin = useRecoilValue(isLoginSelector);
+  const user = useRecoilValue(userInfoAtom);
+  const { username } = user;
+
   const imageUrl =
     'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
   const discussionDate = dayjs(createdAt).format('YYYY-MM-DD');
@@ -53,6 +60,11 @@ function DiscussionInfomation({
   };
 
   const handleLike = () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     if (isLike) {
       onUnlike();
       setIsLike(false);
@@ -78,9 +90,13 @@ function DiscussionInfomation({
             <DiscussionDate>{discussionDate}</DiscussionDate>
           </DiscussionInfo>
           <ButtonContainer>
-            <Button onClick={handleEdit}>수정</Button>
-            <BsDot />
-            <Button onClick={handleShowModal}>삭제</Button>
+            {username === author && (
+              <>
+                <Button onClick={handleEdit}>수정</Button>
+                <BsDot />
+                <Button onClick={handleShowModal}>삭제</Button>
+              </>
+            )}
             <PostLikeButton aria-label="찜하기" onClick={handleLike}>
               {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
             </PostLikeButton>
