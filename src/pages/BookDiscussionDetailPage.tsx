@@ -12,12 +12,11 @@ import CommentForm from '../components/Comment/CommentForm';
 import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
 import { Book, BookDiscussionInfo, Comment } from '../types';
-import getBookDiscussionDetail from '../apis/discussion';
+import { getBookDiscussion } from '../apis/bookDiscussion';
 import { jwtAtom } from '../recoil/atoms';
+import { createComment, updateComment, deleteComment } from '../apis/comment';
 
-const { VITE_API_URL } = import.meta.env;
-
-interface BookDiscussionDetail extends BookDiscussionInfo {
+interface BookDiscussion extends BookDiscussionInfo {
   book: Book;
   postLikedByUser: boolean;
   comments?: Comment[];
@@ -25,168 +24,62 @@ interface BookDiscussionDetail extends BookDiscussionInfo {
 
 function BookDiscussionDetailPage() {
   const { postId } = useParams();
-  const token = useRecoilValue(jwtAtom);
+  const token = useRecoilValue(jwtAtom) ?? '';
 
-  const [bookDiscussionDetail, setBookDiscussionDetail] =
-    useState<BookDiscussionDetail | null>(null);
+  const [bookDiscussion, setBookDiscussion] = useState<BookDiscussion>();
+  const [commentsData, setCommentsData] = useState<Comment[]>();
 
   const fetchData = async () => {
-    const data = await getBookDiscussionDetail(postId, token);
-    setBookDiscussionDetail(data);
+    const data = await getBookDiscussion(postId, token);
+    setBookDiscussion(data);
+    setCommentsData(data.comments);
   };
 
   useEffect(() => {
     fetchData();
   }, [postId]);
 
-  const handlePostDelete = () => {
-    fetch(`${VITE_API_URL}/book-discussions/${postId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
-  const handlePostLike = () => {
-    fetch(`${VITE_API_URL}/likes/${postId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
-  const handlePostUnlike = () => {
-    fetch(`${VITE_API_URL}/likes/${postId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
   const handleCommentSubmit = (content: string) => {
-    fetch(`${VITE_API_URL}/comments?postId=${postId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-      body: JSON.stringify({ content }),
-    }).then(() => fetchData());
+    createComment(postId, token, content).then(() => fetchData());
   };
 
   const handleCommentUpdate = (id: number, content: string) => {
-    fetch(`${VITE_API_URL}/comments/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-      body: JSON.stringify({ content }),
-    }).then(() => fetchData());
+    updateComment(id, token, content).then(() => fetchData());
   };
 
   const handleCommentDelete = (id: number) => {
-    fetch(`${VITE_API_URL}/comments/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    }).then(() => fetchData());
+    deleteComment(id, token).then(() => fetchData());
   };
 
-  const handleCommentLikeClick = (id: number) => {
-    fetch(`${VITE_API_URL}/comments/${id}/like`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
-  const handleCommentLikeCancel = (id: number) => {
-    fetch(`${VITE_API_URL}/comments/${id}/like`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
-  const handleCommentDislikeClick = (id: number) => {
-    fetch(`${VITE_API_URL}/comments/${id}/dislike`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
-  const handleCommentDislikeCancel = (id: number) => {
-    fetch(`${VITE_API_URL}/comments/${id}/dislike`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        Authorization: token || '',
-      },
-    });
-  };
-
-  if (!bookDiscussionDetail) {
+  if (!bookDiscussion) {
     return <Loading />;
   }
 
   return (
     <MainContainer>
       <DiscussionInfomation
-        id={bookDiscussionDetail.id}
-        author={bookDiscussionDetail.author}
-        title={bookDiscussionDetail.title}
-        content={bookDiscussionDetail.content}
-        createdAt={bookDiscussionDetail.createdAt}
-        postLikedByUser={bookDiscussionDetail.postLikedByUser}
-        onDelete={handlePostDelete}
-        onLike={handlePostLike}
-        onUnlike={handlePostUnlike}
+        id={bookDiscussion.id}
+        author={bookDiscussion.author}
+        title={bookDiscussion.title}
+        content={bookDiscussion.content}
+        createdAt={bookDiscussion.createdAt}
+        postLikedByUser={bookDiscussion.postLikedByUser}
       />
       <Subtitle>
         도서 정보 <GoBook size="24" />
       </Subtitle>
-      <BookInformation book={bookDiscussionDetail.book} />
+      <BookInformation book={bookDiscussion.book} />
       <Subtitle>
         댓글 <BsChatLeftDots />
       </Subtitle>
       <CommentForm onSubmit={handleCommentSubmit} />
       <CommentList>
-        {bookDiscussionDetail.comments?.map((comment) => (
+        {commentsData?.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
             onUpdate={handleCommentUpdate}
             onDelete={handleCommentDelete}
-            onClickLike={handleCommentLikeClick}
-            onCancelLike={handleCommentLikeCancel}
-            onClickDislike={handleCommentDislikeClick}
-            onCancelDislike={handleCommentDislikeCancel}
           />
         ))}
       </CommentList>
