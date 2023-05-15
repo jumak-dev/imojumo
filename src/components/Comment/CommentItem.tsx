@@ -17,18 +17,20 @@ import Input from '../UI/Input/Input';
 import useInputs from '../../hooks/useInputs';
 import useModal from '../../hooks/useModal';
 import Modal from '../UI/Modal/Modal';
-import { userInfoAtom } from '../../recoil/atoms';
+import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
+import {
+  likeComment,
+  cancelCommentLike,
+  dislikeComment,
+  cancelCommentDislike,
+} from '../../apis/comment';
 
 interface CommentItemProps {
   comment: Comment;
   isProConDiscussion?: boolean;
   onUpdate: (id: number, content: string) => void;
   onDelete: (id: number) => void;
-  onClickLike: (id: number) => void;
-  onCancelLike: (id: number) => void;
-  onClickDislike: (id: number) => void;
-  onCancelDislike: (id: number) => void;
 }
 
 function CommentItem({
@@ -36,14 +38,11 @@ function CommentItem({
   isProConDiscussion = false,
   onUpdate,
   onDelete,
-  onClickLike,
-  onCancelLike,
-  onClickDislike,
-  onCancelDislike,
 }: CommentItemProps) {
   const navigate = useNavigate();
 
   const isLogin = useRecoilValue(isLoginSelector);
+  const token = useRecoilValue(jwtAtom) ?? '';
   const user = useRecoilValue(userInfoAtom);
   const { username } = user;
 
@@ -94,17 +93,17 @@ function CommentItem({
     }
 
     if (isDislike) {
-      onCancelDislike(id);
+      cancelCommentDislike(id, token);
       setIsDislike(false);
       setDislikeCount((prevState) => prevState - 1);
     }
 
     if (isLike) {
-      onCancelLike(id);
+      cancelCommentLike(id, token);
       setIsLike(false);
       setLikeCount((prevState) => prevState - 1);
     } else {
-      onClickLike(id);
+      likeComment(id, token);
       setIsLike(true);
       setLikeCount((prevState) => prevState + 1);
     }
@@ -117,17 +116,17 @@ function CommentItem({
     }
 
     if (isLike) {
-      onCancelLike(id);
+      cancelCommentLike(id, token);
       setIsLike(false);
       setLikeCount((prevState) => prevState - 1);
     }
 
     if (isDislike) {
-      onCancelDislike(id);
+      cancelCommentDislike(id, token);
       setIsDislike(false);
       setDislikeCount((prevState) => prevState - 1);
     } else {
-      onClickDislike(id);
+      dislikeComment(id, token);
       setIsDislike(true);
       setDislikeCount((prevState) => prevState + 1);
     }
