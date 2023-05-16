@@ -27,7 +27,7 @@ function ProConDiscussion() {
   const getProConDiscussion = async (
     page: number,
   ): Promise<GetProConDiscussion> => {
-    const url = `${VITE_API_URL}pro-con-discussions?page=${page}&limit=4`;
+    const url = `${VITE_API_URL}/pro-con-discussions?page=${page}&limit=4`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -36,6 +36,11 @@ function ProConDiscussion() {
         'ngrok-skip-browser-warning': '12',
       },
     });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
 
     const data = await response.json();
     return data;
