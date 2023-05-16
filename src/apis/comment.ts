@@ -1,10 +1,12 @@
+import { Comment } from '../types';
+
 const { VITE_API_URL } = import.meta.env;
 
 export async function createComment(
   id: string | undefined,
   token: string,
   content: string,
-) {
+): Promise<Comment> {
   try {
     const response = await fetch(`${VITE_API_URL}/comments?postId=${id}`, {
       method: 'POST',
@@ -19,6 +21,8 @@ export async function createComment(
       const error = await response.json();
       throw new Error(error.message);
     }
+
+    return (await response.json()) as Comment;
   } catch (error) {
     console.error(error);
     throw error;
@@ -29,7 +33,7 @@ export async function updateComment(
   id: number,
   token: string,
   content: string,
-) {
+): Promise<Comment> {
   try {
     const response = await fetch(`${VITE_API_URL}/comments/${id}`, {
       method: 'PATCH',
@@ -44,6 +48,8 @@ export async function updateComment(
       const error = await response.json();
       throw new Error(error.message);
     }
+
+    return (await response.json()) as Comment;
   } catch (error) {
     console.error(error);
     throw error;

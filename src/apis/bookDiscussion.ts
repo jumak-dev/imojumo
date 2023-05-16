@@ -5,7 +5,7 @@ const { VITE_API_URL } = import.meta.env;
 interface BookDiscussion extends BookDiscussionInfo {
   book: Book;
   postLikedByUser: boolean;
-  comments?: Comment[];
+  comments: Comment[];
 }
 
 export async function getBookDiscussion(
