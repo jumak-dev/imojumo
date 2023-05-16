@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
@@ -20,6 +20,8 @@ import Modal from '../UI/Modal/Modal';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
 import {
+  updateComment,
+  deleteComment,
   likeComment,
   cancelCommentLike,
   dislikeComment,
@@ -29,15 +31,13 @@ import {
 interface CommentItemProps {
   comment: Comment;
   isProConDiscussion?: boolean;
-  onUpdate: (id: number, content: string) => void;
-  onDelete: (id: number) => void;
+  setComments: Dispatch<SetStateAction<Comment[]>>;
 }
 
 function CommentItem({
   comment,
   isProConDiscussion = false,
-  onUpdate,
-  onDelete,
+  setComments,
 }: CommentItemProps) {
   const navigate = useNavigate();
 
@@ -77,58 +77,68 @@ function CommentItem({
     reset();
   };
 
-  const handleCommentUpdate = () => {
-    onUpdate(id, value);
+  const handleCommentUpdate = async () => {
+    const data = await updateComment(id, token, value);
+    setComments((prevComments) =>
+      prevComments.map((prevComment) =>
+        prevComment.id === id
+          ? { ...prevComment, content: data.content }
+          : prevComment,
+      ),
+    );
     setIsEdit(false);
   };
 
-  const handleDelete = () => {
-    onDelete(id);
+  const handleDelete = async () => {
+    await deleteComment(id, token);
+    setComments((prevComments) =>
+      prevComments.filter((prevComment) => prevComment.id !== id),
+    );
   };
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (!isLogin) {
       navigate('/login');
       return;
     }
 
     if (isDislike) {
-      cancelCommentDislike(id, token);
+      await cancelCommentDislike(id, token);
       setIsDislike(false);
-      setDislikeCount((prevState) => prevState - 1);
+      setDislikeCount((prevCount) => prevCount - 1);
     }
 
     if (isLike) {
-      cancelCommentLike(id, token);
+      await cancelCommentLike(id, token);
       setIsLike(false);
-      setLikeCount((prevState) => prevState - 1);
+      setLikeCount((prevCount) => prevCount - 1);
     } else {
-      likeComment(id, token);
+      await likeComment(id, token);
       setIsLike(true);
-      setLikeCount((prevState) => prevState + 1);
+      setLikeCount((prevCount) => prevCount + 1);
     }
   };
 
-  const handleDislike = () => {
+  const handleDislike = async () => {
     if (!isLogin) {
       navigate('/login');
       return;
     }
 
     if (isLike) {
-      cancelCommentLike(id, token);
+      await cancelCommentLike(id, token);
       setIsLike(false);
-      setLikeCount((prevState) => prevState - 1);
+      setLikeCount((prevCount) => prevCount - 1);
     }
 
     if (isDislike) {
-      cancelCommentDislike(id, token);
+      await cancelCommentDislike(id, token);
       setIsDislike(false);
-      setDislikeCount((prevState) => prevState - 1);
+      setDislikeCount((prevCount) => prevCount - 1);
     } else {
-      dislikeComment(id, token);
+      await dislikeComment(id, token);
       setIsDislike(true);
-      setDislikeCount((prevState) => prevState + 1);
+      setDislikeCount((prevCount) => prevCount + 1);
     }
   };
 
