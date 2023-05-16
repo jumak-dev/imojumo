@@ -1,18 +1,29 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProConDiscussionInfo } from '../../types';
 import { flex, colFlex, truncateTextCSS } from '../../styles/shared';
+import getRate from '../../utils/Rate';
 
 interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
+}
+
+interface RateType {
+  proRate: number;
+  conRate: number;
 }
 
 function ProConDiscussionSearchCard({
   procondiscussionData,
 }: ProConDiscussionSearchCardProps) {
   const { proCount, conCount } = procondiscussionData;
-  const proRate = String((proCount / (proCount + conCount)) * 100);
-  const conRate = String((conCount / (proCount + conCount)) * 100);
+  const [rate, setRate] = useState<RateType>({ proRate: 50, conRate: 50 });
+
+  useEffect(() => {
+    const value = getRate(proCount, conCount);
+    setRate(value);
+  });
 
   return (
     <CardContainer to="/search">
@@ -22,14 +33,14 @@ function ProConDiscussionSearchCard({
           <ProConRateText>
             찬성
             <br />
-            {`${proRate}%`}
+            {`${rate.proRate}%`}
           </ProConRateText>
         </ProConBlock>
         <ProConBlock isPro={false}>
           <ProConRateText>
             반대
             <br />
-            {`${conRate}%`}
+            {`${rate.conRate}%`}
           </ProConRateText>
         </ProConBlock>
       </ProConBlockBox>
