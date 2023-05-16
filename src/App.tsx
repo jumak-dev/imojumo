@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import logout from './utils/auth/logout';
-
+import useLoggedIn from './hooks/useLoggedIn';
 import route from './Routes';
 
 function App() {
-  useEffect(() => {
-    const isStayLoggedIn =
-      localStorage.getItem('stayLoggedIn') === 'true' || false;
-    return () => {
-      if (!isStayLoggedIn) {
-        logout();
-      }
-    };
-  }, []);
+  useLoggedIn();
 
   return (
     <RecoilRoot>
