@@ -8,15 +8,27 @@ import MainContainer from '../styles/layout';
 import RecommendedBookCard from '../components/Main/RecommendedBookCard';
 import BookDiscussionTop10 from '../components/Main/BookDiscussionTop10';
 import NewSection from '../components/Main/BookCategorySection/NewSection';
-import { InterparkBookSearchItem } from '../types';
+import {
+  AladinBookSearchItem,
+  BookDiscussionInfo,
+  ProConDiscussionInfo,
+} from '../types';
 
 function HomePage() {
-  const { VITE_ALADIN_API_TTB } = import.meta.env;
+  const { VITE_API_URL, VITE_ALADIN_API_TTB } = import.meta.env;
   const [recommendedBook, setRecommendedBook] = useState<
-    InterparkBookSearchItem[]
+    AladinBookSearchItem[]
   >([]);
+  const [bookDiscussion, setBookDiscussion] = useState<BookDiscussionInfo[]>(
+    [],
+  );
+  const [proConDiscussion, setProConDiscussion] = useState<
+    ProConDiscussionInfo[]
+  >([]);
+  const [newBook, setNewBook] = useState<AladinBookSearchItem[]>([]);
 
-  const getRecommendedBook = async (): Promise<InterparkBookSearchItem[]> => {
+  //! 추천 도서
+  const getRecommendedBook = async (): Promise<AladinBookSearchItem[]> => {
     const url = `/api/ItemList.aspx?ttbkey=${VITE_ALADIN_API_TTB}&QueryType=ItemNewSpecial&start=1&MaxResults=3&SearchTarget=Book&output=js&Version=20131101`;
 
     const response = await fetch(url, {
@@ -27,6 +39,74 @@ function HomePage() {
       },
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+
+    const data = await response.json();
+    return data.item;
+  };
+
+  //! 독서토론
+  const getBookDiscussion = async (): Promise<BookDiscussionInfo[]> => {
+    const url = `${VITE_API_URL}/book-discussions?page=1&limit=3`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+
+    const data = await response.json();
+    return data.posts;
+  };
+
+  //! 찬반토론
+  const getProConDiscussion = async (): Promise<ProConDiscussionInfo[]> => {
+    const url = `${VITE_API_URL}/pro-con-discussions?page=1&limit=3`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+
+    const data = await response.json();
+    return data.posts;
+  };
+
+  //! 신간 도서
+  const getNewBook = async (): Promise<AladinBookSearchItem[]> => {
+    const url = `/api/ItemList.aspx?ttbkey=${VITE_ALADIN_API_TTB}&QueryType=ItemNewAll&start=1&MaxResults=3&SearchTarget=Book&output=js&Version=20131101`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+
     const data = await response.json();
     return data.item;
   };
@@ -34,6 +114,9 @@ function HomePage() {
   useEffect(() => {
     try {
       getRecommendedBook().then((res) => setRecommendedBook(res));
+      getBookDiscussion().then((res) => setBookDiscussion(res));
+      getProConDiscussion().then((res) => setProConDiscussion(res));
+      getNewBook().then((res) => setNewBook(res));
     } catch (e) {
       console.log(e);
     }
@@ -70,9 +153,21 @@ function HomePage() {
         </IconWrap>
       </FlexContainer>
       <FlexContainer>
-        <NewSection subtitle="독서토론" isProConDiscussion={false} />
-        <NewSection subtitle="찬반토론" isProConDiscussion />
-        <NewSection subtitle="신간도서" isProConDiscussion={false} />
+        <NewSection
+          subtitle="독서토론"
+          isProConDiscussion={false}
+          bookDiscussion={bookDiscussion}
+        />
+        <NewSection
+          subtitle="찬반토론"
+          isProConDiscussion
+          proConDiscussion={proConDiscussion}
+        />
+        <NewSection
+          subtitle="신간도서"
+          isProConDiscussion={false}
+          newBook={newBook}
+        />
       </FlexContainer>
     </MainContainer>
   );
