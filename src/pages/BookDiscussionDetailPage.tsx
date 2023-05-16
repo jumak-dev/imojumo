@@ -14,12 +14,11 @@ import CommentItem from '../components/Comment/CommentItem';
 import { Book, BookDiscussionInfo, Comment } from '../types';
 import { getBookDiscussion } from '../apis/bookDiscussion';
 import { jwtAtom } from '../recoil/atoms';
-import { createComment, updateComment, deleteComment } from '../apis/comment';
 
 interface BookDiscussion extends BookDiscussionInfo {
   book: Book;
   postLikedByUser: boolean;
-  comments?: Comment[];
+  comments: Comment[];
 }
 
 function BookDiscussionDetailPage() {
@@ -27,7 +26,7 @@ function BookDiscussionDetailPage() {
   const token = useRecoilValue(jwtAtom) ?? '';
 
   const [bookDiscussion, setBookDiscussion] = useState<BookDiscussion>();
-  const [commentsData, setCommentsData] = useState<Comment[]>();
+  const [commentsData, setCommentsData] = useState<Comment[]>([]);
 
   const fetchData = async () => {
     const data = await getBookDiscussion(postId, token);
@@ -39,47 +38,37 @@ function BookDiscussionDetailPage() {
     fetchData();
   }, [postId]);
 
-  const handleCommentSubmit = (content: string) => {
-    createComment(postId, token, content).then(() => fetchData());
-  };
-
-  const handleCommentUpdate = (id: number, content: string) => {
-    updateComment(id, token, content).then(() => fetchData());
-  };
-
-  const handleCommentDelete = (id: number) => {
-    deleteComment(id, token).then(() => fetchData());
-  };
-
   if (!bookDiscussion) {
     return <Loading />;
   }
 
+  const { id, author, title, content, createdAt, postLikedByUser, book } =
+    bookDiscussion;
+
   return (
     <MainContainer>
       <DiscussionInfomation
-        id={bookDiscussion.id}
-        author={bookDiscussion.author}
-        title={bookDiscussion.title}
-        content={bookDiscussion.content}
-        createdAt={bookDiscussion.createdAt}
-        postLikedByUser={bookDiscussion.postLikedByUser}
+        id={id}
+        author={author}
+        title={title}
+        content={content}
+        createdAt={createdAt}
+        postLikedByUser={postLikedByUser}
       />
       <Subtitle>
         도서 정보 <GoBook size="24" />
       </Subtitle>
-      <BookInformation book={bookDiscussion.book} />
+      <BookInformation book={book} />
       <Subtitle>
         댓글 <BsChatLeftDots />
       </Subtitle>
-      <CommentForm onSubmit={handleCommentSubmit} />
+      <CommentForm setComments={setCommentsData} />
       <CommentList>
-        {commentsData?.map((comment) => (
+        {commentsData.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
-            onUpdate={handleCommentUpdate}
-            onDelete={handleCommentDelete}
+            setComments={setCommentsData}
           />
         ))}
       </CommentList>
