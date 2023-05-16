@@ -144,7 +144,7 @@ function CommentItem({
 
   return (
     <CommentItemContainer>
-      <CommentInfomation>
+      <CommentInformation>
         <InformationContainer>
           <Profile src={imageUrl} alt="프로필 이미지" />
           <InformationWrapper>
@@ -181,7 +181,7 @@ function CommentItem({
             )}
           </ButtonContainer>
         )}
-      </CommentInfomation>
+      </CommentInformation>
       {isEdit ? (
         <Input name="value" value={value} onChange={onChange} />
       ) : (
@@ -217,7 +217,7 @@ const CommentItemContainer = styled.li`
   }
 `;
 
-const CommentInfomation = styled.div`
+const CommentInformation = styled.div`
   ${alignCenter}
   justify-content: space-between;
 `;

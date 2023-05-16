@@ -18,7 +18,7 @@ import {
   unlikeBookDiscussion,
 } from '../../apis/bookDiscussion';
 
-interface DiscussionInfomationProps {
+interface DiscussioninformationProps {
   id: number;
   author: string;
   title: string;
@@ -27,14 +27,14 @@ interface DiscussionInfomationProps {
   postLikedByUser: boolean;
 }
 
-function DiscussionInfomation({
+function DiscussionInformation({
   id,
   author,
   title,
   content,
   createdAt,
   postLikedByUser,
-}: DiscussionInfomationProps) {
+}: DiscussioninformationProps) {
   const navigate = useNavigate();
 
   const isLogin = useRecoilValue(isLoginSelector);
@@ -176,4 +176,4 @@ const DiscussionContent = styled.p`
   line-height: 20px;
 `;
 
-export default DiscussionInfomation;
+export default DiscussionInformation;

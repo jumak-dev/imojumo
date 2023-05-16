@@ -6,7 +6,7 @@ import { GoBook } from 'react-icons/go';
 import Loading from '../components/UI/Loading/Loading';
 import MainContainer from '../styles/layout';
 import Subtitle from '../components/UI/Subtitle/Subtitle';
-import DiscussionInfomation from '../components/BookDiscussionDetail/DiscussionInfomation';
+import DiscussionInformation from '../components/BookDiscussionDetail/DiscussionInformation';
 import BookInformation from '../components/BookDiscussionDetail/BookInformation';
 import CommentForm from '../components/Comment/CommentForm';
 import CommentList from '../components/Comment/CommentList';
@@ -47,7 +47,7 @@ function BookDiscussionDetailPage() {
 
   return (
     <MainContainer>
-      <DiscussionInfomation
+      <DiscussionInformation
         id={id}
         author={author}
         title={title}
