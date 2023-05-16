@@ -1,3 +1,5 @@
+import React, { Dispatch, SetStateAction } from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Input from '../UI/Input/Input';
@@ -5,24 +7,31 @@ import { ButtonBox } from '../UI/Button/Button';
 import { rowFlex } from '../../styles/shared';
 import useInputs from '../../hooks/useInputs';
 import isLoginSelector from '../../recoil/seletors';
+import { jwtAtom } from '../../recoil/atoms';
+import { Comment } from '../../types';
+import { createComment } from '../../apis/comment';
 
 interface CommentFormProps {
-  onSubmit: (content: string) => void;
+  setComments: Dispatch<SetStateAction<Comment[]>>;
 }
 
-function CommentForm({ onSubmit }: CommentFormProps) {
+function CommentForm({ setComments }: CommentFormProps) {
+  const { postId } = useParams();
+
   const isLogin = useRecoilValue(isLoginSelector);
+  const token = useRecoilValue(jwtAtom) ?? '';
 
   const [{ content }, onChange, reset] = useInputs({ content: '' });
 
-  const handleSubmit = (event: MouseEvent) => {
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if (content.length === 0) {
       return;
     }
 
-    onSubmit(content);
+    const data = await createComment(postId, token, content);
+    setComments((prevComments) => [data, ...prevComments]);
     reset();
   };
 
