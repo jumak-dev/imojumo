@@ -1,6 +1,8 @@
+import URL from '../constants/URL';
+
 const { VITE_API_URL } = import.meta.env;
 
-const login = async (
+export const login = async (
   email: string,
   password: string,
   setDisplayError: (error: string) => void,
@@ -45,4 +47,39 @@ const login = async (
   }
 };
 
-export default login;
+export const signup = async (
+  email: string,
+  password: string,
+  setDisplayError: (error: string) => void,
+) => {
+  const newError = '';
+  try {
+    const response = await fetch(`${VITE_API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        avatarUrl: URL.DEFAULT_AVATA_URL,
+      }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      const { statusCode, message, error } = data;
+
+      setDisplayError(newError);
+      throw new Error(
+        `서버에 이상이 있습니다 status: ${statusCode} message: ${message}, error: ${error}`,
+      );
+    }
+  } catch (responseError) {
+    if (responseError instanceof Error) {
+      throw new Error(responseError.message);
+    } else {
+      throw new Error('An unexpected errorjwt occurred.');
+    }
+  }
+};
