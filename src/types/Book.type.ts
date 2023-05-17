@@ -1,19 +1,18 @@
 // 외부 API의 검색 결과 데이터 타입
 
 export interface Book {
-  id: number;
-  isbn: number;
+  id?: number;
+  isbn: string;
   title: string;
   author: string;
-  translator: string;
+  translator?: string;
   description: string;
-  url: string;
-  image: string;
+  link: string;
+  cover: string;
   publisher: string;
-  pubdate: string;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
+  pubDate: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface AladinBookSearchResult {

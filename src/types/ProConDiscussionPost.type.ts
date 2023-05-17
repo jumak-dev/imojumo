@@ -16,3 +16,9 @@ export interface ProConLeader {
   username: string;
   avatarUrl: string | null;
 }
+
+export interface ProConDiscussionRequest {
+  title: string;
+  content: string;
+  isPro: boolean;
+}
