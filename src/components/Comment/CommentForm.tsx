@@ -16,7 +16,7 @@ interface CommentFormProps {
 }
 
 function CommentForm({ setComments }: CommentFormProps) {
-  const { postId } = useParams();
+  const { postId } = useParams() as { postId: string };
 
   const isLogin = useRecoilValue(isLoginSelector);
   const token = useRecoilValue(jwtAtom) ?? '';

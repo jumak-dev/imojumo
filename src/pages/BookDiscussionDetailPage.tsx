@@ -22,7 +22,7 @@ interface BookDiscussion extends BookDiscussionInfo {
 }
 
 function BookDiscussionDetailPage() {
-  const { postId } = useParams();
+  const { postId } = useParams() as { postId: string };
   const token = useRecoilValue(jwtAtom) ?? '';
 
   const [bookDiscussion, setBookDiscussion] = useState<BookDiscussion>();

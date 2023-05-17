@@ -3,7 +3,7 @@ import { Comment } from '../types';
 const { VITE_API_URL } = import.meta.env;
 
 export async function createComment(
-  id: string | undefined,
+  id: string,
   token: string,
   content: string,
 ): Promise<Comment> {

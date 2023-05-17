@@ -9,7 +9,7 @@ interface BookDiscussion extends BookDiscussionInfo {
 }
 
 export async function getBookDiscussion(
-  id: string | undefined,
+  id: string,
   token: string,
 ): Promise<BookDiscussion> {
   try {
