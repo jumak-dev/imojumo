@@ -1,4 +1,4 @@
-import useFetch from '../useFetch';
+import useQuery from '../useQuery';
 import searchAladinBook, {
   SearchAladinBookType,
 } from '../../apis/aladin/searchApi';
@@ -14,7 +14,7 @@ const useSearchAladinBook = ({
   isSuspense = false,
   isErrorBoundary = false,
 }: UseSearchAladinBookType) => {
-  const { data, isLoading, error } = useFetch<any, AladinBookSearchResult>({
+  const { data, isLoading, error } = useQuery<any, AladinBookSearchResult>({
     fetchFn: searchAladinBook,
     arg: { query },
     isErrorBoundary,

@@ -1,18 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
 
-interface UseFetchProps<I, T> {
+interface UseQueryProps<I, T> {
   fetchFn: (args: I) => Promise<T>;
   arg: I;
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+  onSuccess?: (data: T | null) => void;
+  onError?: (error: unknown) => void;
+  onSettled?: (data: T | null, error: unknown) => void;
+  enabled?: boolean;
 }
 
-function useFetch<I, T>({
+function useQuery<I, T>({
   fetchFn,
   arg,
   isSuspense = false,
   isErrorBoundary = false,
-}: UseFetchProps<I, T>) {
+  enabled = true,
+  onSuccess,
+  onError,
+  onSettled,
+}: UseQueryProps<I, T>) {
   const [promise, setPromise] = useState<Promise<void>>();
   const [status, setStatus] = useState<'pending' | 'fulfilled' | 'error'>(
     'pending',
@@ -24,10 +32,25 @@ function useFetch<I, T>({
   const resolvePromise = (promiseResult: T) => {
     setStatus('fulfilled');
     setResult(promiseResult);
+
+    if (onSuccess && typeof onSuccess === 'function') {
+      onSuccess(promiseResult);
+    }
+
+    if (onSettled && typeof onSettled === 'function') {
+      onSettled(promiseResult, null);
+    }
   };
   const rejectPromise = (promiseError: Error) => {
     setStatus('error');
     setError(promiseError);
+    if (onError && typeof onError === 'function') {
+      onError(promiseError);
+    }
+
+    if (onSettled && typeof onSettled === 'function') {
+      onSettled(null, promiseError);
+    }
   };
 
   const fetch = useCallback(() => {
@@ -36,7 +59,7 @@ function useFetch<I, T>({
   }, [serializedArg]);
 
   useEffect(() => {
-    fetch();
+    if (enabled) fetch();
   }, [serializedArg]);
 
   if (isSuspense && status === 'pending' && promise) {
@@ -55,4 +78,4 @@ function useFetch<I, T>({
   };
 }
 
-export default useFetch;
+export default useQuery;
