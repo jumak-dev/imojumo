@@ -26,7 +26,7 @@ function BookDiscussion() {
   const getBookDiscussion = async (
     page: number,
   ): Promise<GetBookDiscussion> => {
-    const url = `${VITE_API_URL}book-discussions?page=${page}&limit=9`;
+    const url = `${VITE_API_URL}/book-discussions?page=${page}&limit=9`;
 
     const response = await fetch(url, {
       method: 'GET',
