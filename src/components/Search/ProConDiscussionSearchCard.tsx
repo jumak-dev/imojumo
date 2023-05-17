@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProConDiscussionInfo } from '../../types';
@@ -9,21 +8,11 @@ interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
 }
 
-interface RateType {
-  proRate: number;
-  conRate: number;
-}
-
 function ProConDiscussionSearchCard({
   procondiscussionData,
 }: ProConDiscussionSearchCardProps) {
   const { proCount, conCount } = procondiscussionData;
-  const [rate, setRate] = useState<RateType>({ proRate: 50, conRate: 50 });
-
-  useEffect(() => {
-    const value = getRate(proCount, conCount);
-    setRate(value);
-  });
+  const proConSum = proCount + conCount;
 
   return (
     <CardContainer to="/search">
@@ -33,14 +22,14 @@ function ProConDiscussionSearchCard({
           <ProConRateText>
             찬성
             <br />
-            {`${rate.proRate}%`}
+            {`${getRate(proCount, proConSum)}%`}
           </ProConRateText>
         </ProConBlock>
         <ProConBlock isPro={false}>
           <ProConRateText>
             반대
             <br />
-            {`${rate.conRate}%`}
+            {`${getRate(conCount, proConSum)}%`}
           </ProConRateText>
         </ProConBlock>
       </ProConBlockBox>
