@@ -10,7 +10,6 @@ import {
 
 interface NewSectionProps {
   subtitle: string;
-  isProConDiscussion: boolean;
   bookDiscussion?: BookDiscussionInfo[];
   proConDiscussion?: ProConDiscussionInfo[];
   newBook?: AladinBookSearchItem[];
@@ -18,7 +17,6 @@ interface NewSectionProps {
 
 function NewSection({
   subtitle,
-  isProConDiscussion,
   bookDiscussion,
   proConDiscussion,
   newBook,
@@ -31,20 +29,15 @@ function NewSection({
       <Subtitle>{subtitle}</Subtitle>
       <ThumnailImage src={image} alt="썸네일 이미지" />
       <ListContainer>
-        {(isProConDiscussion &&
-          proConDiscussion?.map((post) => (
-            <ProConDiscussionListItem
-              key={post.id}
-              proConDiscussionInfo={post}
-            />
-          ))) ||
-          (bookDiscussion &&
-            bookDiscussion.map((post) => (
-              <NewSectionListItem key={post.id} bookInfo={post.book} />
-            ))) ||
-          newBook?.map((item) => (
-            <NewSectionListItem key={item.itemId} bookInfo={item} />
-          ))}
+        {proConDiscussion?.map((post) => (
+          <ProConDiscussionListItem key={post.id} proConDiscussionInfo={post} />
+        ))}
+        {bookDiscussion?.map((post) => (
+          <NewSectionListItem key={post.id} bookInfo={post.book} />
+        ))}
+        {newBook?.map((item) => (
+          <NewSectionListItem key={item.itemId} bookInfo={item} />
+        ))}
       </ListContainer>
     </NewSectionContainer>
   );
