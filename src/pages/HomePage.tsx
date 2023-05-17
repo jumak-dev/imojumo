@@ -153,21 +153,9 @@ function HomePage() {
         </IconWrap>
       </FlexContainer>
       <FlexContainer>
-        <NewSection
-          subtitle="독서토론"
-          isProConDiscussion={false}
-          bookDiscussion={bookDiscussion}
-        />
-        <NewSection
-          subtitle="찬반토론"
-          isProConDiscussion
-          proConDiscussion={proConDiscussion}
-        />
-        <NewSection
-          subtitle="신간도서"
-          isProConDiscussion={false}
-          newBook={newBook}
-        />
+        <NewSection subtitle="독서토론" bookDiscussion={bookDiscussion} />
+        <NewSection subtitle="찬반토론" proConDiscussion={proConDiscussion} />
+        <NewSection subtitle="신간도서" newBook={newBook} />
       </FlexContainer>
     </MainContainer>
   );
