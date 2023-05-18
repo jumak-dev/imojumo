@@ -1,9 +1,9 @@
-import { CreateBookDiscussioType, GetBookDiscussioType } from '../../types';
+import { CreateBookDiscussionType, GetBookDiscussionType } from '../../types';
 import request from '../api';
 
 const { VITE_API_URL } = import.meta.env;
 
-export interface CreateBookDiscussionsType extends CreateBookDiscussioType {
+export interface CreateBookDiscussionsType extends CreateBookDiscussionType {
   token?: string;
 }
 
@@ -33,7 +33,7 @@ async function createBookDiscussions({
 }
 
 async function getBookDiscussions(
-  { id }: GetBookDiscussioType,
+  { id }: GetBookDiscussionType,
   token?: string,
 ) {
   const response = await request({
