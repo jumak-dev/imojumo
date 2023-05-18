@@ -3,16 +3,11 @@ import styled from 'styled-components';
 import TAB from '../../constants/Tab';
 import SubtitleSection from './SubtitleSection';
 import Pagination from '../UI/Pagination/Pagination';
-import { BookDiscussionInfo, PageInfo } from '../../types';
+import { GetBookDiscussion } from '../../types';
 import { discussionCardContainerCSS } from '../../styles/shared';
 import BookDiscussionCard from '../BookDiscussion/BookDiscussionCard';
 
-interface BookDiscussionTabProps {
-  posts: BookDiscussionInfo[];
-  paginationInfo: PageInfo;
-}
-
-function BookDiscussionTab({ posts, paginationInfo }: BookDiscussionTabProps) {
+function BookDiscussionTab({ posts, pageInfo }: GetBookDiscussion) {
   const [paginate, setPaginate] = useState(1);
 
   return (
@@ -26,7 +21,7 @@ function BookDiscussionTab({ posts, paginationInfo }: BookDiscussionTabProps) {
       <Pagination
         currentPage={paginate}
         setPaginate={setPaginate}
-        paginationInfo={paginationInfo}
+        pageInfo={pageInfo}
       />
     </>
   );

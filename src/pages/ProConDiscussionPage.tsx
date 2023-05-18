@@ -3,20 +3,15 @@ import styled from 'styled-components';
 import MainContainer from '../styles/layout';
 import { colFlex } from '../styles/shared';
 import { Subtitle } from './BookDiscussionPage';
-import { PageInfo, ProConDiscussionInfo } from '../types';
+import { PageInfo, ProConDiscussionInfo, GetProConDiscussion } from '../types';
 import Pagination from '../components/UI/Pagination/Pagination';
 import ProConDiscussionCard from '../components/ProConDiscussion/ProConDiscussionCard';
 
-interface GetProConDiscussion {
-  pageInfo: PageInfo;
-  posts: ProConDiscussionInfo[];
-}
-
 function ProConDiscussion() {
   const { VITE_API_URL } = import.meta.env;
-  const [posts, setPosts] = useState<ProConDiscussionInfo[]>([]);
+  const [posts, setPosts] = useState<ProConDiscussionInfo[] | undefined>([]);
   const [paginate, setPaginate] = useState(1);
-  const [paginationInfo, setPaginationInfo] = useState<PageInfo>({
+  const [pageInfo, setPageInfo] = useState<PageInfo>({
     page: 1,
     totalPage: 1,
     totalCount: 1,
@@ -50,7 +45,7 @@ function ProConDiscussion() {
     try {
       getProConDiscussion(paginate).then((res) => {
         setPosts(res.posts);
-        setPaginationInfo(res.pageInfo);
+        setPageInfo(res.pageInfo);
       });
     } catch (e) {
       console.log(e);
@@ -61,14 +56,14 @@ function ProConDiscussion() {
     <MainContainer>
       <Subtitle>찬반토론</Subtitle>
       <ProConDiscussionCardContainer>
-        {posts.map((post) => (
+        {posts?.map((post) => (
           <ProConDiscussionCard procondiscussionData={post} key={post.id} />
         ))}
       </ProConDiscussionCardContainer>
       <Pagination
         currentPage={paginate}
         setPaginate={setPaginate}
-        paginationInfo={paginationInfo}
+        pageInfo={pageInfo}
       />
     </MainContainer>
   );
