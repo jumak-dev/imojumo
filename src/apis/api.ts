@@ -1,8 +1,4 @@
-interface APIError {
-  status: number;
-  error: string;
-  message: string[];
-}
+import { APIError } from '../types';
 
 interface requestType {
   url: string;

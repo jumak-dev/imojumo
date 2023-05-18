@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { APIError, PromiseStatusType } from '../types';
+import PROMISE_STATUS from '../constants/Promise';
 
 interface UseMuateProps<I, T> {
   fetchFn: (args: I) => Promise<T>;
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
   onSuccess?: (data: T | null) => void;
-  onError?: (error: unknown) => void;
+  onError?: (error: Error | APIError) => void;
   onSettled?: (data: T | null, error: unknown) => void;
 }
 
@@ -18,14 +20,12 @@ function useMutate<I, T>({
   onSettled,
 }: UseMuateProps<I, T>) {
   const [promise, setPromise] = useState<Promise<void>>();
-  const [status, setStatus] = useState<'pending' | 'fulfilled' | 'error'>(
-    'pending',
-  );
+  const [status, setStatus] = useState<PromiseStatusType>(PROMISE_STATUS.IDLE);
   const [result, setResult] = useState<T>();
   const [error, setError] = useState<Error>();
 
   const resolvePromise = (promiseResult: T) => {
-    setStatus('fulfilled');
+    setStatus(PROMISE_STATUS.FULFILLED);
     setResult(promiseResult);
 
     if (onSuccess && typeof onSuccess === 'function') {
@@ -38,7 +38,7 @@ function useMutate<I, T>({
   };
 
   const rejectPromise = (promiseError: Error) => {
-    setStatus('error');
+    setStatus(PROMISE_STATUS.PENDING);
     setError(promiseError);
 
     if (onError && typeof onError === 'function') {
@@ -51,23 +51,25 @@ function useMutate<I, T>({
   };
 
   const mutate = async (arg: I) => {
-    setStatus('pending');
+    setStatus(PROMISE_STATUS.PENDING);
     setPromise(fetchFn(arg).then(resolvePromise, rejectPromise));
+    return promise;
   };
 
-  if (isSuspense && status === 'pending' && promise) {
+  if (isSuspense && status === PROMISE_STATUS.PENDING && promise) {
     throw promise;
   }
 
-  if (isErrorBoundary && status === 'error') {
+  if (isErrorBoundary && status === PROMISE_STATUS.ERROR) {
     throw error;
   }
 
   return {
-    isLoading: status === 'pending',
+    isLoading: status === PROMISE_STATUS.PENDING,
     error,
     data: result,
     mutate,
+    setData: setResult,
   };
 }
 
