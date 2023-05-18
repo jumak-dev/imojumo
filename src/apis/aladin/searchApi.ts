@@ -19,9 +19,11 @@ type SortType =
 
 type CoverType = 'Big' | 'MidBig' | 'Mid' | 'Small' | 'Mini' | 'None';
 
-type Prameter = 'ItemSearch.aspx' | 'ItemList.aspx';
+type Prameter = 'ItemSearch.aspx' | 'ItemList.aspx' | 'ItemLookUp.aspx';
 
 const SEARCHTARGETTYPE = 'Book';
+
+const ITEMIDTYPE = 'ISBN13';
 
 const VERSION = '20131101';
 
@@ -36,6 +38,7 @@ export interface SearchAladinBookType {
   start?: number;
   maxResults?: number;
   query?: string;
+  ItemId?: string;
 }
 
 async function searchAladinBook({
@@ -47,6 +50,7 @@ async function searchAladinBook({
   categoryId = 0,
   start = 1,
   maxResults = 10,
+  ItemId = '',
 }: SearchAladinBookType) {
   const searchParams = new URLSearchParams({
     parameter,
@@ -61,6 +65,8 @@ async function searchAladinBook({
     version: VERSION,
     output: OUTPUT,
     ttbkey: VITE_ALADIN_TTBKEY,
+    ItemId,
+    ItemIdType: ITEMIDTYPE,
   }).toString();
 
   const response = await request({
