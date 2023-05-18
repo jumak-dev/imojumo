@@ -25,7 +25,7 @@ function useInfiniteQuery<T>({
 }: UseInfiniteQueryProps<T>) {
   const [promise, setPromise] = useState<Promise<void>>();
   const [status, setStatus] = useState<PromiseStatusType>(PROMISE_STATUS.IDLE);
-  const [results, setResults] = useState<T[]>([]); // Change to array for accumulating results
+  const [results, setResults] = useState<T[]>([]);
   const [error, setError] = useState<Error>();
   const currentPage = useRef<number | undefined>(1);
 
@@ -34,7 +34,7 @@ function useInfiniteQuery<T>({
     if (currentPage.current === 1) {
       setResults([promiseResult]);
     } else {
-      setResults((prevResults) => [...prevResults, promiseResult]); // Add new result to the accumulated results array
+      setResults((prevResults) => [...prevResults, promiseResult]);
     }
 
     if (onSuccess && typeof onSuccess === 'function') {
