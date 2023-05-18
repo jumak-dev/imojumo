@@ -11,7 +11,7 @@ export interface CreateBookDiscussionsType extends CreateBookDiscussionType {
   token?: string;
 }
 
-async function createBookDiscussions({
+export async function createBookDiscussion({
   title,
   content,
   book,
@@ -36,7 +36,7 @@ async function createBookDiscussions({
   return response;
 }
 
-async function getBookDiscussions({
+export async function getBookDiscussions({
   page,
   limit,
   orderBy = 'lastest',
@@ -55,7 +55,7 @@ async function getBookDiscussions({
   return response;
 }
 
-async function getBookDiscussionsDetail(
+export async function getBookDiscussionDetail(
   { id }: GetBookDiscussionDetailType,
   token?: string,
 ) {
@@ -72,5 +72,3 @@ async function getBookDiscussionsDetail(
 
   return response;
 }
-
-export { createBookDiscussions, getBookDiscussions, getBookDiscussionsDetail };
