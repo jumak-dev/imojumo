@@ -1,7 +1,7 @@
 import { Book, PageInfo } from './index';
 
 export interface BookDiscussionInfo {
-  id: string;
+  id: number;
   author: string;
   title: string;
   content: string;

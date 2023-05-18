@@ -13,6 +13,7 @@ export interface Book {
   pubDate: string;
   createdAt?: string;
   updatedAt?: string;
+  category?: string;
 }
 
 export interface AladinBookSearchResult {

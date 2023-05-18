@@ -2,7 +2,7 @@ import React, { useId, useState } from 'react';
 import styled from 'styled-components';
 import { Form, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button/Button';
-import { colFlex } from '../../styles/shared';
+import { colFlex, rowFlex } from '../../styles/shared';
 
 interface FormProps {
   pathname: string;
@@ -16,6 +16,9 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
   const [checkPassword, setCheckPassword] = useState('');
   const isLogin = pathname.includes('login');
   const navigate = useNavigate();
+  const [isStayLoggedIn, setIsStayLoggedIn] = useState(
+    localStorage.getItem('stayLoggedIn') === 'true' || false,
+  );
 
   const emailId = useId();
   const passwordId = useId();
@@ -44,6 +47,11 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(email, password, checkPassword);
+  };
+
+  const handleStayLoggedIn = () => {
+    setIsStayLoggedIn((prev) => !prev);
+    localStorage.setItem('stayLoggedIn', String(!isStayLoggedIn));
   };
 
   return (
@@ -95,10 +103,21 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
             <Input
               type="password"
               name="checkPassword"
-              value={checkPassword}
               placeholder="비밀번호를 확인하세요"
               onChange={onChange}
             />
+          )}
+          {isLogin && (
+            <StayLoggedInContainer>
+              <Input
+                type="checkbox"
+                name="stayLoggedIn"
+                id="stayLoggedIn"
+                onChange={handleStayLoggedIn}
+                checked={isStayLoggedIn}
+              />
+              <label htmlFor="stayLoggedIn">로그인 상태 유지</label>
+            </StayLoggedInContainer>
           )}
 
           <Button
@@ -124,6 +143,15 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
     </FormContainer>
   );
 }
+
+const StayLoggedInContainer = styled.section`
+  ${rowFlex}
+  align-items: center;
+  input {
+    margin-bottom: 3px;
+    margin-right: 5px;
+  }
+`;
 
 const DisplayErrorWrraper = styled.ul`
   ${colFlex}

@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+
 import GlobalStyle from '../styles/GlobalStyle';
 import Header from '../components/Layout/Header/Header';
 import Footer from '../components/Layout/Footer/Footer';
