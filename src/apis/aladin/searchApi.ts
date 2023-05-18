@@ -2,16 +2,13 @@ import request from '../api';
 
 const { VITE_ALADIN_URL, VITE_ALADIN_TTBKEY } = import.meta.env;
 
-type QueryType = 'Keyword' | 'Title' | 'Author' | 'Publisher';
-
-type SearchTagetType =
-  | 'Book'
-  | 'Foreign'
-  | 'Music'
-  | 'DVD'
-  | 'Used'
-  | 'eBook'
-  | 'All';
+type QueryType =
+  | 'Keyword'
+  | 'Title'
+  | 'Author'
+  | 'Publisher'
+  | 'ItemNewAll'
+  | 'ItemNewSpecial';
 
 type SortType =
   | 'Accuracy'
@@ -20,27 +17,31 @@ type SortType =
   | 'SalesPoint'
   | 'CustomerRating';
 
-type coverType = 'Big' | 'MidBig' | 'Mid' | 'Small' | 'Mini' | 'None';
+type CoverType = 'Big' | 'MidBig' | 'Mid' | 'Small' | 'Mini' | 'None';
+
+type Prameter = 'ItemSearch.aspx' | 'ItemList.aspx';
+
+const SEARCHTARGETTYPE = 'Book';
 
 const VERSION = '20131101';
 
 const OUTPUT = 'js';
 
 export interface SearchAladinBookType {
+  parameter: Prameter;
   queryType?: QueryType;
-  searchTarget?: SearchTagetType;
   sort?: SortType;
-  cover?: coverType;
+  cover?: CoverType;
   categoryId?: number;
   start?: number;
   maxResults?: number;
-  query: string;
+  query?: string;
 }
 
 async function searchAladinBook({
-  query,
+  parameter = 'ItemSearch.aspx',
+  query = '',
   queryType = 'Title',
-  searchTarget = 'Book',
   sort = 'Accuracy',
   cover = 'Mid',
   categoryId = 0,
@@ -48,9 +49,10 @@ async function searchAladinBook({
   maxResults = 10,
 }: SearchAladinBookType) {
   const searchParams = new URLSearchParams({
+    parameter,
     query,
     queryType,
-    searchTarget,
+    searchTarget: SEARCHTARGETTYPE,
     sort,
     cover,
     categoryId: String(categoryId),
@@ -62,7 +64,7 @@ async function searchAladinBook({
   }).toString();
 
   const response = await request({
-    url: `${VITE_ALADIN_URL}?${searchParams}`,
+    url: `${VITE_ALADIN_URL}/${parameter}?${searchParams}`,
     options: {
       method: 'GET',
     },
