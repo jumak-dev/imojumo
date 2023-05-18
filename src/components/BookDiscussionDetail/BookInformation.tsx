@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { colFlex, rowFlex } from '../../styles/shared';
 import { Book } from '../../types';
@@ -8,19 +7,15 @@ interface BookInformationProps {
 }
 
 function BookInformation({ book }: BookInformationProps) {
-  const imageUrl =
-    'https://image.aladin.co.kr/product/27222/22/cover500/e822538010_1.jpg';
-
-  const { title, author, publisher, description } = book;
-  const pubdate = dayjs(book.pubdate).format('YYYY-MM-DD');
+  const { title, author, publisher, description, cover, pubDate } = book;
 
   return (
     <InformationContainer>
-      <BookImage src={imageUrl} alt={title} />
+      <BookImage src={cover} alt={title} />
       <BookInfoContainer>
         <BookTitle>{title}</BookTitle>
         <BookInfo>
-          {author} 저 | {pubdate} | {publisher} 출판 | 408쪽
+          {author} | {pubDate} | {publisher} 출판
         </BookInfo>
         <BookDescription>{description}</BookDescription>
       </BookInfoContainer>
