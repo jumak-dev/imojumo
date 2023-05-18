@@ -13,12 +13,12 @@ export interface BookDiscussionInfo {
   book?: Book;
 }
 
-export interface CreateBookDiscussioType {
+export interface CreateBookDiscussionType {
   title: string;
   content: string;
   book: Book;
 }
 
-export interface GetBookDiscussioType {
+export interface GetBookDiscussionType {
   id: number;
 }
