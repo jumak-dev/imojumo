@@ -69,6 +69,7 @@ function useMutate<I, T>({
     error,
     data: result,
     mutate,
+    setData: setResult,
   };
 }
 

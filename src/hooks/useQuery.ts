@@ -75,6 +75,7 @@ function useQuery<I, T>({
     error,
     data: result,
     refetch: fetch,
+    setData: setResult,
   };
 }
 
