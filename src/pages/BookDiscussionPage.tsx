@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
-import { BookDiscussionInfo, PageInfo } from '../types';
+import { BookDiscussionInfo, PageInfo, GetBookDiscussion } from '../types';
 import { discussionCardContainerCSS } from '../styles/shared';
 import Pagination from '../components/UI/Pagination/Pagination';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
-
-interface GetBookDiscussion {
-  pageInfo: PageInfo;
-  posts: BookDiscussionInfo[];
-}
 
 function BookDiscussion() {
   const { VITE_API_URL } = import.meta.env;

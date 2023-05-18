@@ -1,4 +1,4 @@
-import { Book } from './Book.type';
+import { Book, PageInfo } from './index';
 
 export interface BookDiscussionInfo {
   id: string;
@@ -13,12 +13,30 @@ export interface BookDiscussionInfo {
   book?: Book;
 }
 
+export interface GetBookDiscussion {
+  pageInfo?: PageInfo;
+  posts?: BookDiscussionInfo[];
+}
+
+type OrderBy = 'lastest' | 'popular';
+
+export interface GetBookDiscussionType extends GetBookDiscussion {
+  page: number;
+  limit: number;
+  orderBy?: OrderBy;
+}
+
 export interface CreateBookDiscussionType {
   title: string;
   content: string;
   book: Book;
 }
 
-export interface GetBookDiscussionType {
+export interface GetBookDiscussionDetailType {
   id: number;
+}
+
+export interface UseBookDiscussionType extends GetBookDiscussionType {
+  isSuspense?: boolean;
+  isErrorBoundary?: boolean;
 }
