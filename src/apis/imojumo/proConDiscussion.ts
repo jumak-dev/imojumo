@@ -1,4 +1,4 @@
-import { GetBookDiscussioType, ProConDiscussionRequest } from '../../types';
+import { GetBookDiscussionType, ProConDiscussionRequest } from '../../types';
 import request from '../api';
 
 const { VITE_API_URL } = import.meta.env;

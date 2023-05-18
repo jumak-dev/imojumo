@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProConDiscussionInfo } from '../../types';
 import { flex, colFlex, truncateTextCSS } from '../../styles/shared';
+import getRate from '../../utils/Rate';
 
 interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
@@ -11,8 +12,7 @@ function ProConDiscussionSearchCard({
   procondiscussionData,
 }: ProConDiscussionSearchCardProps) {
   const { proCount, conCount } = procondiscussionData;
-  const proRate = String((proCount / (proCount + conCount)) * 100);
-  const conRate = String((conCount / (proCount + conCount)) * 100);
+  const proConSum = proCount + conCount;
 
   return (
     <CardContainer to="/search">
@@ -22,14 +22,14 @@ function ProConDiscussionSearchCard({
           <ProConRateText>
             찬성
             <br />
-            {`${proRate}%`}
+            {`${getRate(proCount, proConSum)}%`}
           </ProConRateText>
         </ProConBlock>
         <ProConBlock isPro={false}>
           <ProConRateText>
             반대
             <br />
-            {`${conRate}%`}
+            {`${getRate(conCount, proConSum)}%`}
           </ProConRateText>
         </ProConBlock>
       </ProConBlockBox>

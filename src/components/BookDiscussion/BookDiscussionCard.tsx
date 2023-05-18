@@ -98,7 +98,6 @@ const UserInfoBox = styled.div`
 
 const DiscussionTitle = styled.h3`
   ${truncateTextCSS}
-  height: 20%;
   font-size: var(--font-size-l);
   font-weight: bold;
   margin-bottom: 20px;

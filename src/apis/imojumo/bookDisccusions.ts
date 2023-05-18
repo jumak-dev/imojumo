@@ -1,9 +1,13 @@
-import { CreateBookDiscussioType, GetBookDiscussioType } from '../../types';
+import {
+  CreateBookDiscussionType,
+  GetBookDiscussionType,
+  GetBookDiscussionDetailType,
+} from '../../types';
 import request from '../api';
 
 const { VITE_API_URL } = import.meta.env;
 
-export interface CreateBookDiscussionsType extends CreateBookDiscussioType {
+export interface CreateBookDiscussionsType extends CreateBookDiscussionType {
   token?: string;
 }
 
@@ -32,8 +36,27 @@ async function createBookDiscussions({
   return response;
 }
 
-async function getBookDiscussions(
-  { id }: GetBookDiscussioType,
+async function getBookDiscussions({
+  page,
+  limit,
+  orderBy = 'lastest',
+}: GetBookDiscussionType) {
+  const response = await request({
+    url: `${VITE_API_URL}/book-discussions?page=${page}&limit=${limit}&orderBy=${orderBy}`,
+    options: {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': '12',
+      },
+    },
+  });
+
+  return response;
+}
+
+async function getBookDiscussionsDetail(
+  { id }: GetBookDiscussionDetailType,
   token?: string,
 ) {
   const response = await request({
@@ -50,4 +73,4 @@ async function getBookDiscussions(
   return response;
 }
 
-export { createBookDiscussions, getBookDiscussions };
+export { createBookDiscussions, getBookDiscussions, getBookDiscussionsDetail };

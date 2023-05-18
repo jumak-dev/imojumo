@@ -1,24 +1,18 @@
 import styled from 'styled-components';
 import { flex, truncateTextCSS } from '../../../styles/shared';
-
-interface BookInfo {
-  id: number;
-  imageUrl: string;
-  title: string;
-  description: string;
-}
+import { Book, AladinBookSearchItem } from '../../../types';
 
 interface NewSectionListItemProps {
-  bookInfo: BookInfo;
+  bookInfo: Book | AladinBookSearchItem | undefined;
 }
 
 function NewSectionListItem({ bookInfo }: NewSectionListItemProps) {
   return (
     <ListItem>
-      <ListItemThumnail src={bookInfo.imageUrl} alt="썸네일 이미지" />
+      <ListItemThumnail src={bookInfo?.imageUrl} alt="썸네일 이미지" />
       <ListItemInfo>
-        <ListItemTitle>{bookInfo.title}</ListItemTitle>
-        <ListItemDescription>{bookInfo.description}</ListItemDescription>
+        <ListItemTitle>{bookInfo?.title}</ListItemTitle>
+        <ListItemDescription>{bookInfo?.description}</ListItemDescription>
       </ListItemInfo>
     </ListItem>
   );
@@ -28,6 +22,7 @@ export const ListItem = styled.li`
   ${flex}
   flex: 1;
   border-bottom: 1px solid var(--color-borderbottom-color);
+  padding: 20px 10px;
 
   &:last-child {
     border-bottom: none;

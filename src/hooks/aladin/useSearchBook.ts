@@ -1,19 +1,12 @@
 import useQuery from '../useQuery';
-import searchAladinBook, {
-  SearchAladinBookType,
-} from '../../apis/aladin/searchApi';
-import { AladinBookSearchResult } from '../../types';
+import searchAladinBook from '../../apis/aladin/searchApi';
+import { AladinBookSearchResult, UseSearchAladinBookType } from '../../types';
 
-interface UseSearchAladinBookType extends SearchAladinBookType {
-  isSuspense?: boolean;
-  isErrorBoundary?: boolean;
-}
-
-const useSearchAladinBook = ({
+function useSearchAladinBook({
   query,
   isSuspense = false,
   isErrorBoundary = false,
-}: UseSearchAladinBookType) => {
+}: UseSearchAladinBookType) {
   const { data, isLoading, error } = useQuery<any, AladinBookSearchResult>({
     fetchFn: searchAladinBook,
     arg: { query },
@@ -22,6 +15,6 @@ const useSearchAladinBook = ({
   });
 
   return { data, isLoading, error };
-};
+}
 
 export default useSearchAladinBook;
