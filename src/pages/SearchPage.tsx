@@ -11,26 +11,16 @@ import ProConDiscussionSearchCard from '../components/Search/ProConDiscussionSea
 
 import { TabContext } from '../context/TabContext';
 import { flex, discussionCardContainerCSS } from '../styles/shared';
-import { BookDiscussionInfo, ProConDiscussionInfo, PageInfo } from '../types';
+import { GetBookDiscussion, GetProConDiscussion } from '../types';
 
 import BOOKDISCUSSION_DUMMY from '../components/BookDiscussion/BOOKDISCUSSION_DUMMY';
 import PROCONDISCUSSION_DUMMY from '../components/ProConDiscussion/PROCONDISCUSSION_DUMMY';
 
-interface BookDiscussionData {
-  pageInfo: PageInfo;
-  data: BookDiscussionInfo[];
-}
-
-interface ProConDiscussionData {
-  pageInfo: PageInfo;
-  posts: ProConDiscussionInfo[];
-}
-
 function SearchPage() {
   const { currentTab } = useContext(TabContext);
   const [bookDiscussionPosts] =
-    useState<BookDiscussionData>(BOOKDISCUSSION_DUMMY);
-  const [proConDiscussionPosts] = useState<ProConDiscussionData>(
+    useState<GetBookDiscussion>(BOOKDISCUSSION_DUMMY);
+  const [proConDiscussionPosts] = useState<GetProConDiscussion>(
     PROCONDISCUSSION_DUMMY,
   );
 
@@ -64,13 +54,13 @@ function SearchPage() {
         {currentTab === TAB.BOOK_DISCUSSION && (
           <BookDiscussionTab
             posts={bookDiscussionPosts.data}
-            paginationInfo={bookDiscussionPosts.pageInfo}
+            pageInfo={bookDiscussionPosts.pageInfo}
           />
         )}
         {currentTab === TAB.PROCON_DISCUSSION && (
           <ProConDiscussionTab
             posts={proConDiscussionPosts.posts}
-            paginationInfo={proConDiscussionPosts.pageInfo}
+            pageInfo={proConDiscussionPosts.pageInfo}
           />
         )}
       </MainContainer>
