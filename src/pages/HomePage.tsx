@@ -41,8 +41,6 @@ function HomePage() {
     orderBy: 'popular',
   });
 
-  console.log('ㅇㅅㅇ', bookDiscussionTop10);
-
   return (
     <MainContainer>
       <TitleContainer>
