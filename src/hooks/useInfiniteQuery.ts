@@ -31,7 +31,9 @@ function useInfiniteQuery<T>({
 
   const resolvePromise = (promiseResult: T) => {
     setStatus(PROMISE_STATUS.FULFILLED);
-    if (currentPage.current === 1) {
+    const isFirstPage = currentPage.current === 1;
+
+    if (isFirstPage) {
       setResults([promiseResult]);
     } else {
       setResults((prevResults) => [...prevResults, promiseResult]);
