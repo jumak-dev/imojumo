@@ -12,7 +12,11 @@ function useInputs<T extends Record<string, any>>(initialForm: T) {
     setForm((preState) => ({ ...preState, [name]: value }));
   };
 
-  return [form, onChange, reset] as const;
+  const setValue = (name: string, value: string) => {
+    setForm((preState) => ({ ...preState, [name]: value }));
+  };
+
+  return [form, onChange, reset, setValue] as const;
 }
 
 export default useInputs;
