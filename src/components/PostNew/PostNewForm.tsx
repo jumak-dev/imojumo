@@ -4,12 +4,13 @@ import { colFlexCenter, screenReaderTextCSS } from '../../styles/shared';
 
 interface PostNewFormProps {
   title: string;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   children: React.ReactNode;
 }
 
-function PostNewForm({ title, children }: PostNewFormProps) {
+function PostNewForm({ title, onSubmit, children }: PostNewFormProps) {
   return (
-    <PostFormContainer>
+    <PostFormContainer onSubmit={onSubmit}>
       <PostNewFormTitle>{title}</PostNewFormTitle>
       {children}
     </PostFormContainer>
