@@ -11,12 +11,12 @@ type useIntersectionObserverProps = {
   onIntersect: IntersectionObserverCallback;
 };
 
-const useIntersectionObserver = ({
+function useIntersectionObserver({
   root,
   rootMargin = '0px',
   threshold = 1,
   onIntersect,
-}: useIntersectionObserverProps) => {
+}: useIntersectionObserverProps) {
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
 
   useEffect(() => {
@@ -32,6 +32,6 @@ const useIntersectionObserver = ({
   }, [onIntersect, root, rootMargin, target, threshold]);
 
   return { setTarget };
-};
+}
 
 export default useIntersectionObserver;
