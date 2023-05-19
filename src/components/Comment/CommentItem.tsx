@@ -55,6 +55,7 @@ function CommentItem({
     updatedAt,
     likedByUser,
     dislikedByUser,
+    isPro,
   } = comment;
 
   const imageUrl =
@@ -151,12 +152,12 @@ function CommentItem({
             <UserInfoBox>
               <Nickname>{author}</Nickname>
               {isProConDiscussion &&
-                (comment.isPro ? (
+                (isPro ? (
                   <ProConLeaderTag isAgree tagSize="sm">
                     찬성측
                   </ProConLeaderTag>
                 ) : (
-                  <ProConLeaderTag isAgree tagSize="sm">
+                  <ProConLeaderTag isAgree={false} tagSize="sm">
                     반대측
                   </ProConLeaderTag>
                 ))}
