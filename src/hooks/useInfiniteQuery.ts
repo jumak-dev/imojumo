@@ -46,11 +46,6 @@ function useInfiniteQuery<T>({
     if (onSettled && typeof onSettled === 'function') {
       onSettled(promiseResult, null);
     }
-
-    currentPage.current = getNextPageParam(
-      results[results.length - 1],
-      results,
-    );
   };
 
   const rejectPromise = (promiseError: Error) => {
@@ -98,6 +93,13 @@ function useInfiniteQuery<T>({
     }
   }, []);
 
+  useEffect(() => {
+    currentPage.current = getNextPageParam(
+      results[results.length - 1],
+      results,
+    );
+  }, [results]);
+
   if (isSuspense && status === PROMISE_STATUS.PENDING && promise) {
     throw promise;
   }
@@ -112,7 +114,7 @@ function useInfiniteQuery<T>({
     fetchNextPage,
     data: results,
     setData: setResults,
-    hasNextPage: currentPage !== undefined,
+    hasNextPage: currentPage.current !== undefined,
     isLoading: status === PROMISE_STATUS.PENDING,
   };
 }
