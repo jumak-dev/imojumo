@@ -6,6 +6,7 @@ import MainContainer from '../styles/layout';
 import RecommendedBookCard from '../components/Main/RecommendedBookCard';
 import BookDiscussionTop10 from '../components/Main/BookDiscussionTop10';
 import NewSection from '../components/Main/BookCategorySection/NewSection';
+import URL from '../constants/URL';
 
 import useAladinBook from '../hooks/aladin/useAladinBook';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
@@ -62,12 +63,20 @@ function HomePage() {
         <NewSection
           subtitle="독서토론"
           bookDiscussion={bookDiscussion?.posts}
+          imageUrl={
+            bookDiscussion?.posts[0].book?.cover || URL.DEFAULT_BOOK_IMAGE_URL
+          }
         />
         <NewSection
           subtitle="찬반토론"
           proConDiscussion={proConDiscussion?.posts}
+          imageUrl={URL.DEFAULT_BOOK_IMAGE_URL}
         />
-        <NewSection subtitle="신간도서" newBook={newBook?.item} />
+        <NewSection
+          subtitle="신간도서"
+          newBook={newBook?.item}
+          imageUrl={newBook?.item[0].cover || URL.DEFAULT_BOOK_IMAGE_URL}
+        />
       </FlexContainer>
     </MainContainer>
   );
