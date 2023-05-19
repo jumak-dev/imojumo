@@ -29,15 +29,24 @@ function useInfiniteQuery<T>({
   const [error, setError] = useState<Error>();
   const currentPage = useRef<number | undefined>(1);
 
+  const resolveFirstPromise = (promiseResult: T) => {
+    setStatus(PROMISE_STATUS.FULFILLED);
+
+    setResults([promiseResult]);
+
+    if (onSuccess && typeof onSuccess === 'function') {
+      onSuccess(promiseResult);
+    }
+
+    if (onSettled && typeof onSettled === 'function') {
+      onSettled(promiseResult, null);
+    }
+  };
+
   const resolvePromise = (promiseResult: T) => {
     setStatus(PROMISE_STATUS.FULFILLED);
-    const isFirstPage = currentPage.current === 1;
 
-    if (isFirstPage) {
-      setResults([promiseResult]);
-    } else {
-      setResults((prevResults) => [...prevResults, promiseResult]);
-    }
+    setResults((prevResults) => [...prevResults, promiseResult]);
 
     if (onSuccess && typeof onSuccess === 'function') {
       onSuccess(promiseResult);
@@ -68,12 +77,19 @@ function useInfiniteQuery<T>({
 
     setStatus(PROMISE_STATUS.PENDING);
     setPromise(
-      fetchFn(currentPage.current).then(resolvePromise, rejectPromise),
+      fetchFn(currentPage.current).then(resolveFirstPromise, rejectPromise),
     );
   }, [fetchFn]);
 
   const fetchNextPage = useCallback(() => {
-    fetch();
+    if (currentPage.current === undefined) {
+      return;
+    }
+
+    setStatus(PROMISE_STATUS.PENDING);
+    setPromise(
+      fetchFn(currentPage.current).then(resolvePromise, rejectPromise),
+    );
   }, [fetchFn]);
 
   const refetch = useCallback(() => {
@@ -83,7 +99,7 @@ function useInfiniteQuery<T>({
         prevResults.splice(0, prevResults.length - 1),
       );
     }
-    fetch();
+    fetchNextPage();
   }, [fetchFn]);
 
   useEffect(() => {
