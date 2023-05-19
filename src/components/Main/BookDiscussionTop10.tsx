@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { flex } from '../../styles/shared';
 import BookDiscussionTop10Card from './BookDiscussionTop10Card';
-// import useBookDiscussion from '../../hooks/bookDiscussion/useBookDisscussion';
 import { BookDiscussionInfo, GetBookDiscussion } from '../../types';
 
 interface BookDiscussionTop10Props {
@@ -11,39 +10,46 @@ interface BookDiscussionTop10Props {
 }
 
 function BookDiscussionTop10({ bookDiscussion }: BookDiscussionTop10Props) {
-  const PAGESUM = bookDiscussion?.posts.length || 10;
   const PERPAGE = 5;
+  const PAGESUM = bookDiscussion?.posts.length || 10;
+  const currentIndexRef = useRef(0);
 
   const perPost: BookDiscussionInfo[] =
     bookDiscussion?.posts.slice(0, PERPAGE) || [];
   const [posts, setPosts] = useState<BookDiscussionInfo[]>(perPost);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? Math.floor(PAGESUM / PERPAGE) + 1 : prevIndex - 1,
-    );
+    currentIndexRef.current =
+      currentIndexRef.current === 0
+        ? Math.floor(PAGESUM / PERPAGE) + 1
+        : currentIndexRef.current - 1;
+    updatePosts();
   };
 
   const hadleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === PAGESUM % PERPAGE ? 0 : prevIndex + 1,
-    );
+    currentIndexRef.current =
+      currentIndexRef.current === PAGESUM % PERPAGE
+        ? 0
+        : currentIndexRef.current + 1;
+    updatePosts();
   };
 
-  useEffect(() => {
+  const updatePosts = () => {
     if (bookDiscussion) {
       setPosts(
-        bookDiscussion.posts.slice(currentIndex, currentIndex + PERPAGE),
+        bookDiscussion.posts.slice(
+          currentIndexRef.current,
+          currentIndexRef.current + PERPAGE,
+        ),
       );
     }
-  }, [currentIndex]);
+  };
 
   return (
     <BookDiscussionTop10Container>
       <ArrowLeftIcon onClick={handlePrev} />
       {posts.map((post) => (
-        <BookDiscussionTop10Card post={post} />
+        <BookDiscussionTop10Card key={post.id} post={post} />
       ))}
       <ArrowRightIcon onClick={hadleNext} />
     </BookDiscussionTop10Container>
