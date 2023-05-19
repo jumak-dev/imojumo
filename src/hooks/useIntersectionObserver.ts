@@ -5,7 +5,7 @@ interface IntersectionObserverCallback {
 }
 
 type useIntersectionObserverProps = {
-  root?: null;
+  root?: HTMLElement | null;
   rootMargin?: string;
   threshold?: number;
   onIntersect: IntersectionObserverCallback;
