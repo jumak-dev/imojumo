@@ -2,21 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
-import { PageInfo } from '../../../types';
+import { PaginationType } from '../../../types';
 import { flex } from '../../../styles/shared';
 
-interface PaginationProps {
-  paginationInfo: PageInfo;
-  currentPage: number;
-  setPaginate: React.Dispatch<React.SetStateAction<number>>;
-}
-
-function Pagination({
-  currentPage,
-  setPaginate,
-  paginationInfo,
-}: PaginationProps) {
-  const { page, totalPage } = paginationInfo;
+function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
+  const { page, totalPage } = pageInfo;
   const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
 
   return (

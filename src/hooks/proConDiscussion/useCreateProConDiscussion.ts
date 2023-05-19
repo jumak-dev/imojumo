@@ -1,7 +1,7 @@
 import {
   CreateProConDiscussionType,
   createProConDiscussion,
-} from '../../apis/imojumo/proConDiscussion';
+} from '../../apis/imojumo/proConDiscussions';
 import useMutate from '../useMutate';
 
 const useCreateProConDiscussion = () => {

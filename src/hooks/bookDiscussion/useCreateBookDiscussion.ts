@@ -1,6 +1,6 @@
 import {
   CreateBookDiscussionsType,
-  createBookDiscussions,
+  createBookDiscussion,
 } from '../../apis/imojumo/bookDisccusions';
 
 import useMutate from '../useMutate';
@@ -10,7 +10,7 @@ const useCreateBookDiscussion = () => {
     CreateBookDiscussionsType,
     any
   >({
-    fetchFn: createBookDiscussions,
+    fetchFn: createBookDiscussion,
   });
 
   return { mutate, data, error, isLoading };

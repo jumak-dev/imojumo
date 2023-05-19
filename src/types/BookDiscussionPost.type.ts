@@ -14,13 +14,13 @@ export interface BookDiscussionInfo {
 }
 
 export interface GetBookDiscussion {
-  pageInfo?: PageInfo;
-  posts?: BookDiscussionInfo[];
+  pageInfo: PageInfo;
+  posts: BookDiscussionInfo[];
 }
 
 type OrderBy = 'lastest' | 'popular';
 
-export interface GetBookDiscussionType extends GetBookDiscussion {
+export interface GetBookDiscussionType {
   page: number;
   limit: number;
   orderBy?: OrderBy;

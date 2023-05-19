@@ -1,3 +1,5 @@
+import { PageInfo } from './index';
+
 export interface ProConDiscussionInfo {
   id: number;
   author: string;
@@ -12,6 +14,16 @@ export interface ProConDiscussionInfo {
   conLeader: ProConLeader | null;
 }
 
+export interface GetProConDiscussion {
+  posts: ProConDiscussionInfo[];
+  pageInfo: PageInfo;
+}
+
+export interface GetProConDiscussionType {
+  page: number;
+  limit: number;
+}
+
 export interface ProConLeader {
   username: string;
   avatarUrl: string | null;
@@ -21,4 +33,14 @@ export interface ProConDiscussionRequest {
   title: string;
   content: string;
   isPro: boolean;
+}
+
+export interface GetProConDiscussionDetailType {
+  id: number;
+  token: string;
+}
+
+export interface UseProConDiscussionType extends GetProConDiscussionType {
+  isSuspense?: boolean;
+  isErrorBoundary?: boolean;
 }
