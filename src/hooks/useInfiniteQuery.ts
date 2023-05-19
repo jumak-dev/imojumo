@@ -92,7 +92,7 @@ function useInfiniteQuery<T>({
   }, [fetchFn]);
 
   useEffect(() => {
-    setResults([]);
+    currentPage.current = 1;
     if (enabled) {
       fetch();
     }
