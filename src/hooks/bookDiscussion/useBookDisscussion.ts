@@ -5,13 +5,14 @@ import { UseBookDiscussionType, GetBookDiscussion } from '../../types';
 function useBookDiscussion({
   page,
   limit,
+  token = '',
   orderBy = 'lastest',
   isSuspense = false,
   isErrorBoundary = false,
 }: UseBookDiscussionType) {
   const { data, isLoading, error } = useQuery<any, GetBookDiscussion>({
     fetchFn: getBookDiscussions,
-    arg: { page, limit, orderBy },
+    arg: { page, limit, token, orderBy },
     isErrorBoundary,
     isSuspense,
   });

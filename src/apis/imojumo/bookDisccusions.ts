@@ -39,6 +39,7 @@ export async function createBookDiscussion({
 export async function getBookDiscussions({
   page,
   limit,
+  token = '',
   orderBy = 'lastest',
 }: GetBookDiscussionType) {
   const response = await request({
@@ -48,6 +49,7 @@ export async function getBookDiscussions({
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '12',
+        ...(token && { Authorization: token }),
       },
     },
   });
@@ -65,7 +67,7 @@ export async function getBookDiscussionDetail(
       method: 'GET',
       headers: {
         'ngrok-skip-browser-warning': '12',
-        ...(token && { tokenAuthorization: `Bearer ${token}` }),
+        ...(token && { Authorization: token }),
       },
     },
   });

@@ -7,7 +7,7 @@ export interface Banner {
 }
 
 interface IProps {
-  banners: Banner[];
+  banners: readonly Banner[];
   activeIndex: number;
 }
 

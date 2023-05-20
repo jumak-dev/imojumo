@@ -15,7 +15,7 @@ interface RecommendedBookCardProps {
 
 function RecommendedBookCard({ recommendedBook }: RecommendedBookCardProps) {
   return (
-    <CardContainer to={`/books/:${1}`}>
+    <CardContainer to={`/books/${recommendedBook.isbn}`}>
       <CardSideBlock />
       <CardBolck>
         <BookCover src={recommendedBook.cover} alt="추천 도서 이미지" />

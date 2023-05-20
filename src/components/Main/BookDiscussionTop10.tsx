@@ -1,67 +1,83 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Card } from '../UI/Card/Card';
-import LikeIcon from '../UI/Icon/LikeIcon';
-import UnlikeIcon from '../UI/Icon/UnlikeIcon';
-import { colFlex, flex, truncateTextCSS } from '../../styles/shared';
+import { useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
+import { flex } from '../../styles/shared';
+import BookDiscussionTop10Card from './BookDiscussionTop10Card';
+import { BookDiscussionInfo, GetBookDiscussion } from '../../types';
 
-function BookDiscussionTop10() {
-  const [isLiked, setIsLiked] = useState(false);
-  const title = '미드나잇 라이브러리';
+interface BookDiscussionTop10Props {
+  bookDiscussion: GetBookDiscussion | undefined;
+}
 
-  // 임시로 사용하는 이미지 URL입니다!
-  const imageUrl =
-    'https://image.aladin.co.kr/product/28448/6/cover500/k212835618_2.jpg';
+function BookDiscussionTop10({ bookDiscussion }: BookDiscussionTop10Props) {
+  const PERPAGE = 5;
+  const PAGESUM = bookDiscussion?.posts.length || 10;
+  const currentIndexRef = useRef(0);
 
-  const handleLikeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsLiked(!isLiked);
+  const perPost: BookDiscussionInfo[] =
+    bookDiscussion?.posts.slice(0, PERPAGE) || [];
+  const [posts, setPosts] = useState<BookDiscussionInfo[]>(perPost);
+
+  const handlePrev = () => {
+    currentIndexRef.current =
+      currentIndexRef.current === 0
+        ? Math.floor(PAGESUM / PERPAGE) + 1
+        : currentIndexRef.current - 1;
+    updatePosts();
+  };
+
+  const hadleNext = () => {
+    currentIndexRef.current =
+      currentIndexRef.current === PAGESUM % PERPAGE
+        ? 0
+        : currentIndexRef.current + 1;
+    updatePosts();
+  };
+
+  const updatePosts = () => {
+    if (bookDiscussion) {
+      setPosts(
+        bookDiscussion.posts.slice(
+          currentIndexRef.current,
+          currentIndexRef.current + PERPAGE,
+        ),
+      );
+    }
   };
 
   return (
-    <CardContainer to="/book-dissscusion" radius="20px" margin="5px">
-      {!isLiked ? (
-        <UnlikeIcon onClick={handleLikeClick} />
-      ) : (
-        <LikeIcon onClick={handleLikeClick} />
-      )}
-      <CardImage src={imageUrl} alt="독서토론 도서 이미지" />
-      <CardTitleWrap>
-        <CardTitle>{title}</CardTitle>
-      </CardTitleWrap>
-    </CardContainer>
+    <BookDiscussionTop10Container>
+      <ArrowLeftIcon onClick={handlePrev} />
+      {posts.map((post) => (
+        <BookDiscussionTop10Card key={post.id} post={post} />
+      ))}
+      <ArrowRightIcon onClick={hadleNext} />
+    </BookDiscussionTop10Container>
   );
 }
 
-const CardContainer = styled(Link)`
-  ${Card}
-  ${colFlex}
-  border: none;
-  width: 175px;
-  height: 240px;
-  margin: 10px 15px;
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px, rgba(0, 0, 0, 0.12) 0px 1px 2px;
+const BookDiscussionTop10Container = styled.section`
+  ${flex};
+  margin: 10px;
 `;
 
-const CardImage = styled.img`
-  height: 70%;
-  object-fit: cover;
-  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+const arrowIconCSS = css`
+  font-size: 35px;
+  cursor: pointer;
+  color: #cacaca;
+
+  &:hover {
+    color: #b8b8b8;
+    transform: scale(0.9);
+  }
 `;
 
-const CardTitleWrap = styled.div`
-  ${flex}
-  flex: 1;
+const ArrowLeftIcon = styled(SlArrowLeft)`
+  ${arrowIconCSS}
 `;
 
-const CardTitle = styled.p`
-  ${truncateTextCSS}
-  -webkit-line-clamp: 3;
-  margin: 5px 10px;
-  font-weight: bold;
-  font-size: var(--font-size-m);
+const ArrowRightIcon = styled(SlArrowRight)`
+  ${arrowIconCSS}
 `;
 
 export default BookDiscussionTop10;
