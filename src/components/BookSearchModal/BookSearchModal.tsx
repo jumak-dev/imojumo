@@ -7,11 +7,12 @@ import BookSearchList from './BookSearchList';
 import BookSearchListItem from './BookSearchListItem';
 
 import { flex, screenReaderTextCSS } from '../../styles/shared';
-import useSearchAladinBook from '../../hooks/aladin/useAladinBookInfiniteQuery';
-import useOnClickOutside from '../../hooks/useOnClickOutside';
-import { AladinBookSearchItem } from '../../types';
-import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+
 import Loading from '../UI/Loading/Loading';
+import { AladinBookSearchItem } from '../../types';
+import useOnClickOutside from '../../hooks/useOnClickOutside';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import useAladinBookInfiniteQuery from '../../hooks/aladin/useAladinBookInfiniteQuery';
 
 interface BookSearchModalProps {
   query: string;
@@ -30,7 +31,7 @@ function BookSearchModal({ query, onClick, onClose }: BookSearchModalProps) {
     fetchNextPage,
     hasNextPage,
     isNoResult,
-  } = useSearchAladinBook({
+  } = useAladinBookInfiniteQuery({
     query,
     parameter: 'ItemSearch.aspx',
   });
@@ -41,7 +42,6 @@ function BookSearchModal({ query, onClick, onClose }: BookSearchModalProps) {
   });
 
   useOnClickOutside(bookSearchModalCardRef, onClose);
-  console.log(hasNextPage);
 
   return (
     <BookSearchModalCard ref={bookSearchModalCardRef}>

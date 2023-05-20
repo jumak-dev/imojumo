@@ -15,7 +15,6 @@ function useAladinBookInfiniteQuery({
     results: AladinBookSearchResult[],
   ) => {
     const totalCount = results.reduce((acc, cur) => acc + cur.item.length, 0);
-    console.log(totalCount, lastResult, lastResult?.totalResults);
     if (totalCount < lastResult?.totalResults) {
       return Number(lastResult.startIndex) + 1;
     }
