@@ -1,10 +1,11 @@
 import { Outlet } from 'react-router-dom';
 
 import GlobalStyle from '../styles/GlobalStyle';
+import TabProvider from '../context/TabContext';
 import Header from '../components/Layout/Header/Header';
 import Footer from '../components/Layout/Footer/Footer';
-import Banner from '../components/Main/Banner';
-import TabProvider from '../context/TabContext';
+import BANNERS from '../constants/Banners';
+import Carousel from '../components/UI/Carousel/Carousel';
 
 // Header, Footer가 들어간 Page Root
 export function Root() {
@@ -26,7 +27,7 @@ export function Home() {
     <>
       <GlobalStyle />
       <Header />
-      <Banner />
+      <Carousel banners={BANNERS} interval={4000} />
       <Outlet />
       <Footer />
     </>
