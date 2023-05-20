@@ -65,7 +65,7 @@ export async function getProConDiscussionDetail(
       method: 'GET',
       headers: {
         'ngrok-skip-browser-warning': '12',
-        ...(token && { tokenAuthorization: `Bearer ${token}` }),
+        ...(token && { Authorization: token }),
       },
     },
   });
