@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
-import { colFlex, flex, truncateTextCSS } from '../../styles/shared';
 import { BookDiscussionInfo } from '../../types';
+import { colFlex, flex, truncateTextCSS } from '../../styles/shared';
 
 interface BookDiscussionTop10CardProps {
   post: BookDiscussionInfo;
@@ -20,7 +20,11 @@ function BookDiscussionTop10Card({ post }: BookDiscussionTop10CardProps) {
   };
 
   return (
-    <CardContainer to="/book-dissscusion" radius="20px" margin="5px">
+    <CardContainer
+      to={`/book-discussion/${post.id}`}
+      radius="20px"
+      margin="5px"
+    >
       {!isLiked ? (
         <UnlikeIcon onClick={handleLikeClick} />
       ) : (
