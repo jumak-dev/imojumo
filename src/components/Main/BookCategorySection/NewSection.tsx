@@ -32,10 +32,18 @@ function NewSection({
           <ProConDiscussionListItem key={post.id} proConDiscussionInfo={post} />
         ))}
         {bookDiscussion?.map((post) => (
-          <NewSectionListItem key={post.id} bookInfo={post.book} />
+          <NewSectionListItem
+            key={post.id}
+            bookInfo={post.book}
+            path={`/book-discussion/${post.id}`}
+          />
         ))}
         {newBook?.map((item) => (
-          <NewSectionListItem key={item.itemId} bookInfo={item} />
+          <NewSectionListItem
+            key={item.itemId}
+            bookInfo={item}
+            path={`/books/${item.isbn}`}
+          />
         ))}
       </ListContainer>
     </NewSectionContainer>

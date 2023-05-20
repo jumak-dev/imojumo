@@ -7,6 +7,7 @@ import {
   justifyEnd,
   truncateTextCSS,
 } from '../../styles/shared';
+import scrollTop from '../../utils/ScrollTop';
 import { AladinBookSearchItem } from '../../types';
 
 interface RecommendedBookCardProps {
@@ -15,7 +16,7 @@ interface RecommendedBookCardProps {
 
 function RecommendedBookCard({ recommendedBook }: RecommendedBookCardProps) {
   return (
-    <CardContainer to={`/books/:${1}`}>
+    <CardContainer to={`/books/${recommendedBook.isbn}`} onClick={scrollTop}>
       <CardSideBlock />
       <CardBolck>
         <BookCover src={recommendedBook.cover} alt="추천 도서 이미지" />

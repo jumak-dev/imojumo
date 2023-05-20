@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FiUser } from 'react-icons/fi';
 import { colFlex } from '../../../styles/shared';
+import scrollTop from '../../../utils/ScrollTop';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { ListItem, ListItemTitle } from './NewSectionListItem';
 
@@ -20,7 +21,12 @@ function ProConDiscussionListItem({
     <ListItem>
       <UserIcon isPro />
       <ListItemInfo>
-        <ListItemTitle>{proConDiscussionInfo.title}</ListItemTitle>
+        <ListItemTitle
+          to={`/pro-con-discussion/${proConDiscussionInfo.id}`}
+          onClick={scrollTop}
+        >
+          {proConDiscussionInfo.title}
+        </ListItemTitle>
         <ProgressBar
           isDisplayContent
           barWidth="100%"
