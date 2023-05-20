@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { AiOutlineRise } from 'react-icons/ai';
-import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { flex, alignCenter } from '../styles/shared';
 import MainContainer from '../styles/layout';
 import RecommendedBookCard from '../components/Main/RecommendedBookCard';
 import BookDiscussionTop10 from '../components/Main/BookDiscussionTop10';
 import NewSection from '../components/Main/BookCategorySection/NewSection';
+import URL from '../constants/URL';
 
 import useAladinBook from '../hooks/aladin/useAladinBook';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
@@ -37,7 +37,7 @@ function HomePage() {
 
   const { data: bookDiscussionTop10 } = useBookDiscussion({
     page: 1,
-    limit: 3,
+    limit: 10,
     orderBy: 'popular',
   });
 
@@ -56,31 +56,27 @@ function HomePage() {
         <Subtitle>Top 10 독서토론</Subtitle>
         <RiseIcon />
       </TitleContainer>
-      <FlexContainer>
-        {/* 캐러셸 추가하면 삭제 */}
-        <IconWrap>
-          <SlArrowLeft size={35} />
-        </IconWrap>
-        <BookDiscussionTop10 />
-        <BookDiscussionTop10 />
-        <BookDiscussionTop10 />
-        <BookDiscussionTop10 />
-        <BookDiscussionTop10 />
-        {/* 캐러셸 추가하면 삭제 */}
-        <IconWrap>
-          <SlArrowRight size={35} />
-        </IconWrap>
-      </FlexContainer>
+      {bookDiscussionTop10 && (
+        <BookDiscussionTop10 bookDiscussion={bookDiscussionTop10} />
+      )}
       <FlexContainer>
         <NewSection
           subtitle="독서토론"
           bookDiscussion={bookDiscussion?.posts}
+          imageUrl={
+            bookDiscussion?.posts[0].book?.cover || URL.DEFAULT_BOOK_IMAGE_URL
+          }
         />
         <NewSection
           subtitle="찬반토론"
           proConDiscussion={proConDiscussion?.posts}
+          imageUrl={URL.DEFAULT_BOOK_IMAGE_URL}
         />
-        <NewSection subtitle="신간도서" newBook={newBook?.item} />
+        <NewSection
+          subtitle="신간도서"
+          newBook={newBook?.item}
+          imageUrl={newBook?.item[0].cover || URL.DEFAULT_BOOK_IMAGE_URL}
+        />
       </FlexContainer>
     </MainContainer>
   );
@@ -97,7 +93,7 @@ const Subtitle = styled.h2`
   margin: 80px 0 30px 20px;
 `;
 
-const FlexContainer = styled.div`
+const FlexContainer = styled.article`
   ${flex}
   margin: 10px;
 `;
@@ -115,15 +111,6 @@ const BookIcon = styled(GoBook)`
 const RiseIcon = styled(AiOutlineRise)`
   ${iconCSS}
   color: var(--color-primary-pink);
-`;
-
-// 캐러셸 추가하면 삭제
-const IconWrap = styled.button`
-  color: #cacaca;
-
-  &:hover {
-    color: #b8b8b8;
-  }
 `;
 
 export default HomePage;

@@ -23,6 +23,7 @@ type OrderBy = 'lastest' | 'popular';
 export interface GetBookDiscussionType {
   page: number;
   limit: number;
+  token?: string;
   orderBy?: OrderBy;
 }
 

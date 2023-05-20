@@ -4,7 +4,7 @@ import CarouselArrowButton from './CarouselArrowButton';
 import CarouselList, { Banner } from './CarouselList';
 
 interface IProps {
-  banners: Banner[];
+  banners: readonly Banner[];
   style?: React.CSSProperties;
   isDisplayArrowButton?: boolean;
   interval?: number;
@@ -53,7 +53,7 @@ function Carousel({
 const Container = styled.section`
   position: relative;
   width: 100%;
-  height: 450px;
+  height: 400px;
 `;
 
 export default Carousel;

@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import TAB from '../../constants/Tab';
-import { alignCenter } from '../../styles/shared';
 import { TabContext } from '../../context/TabContext';
+import { alignCenter, fontCSS } from '../../styles/shared';
 
 interface SubtitleSectionProps {
   subtitle: string;
@@ -40,11 +40,6 @@ const SubtitleBlock = styled.div`
   ${alignCenter}
   margin: 50px 10px;
   position: relative;
-`;
-
-const fontCSS = css`
-  font-weight: 700;
-  font-size: var(--font-size-l);
 `;
 
 const Subtitle = styled.h2`

@@ -1,17 +1,19 @@
 import styled from 'styled-components';
-import { flex, truncateTextCSS } from '../../../styles/shared';
+import { Link } from 'react-router-dom';
 import { Book, AladinBookSearchItem } from '../../../types';
+import { flex, truncateTextCSS } from '../../../styles/shared';
 
 interface NewSectionListItemProps {
   bookInfo: Book | AladinBookSearchItem | undefined;
+  path: string;
 }
 
-function NewSectionListItem({ bookInfo }: NewSectionListItemProps) {
+function NewSectionListItem({ bookInfo, path }: NewSectionListItemProps) {
   return (
     <ListItem>
       <ListItemThumnail src={bookInfo?.imageUrl} alt="썸네일 이미지" />
       <ListItemInfo>
-        <ListItemTitle>{bookInfo?.title}</ListItemTitle>
+        <ListItemTitle to={path}>{bookInfo?.title}</ListItemTitle>
         <ListItemDescription>{bookInfo?.description}</ListItemDescription>
       </ListItemInfo>
     </ListItem>
@@ -35,7 +37,7 @@ const ListItemThumnail = styled.img`
   object-fit: cover;
 `;
 
-export const ListItemTitle = styled.p`
+export const ListItemTitle = styled(Link)`
   ${truncateTextCSS}
 
   font-size: var(--font-size-m);

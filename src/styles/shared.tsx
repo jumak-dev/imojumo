@@ -94,6 +94,11 @@ export const discussionCardContainerCSS = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
-  gap: 40px;
+  gap: 80px;
   margin-bottom: 60px;
+`;
+
+export const fontCSS = css`
+  font-weight: 700;
+  font-size: var(--font-size-l);
 `;
