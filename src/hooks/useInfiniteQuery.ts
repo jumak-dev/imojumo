@@ -29,10 +29,8 @@ function useInfiniteQuery<T>({
   const [error, setError] = useState<Error>();
   const currentPage = useRef<number | undefined>(1);
 
-  const resolveFirstPromise = (promiseResult: T) => {
+  const handleSuccess = (promiseResult: T) => {
     setStatus(PROMISE_STATUS.FULFILLED);
-
-    setResults([promiseResult]);
 
     if (onSuccess && typeof onSuccess === 'function') {
       onSuccess(promiseResult);
@@ -43,18 +41,14 @@ function useInfiniteQuery<T>({
     }
   };
 
+  const resolveFirstPromise = (promiseResult: T) => {
+    setResults([promiseResult]);
+    handleSuccess(promiseResult);
+  };
+
   const resolvePromise = (promiseResult: T) => {
-    setStatus(PROMISE_STATUS.FULFILLED);
-
     setResults((prevResults) => [...prevResults, promiseResult]);
-
-    if (onSuccess && typeof onSuccess === 'function') {
-      onSuccess(promiseResult);
-    }
-
-    if (onSettled && typeof onSettled === 'function') {
-      onSettled(promiseResult, null);
-    }
+    handleSuccess(promiseResult);
   };
 
   const rejectPromise = (promiseError: Error) => {
