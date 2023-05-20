@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Card } from '../UI/Card/Card';
+import URL from '../../constants/URL';
+import getRate from '../../utils/Rate';
 import { ProConDiscussionInfo } from '../../types';
 import UserProfile from '../UI/UserProfile/UserProfile';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
@@ -16,21 +18,12 @@ interface ProConDiscussionCardProps {
   procondiscussionData: ProConDiscussionInfo;
 }
 
-const userImageUrl =
-  'https://www.thechooeok.com/common/img/default_profile.png';
-
-const noneImageUrl =
-  'https://www.pngitem.com/pimgs/m/80-806189_red-x-circle-icon-hd-png-download.png';
-
 function ProConDiscussionCard({
   procondiscussionData,
 }: ProConDiscussionCardProps) {
   const proLeader = procondiscussionData.proLeader?.username;
   const conLeader = procondiscussionData.conLeader?.username;
-  const { proCount } = procondiscussionData;
-  const proRate = String(
-    (proCount / (proCount + procondiscussionData.conCount)) * 100,
-  );
+  const { proCount, conCount } = procondiscussionData;
 
   return (
     <CardContainer to={`/pro-con-discussion/${procondiscussionData.id}`}>
@@ -39,9 +32,11 @@ function ProConDiscussionCard({
           찬성측
         </ProConLeaderTag>
         <UserProfile
-          avatar={userImageUrl || noneImageUrl}
+          avatar={
+            procondiscussionData.proLeader?.avatarUrl || URL.NONE_AVATA_URL
+          }
           alt="찬성측 프로필 이미지"
-          itemGap="24px"
+          itemGap="20px"
           nickname={proLeader || ''}
           size="md"
         />
@@ -53,7 +48,7 @@ function ProConDiscussionCard({
           isDisplayContent
           barWidth="70%"
           barHeight="20px"
-          value={proRate}
+          value={String(getRate(proCount, proCount + conCount))}
           size="md"
         />
       </DiscussionInfoWrap>
@@ -62,9 +57,11 @@ function ProConDiscussionCard({
           반대측
         </ProConLeaderTag>
         <UserProfile
-          avatar={userImageUrl || noneImageUrl}
+          avatar={
+            procondiscussionData.conLeader?.avatarUrl || URL.NONE_AVATA_URL
+          }
           alt="찬성측 프로필 이미지"
-          itemGap="24px"
+          itemGap="20px"
           nickname={conLeader || ''}
           size="md"
         />
@@ -76,11 +73,10 @@ function ProConDiscussionCard({
 const CardContainer = styled(Link)`
   ${Card};
   ${flex}
-  gap: 50px;
   width: 970px;
   height: 250px;
   padding: 30px;
-  margin: 50px 0;
+  margin: 40px 0;
 `;
 
 const Title = styled.h3`
@@ -97,7 +93,7 @@ const Content = styled.p`
 
 const ProfileBox = styled.div`
   ${profileBoxCSS}
-  flex: 2;
+  flex: 1;
   height: 100%;
   padding-top: 10px;
   justify-content: flex-start;
@@ -107,6 +103,7 @@ const DiscussionInfoWrap = styled.div`
   ${colFlex};
   gap: 20px;
   align-items: center;
+  width: 580px;
 `;
 
 export default ProConDiscussionCard;
