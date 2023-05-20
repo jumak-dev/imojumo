@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PROMISE_STATUS from '../constants/Promise';
 import { APIError, PromiseStatusType } from '../types';
 
-interface UseQueryProps<I, T> {
-  fetchFn: (args: I) => Promise<T>;
-  arg: I;
+interface UseInfiniteQueryProps<T> {
+  fetchFn: (page: number) => Promise<T>;
+  getNextPageParam: (data: T, datas: T[]) => number | undefined;
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
   onSuccess?: (data: T | null) => void;
@@ -13,25 +13,24 @@ interface UseQueryProps<I, T> {
   enabled?: boolean;
 }
 
-function useQuery<I, T>({
+function useInfiniteQuery<T>({
   fetchFn,
-  arg,
+  getNextPageParam,
   isSuspense = false,
   isErrorBoundary = false,
   enabled = true,
   onSuccess,
   onError,
   onSettled,
-}: UseQueryProps<I, T>) {
+}: UseInfiniteQueryProps<T>) {
   const [promise, setPromise] = useState<Promise<void>>();
   const [status, setStatus] = useState<PromiseStatusType>(PROMISE_STATUS.IDLE);
-  const [result, setResult] = useState<T>();
+  const [results, setResults] = useState<T[]>([]);
   const [error, setError] = useState<Error>();
-  const serializedArg = JSON.stringify(arg);
+  const currentPage = useRef<number | undefined>(1);
 
-  const resolvePromise = (promiseResult: T) => {
+  const handleSuccess = (promiseResult: T) => {
     setStatus(PROMISE_STATUS.FULFILLED);
-    setResult(promiseResult);
 
     if (onSuccess && typeof onSuccess === 'function') {
       onSuccess(promiseResult);
@@ -41,9 +40,21 @@ function useQuery<I, T>({
       onSettled(promiseResult, null);
     }
   };
+
+  const resolveFirstPromise = (promiseResult: T) => {
+    setResults([promiseResult]);
+    handleSuccess(promiseResult);
+  };
+
+  const resolvePromise = (promiseResult: T) => {
+    setResults((prevResults) => [...prevResults, promiseResult]);
+    handleSuccess(promiseResult);
+  };
+
   const rejectPromise = (promiseError: Error) => {
     setStatus(PROMISE_STATUS.ERROR);
     setError(promiseError);
+
     if (onError && typeof onError === 'function') {
       onError(promiseError);
     }
@@ -54,13 +65,50 @@ function useQuery<I, T>({
   };
 
   const fetch = useCallback(() => {
+    if (currentPage.current === undefined) {
+      return;
+    }
+
     setStatus(PROMISE_STATUS.PENDING);
-    setPromise(fetchFn(arg).then(resolvePromise, rejectPromise));
-  }, [serializedArg]);
+    setPromise(
+      fetchFn(currentPage.current).then(resolveFirstPromise, rejectPromise),
+    );
+  }, [fetchFn]);
+
+  const fetchNextPage = useCallback(() => {
+    if (currentPage.current === undefined) {
+      return;
+    }
+
+    setStatus(PROMISE_STATUS.PENDING);
+    setPromise(
+      fetchFn(currentPage.current).then(resolvePromise, rejectPromise),
+    );
+  }, [fetchFn]);
+
+  const refetch = useCallback(() => {
+    if (results.length > 0 && currentPage.current !== undefined) {
+      currentPage.current -= 1;
+      setResults((prevResults) =>
+        prevResults.splice(0, prevResults.length - 1),
+      );
+    }
+    fetchNextPage();
+  }, [fetchFn]);
 
   useEffect(() => {
-    if (enabled) fetch();
-  }, [serializedArg]);
+    currentPage.current = 1;
+    if (enabled) {
+      fetch();
+    }
+  }, []);
+
+  useEffect(() => {
+    currentPage.current = getNextPageParam(
+      results[results.length - 1],
+      results,
+    );
+  }, [results]);
 
   if (isSuspense && status === PROMISE_STATUS.PENDING && promise) {
     throw promise;
@@ -71,12 +119,14 @@ function useQuery<I, T>({
   }
 
   return {
-    isLoading: status === PROMISE_STATUS.PENDING,
     error,
-    data: result,
-    refetch: fetch,
-    setData: setResult,
+    refetch,
+    fetchNextPage,
+    data: results,
+    setData: setResults,
+    hasNextPage: currentPage.current !== undefined,
+    isLoading: status === PROMISE_STATUS.PENDING,
   };
 }
 
-export default useQuery;
+export default useInfiniteQuery;
