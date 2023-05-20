@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colFlex, flex, screenReaderTextCSS } from '../../styles/shared';
 import { ButtonBox } from '../UI/Button/Button';
 import { Card } from '../UI/Card/Card';
@@ -8,11 +8,12 @@ import Textarea from '../UI/Textarea/Textarea';
 import UserProfile from '../UI/UserProfile/UserProfile';
 
 interface DiscussionInputsProps {
-  avatar: string;
+  avatar: string | null;
   title: string;
   content: string;
   containerHeight: string;
   isProConDiscussion?: boolean;
+  isPro?: boolean;
   onProButtonClick?: () => void;
   onConButtonClick?: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,6 +24,7 @@ function DiscussionInputs({
   title,
   content,
   containerHeight,
+  isPro,
   onProButtonClick,
   onConButtonClick,
   onChange,
@@ -48,6 +50,7 @@ function DiscussionInputs({
               buttonColor="mint"
               buttonSize="m"
               onClick={onProButtonClick}
+              isAcitve={isPro}
             >
               찬성
             </ProConButton>
@@ -57,6 +60,7 @@ function DiscussionInputs({
               buttonColor="pink"
               buttonSize="m"
               onClick={onConButtonClick}
+              isAcitve={!isPro}
             >
               반대
             </ProConButton>
@@ -101,9 +105,18 @@ const ButtonContainer = styled.div`
   justify-content: flex-start;
 `;
 
-const ProConButton = styled(ButtonBox)`
+const buttonActiveCSS = css`
+  pointer-events: none;
+`;
+
+const buttonDeactivateCSS = css`
+  filter: brightness(75%);
+`;
+
+const ProConButton = styled(ButtonBox)<{ isAcitve: boolean }>`
   width: 120px;
   height: 40px;
+  ${({ isAcitve }) => (isAcitve ? buttonActiveCSS : buttonDeactivateCSS)}
 `;
 
 const DiscussionInputContainer = styled.div`

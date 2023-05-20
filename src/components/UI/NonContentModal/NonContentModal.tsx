@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import styled from 'styled-components';
 import NonContentModalPortal from './NonContentModalPortal';
 import { Card } from '../Card/Card';
 
 interface Props {
-  showModal: boolean;
   children: React.ReactNode;
   [rest: string]: any;
 }
 
-function NonContentModal({ showModal, children, ...rest }: Props) {
-  return showModal ? (
+function NonContentModal(
+  { children, ...rest }: Props,
+  ref: React.ForwardedRef<HTMLElement>,
+) {
+  useEffect(() => {
+    const $body = document.querySelector('body');
+    let prevOverflow = 'auto';
+
+    if ($body) {
+      prevOverflow = $body.style.overflow;
+      $body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      if ($body) {
+        $body.style.overflow = prevOverflow;
+      }
+    };
+  }, []);
+
+  return (
     <NonContentModalPortal>
-      <Modal {...rest}>{children}</Modal>
+      <Modal {...rest} ref={ref}>
+        {children}
+      </Modal>
     </NonContentModalPortal>
-  ) : null;
+  );
 }
 
 const Modal = styled.section`
   ${Card}
 `;
 
-export default NonContentModal;
+export default forwardRef(NonContentModal);
