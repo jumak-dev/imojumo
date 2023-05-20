@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import scrollTop from '../../../utils/ScrollTop';
 import { Book, AladinBookSearchItem } from '../../../types';
 import { flex, truncateTextCSS } from '../../../styles/shared';
 
@@ -14,9 +13,7 @@ function NewSectionListItem({ bookInfo, path }: NewSectionListItemProps) {
     <ListItem>
       <ListItemThumnail src={bookInfo?.imageUrl} alt="썸네일 이미지" />
       <ListItemInfo>
-        <ListItemTitle to={path} onClick={scrollTop}>
-          {bookInfo?.title}
-        </ListItemTitle>
+        <ListItemTitle to={path}>{bookInfo?.title}</ListItemTitle>
         <ListItemDescription>{bookInfo?.description}</ListItemDescription>
       </ListItemInfo>
     </ListItem>
