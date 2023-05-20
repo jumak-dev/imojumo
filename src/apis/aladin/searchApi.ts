@@ -46,7 +46,7 @@ async function searchAladinBook({
   query = '',
   queryType = 'Title',
   sort = 'Accuracy',
-  cover = 'Mid',
+  cover = 'Big',
   categoryId = 0,
   start = 1,
   maxResults = 10,
