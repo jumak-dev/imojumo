@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import styled from 'styled-components';
 import { AiFillHeart } from 'react-icons/ai';
+
 import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
 import { BookDiscussionInfo } from '../../types';
 import { alignCenter, truncateTextCSS } from '../../styles/shared';
+
 import { jwtAtom } from '../../recoil/atoms';
 
 import useCreateLike from '../../hooks/postLike/useCreateLike';
@@ -16,6 +18,7 @@ import useDeleteLike from '../../hooks/postLike/useDeleteLike';
 
 interface BookDiscussionCardProps {
   bookDiscussionData: BookDiscussionInfo;
+  handleUpdateLike: (postId: number, likeCount: number | undefined) => void;
 }
 
 // 임시로 사용하는 이미지 URL입니다!
@@ -25,20 +28,31 @@ export const imageUrl =
 export const profileUrl =
   'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
 
-function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
+function BookDiscussionCard({
+  bookDiscussionData,
+  handleUpdateLike,
+}: BookDiscussionCardProps) {
   const [isLiked, setIsLiked] = useState(bookDiscussionData.postLikedByUser);
   const bookDiscussionDate = dayjs(bookDiscussionData.createdAt).format(
     'YYYY.MM.DD',
   );
 
   const token = useRecoilValue(jwtAtom);
+  const postId = bookDiscussionData.id;
+
   const { mutate: createLike } = useCreateLike({
+    onSuccess: (likeCount) => {
+      handleUpdateLike(postId, likeCount?.likeCount);
+    },
     onError: (error) => {
       console.log(error);
     },
   });
 
   const { mutate: deleteLike } = useDeleteLike({
+    onSuccess: (likeCount) => {
+      handleUpdateLike(postId, likeCount?.likeCount);
+    },
     onError: (error) => {
       console.log(error);
     },
@@ -62,9 +76,10 @@ function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
     setIsLiked(!isLiked);
   };
 
+  // ! 프로필 업데이트 되면 추가하기
   return (
     <CardContainer
-      to={`/book-discussions/${bookDiscussionData.id}`}
+      to={`/book-discussion/${bookDiscussionData.id}`}
       radius="8px"
     >
       {!isLiked ? (
@@ -72,7 +87,7 @@ function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
       ) : (
         <LikeIcon onClick={handleLikeClick} size={25} />
       )}
-      <BookImage src={imageUrl} />
+      <BookImage src={bookDiscussionData.book?.cover} />
       <DiscussionInfoContainer>
         <DiscussionInfoBox>
           <DiscussionTitle>{bookDiscussionData.title}</DiscussionTitle>
