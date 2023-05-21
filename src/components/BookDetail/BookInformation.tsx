@@ -79,46 +79,49 @@ const InformationContainer = styled.div`
   ${rowFlex}
   margin: 24px 0;
   padding: 0 24px;
+  gap: 48px;
 `;
 
 const BookImage = styled.img`
-  width: 240px;
-  height: 360px;
+  width: 200px;
+  height: 300px;
   border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `;
 
 const BookInfoContainer = styled.div`
   ${colFlex}
-  margin-left: 48px;
+  gap: 24px;
 `;
 
 const TitleContainer = styled.div`
   ${alignCenter}
-  margin-bottom: 24px;
+  gap: 24px;
 `;
 
 const BookTitle = styled.h2`
-  margin-right: 24px;
-  font-weight: bold;
+  font-weight: 700;
   font-size: var(--font-size-xxl);
 `;
 
 const BookInfoList = styled.ul`
   ${colFlex}
+  gap: 16px;
 `;
 
 const BookInfoItem = styled.li`
   ${rowFlex}
+  gap: 16px;
 `;
 
 const InfoLabel = styled.strong`
   width: 48px;
-  margin-right: 16px;
   font-weight: 600;
+  white-space: nowrap;
 `;
 
 const InfoText = styled.p`
-  margin-bottom: 16px;
+  color: var(--color-content-text);
 `;
 
 const BookDescription = styled.p`
