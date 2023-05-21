@@ -19,7 +19,6 @@ export default async function searchDiscussions({
     type,
     page: String(page),
     limit: String(limit),
-    ...(token && { token }),
     ...(isbn && { isbn }),
   }).toString();
 
@@ -30,6 +29,7 @@ export default async function searchDiscussions({
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '12',
+        Authorization: `${token}`,
       },
     },
   });
