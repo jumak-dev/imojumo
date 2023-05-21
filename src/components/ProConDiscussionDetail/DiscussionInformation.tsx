@@ -10,6 +10,7 @@ import ProgressBar from '../UI/ProgressBar/ProgressBar';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import {
   colFlex,
+  colFlexCenter,
   alignCenter,
   rowFlexCenter,
   profileBoxCSS,
@@ -86,7 +87,7 @@ function DiscussionInformation({
             찬성측
           </ProConLeaderTag>
           <UserProfile
-            avatar={proLeaderAvatar || URL.NONE_AVATAR_URL}
+            avatar={proLeaderAvatar || URL.NONE_AVATA_URL}
             alt="찬성측 프로필 이미지"
             itemGap="24px"
             nickname={proLeaderName}
@@ -109,7 +110,7 @@ function DiscussionInformation({
             반대측
           </ProConLeaderTag>
           <UserProfile
-            avatar={conLeaderAvatar || URL.NONE_AVATAR_URL}
+            avatar={conLeaderAvatar || URL.NONE_AVATA_URL}
             alt="반대측 프로필 이미지"
             itemGap="24px"
             nickname={conLeaderName}
@@ -142,7 +143,7 @@ const DiscussionInfoContainer = styled.div`
 `;
 
 const DiscussionInfo = styled.div`
-  ${colFlex}
+  ${colFlexCenter}
   align-items: center;
   gap: 12px;
 `;
