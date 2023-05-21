@@ -1,23 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+
+import SubtitleSection from './SubtitleSection';
+import EmptySearchResult from './EmptySearchResult';
 import BookDiscussionCard from '../BookDiscussion/BookDiscussionCard';
 import ProConDiscussionSearchCard from './ProConDiscussionSearchCard';
-import SubtitleSection from './SubtitleSection';
-import {
-  alignCenter,
-  discussionCardContainerCSS,
-  flex,
-} from '../../styles/shared';
+
+import { alignCenter, discussionCardContainerCSS } from '../../styles/shared';
+
 import TAB from '../../constants/Tab';
+import { jwtAtom } from '../../recoil/atoms';
 import useSearchDiscussion from '../../hooks/searchDiscussion/useSearchDiscussion';
-import EmptySearchResult from './EmptySearchResult';
 
 function AllTab() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
+  const token = useRecoilValue(jwtAtom);
 
-  const { data } = useSearchDiscussion({
+  const { data, handleUpdateLike } = useSearchDiscussion({
+    token,
     query,
     type: 'all',
     page: 1,
@@ -39,7 +42,11 @@ function AllTab() {
           />
           <BookDiscussionCardContainer>
             {data?.bookResults.posts.map((post) => (
-              <BookDiscussionCard bookDiscussionData={post} key={post.id} />
+              <BookDiscussionCard
+                bookDiscussionData={post}
+                key={post.id}
+                handleUpdateLike={handleUpdateLike}
+              />
             ))}
           </BookDiscussionCardContainer>
           <Divider />
