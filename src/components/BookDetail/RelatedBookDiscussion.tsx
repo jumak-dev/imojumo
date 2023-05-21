@@ -32,6 +32,10 @@ const DiscussionContainer = styled(Link)`
   height: 100px;
   padding: 0 24px;
   border-bottom: 1px solid var(--color-borderbottom-color);
+
+  &:hover {
+    background-color: var(--color-inputbox-bg);
+  }
 `;
 
 const DiscussionBox = styled.div`
