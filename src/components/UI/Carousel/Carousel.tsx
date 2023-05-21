@@ -20,7 +20,7 @@ function Carousel({
 
   const handlePrev = () =>
     setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? banners.length - 1 : banners.length + 1,
+      prevIndex === 0 ? banners.length - 1 : prevIndex - 1,
     );
 
   const handleNext = () => {
