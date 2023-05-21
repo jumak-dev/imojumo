@@ -20,7 +20,7 @@ function Pagination({
   };
 
   return (
-    <PaginationContainer>
+    <PaginationContainer className={className}>
       <PageButton aria-label="처음" onClick={() => handleClick(1)}>
         <RxDoubleArrowLeft size={11} />
       </PageButton>
