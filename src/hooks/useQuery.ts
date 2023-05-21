@@ -11,6 +11,7 @@ interface UseQueryProps<I, T> {
   onError?: (error: Error | APIError) => void;
   onSettled?: (data: T | null, error: unknown) => void;
   enabled?: boolean;
+  delay?: number;
 }
 
 function useQuery<I, T>({
@@ -22,6 +23,7 @@ function useQuery<I, T>({
   onSuccess,
   onError,
   onSettled,
+  delay = 0,
 }: UseQueryProps<I, T>) {
   const [promise, setPromise] = useState<Promise<void>>();
   const [status, setStatus] = useState<PromiseStatusType>(PROMISE_STATUS.IDLE);
@@ -55,7 +57,15 @@ function useQuery<I, T>({
 
   const fetch = useCallback(() => {
     setStatus(PROMISE_STATUS.PENDING);
-    setPromise(fetchFn(arg).then(resolvePromise, rejectPromise));
+    setPromise(
+      new Promise<void>((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, delay);
+      })
+        .then(() => fetchFn(arg))
+        .then(resolvePromise, rejectPromise),
+    );
   }, [serializedArg]);
 
   useEffect(() => {
