@@ -2,19 +2,41 @@ import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { GrNext } from 'react-icons/gr';
+import { useRecoilValue } from 'recoil';
+import Loading from '../components/UI/Loading/Loading';
 import MainContainer from '../styles/layout';
 import { alignCenter } from '../styles/shared';
 import BookInformation from '../components/BookDetail/BookInformation';
 import RelatedBookDiscussion from '../components/BookDetail/RelatedBookDiscussion';
+import { jwtAtom } from '../recoil/atoms';
 import useAladinBook from '../hooks/aladin/useAladinBook';
+import useBookDetail from '../hooks/bookDetail/useBookDetail';
 
 function BookDetailPage() {
-  const { bookId } = useParams();
+  const { bookId } = useParams() as { bookId: string };
+  const token = useRecoilValue(jwtAtom) ?? '';
 
   const { data: bookInfo } = useAladinBook({
     parameter: 'ItemLookUp.aspx',
     ItemId: bookId,
   });
+
+  const {
+    data: discussionInfo,
+    isLoading,
+    error,
+  } = useBookDetail({
+    isbn: bookId,
+    token,
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>에러 발생!</div>;
+  }
 
   return (
     <MainContainer>
@@ -28,9 +50,9 @@ function BookDetailPage() {
         </ShowMoreLink>
       </SubtitleBox>
       <DiscussionSection>
-        <RelatedBookDiscussion />
-        <RelatedBookDiscussion />
-        <RelatedBookDiscussion />
+        {discussionInfo?.posts.map((post) => (
+          <RelatedBookDiscussion post={post} />
+        ))}
       </DiscussionSection>
     </MainContainer>
   );
@@ -48,8 +70,8 @@ const SubtitleBox = styled.div`
 
 const Subtitle = styled.h3`
   ${alignCenter}
+  font-weight: 700;
   font-size: var(--font-size-l);
-  font-weight: bold;
 `;
 
 const BookIcon = styled(GoBook)`
@@ -68,7 +90,7 @@ const NextIcon = styled(GrNext)`
 `;
 
 const DiscussionSection = styled.section`
-  & > article:last-child {
+  & > a:last-child {
     border: none;
   }
 `;
