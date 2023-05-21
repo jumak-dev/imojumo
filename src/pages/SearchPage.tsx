@@ -1,84 +1,42 @@
-import { useState, useContext } from 'react';
+import { useContext, Suspense } from 'react';
 import styled from 'styled-components';
+
 import TAB from '../constants/Tab';
 import MainContainer from '../styles/layout';
 import SearchNav from '../components/Search/SearchNav';
-import SubtitleSection from '../components/Search/SubtitleSection';
 import BookDiscussionTab from '../components/Search/BookDiscussionTab';
 import ProConDiscussionTab from '../components/Search/ProConDiscussionTab';
-import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
-import ProConDiscussionSearchCard from '../components/Search/ProConDiscussionSearchCard';
 
 import { TabContext } from '../context/TabContext';
-import { flex, discussionCardContainerCSS } from '../styles/shared';
-import { GetBookDiscussion, GetProConDiscussion } from '../types';
-
-import BOOKDISCUSSION_DUMMY from '../components/BookDiscussion/BOOKDISCUSSION_DUMMY';
-import PROCONDISCUSSION_DUMMY from '../components/ProConDiscussion/PROCONDISCUSSION_DUMMY';
+import AllTab from '../components/Search/AllTab';
+import Loading from '../components/UI/Loading/Loading';
 
 function SearchPage() {
   const { currentTab } = useContext(TabContext);
-  const [bookDiscussionPosts] =
-    useState<GetBookDiscussion>(BOOKDISCUSSION_DUMMY);
-  const [proConDiscussionPosts] = useState<GetProConDiscussion>(
-    PROCONDISCUSSION_DUMMY,
-  );
 
   return (
     <>
       <SearchNav />
       <MainContainer>
-        {currentTab === TAB.ALL && (
-          <>
-            <SubtitleSection subtitle={TAB.BOOK_DISCUSSION} postCount={1234} />
-            <BookDiscussionCardContainer>
-              {bookDiscussionPosts.data.slice(0, 3).map((post) => (
-                <BookDiscussionCard bookDiscussionData={post} key={post.id} />
-              ))}
-            </BookDiscussionCardContainer>
-            <Divider />
-            <SubtitleSection
-              subtitle={TAB.PROCON_DISCUSSION}
-              postCount={4321}
-            />
-            <ProConDiscussionSearchCardContainer>
-              {proConDiscussionPosts.posts.slice(0, 3).map((post) => (
-                <ProConDiscussionSearchCard
-                  procondiscussionData={post}
-                  key={post.id}
-                />
-              ))}
-            </ProConDiscussionSearchCardContainer>
-          </>
-        )}
-        {currentTab === TAB.BOOK_DISCUSSION && (
-          <BookDiscussionTab
-            posts={bookDiscussionPosts.data}
-            pageInfo={bookDiscussionPosts.pageInfo}
-          />
-        )}
-        {currentTab === TAB.PROCON_DISCUSSION && (
-          <ProConDiscussionTab
-            posts={proConDiscussionPosts.posts}
-            pageInfo={proConDiscussionPosts.pageInfo}
-          />
-        )}
+        <SearchPageWarapper>
+          <Suspense fallback={<Loading />}>
+            {
+              {
+                [TAB.ALL]: <AllTab />,
+                [TAB.BOOK_DISCUSSION]: <BookDiscussionTab />,
+                [TAB.PROCON_DISCUSSION]: <ProConDiscussionTab />,
+              }[currentTab]
+            }
+          </Suspense>
+        </SearchPageWarapper>
       </MainContainer>
     </>
   );
 }
 
-const ProConDiscussionSearchCardContainer = styled.section`
-  ${flex}
-`;
-
-const Divider = styled.hr`
-  border: none;
-  border-bottom: 1px solid var(--color-borderbottom-color);
-`;
-
-const BookDiscussionCardContainer = styled.section`
-  ${discussionCardContainerCSS}
+const SearchPageWarapper = styled.article`
+  min-height: 100%;
+  flex: 1;
 `;
 
 export default SearchPage;
