@@ -5,7 +5,7 @@ export interface SearchDiscussionsProps {
   page: number;
   type: 'book' | 'proCon' | 'all';
   isbn?: string;
-  token?: string;
+  token?: string | null;
   limit: number;
 }
 
