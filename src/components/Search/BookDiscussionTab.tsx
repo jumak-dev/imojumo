@@ -1,21 +1,29 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
-import TAB from '../../constants/Tab';
-import SubtitleSection from './SubtitleSection';
+import { useRecoilValue } from 'recoil';
+
 import Pagination from '../UI/Pagination/Pagination';
-import { discussionCardContainerCSS } from '../../styles/shared';
+import SubtitleSection from './SubtitleSection';
+import EmptySearchResult from './EmptySearchResult';
 import BookDiscussionCard from '../BookDiscussion/BookDiscussionCard';
 import useSearchDiscussion from '../../hooks/searchDiscussion/useSearchDiscussion';
+
+import { discussionCardContainerCSS } from '../../styles/shared';
+
+import TAB from '../../constants/Tab';
 import INIT_PAGE_INFO from '../../constants/PageInfo';
-import EmptySearchResult from './EmptySearchResult';
+import { jwtAtom } from '../../recoil/atoms';
 
 function BookDiscussionTab() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page') || 1;
   const query = searchParams.get('query');
   const [paginate, setPaginate] = useState(Number(currentPage));
-  const { data } = useSearchDiscussion({
+  const token = useRecoilValue(jwtAtom);
+
+  const { data, handleUpdateLike } = useSearchDiscussion({
+    token,
     query: query || '',
     type: 'book',
     page: Number(currentPage),
@@ -40,7 +48,11 @@ function BookDiscussionTab() {
 
           <BookDiscussionCardContainer>
             {data?.bookResults?.posts.map((post) => (
-              <BookDiscussionCard bookDiscussionData={post} key={post.id} />
+              <BookDiscussionCard
+                bookDiscussionData={post}
+                key={post.id}
+                handleUpdateLike={handleUpdateLike}
+              />
             ))}
           </BookDiscussionCardContainer>
         </>
