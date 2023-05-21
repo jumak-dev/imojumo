@@ -8,6 +8,7 @@ import useQuery from '../useQuery';
 interface UseSearchDiscussionType extends SearchDiscussionsProps {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+  delay?: number;
 }
 
 function useSearchDiscussion({
@@ -15,6 +16,7 @@ function useSearchDiscussion({
   page,
   limit,
   type,
+  delay = 1500,
   isSuspense = false,
   isErrorBoundary = false,
 }: UseSearchDiscussionType) {
@@ -26,6 +28,7 @@ function useSearchDiscussion({
     arg: { query, page, limit, type },
     isErrorBoundary,
     isSuspense,
+    delay,
   });
 
   return { data, isLoading, error };
