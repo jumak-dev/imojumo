@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,10 @@ import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
 import { BookDiscussionInfo } from '../../types';
 import { alignCenter, truncateTextCSS } from '../../styles/shared';
+import { jwtAtom } from '../../recoil/atoms';
+
+import useCreateLike from '../../hooks/postLike/useCreateLike';
+import useDeleteLike from '../../hooks/postLike/useDeleteLike';
 
 interface BookDiscussionCardProps {
   bookDiscussionData: BookDiscussionInfo;
@@ -21,19 +26,44 @@ export const profileUrl =
   'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
 
 function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(bookDiscussionData.postLikedByUser);
   const bookDiscussionDate = dayjs(bookDiscussionData.createdAt).format(
     'YYYY.MM.DD',
   );
 
-  const handleLikeClick = (e: React.MouseEvent) => {
+  const token = useRecoilValue(jwtAtom);
+  const { mutate: createLike } = useCreateLike({
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: deleteLike } = useDeleteLike({
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (isLiked) {
+      await deleteLike({
+        postId: bookDiscussionData.id,
+        token,
+      });
+    } else {
+      await createLike({
+        postId: bookDiscussionData.id,
+        token,
+      });
+    }
+
     setIsLiked(!isLiked);
   };
 
   return (
     <CardContainer
-      // ! id가 아닌 discussionId로 수정되야 함
       to={`/book-discussions/${bookDiscussionData.id}`}
       radius="8px"
     >
