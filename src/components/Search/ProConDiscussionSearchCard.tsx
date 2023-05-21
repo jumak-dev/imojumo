@@ -15,7 +15,7 @@ function ProConDiscussionSearchCard({
   const proConSum = proCount + conCount;
 
   return (
-    <CardContainer to="/search">
+    <CardContainer to={`/pro-con-discussion/${procondiscussionData.id}`}>
       <DiscussionTitle>{procondiscussionData.title}</DiscussionTitle>
       <ProConBlockBox>
         <ProConBlock isPro>
