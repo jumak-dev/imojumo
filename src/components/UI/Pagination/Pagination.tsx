@@ -6,18 +6,23 @@ import { PaginationType } from '../../../types';
 import { flex } from '../../../styles/shared';
 
 function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
-  const { page, totalPage } = pageInfo;
+  const { page, totalPage } = pageInfo || { page: 1, totalPage: 1 };
   const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
+
+  const handleClick = (num: number) => {
+    setPaginate(num);
+    window.scrollTo(0, 0);
+  };
 
   return (
     <PaginationContainer>
-      <PageButton aria-label="처음" onClick={() => setPaginate(1)}>
+      <PageButton aria-label="처음" onClick={() => handleClick(1)}>
         <RxDoubleArrowLeft size={11} />
       </PageButton>
       <PageButton
         aria-label="이전"
         onClick={() =>
-          currentPage === 1 ? setPaginate(1) : setPaginate(page - 1)
+          currentPage === 1 ? handleClick(1) : handleClick(page - 1)
         }
       >
         <IoIosArrowBack size={11} />
@@ -26,7 +31,7 @@ function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
         <ButtonNav
           aria-label={`${num} 페이지`}
           key={num}
-          onClick={() => setPaginate(num)}
+          onClick={() => handleClick(num)}
           isCurrentPage={num === page}
         >
           {num}
@@ -36,13 +41,13 @@ function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
         aria-label="다음"
         onClick={() =>
           currentPage === totalPage
-            ? setPaginate(totalPage)
-            : setPaginate(page + 1)
+            ? handleClick(totalPage)
+            : handleClick(page + 1)
         }
       >
         <IoIosArrowForward size={11} />
       </PageButton>
-      <PageButton aria-label="끝" onClick={() => setPaginate(totalPage)}>
+      <PageButton aria-label="끝" onClick={() => handleClick(totalPage)}>
         <RxDoubleArrowRight size={11} />
       </PageButton>
     </PaginationContainer>

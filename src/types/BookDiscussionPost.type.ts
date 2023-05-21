@@ -1,4 +1,4 @@
-import { Book, PageInfo } from './index';
+import { Book, PageInfo, APIError } from './index';
 
 export interface BookDiscussionInfo {
   id: number;
@@ -40,4 +40,18 @@ export interface GetBookDiscussionDetailType {
 export interface UseBookDiscussionType extends GetBookDiscussionType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+}
+
+export interface PostLikeType {
+  postId: number;
+  token: string;
+}
+
+export interface UsePostLikeType {
+  onSuccess?: (data: PostLikeResponse | null) => void;
+  onError?: (error: Error | APIError) => void;
+}
+
+export interface PostLikeResponse {
+  likeCount: number;
 }

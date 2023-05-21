@@ -1,65 +1,77 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
-import { BookDiscussionInfo, PageInfo, GetBookDiscussion } from '../types';
 import { discussionCardContainerCSS } from '../styles/shared';
 import Pagination from '../components/UI/Pagination/Pagination';
+import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
+import { jwtAtom } from '../recoil/atoms';
+import Loading from '../components/UI/Loading/Loading';
+import { BookDiscussionInfo } from '../types';
 
 function BookDiscussion() {
-  const { VITE_API_URL } = import.meta.env;
-  const [posts, setPosts] = useState<BookDiscussionInfo[]>([]);
   const [paginate, setPaginate] = useState(1);
-  const [pageInfo, setPageInfo] = useState<PageInfo>({
-    page: 1,
-    totalPage: 1,
-    totalCount: 1,
-    currentCount: 1,
+  const token = useRecoilValue(jwtAtom);
+
+  const {
+    data: bookDiscussion,
+    isLoading,
+    setData: setBookDiscussion,
+  } = useBookDiscussion({
+    page: paginate || 1,
+    limit: 9,
+    token: token || '',
   });
 
-  // apis로 뺄 예정
-  const getBookDiscussion = async (
-    page: number,
-  ): Promise<GetBookDiscussion> => {
-    const url = `${VITE_API_URL}/book-discussions?page=${page}&limit=9`;
+  const handleUpdateLike = (postId: number, likeSum: number | undefined) => {
+    setBookDiscussion((prev: any) => {
+      if (prev) {
+        const updatedPosts: any = prev.posts.map((post: BookDiscussionInfo) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              likeCount: likeSum,
+            };
+          }
+          return post;
+        });
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-      },
+        return {
+          ...prev,
+          posts: updatedPosts,
+        };
+      }
+      return prev;
     });
-
-    const data = await response.json();
-    return data;
   };
-
-  useEffect(() => {
-    try {
-      getBookDiscussion(paginate).then((res) => {
-        setPosts(res.posts);
-        setPageInfo(res.pageInfo);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }, [paginate]);
 
   return (
     <MainContainer>
-      <Subtitle>독서토론</Subtitle>
-      <BookDiscussionCardContainer>
-        {posts &&
-          posts.map((post) => (
-            <BookDiscussionCard bookDiscussionData={post} key={post.id} />
-          ))}
-      </BookDiscussionCardContainer>
-      <Pagination
-        currentPage={paginate}
-        setPaginate={setPaginate}
-        pageInfo={pageInfo}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Subtitle>독서토론</Subtitle>
+          <BookDiscussionCardContainer>
+            {bookDiscussion &&
+              bookDiscussion.posts.map((post) => (
+                <BookDiscussionCard
+                  bookDiscussionData={post}
+                  key={post.id}
+                  handleUpdateLike={handleUpdateLike}
+                />
+              ))}
+          </BookDiscussionCardContainer>
+          {bookDiscussion && (
+            <Pagination
+              currentPage={paginate}
+              setPaginate={setPaginate}
+              pageInfo={bookDiscussion?.pageInfo}
+            />
+          )}
+        </>
+      )}
     </MainContainer>
   );
 }
@@ -72,6 +84,7 @@ export const Subtitle = styled.h2`
 
 const BookDiscussionCardContainer = styled.section`
   ${discussionCardContainerCSS}
+  margin: 0 50px 50px;
 `;
 
 export default BookDiscussion;
