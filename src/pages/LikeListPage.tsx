@@ -1,65 +1,77 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
+import Loading from '../components/UI/Loading/Loading';
 import Pagination from '../components/UI/Pagination/Pagination';
 import { discussionCardContainerCSS, fontCSS } from '../styles/shared';
-import { BookDiscussionInfo, PageInfo, GetBookDiscussion } from '../types';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 
+import { jwtAtom } from '../recoil/atoms';
+import { BookDiscussionInfo } from '../types';
+import useLikeList from '../hooks/likeList/useLikeList';
+
 function LikeListPage() {
-  const { VITE_API_URL } = import.meta.env;
-  const [posts, setPosts] = useState<BookDiscussionInfo[]>([]);
   const [paginate, setPaginate] = useState(1);
-  const [pageInfo, setPageInfo] = useState<PageInfo>({
-    page: 1,
-    totalPage: 1,
-    totalCount: 1,
-    currentCount: 1,
+  const token = useRecoilValue(jwtAtom);
+
+  const {
+    data: likeList,
+    isLoading,
+    setData: setLikeList,
+  } = useLikeList({
+    page: paginate || 1,
+    limit: 9,
+    token: token || '',
   });
 
-  // apis로 뺄 예정
-  const getLikeBookDiscussions = async (
-    page: number,
-  ): Promise<GetBookDiscussion> => {
-    const url = `${VITE_API_URL}/likes/me?page=${page}&limit=9`;
+  const handleUpdateLike = (postId: number, likeSum: number | undefined) => {
+    setLikeList((prev: any) => {
+      if (prev) {
+        const updatedPosts: any = prev.posts.map((post: BookDiscussionInfo) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              likeCount: likeSum,
+            };
+          }
+          return post;
+        });
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-      },
+        return {
+          ...prev,
+          posts: updatedPosts,
+        };
+      }
+      return prev;
     });
-
-    const data = await response.json();
-    return data;
   };
-
-  useEffect(() => {
-    try {
-      getLikeBookDiscussions(paginate).then((res) => {
-        setPosts(res.posts);
-        setPageInfo(res.pageInfo);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }, [paginate]);
 
   return (
     <MainContainer>
-      <Subtitle>찜 목록</Subtitle>
-      <LikePostCount>{pageInfo.totalCount}</LikePostCount>
-      <LikeListCardContainer>
-        {posts.map((post) => (
-          <BookDiscussionCard bookDiscussionData={post} key={post.id} />
-        ))}
-      </LikeListCardContainer>
-      <Pagination
-        currentPage={paginate}
-        setPaginate={setPaginate}
-        pageInfo={pageInfo}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Subtitle>찜 목록</Subtitle>
+          <LikePostCount>{likeList?.pageInfo.totalCount}</LikePostCount>
+          <LikeListCardContainer>
+            {likeList &&
+              likeList.posts.map((post) => (
+                <BookDiscussionCard
+                  bookDiscussionData={post}
+                  key={post.id}
+                  handleUpdateLike={handleUpdateLike}
+                />
+              ))}
+          </LikeListCardContainer>
+          <Pagination
+            currentPage={paginate}
+            setPaginate={setPaginate}
+            pageInfo={likeList?.pageInfo}
+          />
+        </>
+      )}
     </MainContainer>
   );
 }
