@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { GrNext } from 'react-icons/gr';
@@ -6,11 +6,19 @@ import MainContainer from '../styles/layout';
 import { alignCenter } from '../styles/shared';
 import BookInformation from '../components/BookDetail/BookInformation';
 import RelatedBookDiscussion from '../components/BookDetail/RelatedBookDiscussion';
+import useAladinBook from '../hooks/aladin/useAladinBook';
 
 function BookDetailPage() {
+  const { bookId } = useParams();
+
+  const { data: bookInfo } = useAladinBook({
+    parameter: 'ItemLookUp.aspx',
+    ItemId: bookId,
+  });
+
   return (
     <MainContainer>
-      <BookInformation />
+      <BookInformation bookInfo={bookInfo?.item[0]} />
       <SubtitleBox>
         <Subtitle>
           관련 독서토론 <BookIcon />
