@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
+
 import SubtitleSection from './SubtitleSection';
-import Pagination from '../UI/Pagination/Pagination';
-import { discussionCardContainerCSS } from '../../styles/shared';
-import ProConDiscussionSearchCard from './ProConDiscussionSearchCard';
-import TAB from '../../constants/Tab';
-import useSearchDiscussion from '../../hooks/searchDiscussion/useSearchDiscussion';
-import INIT_PAGE_INFO from '../../constants/PageInfo';
 import EmptySearchResult from './EmptySearchResult';
+import Pagination from '../UI/Pagination/Pagination';
+import ProConDiscussionSearchCard from './ProConDiscussionSearchCard';
+
+import { discussionCardContainerCSS } from '../../styles/shared';
+
+import TAB from '../../constants/Tab';
+import INIT_PAGE_INFO from '../../constants/PageInfo';
+import useSearchDiscussion from '../../hooks/searchDiscussion/useSearchDiscussion';
 
 function ProConDiscussionTap() {
   const [searchParams, setSearchParams] = useSearchParams();
