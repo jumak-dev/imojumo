@@ -6,8 +6,8 @@ import {
 import useQuery from '../useQuery';
 
 interface UseSearchDiscussionType extends SearchDiscussionsProps {
-  isSuspense?: false;
-  isErrorBoundary?: false;
+  isSuspense?: boolean;
+  isErrorBoundary?: boolean;
 }
 
 function useSearchDiscussion({
