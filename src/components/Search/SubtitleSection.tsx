@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+
+import { alignCenter, fontCSS } from '../../styles/shared';
+
 import TAB from '../../constants/Tab';
 import { TabContext } from '../../context/TabContext';
-import { alignCenter, fontCSS } from '../../styles/shared';
 
 interface SubtitleSectionProps {
   subtitle: string;
