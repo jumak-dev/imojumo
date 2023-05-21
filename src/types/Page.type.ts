@@ -11,4 +11,5 @@ export interface PaginationType {
   pageInfo: PageInfo | undefined;
   currentPage: number;
   setPaginate: React.Dispatch<React.SetStateAction<number>>;
+  className?: string;
 }

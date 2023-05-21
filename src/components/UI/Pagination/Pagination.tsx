@@ -5,7 +5,12 @@ import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
 import { PaginationType } from '../../../types';
 import { flex } from '../../../styles/shared';
 
-function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
+function Pagination({
+  currentPage,
+  setPaginate,
+  pageInfo,
+  className,
+}: PaginationType) {
   const { page, totalPage } = pageInfo || { page: 1, totalPage: 1 };
   const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
 
