@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import BookDiscussionForm from '../components/PostNew/BookDiscussionForm';
 import DiscussionTab from '../components/PostNew/DiscussionTab';
@@ -15,9 +15,6 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
     proCon: '찬반 토론 게시글 작성하기',
     book: '독서 토론 게시글 작성하기',
   }[discussionType];
-
-  const handleSubmit = () => {};
-
   return (
     <MainContainer>
       <PostNewPageContainer>
@@ -25,8 +22,8 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
         <DiscussionTab />
         {
           {
-            proCon: <ProConDiscussionForm onSubmit={handleSubmit} />,
-            book: <BookDiscussionForm onSubmit={handleSubmit} />,
+            proCon: <ProConDiscussionForm />,
+            book: <BookDiscussionForm />,
           }[discussionType]
         }
       </PostNewPageContainer>

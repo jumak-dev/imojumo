@@ -1,11 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { alignCenter, flex } from '../../styles/shared';
-
 import { ReactComponent as proConSVG } from '../../assets/icons/proConIcon.svg';
+import { alignCenter, flex } from '../../styles/shared';
 
 function DiscussionTab() {
   return (
@@ -48,6 +46,7 @@ const DiscussionTabLink = styled(NavLink)`
 
   &.active {
     color: var(--white);
+    pointer-events: none;
   }
 `;
 
