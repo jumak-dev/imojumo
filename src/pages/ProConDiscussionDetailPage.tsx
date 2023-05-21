@@ -12,7 +12,11 @@ import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
 import { ProConDiscussionInfo, Comment } from '../types';
 import { jwtAtom } from '../recoil/atoms';
-import { getProConDiscussion } from '../apis/proConDiscussion';
+import {
+  createProConVote,
+  getProConDiscussion,
+  updateProConVote,
+} from '../apis/proConDiscussion';
 
 interface ProConDiscussion extends ProConDiscussionInfo {
   isPro: boolean;
@@ -26,20 +30,26 @@ function ProConDiscussionDetailPage() {
 
   const [proConDiscussion, setProConDiscussion] = useState<ProConDiscussion>();
   const [commentsData, setCommentsData] = useState<Comment[]>([]);
-  const [isVote, setIsVote] = useState(false);
-  const [isPro, setIsPro] = useState(false);
 
   const fetchData = async () => {
     const data = await getProConDiscussion(postId, token);
     setProConDiscussion(data);
     setCommentsData(data.comments);
-    setIsVote(data.isVote);
-    setIsPro(data.isPro);
   };
 
   useEffect(() => {
     fetchData();
   }, [postId]);
+
+  const handleProConVote = async (voteValue: boolean) => {
+    await createProConVote(postId, token, voteValue);
+    fetchData();
+  };
+
+  const handleProConRevote = async (voteValue: boolean) => {
+    await updateProConVote(postId, token, voteValue);
+    fetchData();
+  };
 
   if (!proConDiscussion) {
     return <Loading />;
@@ -55,6 +65,8 @@ function ProConDiscussionDetailPage() {
     conCount,
     proLeader,
     conLeader,
+    isVote,
+    isPro,
   } = proConDiscussion;
 
   return (
@@ -76,8 +88,8 @@ function ProConDiscussionDetailPage() {
         content={content}
         isPro={isPro}
         isVote={isVote}
-        setIsPro={setIsPro}
-        setIsVote={setIsVote}
+        onVote={handleProConVote}
+        onRevote={handleProConRevote}
       />
       <Subtitle>
         참여하기 <BsChatLeftDots />

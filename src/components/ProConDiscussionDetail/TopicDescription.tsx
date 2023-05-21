@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
@@ -9,16 +8,16 @@ interface TopicDescriptionProps {
   content: string;
   isPro: boolean;
   isVote: boolean;
-  setIsPro: Dispatch<SetStateAction<boolean>>;
-  setIsVote: Dispatch<SetStateAction<boolean>>;
+  onVote: (voteValue: boolean) => void;
+  onRevote: (voteValue: boolean) => void;
 }
 
 function TopicDescription({
   content,
   isPro,
   isVote,
-  setIsPro,
-  setIsVote,
+  onVote,
+  onRevote,
 }: TopicDescriptionProps) {
   const navigate = useNavigate();
   const isLogin = useRecoilValue(isLoginSelector);
@@ -30,10 +29,11 @@ function TopicDescription({
     }
 
     if (!isVote) {
-      setIsVote(true);
+      onVote(voteValue);
+      return;
     }
 
-    setIsPro(voteValue);
+    onRevote(voteValue);
   };
 
   return (
