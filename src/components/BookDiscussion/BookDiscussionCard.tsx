@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { AiFillHeart } from 'react-icons/ai';
+import isLoginSelector from '../../recoil/seletors';
 
 import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
@@ -21,10 +22,6 @@ interface BookDiscussionCardProps {
   handleUpdateLike: (postId: number, likeCount: number | undefined) => void;
 }
 
-// 임시로 사용하는 이미지 URL입니다!
-export const imageUrl =
-  'https://image.aladin.co.kr/product/28448/6/cover500/k212835618_2.jpg';
-
 export const profileUrl =
   'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
 
@@ -37,8 +34,9 @@ function BookDiscussionCard({
     'YYYY.MM.DD',
   );
 
-  const token = useRecoilValue(jwtAtom);
   const postId = bookDiscussionData.id;
+  const token = useRecoilValue(jwtAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
 
   const { mutate: createLike } = useCreateLike({
     onSuccess: (likeCount) => {
@@ -82,11 +80,10 @@ function BookDiscussionCard({
       to={`/book-discussion/${bookDiscussionData.id}`}
       radius="8px"
     >
-      {!isLiked ? (
+      {isLogin && !isLiked && (
         <UnlikeIcon onClick={handleLikeClick} size={25} />
-      ) : (
-        <LikeIcon onClick={handleLikeClick} size={25} />
       )}
+      {isLogin && isLiked && <LikeIcon onClick={handleLikeClick} size={25} />}
       <BookImage src={bookDiscussionData.book?.cover} />
       <DiscussionInfoContainer>
         <DiscussionInfoBox>
