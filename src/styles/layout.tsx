@@ -5,6 +5,7 @@ const MainContainer = styled.main`
   max-width: 1120px;
   width: 100%;
   margin: auto;
+  min-height: calc(100% - 320px);
 `;
 
 export default MainContainer;
