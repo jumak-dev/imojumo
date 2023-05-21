@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Card } from '../UI/Card/Card';
@@ -7,6 +8,12 @@ import UnlikeIcon from '../UI/Icon/UnlikeIcon';
 import { BookDiscussionInfo } from '../../types';
 import { colFlex, flex, truncateTextCSS } from '../../styles/shared';
 
+import { jwtAtom } from '../../recoil/atoms';
+import isLoginSelector from '../../recoil/seletors';
+
+import useCreateLike from '../../hooks/postLike/useCreateLike';
+import useDeleteLike from '../../hooks/postLike/useDeleteLike';
+
 interface BookDiscussionTop10CardProps {
   post: BookDiscussionInfo;
 }
@@ -14,8 +21,36 @@ interface BookDiscussionTop10CardProps {
 function BookDiscussionTop10Card({ post }: BookDiscussionTop10CardProps) {
   const [isLiked, setIsLiked] = useState(post.postLikedByUser);
 
-  const handleLikeClick = (e: React.MouseEvent) => {
+  const token = useRecoilValue(jwtAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
+
+  const { mutate: createLike } = useCreateLike({
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: deleteLike } = useDeleteLike({
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (isLiked) {
+      await deleteLike({
+        postId: post.id,
+        token,
+      });
+    } else {
+      await createLike({
+        postId: post.id,
+        token,
+      });
+    }
+
     setIsLiked(!isLiked);
   };
 
@@ -25,11 +60,8 @@ function BookDiscussionTop10Card({ post }: BookDiscussionTop10CardProps) {
       radius="20px"
       margin="5px"
     >
-      {!isLiked ? (
-        <UnlikeIcon onClick={handleLikeClick} />
-      ) : (
-        <LikeIcon onClick={handleLikeClick} />
-      )}
+      {isLogin && !isLiked && <UnlikeIcon onClick={handleLikeClick} />}
+      {isLogin && isLiked && <LikeIcon onClick={handleLikeClick} />}
       <CardImage src={post.book?.cover} alt="독서토론 도서 이미지" />
       <CardTitleWrap>
         <CardTitle>{post.title}</CardTitle>
