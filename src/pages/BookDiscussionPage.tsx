@@ -7,32 +7,70 @@ import Pagination from '../components/UI/Pagination/Pagination';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 import { jwtAtom } from '../recoil/atoms';
+import Loading from '../components/UI/Loading/Loading';
+import { BookDiscussionInfo } from '../types';
 
 function BookDiscussion() {
   const [paginate, setPaginate] = useState(1);
   const token = useRecoilValue(jwtAtom);
 
-  const { data: bookDiscussion } = useBookDiscussion({
+  const {
+    data: bookDiscussion,
+    isLoading,
+    setData: setBookDiscussion,
+  } = useBookDiscussion({
     page: paginate || 1,
     limit: 9,
     token: token || '',
   });
 
+  const handleUpdateLike = (postId: number, likeSum: number | undefined) => {
+    setBookDiscussion((prev: any) => {
+      if (prev) {
+        const updatedPosts: any = prev.posts.map((post: BookDiscussionInfo) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              likeCount: likeSum,
+            };
+          }
+          return post;
+        });
+
+        return {
+          ...prev,
+          posts: updatedPosts,
+        };
+      }
+      return prev;
+    });
+  };
+
   return (
     <MainContainer>
-      <Subtitle>독서토론</Subtitle>
-      <BookDiscussionCardContainer>
-        {bookDiscussion &&
-          bookDiscussion.posts.map((post) => (
-            <BookDiscussionCard bookDiscussionData={post} key={post.id} />
-          ))}
-      </BookDiscussionCardContainer>
-      {bookDiscussion && (
-        <Pagination
-          currentPage={paginate}
-          setPaginate={setPaginate}
-          pageInfo={bookDiscussion?.pageInfo}
-        />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Subtitle>독서토론</Subtitle>
+          <BookDiscussionCardContainer>
+            {bookDiscussion &&
+              bookDiscussion.posts.map((post) => (
+                <BookDiscussionCard
+                  bookDiscussionData={post}
+                  key={post.id}
+                  handleUpdateLike={handleUpdateLike}
+                />
+              ))}
+          </BookDiscussionCardContainer>
+          {bookDiscussion && (
+            <Pagination
+              currentPage={paginate}
+              setPaginate={setPaginate}
+              pageInfo={bookDiscussion?.pageInfo}
+            />
+          )}
+        </>
       )}
     </MainContainer>
   );
