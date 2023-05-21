@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     font-size: var(--font-size-m);
+    height: 100%;
   }
 
   a {
@@ -30,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
   input {
     border: none;
     outline: none;
+  }
+
+  #root {
+    height: 100%;
   }
 `;
 
