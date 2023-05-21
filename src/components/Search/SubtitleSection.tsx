@@ -18,7 +18,6 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
     } else {
       setCurrentTab(TAB.PROCON_DISCUSSION);
     }
-    window.scrollTo(0, 0);
   };
 
   return (
