@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import ButtonBox from '../UI/Button/Button';
+import { buttonActiveCSS, buttonDeactivateCSS } from '../../styles/shared';
 import isLoginSelector from '../../recoil/seletors';
 
 interface TopicDescriptionProps {
@@ -82,14 +83,6 @@ const DescriptionText = styled.p`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const buttonActiveCSS = css`
-  pointer-events: none;
-`;
-
-const buttonDeactivateCSS = css`
-  filter: brightness(75%);
 `;
 
 const ProConButton = styled(ButtonBox)<{ isVote: boolean; isActive: boolean }>`
