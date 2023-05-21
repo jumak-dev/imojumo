@@ -2,7 +2,7 @@ import { deleteLike } from '../../apis/imojumo/postLike';
 import { UsePostLikeType, PostLikeResponse } from '../../types';
 import useMutate from '../useMutate';
 
-function useCreateLike({ onSuccess, onError }: UsePostLikeType) {
+function useDeleteLike({ onSuccess, onError }: UsePostLikeType) {
   const { mutate, data, error, isLoading } = useMutate<any, PostLikeResponse>({
     fetchFn: deleteLike,
     onSuccess,
@@ -12,4 +12,4 @@ function useCreateLike({ onSuccess, onError }: UsePostLikeType) {
   return { mutate, data, error, isLoading };
 }
 
-export default useCreateLike;
+export default useDeleteLike;
