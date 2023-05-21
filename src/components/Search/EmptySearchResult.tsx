@@ -9,19 +9,25 @@ function EmptySearchResult({ keyword }: EmptySearchResultProps) {
   return (
     <EmptySearchResultWarapper>
       <KeywordHighlight>&apos;{keyword}&apos;&nbsp;</KeywordHighlight>에 대한
-      결과가 없습니다
+      검색 결과가 없습니다
     </EmptySearchResultWarapper>
   );
 }
 
 const EmptySearchResultWarapper = styled.div`
+  height: 500px;
   display: flex;
+  text-algin: center;
   align-items: center;
   justify-content: center;
-  text-algin: center;
 `;
 
 const KeywordHighlight = styled.span`
+  height: 100%;
+  display: flex;
+  text-algin: center;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary-pink);
   font-weight: bold;
 `;
