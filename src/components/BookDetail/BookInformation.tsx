@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
 import Button from '../UI/Button/Button';
 import { AladinBookSearchItem } from '../../types';
 import replaceHtml from '../../utils/replaceHtml';
+import isLoginSelector from '../../recoil/seletors';
 
 interface BookInformationProps {
   bookInfo: AladinBookSearchItem | undefined;
@@ -11,9 +13,15 @@ interface BookInformationProps {
 
 function BookInformation({ bookInfo }: BookInformationProps) {
   const navigate = useNavigate();
+  const isLogin = useRecoilValue(isLoginSelector);
 
   const handleClick = () => {
-    navigate('/posts/new');
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
+    navigate('/posts/new/book-discussion');
   };
 
   return (
