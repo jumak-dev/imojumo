@@ -10,14 +10,14 @@ function useBookDiscussion({
   isSuspense = false,
   isErrorBoundary = false,
 }: UseBookDiscussionType) {
-  const { data, isLoading, error } = useQuery<any, GetBookDiscussion>({
+  const { data, isLoading, error, setData } = useQuery<any, GetBookDiscussion>({
     fetchFn: getBookDiscussions,
     arg: { page, limit, token, orderBy },
     isErrorBoundary,
     isSuspense,
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, setData };
 }
 
 export default useBookDiscussion;
