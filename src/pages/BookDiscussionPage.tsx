@@ -1,17 +1,21 @@
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
 import { discussionCardContainerCSS } from '../styles/shared';
 import Pagination from '../components/UI/Pagination/Pagination';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
+import { jwtAtom } from '../recoil/atoms';
 
 function BookDiscussion() {
   const [paginate, setPaginate] = useState(1);
+  const token = useRecoilValue(jwtAtom);
 
   const { data: bookDiscussion } = useBookDiscussion({
     page: paginate || 1,
     limit: 9,
+    token: token || '',
   });
 
   return (
