@@ -24,13 +24,15 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
     <SubtitleBlock>
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
-      <MoreButton
-        isShow={currentTab === TAB.ALL}
-        aria-label="더 보기"
-        onClick={() => haldleMoreButton(subtitle)}
-      >
-        더보기
-      </MoreButton>
+      {postCount > 0 && (
+        <MoreButton
+          isShow={currentTab === TAB.ALL}
+          aria-label="더 보기"
+          onClick={() => haldleMoreButton(subtitle)}
+        >
+          더보기
+        </MoreButton>
+      )}
     </SubtitleBlock>
   );
 }
