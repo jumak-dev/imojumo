@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { flex } from '../../styles/shared';
 import TAB from '../../constants/Tab';
@@ -6,25 +7,32 @@ import { TabContext } from '../../context/TabContext';
 
 function SearchNav() {
   const { currentTab, setCurrentTab } = useContext(TabContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const hanldeNavItemClick = (navItem: string) => {
+    searchParams.set('page', '1');
+    setSearchParams(searchParams);
+    setCurrentTab(navItem);
+  };
 
   return (
     <SearchNavContainer>
       <NavList>
         <NavItem
           isActive={currentTab === TAB.ALL}
-          onClick={() => setCurrentTab(TAB.ALL)}
+          onClick={() => hanldeNavItemClick(TAB.ALL)}
         >
           통합검색
         </NavItem>
         <NavItem
           isActive={currentTab === TAB.BOOK_DISCUSSION}
-          onClick={() => setCurrentTab(TAB.BOOK_DISCUSSION)}
+          onClick={() => hanldeNavItemClick(TAB.BOOK_DISCUSSION)}
         >
           독서토론
         </NavItem>
         <NavItem
           isActive={currentTab === TAB.PROCON_DISCUSSION}
-          onClick={() => setCurrentTab(TAB.PROCON_DISCUSSION)}
+          onClick={() => hanldeNavItemClick(TAB.PROCON_DISCUSSION)}
         >
           찬반토론
         </NavItem>
