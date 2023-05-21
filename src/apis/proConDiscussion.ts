@@ -3,6 +3,8 @@ import { ProConDiscussionInfo, Comment } from '../types';
 const { VITE_API_URL } = import.meta.env;
 
 interface ProConDiscussion extends ProConDiscussionInfo {
+  isPro: boolean;
+  isVote: boolean;
   comments: Comment[];
 }
 
