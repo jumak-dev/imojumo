@@ -5,18 +5,18 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as proConSVG } from '../../assets/icons/proConIcon.svg';
 import { alignCenter, flex } from '../../styles/shared';
 
-function DiscussionTab() {
+function DiscussionFormTab() {
   return (
-    <DiscussionTabNav>
-      <BookDiscussionTabLink to="/posts/new/book-discussion">
+    <DiscussionFormTabNav>
+      <BookDiscussionFormTabLink to="/posts/new/book-discussion">
         <BookIcon />
-        <DiscussionTabLinkText>독서토론 하기</DiscussionTabLinkText>
-      </BookDiscussionTabLink>
-      <ProConDiscussionTabLink to="/posts/new/pro-con-discussion">
-        <DiscussionTabLinkText>찬반토론 하기</DiscussionTabLinkText>
+        <DiscussionFormTabLinkText>독서토론 하기</DiscussionFormTabLinkText>
+      </BookDiscussionFormTabLink>
+      <ProConDiscussionFormTabLink to="/posts/new/pro-con-discussion">
+        <DiscussionFormTabLinkText>찬반토론 하기</DiscussionFormTabLinkText>
         <ProConIcon />
-      </ProConDiscussionTabLink>
-    </DiscussionTabNav>
+      </ProConDiscussionFormTabLink>
+    </DiscussionFormTabNav>
   );
 }
 
@@ -31,13 +31,13 @@ const ProConIcon = styled(proConSVG)`
   color: var(--color-primary-pink);
 `;
 
-const DiscussionTabNav = styled.nav`
+const DiscussionFormTabNav = styled.nav`
   ${flex}
   max-width: 548px;
   height: 56px;
 `;
 
-const DiscussionTabLink = styled(NavLink)`
+const DiscussionFormTabLink = styled(NavLink)`
   ${flex}
   text-align: center;
   color: var(--black);
@@ -50,7 +50,7 @@ const DiscussionTabLink = styled(NavLink)`
   }
 `;
 
-const BookDiscussionTabLink = styled(DiscussionTabLink)`
+const BookDiscussionFormTabLink = styled(DiscussionFormTabLink)`
   border-radius: 5px 0px 0px 5px;
   border-width: 1px 0px 1px 1px;
   border-style: solid;
@@ -65,7 +65,7 @@ const BookDiscussionTabLink = styled(DiscussionTabLink)`
   }
 `;
 
-const ProConDiscussionTabLink = styled(DiscussionTabLink)`
+const ProConDiscussionFormTabLink = styled(DiscussionFormTabLink)`
   border-radius: 0px 5px 5px 0px;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
@@ -80,7 +80,7 @@ const ProConDiscussionTabLink = styled(DiscussionTabLink)`
   }
 `;
 
-const DiscussionTabLinkText = styled.p`
+const DiscussionFormTabLinkText = styled.p`
   ${alignCenter}
 
   font-size: var(--font-size-l);
@@ -88,4 +88,4 @@ const DiscussionTabLinkText = styled.p`
   letter-spacing: -0.02em;
 `;
 
-export default DiscussionTab;
+export default DiscussionFormTab;
