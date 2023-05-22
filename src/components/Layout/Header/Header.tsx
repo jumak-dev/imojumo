@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
@@ -12,8 +12,9 @@ import useInputs from '../../../hooks/useInputs';
 function Header() {
   const user = true;
   const navigate = useNavigate();
-
-  const [{ query }, onChange] = useInputs({ query: '' });
+  const [searchParams] = useSearchParams();
+  const paramsQuery = searchParams.get('query');
+  const [{ query }, onChange] = useInputs({ query: paramsQuery || '' });
 
   const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (query.length === 0) {
@@ -21,7 +22,7 @@ function Header() {
     }
 
     if (event.key === 'Enter') {
-      console.log(query);
+      navigate(`/search?query=${query}&page=1`);
     }
   };
 

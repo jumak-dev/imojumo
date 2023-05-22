@@ -5,7 +5,12 @@ import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
 import { PaginationType } from '../../../types';
 import { flex } from '../../../styles/shared';
 
-function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
+function Pagination({
+  currentPage,
+  setPaginate,
+  pageInfo,
+  className,
+}: PaginationType) {
   const { page, totalPage } = pageInfo || { page: 1, totalPage: 1 };
   const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
 
@@ -15,7 +20,7 @@ function Pagination({ currentPage, setPaginate, pageInfo }: PaginationType) {
   };
 
   return (
-    <PaginationContainer>
+    <PaginationContainer className={className}>
       <PageButton aria-label="처음" onClick={() => handleClick(1)}>
         <RxDoubleArrowLeft size={11} />
       </PageButton>

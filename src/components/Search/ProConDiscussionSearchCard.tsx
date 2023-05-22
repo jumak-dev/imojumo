@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ProConDiscussionInfo } from '../../types';
+
 import { flex, colFlex, truncateTextCSS } from '../../styles/shared';
+
 import getRate from '../../utils/Rate';
+import { ProConDiscussionInfo } from '../../types';
 
 interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
@@ -15,7 +17,7 @@ function ProConDiscussionSearchCard({
   const proConSum = proCount + conCount;
 
   return (
-    <CardContainer to="/search">
+    <CardContainer to={`/pro-con-discussion/${procondiscussionData.id}`}>
       <DiscussionTitle>{procondiscussionData.title}</DiscussionTitle>
       <ProConBlockBox>
         <ProConBlock isPro>

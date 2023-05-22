@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+
+import { alignCenter, fontCSS } from '../../styles/shared';
+
 import TAB from '../../constants/Tab';
 import { TabContext } from '../../context/TabContext';
-import { alignCenter, fontCSS } from '../../styles/shared';
 
 interface SubtitleSectionProps {
   subtitle: string;
@@ -18,20 +20,21 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
     } else {
       setCurrentTab(TAB.PROCON_DISCUSSION);
     }
-    window.scrollTo(0, 0);
   };
 
   return (
     <SubtitleBlock>
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
-      <MoreButton
-        isShow={currentTab === TAB.ALL}
-        aria-label="더 보기"
-        onClick={() => haldleMoreButton(subtitle)}
-      >
-        더보기
-      </MoreButton>
+      {postCount > 0 && (
+        <MoreButton
+          isShow={currentTab === TAB.ALL}
+          aria-label="더 보기"
+          onClick={() => haldleMoreButton(subtitle)}
+        >
+          더보기
+        </MoreButton>
+      )}
     </SubtitleBlock>
   );
 }
