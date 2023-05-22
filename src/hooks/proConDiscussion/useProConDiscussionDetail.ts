@@ -47,8 +47,6 @@ function useProConDiscussionDetail({
     });
   };
 
-  console.log(data);
-
   return { data, isLoading, error, handleUpdateIsPro };
 }
 
