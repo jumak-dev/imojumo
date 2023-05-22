@@ -1,8 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { GrNext } from 'react-icons/gr';
-import { useRecoilValue } from 'recoil';
 import Loading from '../components/UI/Loading/Loading';
 import MainContainer from '../styles/layout';
 import { alignCenter } from '../styles/shared';
@@ -11,8 +12,13 @@ import RelatedBookDiscussion from '../components/BookDetail/RelatedBookDiscussio
 import { jwtAtom } from '../recoil/atoms';
 import useAladinBook from '../hooks/aladin/useAladinBook';
 import useBookDetail from '../hooks/bookDetail/useBookDetail';
+import { TabContext } from '../context/TabContext';
+import TAB from '../constants/Tab';
 
 function BookDetailPage() {
+  const navigate = useNavigate();
+  const { setCurrentTab } = useContext(TabContext);
+
   const { bookId } = useParams() as { bookId: string };
   const token = useRecoilValue(jwtAtom) ?? '';
 
@@ -30,6 +36,11 @@ function BookDetailPage() {
     token,
   });
 
+  const handleShowMoreClick = () => {
+    setCurrentTab(TAB.BOOK_DISCUSSION);
+    navigate(`/search?isbn=${bookInfo?.item[0].isbn}&page=1`);
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -41,9 +52,9 @@ function BookDetailPage() {
         <Subtitle>
           관련 독서토론 <BookIcon />
         </Subtitle>
-        <ShowMoreLink to="/book-discussion">
+        <ShowMoreButton onClick={handleShowMoreClick}>
           더보기 <NextIcon />
-        </ShowMoreLink>
+        </ShowMoreButton>
       </SubtitleBox>
       {error ? (
         <InformationText>
@@ -55,7 +66,7 @@ function BookDetailPage() {
       ) : (
         <DiscussionSection>
           {discussionInfo?.posts.map((post) => (
-            <RelatedBookDiscussion post={post} />
+            <RelatedBookDiscussion key={post.id} post={post} />
           ))}
         </DiscussionSection>
       )}
@@ -85,8 +96,9 @@ const BookIcon = styled(GoBook)`
   color: var(--color-primary-mint);
 `;
 
-const ShowMoreLink = styled(Link)`
+const ShowMoreButton = styled.button`
   ${alignCenter}
+  font-size: var(--font-size-m);
 `;
 
 const NextIcon = styled(GrNext)`
