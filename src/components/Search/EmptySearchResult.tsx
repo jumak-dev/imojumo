@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flex } from '../../styles/shared';
 
 interface EmptySearchResultProps {
   keyword: string;
@@ -15,21 +16,17 @@ function EmptySearchResult({ keyword }: EmptySearchResultProps) {
 }
 
 const EmptySearchResultWarapper = styled.div`
+  ${flex}
+  text-align: center;
   height: 500px;
-  display: flex;
-  text-algin: center;
-  align-items: center;
-  justify-content: center;
 `;
 
 const KeywordHighlight = styled.span`
-  height: 100%;
-  display: flex;
-  text-algin: center;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary-pink);
+  ${flex}
+  text-align: center;
   font-weight: bold;
+  color: var(--color-primary-pink);
+  height: 100%;
 `;
 
 export default EmptySearchResult;
