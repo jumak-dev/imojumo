@@ -11,32 +11,22 @@ import BookInformation from '../components/BookDiscussionDetail/BookInformation'
 import CommentForm from '../components/Comment/CommentForm';
 import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
-import { Book, BookDiscussionInfo, Comment } from '../types';
-import { getBookDiscussion } from '../apis/bookDiscussion';
 import { jwtAtom } from '../recoil/atoms';
-
-interface BookDiscussion extends BookDiscussionInfo {
-  book: Book;
-  postLikedByUser: boolean;
-  comments: Comment[];
-}
+import useBookDiscussionDetail from '../hooks/bookDiscussion/useBookDiscussionDetail';
+import { Comment } from '../types';
 
 function BookDiscussionDetailPage() {
   const { postId } = useParams() as { postId: string };
   const token = useRecoilValue(jwtAtom) ?? '';
-
-  const [bookDiscussion, setBookDiscussion] = useState<BookDiscussion>();
   const [commentsData, setCommentsData] = useState<Comment[]>([]);
 
-  const fetchData = async () => {
-    const data = await getBookDiscussion(postId, token);
-    setBookDiscussion(data);
-    setCommentsData(data.comments);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [postId]);
+  const { data: bookDiscussion } = useBookDiscussionDetail({
+    id: Number(postId),
+    token,
+    onSuccess: (newData) => {
+      setCommentsData(newData?.comments || []);
+    },
+  });
 
   if (!bookDiscussion) {
     return <Loading />;
