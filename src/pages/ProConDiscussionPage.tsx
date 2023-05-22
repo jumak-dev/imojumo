@@ -1,70 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import MainContainer from '../styles/layout';
 import { colFlex } from '../styles/shared';
+import MainContainer from '../styles/layout';
 import { Subtitle } from './BookDiscussionPage';
-import { PageInfo, ProConDiscussionInfo, GetProConDiscussion } from '../types';
 import Pagination from '../components/UI/Pagination/Pagination';
+import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 import ProConDiscussionCard from '../components/ProConDiscussion/ProConDiscussionCard';
 
 function ProConDiscussion() {
-  const { VITE_API_URL } = import.meta.env;
-  const [posts, setPosts] = useState<ProConDiscussionInfo[] | undefined>([]);
   const [paginate, setPaginate] = useState(1);
-  const [pageInfo, setPageInfo] = useState<PageInfo>({
-    page: 1,
-    totalPage: 1,
-    totalCount: 1,
-    currentCount: 1,
+
+  const { data: proConDiscussion } = useProConDiscussion({
+    page: paginate || 1,
+    limit: 4,
   });
-
-  // apis로 뺄 예정
-  const getProConDiscussion = async (
-    page: number,
-  ): Promise<GetProConDiscussion> => {
-    const url = `${VITE_API_URL}/pro-con-discussions?page=${page}&limit=4`;
-
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-      },
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-
-    const data = await response.json();
-    return data;
-  };
-
-  useEffect(() => {
-    try {
-      getProConDiscussion(paginate).then((res) => {
-        setPosts(res.posts);
-        setPageInfo(res.pageInfo);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }, [paginate]);
 
   return (
     <MainContainer>
       <Subtitle>찬반토론</Subtitle>
       <ProConDiscussionCardContainer>
-        {posts?.map((post) => (
-          <ProConDiscussionCard procondiscussionData={post} key={post.id} />
-        ))}
+        {proConDiscussion &&
+          proConDiscussion?.posts?.map((post) => (
+            <ProConDiscussionCard procondiscussionData={post} key={post.id} />
+          ))}
       </ProConDiscussionCardContainer>
-      <Pagination
-        currentPage={paginate}
-        setPaginate={setPaginate}
-        pageInfo={pageInfo}
-      />
+      {proConDiscussion && (
+        <Pagination
+          currentPage={paginate}
+          setPaginate={setPaginate}
+          pageInfo={proConDiscussion.pageInfo}
+        />
+      )}
     </MainContainer>
   );
 }
