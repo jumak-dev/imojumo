@@ -1,17 +1,17 @@
 import useQuery from '../useQuery';
-import { getBookDiscussions } from '../../apis/imojumo/bookDisccusions';
-import { UseBookDiscussionType, GetBookDiscussion } from '../../types';
+import getLikeList from '../../apis/imojumo/likeList';
+import { UseLikeListsType, GetBookDiscussion } from '../../types';
 
-function useBookDiscussion({
+function useLikeList({
   page,
   limit,
-  token = '',
+  token,
   orderBy = 'lastest',
   isSuspense = false,
   isErrorBoundary = false,
-}: UseBookDiscussionType) {
+}: UseLikeListsType) {
   const { data, isLoading, error, setData } = useQuery<any, GetBookDiscussion>({
-    fetchFn: getBookDiscussions,
+    fetchFn: getLikeList,
     arg: { page, limit, token, orderBy },
     isErrorBoundary,
     isSuspense,
@@ -44,4 +44,4 @@ function useBookDiscussion({
   return { data, isLoading, error, setData, handleUpdateLike };
 }
 
-export default useBookDiscussion;
+export default useLikeList;

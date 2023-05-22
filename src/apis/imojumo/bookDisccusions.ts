@@ -66,6 +66,7 @@ export async function getBookDiscussionDetail(
     options: {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '12',
         ...(token && { Authorization: token }),
       },

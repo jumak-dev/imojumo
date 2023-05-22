@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import MainContainer from '../styles/layout';
+import Loading from '../components/UI/Loading/Loading';
 import { discussionCardContainerCSS } from '../styles/shared';
 import Pagination from '../components/UI/Pagination/Pagination';
-import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
+
 import { jwtAtom } from '../recoil/atoms';
-import Loading from '../components/UI/Loading/Loading';
-import { BookDiscussionInfo } from '../types';
+import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
 
 function BookDiscussion() {
   const [paginate, setPaginate] = useState(1);
@@ -17,33 +17,15 @@ function BookDiscussion() {
   const {
     data: bookDiscussion,
     isLoading,
-    setData: setBookDiscussion,
+    handleUpdateLike: setLikeList,
   } = useBookDiscussion({
     page: paginate || 1,
     limit: 9,
     token: token || '',
   });
 
-  const handleUpdateLike = (postId: number, likeSum: number | undefined) => {
-    setBookDiscussion((prev: any) => {
-      if (prev) {
-        const updatedPosts: any = prev.posts.map((post: BookDiscussionInfo) => {
-          if (post.id === postId) {
-            return {
-              ...post,
-              likeCount: likeSum,
-            };
-          }
-          return post;
-        });
-
-        return {
-          ...prev,
-          posts: updatedPosts,
-        };
-      }
-      return prev;
-    });
+  const handleUpdateLike = (postId: number, likeSum: number) => {
+    setLikeList(postId, likeSum);
   };
 
   return (

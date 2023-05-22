@@ -18,7 +18,7 @@ export interface GetBookDiscussion {
   posts: BookDiscussionInfo[];
 }
 
-type OrderBy = 'lastest' | 'popular';
+export type OrderBy = 'lastest' | 'popular';
 
 export interface GetBookDiscussionType {
   page: number;
