@@ -13,6 +13,7 @@ import BookDiscussionDetailPage from '../pages/BookDiscussionDetailPage';
 import ProConDiscussionPage from '../pages/ProConDiscussionPage';
 import ProConDiscussionDetailPage from '../pages/ProConDiscussionDetailPage';
 import PostNewPage from '../pages/PostNewPage';
+import DiscussionEditPage from '../pages/DiscussionEditPage';
 
 export default createBrowserRouter([
   {
@@ -43,12 +44,20 @@ export default createBrowserRouter([
         element: <BookDiscussionDetailPage />,
       },
       {
+        path: '/book-discussion/:postId/edit',
+        element: <DiscussionEditPage discussionType="book" />,
+      },
+      {
         path: '/pro-con-discussion',
         element: <ProConDiscussionPage />,
       },
       {
         path: '/pro-con-discussion/:postId',
         element: <ProConDiscussionDetailPage />,
+      },
+      {
+        path: '/pro-con-discussion/:postId/edit',
+        element: <DiscussionEditPage discussionType="proCon" />,
       },
       {
         path: '/posts/new',

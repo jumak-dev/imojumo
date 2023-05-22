@@ -8,7 +8,7 @@ import Pagination from '../components/UI/Pagination/Pagination';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 
 import { jwtAtom } from '../recoil/atoms';
-import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
+import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 
 function BookDiscussion() {
   const [paginate, setPaginate] = useState(1);

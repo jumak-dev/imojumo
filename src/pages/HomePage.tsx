@@ -13,7 +13,7 @@ import { jwtAtom } from '../recoil/atoms';
 
 import useAladinBook from '../hooks/aladin/useAladinBook';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
-import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
+import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 
 function HomePage() {
   const token = useRecoilValue(jwtAtom);

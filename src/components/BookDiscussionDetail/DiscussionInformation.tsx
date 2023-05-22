@@ -51,7 +51,7 @@ function DiscussionInformation({
 
   const handleEdit = () => {
     // 게시글 수정 추가 예정
-    navigate('/posts/new/book-discussion');
+    navigate(`/book-discussion/${id}/edit`);
   };
 
   const handleDelete = () => {

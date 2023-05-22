@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useInputs from '../../hooks/useInputs';
 import { colFlexCenter } from '../../styles/shared';
 import { ButtonBox } from '../UI/Button/Button';
@@ -12,15 +12,19 @@ import ErrorFallback from '../ErrorFallback/indes';
 import { AladinBookSearchItem } from '../../types';
 
 interface DiscussionSearchBookProps {
-  onSearch: (book: AladinBookSearchItem) => void;
+  initBookTitle?: string;
   isSearchDisabled?: boolean;
+  onSearch: (book: AladinBookSearchItem) => void;
 }
 
 function DiscussionSearchBook({
-  onSearch,
+  initBookTitle = '',
   isSearchDisabled = false,
+  onSearch,
 }: DiscussionSearchBookProps) {
-  const [{ bookTitle }, onChange, _, setValue] = useInputs({ bookTitle: '' });
+  const [{ bookTitle }, onChange, _, setValue] = useInputs({
+    bookTitle: initBookTitle,
+  });
   const [showModal, handleOpenModal, handleCloseModal] = useModal();
 
   const handleSearchClick = () => {
@@ -41,6 +45,10 @@ function DiscussionSearchBook({
     onSearch(book);
     handleCloseModal();
   };
+
+  useEffect(() => {
+    setValue('bookTitle', initBookTitle);
+  }, [initBookTitle]);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>

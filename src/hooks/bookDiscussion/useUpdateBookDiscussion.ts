@@ -1,26 +1,26 @@
-import { createBookDiscussion } from '../../apis/imojumo/bookDisccusions';
+import { updateBookDiscussion } from '../../apis/imojumo/bookDisccusions';
 import {
   APIError,
   BookDiscussionInfo,
-  CreateBookDiscussionsType,
+  UpdateBookDiscussionType,
 } from '../../types';
 
 import useMutate from '../useMutate';
 
-interface UseCreateBookDiscussion {
+interface UseUpdateBookDiscussionProps {
   onSuccess?: (data: BookDiscussionInfo) => void;
   onError?: (error: Error | APIError) => void;
 }
 
-function useCreateBookDiscussion({
+function useUpdateBookDiscussion({
   onSuccess,
   onError,
-}: UseCreateBookDiscussion) {
+}: UseUpdateBookDiscussionProps) {
   const { mutate, data, error, isLoading } = useMutate<
-    CreateBookDiscussionsType,
+    UpdateBookDiscussionType,
     any
   >({
-    fetchFn: createBookDiscussion,
+    fetchFn: updateBookDiscussion,
     onSuccess,
     onError,
   });
@@ -28,4 +28,4 @@ function useCreateBookDiscussion({
   return { mutate, data, error, isLoading };
 }
 
-export default useCreateBookDiscussion;
+export default useUpdateBookDiscussion;

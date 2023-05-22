@@ -14,7 +14,7 @@ import useCreateBookDiscussion from '../../hooks/bookDiscussion/useCreateBookDis
 import { AladinBookSearchItem } from '../../types';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 
-function BookDisscussionNewForm() {
+function BookDiscussionNewForm() {
   const [{ title, content }, onChange] = useInputs({
     title: '',
     content: '',
@@ -46,7 +46,7 @@ function BookDisscussionNewForm() {
     }
 
     if (token === null) {
-      // Todo: 로그인 필요
+      navigate('/login');
       return;
     }
 
@@ -112,4 +112,4 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-export default BookDisscussionNewForm;
+export default BookDiscussionNewForm;

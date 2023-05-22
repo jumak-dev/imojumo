@@ -1,37 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookDiscussionForm from '../components/BookDiscussionNewForm/BookDiscussionNewForm';
+import BookDiscussionEditForm from '../components/BookDiscussionEditForm/BookDiscussionEditForm';
 import DiscussionFormTab from '../components/DiscussionForm/DiscussionFormTab';
 import ProConDiscussionForm from '../components/ProConDiscussionNewForm/ProConDiscussionNewForm';
 import MainContainer from '../styles/layout';
 import { flex, screenReaderTextCSS } from '../styles/shared';
 
-interface PostNewPageProps {
+interface DiscussionEditPageProps {
   discussionType: 'proCon' | 'book';
 }
 
-function PostNewPage({ discussionType }: PostNewPageProps) {
+function DiscussionEditPage({ discussionType }: DiscussionEditPageProps) {
   const title = {
-    proCon: '찬반 토론 게시글 작성하기',
-    book: '독서 토론 게시글 작성하기',
+    proCon: '찬반 토론 게시글 수정하기',
+    book: '독서 토론 게시글 수정하기',
   }[discussionType];
+
   return (
     <MainContainer>
-      <PostNewPageContainer>
-        <PostNewPageTitle>{title}</PostNewPageTitle>
+      <DiscussionEditContainer>
+        <DiscussionEditTitle>{title}</DiscussionEditTitle>
         <DiscussionFormTab />
         {
           {
             proCon: <ProConDiscussionForm />,
-            book: <BookDiscussionForm />,
+            book: <BookDiscussionEditForm />,
           }[discussionType]
         }
-      </PostNewPageContainer>
+      </DiscussionEditContainer>
     </MainContainer>
   );
 }
 
-const PostNewPageContainer = styled.article`
+const DiscussionEditContainer = styled.article`
   ${flex}
   width: 100%;
   flex-direction: column;
@@ -39,8 +40,8 @@ const PostNewPageContainer = styled.article`
   padding: 48px 16px;
 `;
 
-const PostNewPageTitle = styled.h2`
+const DiscussionEditTitle = styled.h2`
   ${screenReaderTextCSS};
 `;
 
-export default PostNewPage;
+export default DiscussionEditPage;

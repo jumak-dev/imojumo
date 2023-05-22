@@ -1,8 +1,9 @@
-import { Book, PageInfo, APIError } from './index';
+import { Book, PageInfo, APIError, Comment } from './index';
 
 export interface BookDiscussionInfo {
   id: number;
   author: string;
+  avatarUrl: string;
   title: string;
   content: string;
   likeCount: number;
@@ -35,11 +36,23 @@ export interface CreateBookDiscussionType {
 
 export interface GetBookDiscussionDetailType {
   id: number;
+  token?: string;
 }
 
 export interface UseBookDiscussionType extends GetBookDiscussionType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+}
+
+export interface UpdateBookDiscussionType {
+  postId: number;
+  title: string;
+  content: string;
+  token: string;
+}
+
+export interface CreateBookDiscussionsType extends CreateBookDiscussionType {
+  token?: string;
 }
 
 export interface PostLikeType {
@@ -54,4 +67,10 @@ export interface UsePostLikeType {
 
 export interface PostLikeResponse {
   likeCount: number;
+}
+
+export interface BookDiscussionDetail extends BookDiscussionInfo {
+  book: Book;
+  postLikedByUser: boolean;
+  comments: Comment[];
 }
