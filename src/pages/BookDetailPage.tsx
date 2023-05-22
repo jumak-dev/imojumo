@@ -34,10 +34,6 @@ function BookDetailPage() {
     return <Loading />;
   }
 
-  if (error) {
-    return <div>에러 발생!</div>;
-  }
-
   return (
     <MainContainer>
       <BookInformation bookInfo={bookInfo?.item[0]} />
@@ -49,11 +45,20 @@ function BookDetailPage() {
           더보기 <NextIcon />
         </ShowMoreLink>
       </SubtitleBox>
-      <DiscussionSection>
-        {discussionInfo?.posts.map((post) => (
-          <RelatedBookDiscussion post={post} />
-        ))}
-      </DiscussionSection>
+      {error ? (
+        <InformationText>
+          관련 독서토론이 존재하지 않습니다
+          <BookDiscussionLink to="/book-discussion">
+            다른 독서토론 보러 가기
+          </BookDiscussionLink>
+        </InformationText>
+      ) : (
+        <DiscussionSection>
+          {discussionInfo?.posts.map((post) => (
+            <RelatedBookDiscussion post={post} />
+          ))}
+        </DiscussionSection>
+      )}
     </MainContainer>
   );
 }
@@ -92,6 +97,24 @@ const NextIcon = styled(GrNext)`
 const DiscussionSection = styled.section`
   & > a:last-child {
     border: none;
+  }
+`;
+
+const InformationText = styled.p`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: 200px;
+  font-size: 18px;
+`;
+
+const BookDiscussionLink = styled(Link)`
+  color: var(--color-placeholder);
+
+  &:hover {
+    color: var(--color-primary-pink);
   }
 `;
 
