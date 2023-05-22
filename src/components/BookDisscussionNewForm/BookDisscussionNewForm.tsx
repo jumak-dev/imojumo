@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import useInputs from '../../hooks/useInputs';
+
 import Button from '../UI/Button/Button';
-import DiscussionInputs from './DiscussionInputs';
-import PostNewForm from './PostNewForm';
-import SearchBook from './SearchBook';
+import DiscussionFormInputs from '../DiscussionForm/DiscussionFormInputs';
+import DiscussionForm from '../DiscussionForm/DiscussionForm';
+import DiscussionSearchBook from '../DiscussionForm/DiscussionSearchBook';
+
+import useInputs from '../../hooks/useInputs';
 import useCreateBookDiscussion from '../../hooks/bookDiscussion/useCreateBookDiscussion';
+
 import { AladinBookSearchItem } from '../../types';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 
-function BookDiscussionForm() {
+function BookDisscussionNewForm() {
   const [{ title, content }, onChange] = useInputs({
     title: '',
     content: '',
@@ -51,7 +54,7 @@ function BookDiscussionForm() {
       title,
       content,
       book: {
-        isbn: book.isbn13,
+        isbn: book.isbn,
         title: book.title,
         author: book.author,
         description: book.description,
@@ -70,9 +73,9 @@ function BookDiscussionForm() {
   };
 
   return (
-    <PostNewForm title="독서 토론 작성 입력폼" onSubmit={handleFormSubmit}>
-      <SearchBook onSearch={handleSearch} />
-      <DiscussionInputs
+    <DiscussionForm title="독서 토론 작성 입력폼" onSubmit={handleFormSubmit}>
+      <DiscussionSearchBook onSearch={handleSearch} />
+      <DiscussionFormInputs
         avatar={avatarUrl}
         title={title}
         content={content}
@@ -90,7 +93,7 @@ function BookDiscussionForm() {
       >
         등록하기
       </SubmitButton>
-    </PostNewForm>
+    </DiscussionForm>
   );
 }
 
@@ -109,4 +112,4 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-export default BookDiscussionForm;
+export default BookDisscussionNewForm;

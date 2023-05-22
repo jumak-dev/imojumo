@@ -2,30 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 import { colFlexCenter, screenReaderTextCSS } from '../../styles/shared';
 
-interface PostNewFormProps {
+interface DiscussionFormProps {
   title: string;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   children: React.ReactNode;
 }
 
-function PostNewForm({ title, onSubmit, children }: PostNewFormProps) {
+function DiscussionForm({ title, onSubmit, children }: DiscussionFormProps) {
   return (
-    <PostFormContainer onSubmit={onSubmit}>
-      <PostNewFormTitle>{title}</PostNewFormTitle>
+    <DiscussionFormContainer onSubmit={onSubmit}>
+      <DiscussionFormTitle>{title}</DiscussionFormTitle>
       {children}
-    </PostFormContainer>
+    </DiscussionFormContainer>
   );
 }
 
-const PostFormContainer = styled.form`
+const DiscussionFormContainer = styled.form`
   ${colFlexCenter}
   gap: 60px;
   width: 100%;
   max-width: 970px;
 `;
 
-const PostNewFormTitle = styled.h3`
+const DiscussionFormTitle = styled.h3`
   ${screenReaderTextCSS};
 `;
 
-export default PostNewForm;
+export default DiscussionForm;

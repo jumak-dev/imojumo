@@ -7,7 +7,7 @@ import Input from '../UI/Input/Input';
 import Textarea from '../UI/Textarea/Textarea';
 import UserProfile from '../UI/UserProfile/UserProfile';
 
-interface DiscussionInputsProps {
+interface DiscussionFormInputsProps {
   avatar: string | null;
   title: string;
   content: string;
@@ -19,7 +19,7 @@ interface DiscussionInputsProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function DiscussionInputs({
+function DiscussionFormInputs({
   avatar,
   title,
   content,
@@ -29,7 +29,7 @@ function DiscussionInputs({
   onConButtonClick,
   onChange,
   isProConDiscussion = false,
-}: DiscussionInputsProps) {
+}: DiscussionFormInputsProps) {
   return (
     <DiscussionInputListContainer containerHeight={containerHeight}>
       <DiscussionInputListTitle>토론 정보 입력하기</DiscussionInputListTitle>
@@ -134,4 +134,4 @@ const DiscussionContentInput = styled(Textarea)`
   flex: 1 1 0;
 `;
 
-export default DiscussionInputs;
+export default DiscussionFormInputs;
