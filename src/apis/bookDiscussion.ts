@@ -1,36 +1,24 @@
-import { Book, BookDiscussionInfo, Comment } from '../types';
+import { BookDiscussionDetail, GetBookDiscussionDetailType } from '../types';
+import request from './api';
 
 const { VITE_API_URL } = import.meta.env;
 
-interface BookDiscussion extends BookDiscussionInfo {
-  book: Book;
-  postLikedByUser: boolean;
-  comments: Comment[];
-}
-
-export async function getBookDiscussion(
-  id: string,
-  token: string,
-): Promise<BookDiscussion> {
-  try {
-    const response = await fetch(`${VITE_API_URL}/book-discussions/${id}`, {
+export async function getBookDiscussion({
+  id,
+  token,
+}: GetBookDiscussionDetailType): Promise<BookDiscussionDetail> {
+  const response = await request({
+    url: `${VITE_API_URL}/book-discussions/${id}`,
+    options: {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `${token}`,
       },
-    });
+    },
+  });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-
-    return (await response.json()) as BookDiscussion;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  return response;
 }
 
 export async function deleteBookDiscussion(id: number, token: string) {
