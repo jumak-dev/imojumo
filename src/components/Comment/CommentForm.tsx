@@ -45,19 +45,18 @@ function CommentForm({
   let disabled = false;
   let placeholder = '';
 
-  if (isProConDiscussion) {
-    if (isVote) {
-      disabled = false;
-      placeholder = PLACEHOLDER.LOGGED_IN_WITH_VOTE;
-    } else {
-      disabled = true;
-      placeholder = PLACEHOLDER.LOGGED_IN_WITHOUT_VOTE;
-    }
-  } else {
+  if (!isProConDiscussion) {
     disabled = false;
     placeholder = PLACEHOLDER.LOGGED_IN;
   }
-
+  if (isProConDiscussion && isVote) {
+    disabled = false;
+    placeholder = PLACEHOLDER.LOGGED_IN_WITH_VOTE;
+  }
+  if (isProConDiscussion && !isVote) {
+    disabled = true;
+    placeholder = PLACEHOLDER.LOGGED_IN_WITHOUT_VOTE;
+  }
   if (!isLogin) {
     disabled = true;
     placeholder = PLACEHOLDER.NOT_LOGGED_IN;
