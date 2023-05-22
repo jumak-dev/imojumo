@@ -36,16 +36,24 @@ function BookDiscussionTop10Card({ post }: BookDiscussionTop10CardProps) {
     },
   });
 
-  const handleLikeClick = async (e: React.MouseEvent) => {
+  const handleCreateLike = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (!isLiked) {
+      await createLike({
+        postId: post.id,
+        token,
+      });
+    }
+
+    setIsLiked(!isLiked);
+  };
+
+  const handleDeleteLike = async (e: React.MouseEvent) => {
     e.preventDefault();
 
     if (isLiked) {
       await deleteLike({
-        postId: post.id,
-        token,
-      });
-    } else {
-      await createLike({
         postId: post.id,
         token,
       });
@@ -60,8 +68,8 @@ function BookDiscussionTop10Card({ post }: BookDiscussionTop10CardProps) {
       radius="20px"
       margin="5px"
     >
-      {isLogin && !isLiked && <UnlikeIcon onClick={handleLikeClick} />}
-      {isLogin && isLiked && <LikeIcon onClick={handleLikeClick} />}
+      {isLogin && !isLiked && <UnlikeIcon onClick={handleCreateLike} />}
+      {isLogin && isLiked && <LikeIcon onClick={handleDeleteLike} />}
       <CardImage src={post.book?.cover} alt="독서토론 도서 이미지" />
       <CardTitleWrap>
         <CardTitle>{post.title}</CardTitle>
