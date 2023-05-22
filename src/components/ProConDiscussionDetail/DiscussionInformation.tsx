@@ -57,10 +57,10 @@ function DiscussionInformation({
   const proConRate = String(getRate(proCount, proConSum));
 
   const proLeaderName = proLeader?.username;
-  const proLeaderAvatar = proLeader?.avatarUrl;
+  const proLeaderAvatar = proLeader?.avatarUrl || URL.NONE_AVATA_URL;
 
   const conLeaderName = conLeader?.username;
-  const conLeaderAvatar = proLeader?.avatarUrl;
+  const conLeaderAvatar = conLeader?.avatarUrl || URL.NONE_AVATA_URL;
 
   const handleEdit = () => {
     // 게시글 수정 추가 예정
@@ -87,7 +87,7 @@ function DiscussionInformation({
             찬성측
           </ProConLeaderTag>
           <UserProfile
-            avatar={proLeaderAvatar || URL.NONE_AVATA_URL}
+            avatar={proLeaderAvatar}
             alt="찬성측 프로필 이미지"
             itemGap="24px"
             nickname={proLeaderName}
@@ -110,7 +110,7 @@ function DiscussionInformation({
             반대측
           </ProConLeaderTag>
           <UserProfile
-            avatar={conLeaderAvatar || URL.NONE_AVATA_URL}
+            avatar={conLeaderAvatar}
             alt="반대측 프로필 이미지"
             itemGap="24px"
             nickname={conLeaderName}
@@ -149,7 +149,7 @@ const DiscussionInfo = styled.div`
 `;
 
 const DiscussionTitle = styled.h2`
-  font-weight: bold;
+  font-weight: 700;
   font-size: var(--font-size-xxl);
 `;
 
