@@ -11,7 +11,7 @@ interface NewSectionListItemProps {
 function NewSectionListItem({ bookInfo, path }: NewSectionListItemProps) {
   return (
     <ListItem>
-      <ListItemThumnail src={bookInfo?.imageUrl} alt="썸네일 이미지" />
+      <ListItemThumnail src={bookInfo?.cover} alt="썸네일 이미지" />
       <ListItemInfo>
         <ListItemTitle to={path}>{bookInfo?.title}</ListItemTitle>
         <ListItemDescription>{bookInfo?.description}</ListItemDescription>
@@ -32,7 +32,7 @@ export const ListItem = styled.li`
 `;
 
 const ListItemThumnail = styled.img`
-  width: 50px;
+  width: 40px;
   height: 50px;
   object-fit: cover;
 `;

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { GoBook } from 'react-icons/go';
 import { AiOutlineRise } from 'react-icons/ai';
 import { flex, alignCenter } from '../styles/shared';
@@ -8,11 +9,15 @@ import BookDiscussionTop10 from '../components/Main/BookDiscussionTop10';
 import NewSection from '../components/Main/BookCategorySection/NewSection';
 import URL from '../constants/URL';
 
+import { jwtAtom } from '../recoil/atoms';
+
 import useAladinBook from '../hooks/aladin/useAladinBook';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDisscussion';
 
 function HomePage() {
+  const token = useRecoilValue(jwtAtom);
+
   const { data: recommendedBook } = useAladinBook({
     parameter: 'ItemList.aspx',
     queryType: 'ItemNewSpecial',
@@ -22,6 +27,7 @@ function HomePage() {
   const { data: bookDiscussion } = useBookDiscussion({
     page: 1,
     limit: 3,
+    token: token || '',
   });
 
   const { data: proConDiscussion } = useProConDiscussion({
@@ -39,6 +45,7 @@ function HomePage() {
     page: 1,
     limit: 10,
     orderBy: 'popular',
+    token: token || '',
   });
 
   return (
