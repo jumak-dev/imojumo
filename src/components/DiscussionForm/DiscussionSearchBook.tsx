@@ -11,11 +11,15 @@ import useModal from '../../hooks/useModal';
 import ErrorFallback from '../ErrorFallback/indes';
 import { AladinBookSearchItem } from '../../types';
 
-interface SearchBookProps {
+interface DiscussionSearchBookProps {
   onSearch: (book: AladinBookSearchItem) => void;
+  isSearchDisabled?: boolean;
 }
 
-function SearchBook({ onSearch }: SearchBookProps) {
+function DiscussionSearchBook({
+  onSearch,
+  isSearchDisabled = false,
+}: DiscussionSearchBookProps) {
   const [{ bookTitle }, onChange, _, setValue] = useInputs({ bookTitle: '' });
   const [showModal, handleOpenModal, handleCloseModal] = useModal();
 
@@ -41,14 +45,17 @@ function SearchBook({ onSearch }: SearchBookProps) {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <SerachBookContainer>
-        <SearchBookTitle>토론 도서 선택하기</SearchBookTitle>
-        <SearchBookInputContainer>
+        <DiscussionSearchBookTitle>
+          토론 도서 선택하기
+        </DiscussionSearchBookTitle>
+        <DiscussionSearchBookInputContainer>
           <BookTitleInput
             value={bookTitle}
             name="bookTitle"
             placeholder="도서명을..."
             onChange={onChange}
             onKeyPress={handleOnKeyPress}
+            disabled={isSearchDisabled}
           />
           <BookSearchButton
             type="button"
@@ -56,10 +63,11 @@ function SearchBook({ onSearch }: SearchBookProps) {
             buttonColor="white"
             buttonSize="sm"
             onClick={handleSearchClick}
+            disabled={isSearchDisabled}
           >
             찾기
           </BookSearchButton>
-        </SearchBookInputContainer>
+        </DiscussionSearchBookInputContainer>
         {showModal && (
           <BookSearchModal
             query={bookTitle}
@@ -83,7 +91,7 @@ const SerachBookContainer = styled.section`
   padding: 32px;
 `;
 
-const SearchBookTitle = styled.h4`
+const DiscussionSearchBookTitle = styled.h4`
   width: 100%;
   text-align: center;
   font-weight: 700;
@@ -93,7 +101,7 @@ const SearchBookTitle = styled.h4`
   color: #1d1d1b;
 `;
 
-const SearchBookInputContainer = styled.div`
+const DiscussionSearchBookInputContainer = styled.div`
   display: flex;
   width: 100%;
 `;
@@ -102,12 +110,23 @@ const BookTitleInput = styled(Input)`
   flex: 1 1 0;
   border-radius: 5px 0 0 5px;
   border-right: 0;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const BookSearchButton = styled(ButtonBox)`
   width: 74px;
   height: 50px;
   color: var(--black);
+
+  &:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: brightness(0.97);
+    color: var(--color-placeholder);
+  }
 `;
 
-export default SearchBook;
+export default DiscussionSearchBook;
