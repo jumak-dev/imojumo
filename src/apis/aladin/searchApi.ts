@@ -19,18 +19,18 @@ type SortType =
 
 type CoverType = 'Big' | 'MidBig' | 'Mid' | 'Small' | 'Mini' | 'None';
 
-type Prameter = 'ItemSearch.aspx' | 'ItemList.aspx' | 'ItemLookUp.aspx';
+type Parameter = 'ItemSearch.aspx' | 'ItemList.aspx' | 'ItemLookUp.aspx';
 
 const SEARCHTARGETTYPE = 'Book';
 
-const ITEMIDTYPE = 'ISBN13';
+const ITEMIDTYPE = 'ISBN';
 
 const VERSION = '20131101';
 
 const OUTPUT = 'js';
 
 export interface SearchAladinBookType {
-  parameter: Prameter;
+  parameter: Parameter;
   queryType?: QueryType;
   sort?: SortType;
   cover?: CoverType;

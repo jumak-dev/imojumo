@@ -13,6 +13,7 @@ interface UseSearchDiscussionType extends SearchDiscussionsProps {
 
 function useSearchDiscussion({
   query,
+  isbn,
   page,
   limit,
   type,
@@ -26,7 +27,7 @@ function useSearchDiscussion({
     SearchDiscussionsResponseType
   >({
     fetchFn: searchDiscussions,
-    arg: { query, page, limit, type, token },
+    arg: { query, isbn, page, limit, type, token },
     isErrorBoundary,
     isSuspense,
     delay,

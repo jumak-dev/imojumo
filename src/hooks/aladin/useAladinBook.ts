@@ -6,12 +6,13 @@ function useAladinBook({
   parameter,
   queryType,
   maxResults,
+  ItemId,
   isSuspense = false,
   isErrorBoundary = false,
 }: UseSearchAladinBookType) {
   const { data, isLoading, error } = useQuery<any, AladinBookSearchResult>({
     fetchFn: searchAladinBook,
-    arg: { parameter, queryType, maxResults },
+    arg: { parameter, queryType, maxResults, ItemId },
     isErrorBoundary,
     isSuspense,
   });
