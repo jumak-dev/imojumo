@@ -20,7 +20,7 @@ import URL from '../../constants/URL';
 import { ProConLeader } from '../../types';
 import getRate from '../../utils/Rate';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
-import { deleteProConDiscussion } from '../../apis/proConDiscussion';
+import useDeleteProConDiscussion from '../../hooks/proConDiscussion/useDeleteProConDiscussion';
 
 interface DiscussioninformationProps {
   id: number;
@@ -45,6 +45,15 @@ function DiscussionInformation({
 }: DiscussioninformationProps) {
   const navigate = useNavigate();
 
+  const { mutate: deleteProConDiscussion } = useDeleteProConDiscussion({
+    onSuccess: () => {
+      navigate('/pro-con-discussion');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const token = useRecoilValue(jwtAtom) ?? '';
   const user = useRecoilValue(userInfoAtom);
   const { username } = user;
@@ -67,9 +76,8 @@ function DiscussionInformation({
     navigate('/posts/new/pro-con-discussion');
   };
 
-  const handleDelete = () => {
-    deleteProConDiscussion(id, token);
-    navigate('/pro-con-discussion');
+  const handleDelete = async () => {
+    await deleteProConDiscussion({ id: String(id), token });
   };
 
   return (
