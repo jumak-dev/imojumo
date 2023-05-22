@@ -6,7 +6,7 @@ import { GoBook } from 'react-icons/go';
 import { GrNext } from 'react-icons/gr';
 import Loading from '../components/UI/Loading/Loading';
 import MainContainer from '../styles/layout';
-import { alignCenter } from '../styles/shared';
+import { alignCenter, flex } from '../styles/shared';
 import BookInformation from '../components/BookDetail/BookInformation';
 import RelatedBookDiscussion from '../components/BookDetail/RelatedBookDiscussion';
 import { jwtAtom } from '../recoil/atoms';
@@ -115,10 +115,8 @@ const DiscussionSection = styled.section`
 `;
 
 const InformationText = styled.p`
-  display: flex;
+  ${flex}
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 16px;
   height: 200px;
   font-size: 18px;
