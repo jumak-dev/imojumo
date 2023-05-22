@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import useInputs from '../../hooks/useInputs';
+
 import Button from '../UI/Button/Button';
-import DiscussionInputs from './DiscussionInputs';
-import PostNewForm from './PostNewForm';
+import DiscussionForm from '../DiscussionForm/DiscussionForm';
+import DiscussionFormInputs from '../DiscussionForm/DiscussionFormInputs';
+
 import useCreateProConDiscussion from '../../hooks/proConDiscussion/useCreateProConDiscussion';
+import useInputs from '../../hooks/useInputs';
 import { jwtAtom } from '../../recoil/atoms';
 
 function ProConDiscussionForm() {
@@ -40,8 +42,8 @@ function ProConDiscussionForm() {
     'https://image.aladin.co.kr/product/27222/22/cover500/e822538010_1.jpg';
 
   return (
-    <PostNewForm title="찬반 토론 작성 입력폼" onSubmit={handleFormSubmit}>
-      <DiscussionInputs
+    <DiscussionForm title="찬반 토론 작성 입력폼" onSubmit={handleFormSubmit}>
+      <DiscussionFormInputs
         avatar={avatar}
         title={title}
         content={content}
@@ -62,7 +64,7 @@ function ProConDiscussionForm() {
       >
         등록하기
       </SubmitButton>
-    </PostNewForm>
+    </DiscussionForm>
   );
 }
 
