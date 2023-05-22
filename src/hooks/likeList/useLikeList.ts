@@ -41,7 +41,7 @@ function useLikeList({
     });
   };
 
-  return { data, isLoading, error, handleUpdateLike };
+  return { data, isLoading, error, setData, handleUpdateLike };
 }
 
 export default useLikeList;
