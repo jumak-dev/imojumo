@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import BookDiscussionForm from '../components/PostNew/BookDiscussionForm';
-import DiscussionTab from '../components/PostNew/DiscussionTab';
-import ProConDiscussionForm from '../components/PostNew/ProConDiscussionForm';
+import BookDiscussionForm from '../components/BookDisscussionNewForm/BookDisscussionNewForm';
+import DiscussionFormTab from '../components/DiscussionForm/DiscussionFormTab';
+import ProConDiscussionForm from '../components/ProConDiscussionNewForm/ProConDiscussionNewForm';
 import MainContainer from '../styles/layout';
 import { flex, screenReaderTextCSS } from '../styles/shared';
 
@@ -19,7 +19,7 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
     <MainContainer>
       <PostNewPageContainer>
         <PostNewPageTitle>{title}</PostNewPageTitle>
-        <DiscussionTab />
+        <DiscussionFormTab />
         {
           {
             proCon: <ProConDiscussionForm />,
