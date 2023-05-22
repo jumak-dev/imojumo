@@ -7,3 +7,4 @@ export * from './LikeList.type';
 export * from './Comment.type';
 export * from './Promise.type';
 export * from './Error.type';
+export * from './ProConVote.type';
