@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookDiscussionForm from '../components/BookDisscussionNewForm/BookDisscussionNewForm';
+import BookDiscussionForm from '../components/BookDiscussionNewForm/BookDiscussionNewForm';
 import DiscussionFormTab from '../components/DiscussionForm/DiscussionFormTab';
 import ProConDiscussionForm from '../components/ProConDiscussionNewForm/ProConDiscussionNewForm';
 import MainContainer from '../styles/layout';

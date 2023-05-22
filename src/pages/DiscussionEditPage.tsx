@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookDisscussionEditForm from '../components/BookDisscussionEditForm/BookDisscussionEditForm';
+import BookDiscussionEditForm from '../components/BookDiscussionEditForm/BookDiscussionEditForm';
 import DiscussionFormTab from '../components/DiscussionForm/DiscussionFormTab';
 import ProConDiscussionForm from '../components/ProConDiscussionNewForm/ProConDiscussionNewForm';
 import MainContainer from '../styles/layout';
@@ -24,7 +24,7 @@ function DiscussionEditPage({ discussionType }: DiscussionEditPageProps) {
         {
           {
             proCon: <ProConDiscussionForm />,
-            book: <BookDisscussionEditForm />,
+            book: <BookDiscussionEditForm />,
           }[discussionType]
         }
       </DiscussionEditContainer>

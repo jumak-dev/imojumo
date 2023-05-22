@@ -14,7 +14,7 @@ import useUpdateBookDiscussion from '../../hooks/bookDiscussion/useUpdateBookDis
 import { jwtAtom } from '../../recoil/atoms';
 import useBookDiscussionDetail from '../../hooks/bookDiscussion/useBookDiscussionDetail';
 
-function BookDisscussionEditForm() {
+function BookDiscussionEditForm() {
   const navigate = useNavigate();
   const { postId } = useParams() || '';
   const token = useRecoilValue(jwtAtom) ?? '';
@@ -129,4 +129,4 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-export default BookDisscussionEditForm;
+export default BookDiscussionEditForm;
