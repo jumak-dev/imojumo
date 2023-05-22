@@ -48,6 +48,9 @@ module.exports = {
       },
     ],
   },
+  globals: {
+    RequestInit: 'readonly',
+  },
   settings: {
     'import/resolver': {
       node: {
