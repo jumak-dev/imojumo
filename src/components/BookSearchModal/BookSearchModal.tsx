@@ -55,11 +55,7 @@ function BookSearchModal({ query, onClick, onClose }: BookSearchModalProps) {
       <BookSearchList>
         {searchPages?.map((page) =>
           page?.item?.map((book) => (
-            <BookSearchListItem
-              key={book.isbn13}
-              book={book}
-              onClick={onClick}
-            />
+            <BookSearchListItem key={book.isbn} book={book} onClick={onClick} />
           )),
         )}
       </BookSearchList>
