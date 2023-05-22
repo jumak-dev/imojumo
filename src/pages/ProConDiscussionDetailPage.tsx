@@ -10,45 +10,53 @@ import TopicDescription from '../components/ProConDiscussionDetail/TopicDescript
 import CommentForm from '../components/Comment/CommentForm';
 import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
-import { ProConDiscussionInfo, Comment } from '../types';
+import { Comment } from '../types';
 import { jwtAtom } from '../recoil/atoms';
-import {
-  createProConVote,
-  getProConDiscussion,
-  updateProConVote,
-} from '../apis/proConDiscussion';
 
-interface ProConDiscussion extends ProConDiscussionInfo {
-  isPro: boolean;
-  isVote: boolean;
-  comments: Comment[];
-}
+import useProConDiscussionDetail from '../hooks/proConDiscussion/useProConDiscussionDetail';
+import useUpdateProConVote from '../hooks/proConVote/useUpdateProConVote';
+import useCreateProConVote from '../hooks/proConVote/useCreateProConVote';
 
 function ProConDiscussionDetailPage() {
   const { postId } = useParams() as { postId: string };
   const token = useRecoilValue(jwtAtom) ?? '';
-
-  const [proConDiscussion, setProConDiscussion] = useState<ProConDiscussion>();
   const [commentsData, setCommentsData] = useState<Comment[]>([]);
 
-  const fetchData = async () => {
-    const data = await getProConDiscussion(postId, token);
-    setProConDiscussion(data);
-    setCommentsData(data.comments);
-  };
+  const { data: proConDiscussion, handleUpdateIsPro } =
+    useProConDiscussionDetail({
+      id: Number(postId),
+      token,
+      onSuccess: (data) => {
+        setCommentsData(data?.comments || []);
+      },
+    });
 
-  useEffect(() => {
-    fetchData();
-  }, [postId]);
+  const { mutate: createProConVote } = useCreateProConVote({
+    onSuccess: (data) => {
+      if (!data) {
+        return;
+      }
+
+      handleUpdateIsPro(data.isPro);
+    },
+  });
+
+  const { mutate: updateProConVote } = useUpdateProConVote({
+    onSuccess: (data) => {
+      if (!data) {
+        return;
+      }
+
+      handleUpdateIsPro(data.isPro);
+    },
+  });
 
   const handleProConVote = async (voteValue: boolean) => {
-    await createProConVote(postId, token, voteValue);
-    fetchData();
+    await createProConVote({ id: postId, token, voteValue });
   };
 
   const handleProConRevote = async (voteValue: boolean) => {
-    await updateProConVote(postId, token, voteValue);
-    fetchData();
+    await updateProConVote({ id: postId, token, voteValue });
   };
 
   if (!proConDiscussion) {
