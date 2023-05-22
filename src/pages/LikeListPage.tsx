@@ -8,7 +8,6 @@ import { discussionCardContainerCSS, fontCSS } from '../styles/shared';
 import BookDiscussionCard from '../components/BookDiscussion/BookDiscussionCard';
 
 import { jwtAtom } from '../recoil/atoms';
-import { BookDiscussionInfo } from '../types';
 import useLikeList from '../hooks/likeList/useLikeList';
 
 function LikeListPage() {
@@ -18,33 +17,15 @@ function LikeListPage() {
   const {
     data: likeList,
     isLoading,
-    setData: setLikeList,
+    handleUpdateLike: setLikeList,
   } = useLikeList({
     page: paginate || 1,
     limit: 9,
     token: token || '',
   });
 
-  const handleUpdateLike = (postId: number, likeSum: number | undefined) => {
-    setLikeList((prev: any) => {
-      if (prev) {
-        const updatedPosts: any = prev.posts.map((post: BookDiscussionInfo) => {
-          if (post.id === postId) {
-            return {
-              ...post,
-              likeCount: likeSum,
-            };
-          }
-          return post;
-        });
-
-        return {
-          ...prev,
-          posts: updatedPosts,
-        };
-      }
-      return prev;
-    });
+  const handleUpdateLike = (postId: number, likeSum: number) => {
+    setLikeList(postId, likeSum);
   };
 
   return (
