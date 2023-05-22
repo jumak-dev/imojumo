@@ -52,9 +52,11 @@ function BookDetailPage() {
         <Subtitle>
           관련 독서토론 <BookIcon />
         </Subtitle>
-        <ShowMoreButton onClick={handleShowMoreClick}>
-          더보기 <NextIcon />
-        </ShowMoreButton>
+        {discussionInfo && discussionInfo?.posts.length > 2 && (
+          <ShowMoreButton onClick={handleShowMoreClick}>
+            더보기 <NextIcon />
+          </ShowMoreButton>
+        )}
       </SubtitleBox>
       {error ? (
         <InformationText>
