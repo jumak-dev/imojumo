@@ -1,11 +1,12 @@
+import { createProConDiscussion } from '../../apis/imojumo/proConDiscussions';
 import {
+  APIError,
   CreateProConDiscussionType,
-  createProConDiscussion,
-} from '../../apis/imojumo/proConDiscussions';
-import { APIError, ProConDiscussionInfo } from '../../types';
+  ProConDiscussionInfo,
+} from '../../types';
 import useMutate from '../useMutate';
 
-interface UseCreateProConDiscussionPrps {
+interface UseCreateProConDiscussionProps {
   onSuccess?: (data: ProConDiscussionInfo) => void;
   onError?: (error: Error | APIError) => void;
 }
@@ -13,7 +14,7 @@ interface UseCreateProConDiscussionPrps {
 function useCreateProConDiscussion({
   onSuccess,
   onError,
-}: UseCreateProConDiscussionPrps) {
+}: UseCreateProConDiscussionProps) {
   const { mutate, data, error, isLoading } = useMutate<
     CreateProConDiscussionType,
     any
