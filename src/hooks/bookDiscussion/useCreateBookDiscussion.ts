@@ -1,8 +1,9 @@
+import { createBookDiscussion } from '../../apis/imojumo/bookDisccusions';
 import {
+  APIError,
+  BookDiscussionInfo,
   CreateBookDiscussionsType,
-  createBookDiscussion,
-} from '../../apis/imojumo/bookDisccusions';
-import { APIError, BookDiscussionInfo } from '../../types';
+} from '../../types';
 
 import useMutate from '../useMutate';
 
