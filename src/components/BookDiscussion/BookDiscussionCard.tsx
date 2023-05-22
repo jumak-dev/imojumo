@@ -19,7 +19,7 @@ import useDeleteLike from '../../hooks/postLike/useDeleteLike';
 
 interface BookDiscussionCardProps {
   bookDiscussionData: BookDiscussionInfo;
-  handleUpdateLike: (postId: number, likeCount: number | undefined) => void;
+  handleUpdateLike: (postId: number, likeCount: number) => void;
 }
 
 export const profileUrl =
@@ -40,7 +40,8 @@ function BookDiscussionCard({
 
   const { mutate: createLike } = useCreateLike({
     onSuccess: (likeCount) => {
-      handleUpdateLike(postId, likeCount?.likeCount);
+      if (!likeCount) return;
+      handleUpdateLike(postId, likeCount.likeCount);
     },
     onError: (error) => {
       console.log(error);
@@ -49,6 +50,7 @@ function BookDiscussionCard({
 
   const { mutate: deleteLike } = useDeleteLike({
     onSuccess: (likeCount) => {
+      if (!likeCount) return;
       handleUpdateLike(postId, likeCount?.likeCount);
     },
     onError: (error) => {
@@ -56,16 +58,24 @@ function BookDiscussionCard({
     },
   });
 
-  const handleLikeClick = async (e: React.MouseEvent) => {
+  const handleCreateLike = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (!isLiked) {
+      await createLike({
+        postId: bookDiscussionData.id,
+        token,
+      });
+    }
+
+    setIsLiked(!isLiked);
+  };
+
+  const handleDeleteLike = async (e: React.MouseEvent) => {
     e.preventDefault();
 
     if (isLiked) {
       await deleteLike({
-        postId: bookDiscussionData.id,
-        token,
-      });
-    } else {
-      await createLike({
         postId: bookDiscussionData.id,
         token,
       });
@@ -81,9 +91,9 @@ function BookDiscussionCard({
       radius="8px"
     >
       {isLogin && !isLiked && (
-        <UnlikeIcon onClick={handleLikeClick} size={25} />
+        <UnlikeIcon onClick={handleCreateLike} size={25} />
       )}
-      {isLogin && isLiked && <LikeIcon onClick={handleLikeClick} size={25} />}
+      {isLogin && isLiked && <LikeIcon onClick={handleDeleteLike} size={25} />}
       <BookImage src={bookDiscussionData.book?.cover} />
       <DiscussionInfoContainer>
         <DiscussionInfoBox>
