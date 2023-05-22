@@ -10,12 +10,19 @@ import isLoginSelector from '../../recoil/seletors';
 import { jwtAtom } from '../../recoil/atoms';
 import { Comment } from '../../types';
 import { createComment } from '../../apis/comment';
+import PLACEHOLDER from '../../constants/Placeholder';
 
 interface CommentFormProps {
+  isVote?: boolean;
+  isProConDiscussion?: boolean;
   setComments: Dispatch<SetStateAction<Comment[]>>;
 }
 
-function CommentForm({ setComments }: CommentFormProps) {
+function CommentForm({
+  isVote,
+  isProConDiscussion,
+  setComments,
+}: CommentFormProps) {
   const { postId } = useParams() as { postId: string };
 
   const isLogin = useRecoilValue(isLoginSelector);
@@ -35,21 +42,41 @@ function CommentForm({ setComments }: CommentFormProps) {
     reset();
   };
 
+  let disabled = false;
+  let placeholder = '';
+
+  if (!isProConDiscussion) {
+    disabled = false;
+    placeholder = PLACEHOLDER.LOGGED_IN;
+  }
+  if (isProConDiscussion && isVote) {
+    disabled = false;
+    placeholder = PLACEHOLDER.LOGGED_IN_WITH_VOTE;
+  }
+  if (isProConDiscussion && !isVote) {
+    disabled = true;
+    placeholder = PLACEHOLDER.LOGGED_IN_WITHOUT_VOTE;
+  }
+  if (!isLogin) {
+    disabled = true;
+    placeholder = PLACEHOLDER.NOT_LOGGED_IN;
+  }
+
   return (
     <CommentFormContainer>
       <CommentInput
         name="content"
         value={content}
         onChange={onChange}
-        disabled={!isLogin}
-        placeholder={isLogin ? '댓글을 입력하세요...' : '로그인이 필요합니다.'}
+        disabled={disabled}
+        placeholder={placeholder}
       />
       <SubmitButton
         type="submit"
         buttonType="buttonRight"
         buttonColor="white"
         buttonSize="sm"
-        disabled={!isLogin}
+        disabled={disabled}
         onClick={handleSubmit}
       >
         등록

@@ -102,3 +102,11 @@ export const fontCSS = css`
   font-weight: 700;
   font-size: var(--font-size-l);
 `;
+
+export const buttonActiveCSS = css`
+  pointer-events: none;
+`;
+
+export const buttonDeactivateCSS = css`
+  filter: brightness(75%);
+`;
