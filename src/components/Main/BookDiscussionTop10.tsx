@@ -20,15 +20,15 @@ function BookDiscussionTop10({ bookDiscussion }: BookDiscussionTop10Props) {
 
   const handlePrev = () => {
     currentIndexRef.current =
-      currentIndexRef.current === 0
-        ? Math.floor(PAGESUM / PERPAGE) + 1
+      currentIndexRef.current <= 0
+        ? Math.floor(PAGESUM / 2)
         : currentIndexRef.current - 1;
     updatePosts();
   };
 
   const hadleNext = () => {
     currentIndexRef.current =
-      currentIndexRef.current === PAGESUM % PERPAGE
+      currentIndexRef.current === Math.floor(PAGESUM / 2)
         ? 0
         : currentIndexRef.current + 1;
     updatePosts();
