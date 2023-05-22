@@ -12,11 +12,10 @@ import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
 import useModal from '../../hooks/useModal';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
-import {
-  deleteBookDiscussion,
-  likeBookDiscussion,
-  unlikeBookDiscussion,
-} from '../../apis/bookDiscussion';
+
+import useDeleteBookDiscussion from '../../hooks/bookDiscussion/useDeleteBookDiscission';
+import useCreateLike from '../../hooks/postLike/useCreateLike';
+import useDeleteLike from '../../hooks/postLike/useDeleteLike';
 
 interface DiscussioninformationProps {
   id: number;
@@ -49,14 +48,36 @@ function DiscussionInformation({
   const [showModal, handleShowModal, handleCloseModal] = useModal();
   const [isLike, setIsLike] = useState(postLikedByUser);
 
+  const { mutate: deleteBookDiscussion } = useDeleteBookDiscussion({
+    onSuccess: () => {
+      navigate('/book-discussion');
+    },
+  });
+
+  const { mutate: createLike } = useCreateLike({
+    onSuccess: () => {
+      setIsLike(true);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: deleteLike } = useDeleteLike({
+    onSuccess: () => {
+      setIsLike(false);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const handleEdit = () => {
-    // 게시글 수정 추가 예정
     navigate(`/book-discussion/${id}/edit`);
   };
 
   const handleDelete = () => {
-    deleteBookDiscussion(id, token);
-    navigate('/book-discussion');
+    deleteBookDiscussion({ id, token });
   };
 
   const handleLike = () => {
@@ -66,11 +87,9 @@ function DiscussionInformation({
     }
 
     if (isLike) {
-      unlikeBookDiscussion(id, token);
-      setIsLike(false);
+      deleteLike({ postId: id, token });
     } else {
-      likeBookDiscussion(id, token);
-      setIsLike(true);
+      createLike({ postId: id, token });
     }
   };
 
