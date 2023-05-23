@@ -2,6 +2,7 @@ import { Comment, PageInfo } from './index';
 
 export interface ProConDiscussionInfo {
   id: number;
+  avatarUrl: string;
   author: string;
   title: string;
   content: string;
