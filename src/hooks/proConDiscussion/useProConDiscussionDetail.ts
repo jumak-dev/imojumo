@@ -9,6 +9,7 @@ import { getProConDiscussionDetail } from '../../apis/proConDiscussion';
 interface UseProConDiscussionDetailProps extends GetProConDiscussionDetailType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+  delay?: number;
   onSuccess?: (data: ProConDiscussion | null) => void;
   onError?: (error: Error | APIError) => void;
 }
@@ -18,10 +19,11 @@ function useProConDiscussionDetail({
   token,
   onSuccess,
   onError,
+  delay = 0,
   isSuspense = false,
   isErrorBoundary = false,
 }: UseProConDiscussionDetailProps) {
-  const { data, isLoading, error, setData } = useQuery<
+  const { data, isLoading, error, setData, refetch } = useQuery<
     GetProConDiscussionDetailType,
     ProConDiscussion
   >({
@@ -31,6 +33,7 @@ function useProConDiscussionDetail({
     isSuspense,
     onSuccess,
     onError,
+    delay,
   });
 
   const handleUpdateIsPro = (isPro: boolean) => {
@@ -47,7 +50,7 @@ function useProConDiscussionDetail({
     });
   };
 
-  return { data, isLoading, error, handleUpdateIsPro };
+  return { data, isLoading, error, handleUpdateIsPro, refetch };
 }
 
 export default useProConDiscussionDetail;
