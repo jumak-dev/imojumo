@@ -22,7 +22,6 @@ export async function createProConDiscussion({
         'Content-Type': 'application/json',
         Authorization: `${token}`,
       },
-      credentials: 'include',
       body: JSON.stringify({
         title,
         content,
@@ -85,7 +84,6 @@ export async function updateProConDiscussion({
         'Content-Type': 'application/json',
         Authorization: `${token}`,
       },
-      credentials: 'include',
       body: JSON.stringify({
         title,
         content,
