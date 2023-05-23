@@ -1,4 +1,4 @@
-import { PageInfo } from './index';
+import { Comment, PageInfo } from './index';
 
 export interface ProConDiscussionInfo {
   id: number;
@@ -43,4 +43,27 @@ export interface GetProConDiscussionDetailType {
 export interface UseProConDiscussionType extends GetProConDiscussionType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+}
+
+export interface UpdateProConDiscussionType {
+  id: number;
+  isPro: boolean;
+  title: string;
+  content: string;
+  token: string;
+}
+
+export interface CreateProConDiscussionType extends ProConDiscussionRequest {
+  token?: string | null;
+}
+
+export interface ProConDiscussion extends ProConDiscussionInfo {
+  isPro: boolean;
+  isVote: boolean;
+  comments: Comment[];
+}
+
+export interface DeleteProConDiscussionType {
+  id: string;
+  token: string;
 }

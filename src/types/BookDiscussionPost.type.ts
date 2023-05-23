@@ -74,3 +74,8 @@ export interface BookDiscussionDetail extends BookDiscussionInfo {
   postLikedByUser: boolean;
   comments: Comment[];
 }
+
+export interface DeleteBookDiscussionType {
+  id: number;
+  token?: string;
+}

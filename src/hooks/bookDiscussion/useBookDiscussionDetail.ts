@@ -7,7 +7,7 @@ import {
 
 import { getBookDiscussion } from '../../apis/bookDiscussion';
 
-interface useBookDiscussionDetailProps extends GetBookDiscussionDetailType {
+interface UseBookDiscussionDetailProps extends GetBookDiscussionDetailType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
   onSuccess?: (data: BookDiscussionDetail | null) => void;
@@ -21,7 +21,7 @@ function useBookDiscussionDetail({
   onError,
   isSuspense = false,
   isErrorBoundary = false,
-}: useBookDiscussionDetailProps) {
+}: UseBookDiscussionDetailProps) {
   const { data, isLoading, error } = useQuery<
     GetBookDiscussionDetailType,
     BookDiscussionDetail
