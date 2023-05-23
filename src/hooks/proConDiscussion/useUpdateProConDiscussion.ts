@@ -12,7 +12,7 @@ interface UseUpdateProConDiscussionProps {
   onError?: (error: Error | APIError) => void;
 }
 
-function useCreateBookDiscussion({
+function useUpdateProConDiscussion({
   onSuccess,
   onError,
 }: UseUpdateProConDiscussionProps) {
@@ -28,4 +28,4 @@ function useCreateBookDiscussion({
   return { mutate, data, error, isLoading };
 }
 
-export default useCreateBookDiscussion;
+export default useUpdateProConDiscussion;
