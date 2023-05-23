@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { BsChatLeftDots, BsInfoCircle } from 'react-icons/bs';
@@ -22,14 +22,13 @@ function ProConDiscussionDetailPage() {
   const token = useRecoilValue(jwtAtom) ?? '';
   const [commentsData, setCommentsData] = useState<Comment[]>([]);
 
-  const { data: proConDiscussion, handleUpdateIsPro } =
-    useProConDiscussionDetail({
-      id: Number(postId),
-      token,
-      onSuccess: (data) => {
-        setCommentsData(data?.comments || []);
-      },
-    });
+  const { data: proConDiscussion, refetch } = useProConDiscussionDetail({
+    id: Number(postId),
+    token,
+    onSuccess: (data) => {
+      setCommentsData(data?.comments || []);
+    },
+  });
 
   const { mutate: createProConVote } = useCreateProConVote({
     onSuccess: (data) => {
@@ -37,7 +36,7 @@ function ProConDiscussionDetailPage() {
         return;
       }
 
-      handleUpdateIsPro(data.isPro);
+      refetch();
     },
   });
 
@@ -47,7 +46,7 @@ function ProConDiscussionDetailPage() {
         return;
       }
 
-      handleUpdateIsPro(data.isPro);
+      refetch();
     },
   });
 
