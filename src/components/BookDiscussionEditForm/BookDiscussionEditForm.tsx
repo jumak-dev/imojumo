@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Button from '../UI/Button/Button';
 import DiscussionFormInputs from '../DiscussionForm/DiscussionFormInputs';
 import DiscussionForm from '../DiscussionForm/DiscussionForm';
 import DiscussionSearchBook from '../DiscussionForm/DiscussionSearchBook';
@@ -13,6 +11,7 @@ import useUpdateBookDiscussion from '../../hooks/bookDiscussion/useUpdateBookDis
 
 import { jwtAtom } from '../../recoil/atoms';
 import useBookDiscussionDetail from '../../hooks/bookDiscussion/useBookDiscussionDetail';
+import DiscussionFormSubmitButton from '../DiscussionForm/DiscussionFormSubmitButton';
 
 function BookDiscussionEditForm() {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ function BookDiscussionEditForm() {
   });
 
   const getDisabledSubmitButton = () => {
-    if (isLoading) {
+    if (isLoading || !bookDiscussionDetail) {
       return false;
     }
 
@@ -47,8 +46,8 @@ function BookDiscussionEditForm() {
     }
 
     if (
-      title !== bookDiscussionDetail?.title ||
-      content !== bookDiscussionDetail?.content
+      title !== bookDiscussionDetail.title ||
+      content !== bookDiscussionDetail.content
     ) {
       return false;
     }
@@ -94,39 +93,21 @@ function BookDiscussionEditForm() {
       />
       <DiscussionFormInputs
         avatar={bookDiscussionDetail?.avatarUrl || null}
+        author={bookDiscussionDetail?.author || ''}
         title={title}
         content={content}
         onChange={onChange}
         containerHeight="300px"
       />
 
-      <SubmitButton
-        type="submit"
-        buttonType="button"
-        buttonColor="pink"
-        buttonSize="l"
+      <DiscussionFormSubmitButton
         onClick={handleFormSubmit}
         disabled={disabledSubmitButton}
       >
         수정하기
-      </SubmitButton>
+      </DiscussionFormSubmitButton>
     </DiscussionForm>
   );
 }
-
-const SubmitButton = styled(Button)`
-  align-self: center;
-
-  &:disabled {
-    cursor: default;
-    background: var(--color-placeholder);
-    box-shadow: inset 0px 1px 0px 0px var(--color-placeholder);
-    border-color: var(--color-placeholder);
-
-    &:active {
-      top: 0px;
-    }
-  }
-`;
 
 export default BookDiscussionEditForm;
