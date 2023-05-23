@@ -56,7 +56,6 @@ function ProConDiscussionEditForm() {
     }
 
     if (title.length === 0 || content.length === 0) {
-      console.log(1111);
       return false;
     }
 
