@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
@@ -8,13 +9,15 @@ import { alignCenter, rowFlex, rowFlexCenter } from '../../../styles/shared';
 import AlarmModal from './AlarmModal';
 import ProfileModal from './ProfileModal';
 import useInputs from '../../../hooks/useInputs';
+import isLoginSelector from '../../../recoil/seletors';
 
 function Header() {
-  const user = true;
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const paramsQuery = searchParams.get('query');
   const [{ query }, onChange] = useInputs({ query: paramsQuery || '' });
+
+  const isLogin = useRecoilValue(isLoginSelector);
 
   const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (query.length === 0) {
@@ -27,6 +30,11 @@ function Header() {
   };
 
   const handleClick = () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     navigate('/posts/new/book-discussion');
   };
 
@@ -57,7 +65,9 @@ function Header() {
               <CustomLink to="/pro-con-discussion">찬반토론</CustomLink>
             </NavLinkItem>
             <NavLinkItem>
-              <CustomLink to="/likes">찜 목록</CustomLink>
+              <CustomLink to={isLogin ? '/likes' : '/login'}>
+                찜 목록
+              </CustomLink>
             </NavLinkItem>
           </NavLinkList>
         </NavContainer>
@@ -70,7 +80,7 @@ function Header() {
         >
           토론하기
         </Button>
-        {user ? (
+        {isLogin ? (
           <ButtonContainer>
             <AlarmModal />
             <ProfileModal />
