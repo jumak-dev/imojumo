@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../UI/Button/Button';
 import DiscussionForm from '../DiscussionForm/DiscussionForm';
 import DiscussionFormInputs from '../DiscussionForm/DiscussionFormInputs';
 
 import useCreateProConDiscussion from '../../hooks/proConDiscussion/useCreateProConDiscussion';
 import useInputs from '../../hooks/useInputs';
-import { jwtAtom } from '../../recoil/atoms';
+import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
+import DiscussionFormSubmitButton from '../DiscussionForm/DiscussionFormSubmitButton';
 
 function ProConDiscussionForm() {
+  const { avatarUrl, username } = useRecoilValue(userInfoAtom);
   const [{ title, content }, onChange] = useInputs({
     title: '',
     content: '',
@@ -27,6 +27,8 @@ function ProConDiscussionForm() {
     },
   });
   const token = useRecoilValue(jwtAtom);
+  const disabledSubmitButton =
+    isLoading || title.length === 0 || content.length === 0;
 
   const handleFormSubmit = async (
     event:
@@ -38,13 +40,11 @@ function ProConDiscussionForm() {
     await mutate({ title, content, isPro, token });
   };
 
-  const avatar =
-    'https://image.aladin.co.kr/product/27222/22/cover500/e822538010_1.jpg';
-
   return (
     <DiscussionForm title="찬반 토론 작성 입력폼" onSubmit={handleFormSubmit}>
       <DiscussionFormInputs
-        avatar={avatar}
+        avatar={avatarUrl}
+        author={username || ''}
         title={title}
         content={content}
         onChange={onChange}
@@ -55,21 +55,14 @@ function ProConDiscussionForm() {
         onConButtonClick={() => setIsPro(false)}
       />
 
-      <SubmitButton
-        type="submit"
-        buttonType="button"
-        buttonColor="pink"
-        buttonSize="l"
+      <DiscussionFormSubmitButton
         onClick={handleFormSubmit}
+        disabled={disabledSubmitButton}
       >
         등록하기
-      </SubmitButton>
+      </DiscussionFormSubmitButton>
     </DiscussionForm>
   );
 }
-
-const SubmitButton = styled(Button)`
-  align-self: center;
-`;
 
 export default ProConDiscussionForm;
