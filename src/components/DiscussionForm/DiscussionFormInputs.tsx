@@ -72,12 +72,14 @@ function DiscussionFormInputs({
           name="title"
           value={title}
           placeholder="토론 제목을 입력하세요..."
+          aria-label="제목"
           onChange={onChange}
         />
         <DiscussionContentInput
           name="content"
           value={content}
           placeholder="내용을 입력하세요..."
+          aria-label="내용"
           onChange={onChange}
         />
       </DiscussionInputContainer>
