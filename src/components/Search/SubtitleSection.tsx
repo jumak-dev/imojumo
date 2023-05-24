@@ -41,7 +41,7 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
 
 const SubtitleBlock = styled.div`
   ${alignCenter}
-  margin: 50px 10px;
+  margin: 52px 10px 32px 10px;
   position: relative;
 `;
 
