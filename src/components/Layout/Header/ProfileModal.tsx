@@ -1,24 +1,36 @@
 import { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
 import { BsPersonCircle } from 'react-icons/bs';
 import UserProfile from '../../UI/UserProfile/UserProfile';
 import { alignCenter, colFlex, rowFlex } from '../../../styles/shared';
 import useModal from '../../../hooks/useModal';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import { jwtAtom, userInfoAtom } from '../../../recoil/atoms';
+import logout from '../../../utils/auth/logout';
 
 function ProfileModal() {
-  const imageUrl =
-    'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
+  const navigate = useNavigate();
+  const setJwt = useSetRecoilState(jwtAtom);
+  const { username, avatarUrl } = useRecoilValue(userInfoAtom);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const [showModal, handleShowModal, handleCloseModal] = useModal();
 
   useOnClickOutside(modalRef, handleCloseModal);
 
+  const handleLogout = () => {
+    logout();
+    setJwt(null);
+    handleCloseModal();
+    navigate('/');
+  };
+
   return (
     <ProfileModalContainer>
       <Profile onClick={handleShowModal}>
-        <Nickname>유아유아짱</Nickname>
+        <Nickname>{username}</Nickname>
         <UserIcon />
       </Profile>
       {showModal && (
@@ -26,15 +38,17 @@ function ProfileModal() {
           <ProfileBox>
             <ProfileItem>프로필</ProfileItem>
             <UserProfile
-              avatar={imageUrl}
-              alt="프로필 이미지"
+              avatar={avatarUrl}
+              alt={`${username} 프로필 이미지`}
               itemGap="10px"
-              nickname="yua77"
+              nickname={username || ''}
               size="md"
             />
           </ProfileBox>
-          <MyPage href="/mypage">마이페이지</MyPage>
-          <ProfileItem onClick={handleCloseModal}>로그아웃</ProfileItem>
+          <MyPage to="/mypage" onClick={handleCloseModal}>
+            마이페이지
+          </MyPage>
+          <ProfileItem onClick={handleLogout}>로그아웃</ProfileItem>
         </ProfileModalCard>
       )}
     </ProfileModalContainer>
@@ -103,9 +117,13 @@ const ProfileItem = styled.div`
   padding: 16px;
   font-weight: 600;
   font-size: var(--font-size-l);
+
+  &:last-child {
+    cursor: pointer;
+  }
 `;
 
-const MyPage = styled.a`
+const MyPage = styled(Link)`
   ${rowFlex}
   justify-content: space-between;
   padding: 16px;
