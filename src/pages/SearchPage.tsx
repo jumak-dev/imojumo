@@ -17,7 +17,7 @@ function SearchPage() {
   return (
     <>
       <SearchNav />
-      <MainContainer>
+      <SearchPageMainContainer>
         <SearchPageWarapper>
           <Suspense fallback={<Loading />}>
             {
@@ -29,14 +29,20 @@ function SearchPage() {
             }
           </Suspense>
         </SearchPageWarapper>
-      </MainContainer>
+      </SearchPageMainContainer>
     </>
   );
 }
 
+const SearchPageMainContainer = styled(MainContainer)`
+  display: flex;
+`;
+
 const SearchPageWarapper = styled.article`
   min-height: 100%;
   flex: 1;
+  position: relative;
+  padding-bottom: 60px;
 `;
 
 export default SearchPage;
