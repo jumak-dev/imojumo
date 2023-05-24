@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import Button from '../../UI/Button/Button';
@@ -65,9 +65,9 @@ function Header() {
               <CustomLink to="/pro-con-discussion">찬반토론</CustomLink>
             </NavLinkItem>
             <NavLinkItem>
-              <CustomLink to={isLogin ? '/likes' : '/login'}>
+              <LikesLink to={isLogin ? '/likes' : '/login'} $isLogin={isLogin}>
                 찜 목록
-              </CustomLink>
+              </LikesLink>
             </NavLinkItem>
           </NavLinkList>
         </NavContainer>
@@ -157,11 +157,19 @@ const NavLinkItem = styled.li`
   font-size: var(--font-size-l);
 `;
 
-const CustomLink = styled(NavLink)`
+const linkCSS = css`
   &:hover,
   &.active {
     font-weight: 600;
   }
+`;
+
+const CustomLink = styled(NavLink)`
+  ${linkCSS}
+`;
+
+const LikesLink = styled(NavLink)<{ $isLogin: boolean }>`
+  ${({ $isLogin }) => $isLogin && linkCSS};
 `;
 
 const ButtonContainer = styled.div`
