@@ -26,7 +26,7 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
     <SubtitleBlock>
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
-      {postCount > 0 && (
+      {postCount > 3 && (
         <MoreButton
           isShow={currentTab === TAB.ALL}
           aria-label="더 보기"
