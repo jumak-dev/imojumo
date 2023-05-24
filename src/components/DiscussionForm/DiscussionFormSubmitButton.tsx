@@ -4,6 +4,7 @@ import Button from '../UI/Button/Button';
 
 interface DiscussionFormSubmitButtonProps {
   disabled: boolean;
+  ariaLabel?: string;
   children: React.ReactNode;
   onClick: (
     event:
@@ -13,6 +14,7 @@ interface DiscussionFormSubmitButtonProps {
 }
 
 function DiscussionFormSubmitButton({
+  ariaLabel,
   disabled,
   children,
   onClick,
@@ -23,6 +25,7 @@ function DiscussionFormSubmitButton({
       buttonType="button"
       buttonColor="pink"
       buttonSize="l"
+      aria-label={ariaLabel}
       onClick={onClick}
       disabled={disabled}
     >
