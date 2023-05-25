@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { BsChatLeftDots } from 'react-icons/bs';
@@ -32,14 +32,23 @@ function BookDiscussionDetailPage() {
     return <Loading />;
   }
 
-  const { id, author, title, content, createdAt, postLikedByUser, book } =
-    bookDiscussion;
+  const {
+    id,
+    author,
+    avatarUrl,
+    title,
+    content,
+    createdAt,
+    postLikedByUser,
+    book,
+  } = bookDiscussion;
 
   return (
     <MainContainer>
       <DiscussionInformation
         id={id}
         author={author}
+        avatarUrl={avatarUrl}
         title={title}
         content={content}
         createdAt={createdAt}
