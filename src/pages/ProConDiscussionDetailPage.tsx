@@ -65,6 +65,7 @@ function ProConDiscussionDetailPage() {
   const {
     id,
     author,
+    avatarUrl,
     title,
     content,
     createdAt,
@@ -92,6 +93,8 @@ function ProConDiscussionDetailPage() {
         주제 설명 <BsInfoCircle />
       </Subtitle>
       <TopicDescription
+        author={author}
+        avatarUrl={avatarUrl}
         content={content}
         isPro={isPro}
         isVote={isVote}
