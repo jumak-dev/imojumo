@@ -5,7 +5,7 @@ export interface Book {
   isbn: string;
   title: string;
   author: string;
-  translator?: string;
+  translator?: string | null;
   description: string;
   link: string;
   cover: string;

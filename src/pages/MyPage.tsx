@@ -14,82 +14,146 @@ import useVisibles from '../hooks/useVisibles';
 import useInputs from '../hooks/useInputs';
 import { inputCSS, alignCenter } from '../styles/shared';
 import Modal from '../components/UI/Modal/Modal';
+import { MyPageContentProps } from '../types';
+import changeDateString from '../utils/changeDateString';
 
 // dummyData
 const data = {
-  bookDiscussion: [
+  bookDiscussions: [
     {
-      id: 0,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
-      likes: 24,
+      id: 10,
+      author: 'wjdwjdtn92',
+      title: 'ddd',
+      content: 'dddd',
+      views: 0,
+      likeCount: 0,
+      createdAt: '2023-05-18T02:01:42.206Z',
+      updatedAt: '2023-05-18T02:01:42.206Z',
+      avatarUrl: 'your-avatar-url',
+      book: {
+        id: 5,
+        isbn: '9791158392246',
+        title:
+          '도메인 주도 설계 철저 입문 - 코드와 패턴으로 밑바닥부터 이해하는 DDD',
+        author: '나루세 마사노부 (지은이), 심효섭 (옮긴이)',
+        translator: null,
+        description:
+          "에릭 에반스의 《도메인 주도 설계》를 읽고 감명받아 쓰게 된 도메인 주도 설계 입문서이며, 앞으로 《도메인 주도 설계》를 읽으려는 독자, 또는 이미 해당 도서를 읽었더라도 '더 이해하기 쉬운 입문서'를 필요로 하는 엔지니어를 대상으로 한다.",
+        link: 'http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=252622256&amp;partner=openAPI&amp;start=api',
+        cover:
+          'https://image.aladin.co.kr/product/25262/22/coversum/k752633106_2.jpg',
+        publisher: '위키북스',
+        pubDate: '2020-10-14',
+        category: '국내도서>컴퓨터/모바일>컴퓨터 공학>소프트웨어 공학',
+        createdAt: '2023-05-18T01:55:04.067Z',
+        updatedAt: '2023-05-18T01:55:04.067Z',
+      },
+      postLikedByUser: false,
     },
     {
-      id: 1,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
-      likes: 24,
+      id: 9,
+      author: 'wjdwjdtn92',
+      title: 'dd',
+      content: 'dd',
+      views: 0,
+      likeCount: 0,
+      createdAt: '2023-05-18T01:55:04.088Z',
+      updatedAt: '2023-05-18T01:55:04.088Z',
+      avatarUrl: 'your-avatar-url',
+      book: {
+        id: 5,
+        isbn: '9791158392246',
+        title:
+          '도메인 주도 설계 철저 입문 - 코드와 패턴으로 밑바닥부터 이해하는 DDD',
+        author: '나루세 마사노부 (지은이), 심효섭 (옮긴이)',
+        translator: null,
+        description:
+          "에릭 에반스의 《도메인 주도 설계》를 읽고 감명받아 쓰게 된 도메인 주도 설계 입문서이며, 앞으로 《도메인 주도 설계》를 읽으려는 독자, 또는 이미 해당 도서를 읽었더라도 '더 이해하기 쉬운 입문서'를 필요로 하는 엔지니어를 대상으로 한다.",
+        link: 'http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=252622256&amp;partner=openAPI&amp;start=api',
+        cover:
+          'https://image.aladin.co.kr/product/25262/22/coversum/k752633106_2.jpg',
+        publisher: '위키북스',
+        pubDate: '2020-10-14',
+        category: '국내도서>컴퓨터/모바일>컴퓨터 공학>소프트웨어 공학',
+        createdAt: '2023-05-18T01:55:04.067Z',
+        updatedAt: '2023-05-18T01:55:04.067Z',
+      },
+      postLikedByUser: false,
     },
   ],
-  proConDiscussion: [
+  proConDiscussions: [
     {
-      id: 0,
-      title:
-        '갑자기 불상한척? 한탕해서 편하게 살려고 주식투자해서 손실난걸 왜 불상한양 기사쓰냐? 잔고 5000만원 남아서 라면 먹는게 불',
-      path: '#',
-      date: '2023.02.04',
+      id: 14,
+      author: 'wjdwjdtn92',
+      title: '나는 바보이다',
+      content: '멍충이인가?',
+      views: 0,
+      createdAt: '2023-05-19T11:12:45.181Z',
+      updatedAt: '2023-05-19T11:12:45.181Z',
+      proCount: 1,
+      conCount: 0,
+      isVote: true,
+      isPro: true,
+      proLeader: {
+        username: 'wjdwjdtn92',
+        avatarUrl: null,
+      },
+      conLeader: null,
     },
     {
-      id: 1,
-      title:
-        '갑자기 불상한척? 한탕해서 편하게 살려고 주식투자해서 손실난걸 왜 불상한양 기사쓰냐? 잔고 5000만원 남아서 라면 먹는게 불',
-      path: '#',
-      date: '2023.02.04',
+      id: 13,
+      author: 'wjdwjdtn92',
+      title: '아이폰 vs 갤럭시',
+      content: '찬성은 아이폰, 반대는 갤럭시 (역시 아이폰이지)',
+      views: 0,
+      createdAt: '2023-05-19T09:10:28.976Z',
+      updatedAt: '2023-05-19T09:10:28.976Z',
+      proCount: 1,
+      conCount: 0,
+      isVote: true,
+      isPro: true,
+      proLeader: {
+        username: 'wjdwjdtn92',
+        avatarUrl: null,
+      },
+      conLeader: null,
     },
   ],
-  myComent: [
+  comments: [
     {
-      id: 0,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
+      id: 23,
+      postId: 11,
+      content: '옴뇸뇸',
+      createdAt: '2023-05-19T04:58:42.627Z',
+      updatedAt: '2023-05-19T04:58:42.627Z',
     },
     {
-      id: 1,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
+      id: 22,
+      postId: 1,
+      content: '떡볶이',
+      createdAt: '2023-05-19T04:58:28.504Z',
+      updatedAt: '2023-05-19T04:58:28.504Z',
     },
   ],
 };
 
-interface ContentListProps {
-  articles: Array<{
-    path: string;
-    title: string;
-    likes?: number;
-    date: string;
-    id: number;
-  }>;
-}
-
-function ContentList({ articles }: ContentListProps) {
+function ContentList({ articles }: MyPageContentProps) {
   return (
     <ul>
       {articles.map((obj) => (
         <ContentContainer key={obj.id}>
           <ContentTop>
-            <ContentLink to={obj.path}>{obj.title}</ContentLink>
-            {obj.likes && (
+            <ContentLink to="/">
+              {'title' in obj ? obj.title : obj.content}
+            </ContentLink>
+            {'likeCount' in obj && (
               <ContentLikeBox>
-                {obj.likes}
+                {obj.likeCount}
                 <HeartIcon />
               </ContentLikeBox>
             )}
           </ContentTop>
-          <ContentBottom>{obj.date}</ContentBottom>
+          <ContentBottom>{changeDateString(obj.createdAt)}</ContentBottom>
         </ContentContainer>
       ))}
     </ul>
@@ -166,7 +230,7 @@ function MyPage() {
           </IndexBarTitle>
           <button type="button">더보기 &gt;</button>
         </IndexBar>
-        <ContentList articles={data.bookDiscussion} />
+        <ContentList articles={data.bookDiscussions} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -176,7 +240,7 @@ function MyPage() {
           </IndexBarTitle>
           <button type="button">더보기 &gt;</button>
         </IndexBar>
-        <ContentList articles={data.proConDiscussion} />
+        <ContentList articles={data.proConDiscussions} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -186,7 +250,7 @@ function MyPage() {
           </IndexBarTitle>
           <button type="button">더보기 &gt;</button>
         </IndexBar>
-        <ContentList articles={data.myComent} />
+        <ContentList articles={data.comments} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
