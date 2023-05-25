@@ -19,7 +19,7 @@ function ContentList({ articles }: MyPageContentProps) {
   }
 
   return (
-    <ul>
+    <ContentListWrraper>
       {articles.map((obj) => (
         <ContentContainer key={obj.id}>
           <ContentTop>
@@ -36,9 +36,13 @@ function ContentList({ articles }: MyPageContentProps) {
           <ContentBottom>{changeDateString(obj.createdAt)}</ContentBottom>
         </ContentContainer>
       ))}
-    </ul>
+    </ContentListWrraper>
   );
 }
+
+const ContentListWrraper = styled.ul`
+  width: 100%;
+`;
 
 const iconCSS = css`
   margin-left: 8px;

@@ -6,13 +6,19 @@ import { AiOutlineClose } from 'react-icons/ai';
 interface Props {
   onClose: () => void;
   children: ReactNode;
+  width?: string;
+  maxWidth?: string;
 }
 
-function ModalPortal({ onClose, children }: Props) {
+function ModalPortal({ onClose, children, width, maxWidth }: Props) {
   const el = document.getElementById('modal-root') as HTMLElement;
   return createPortal(
     <Overlay onClick={onClose}>
-      <Content onClick={(event) => event.stopPropagation()}>
+      <Content
+        contentWidth={width}
+        maxWidth={maxWidth}
+        onClick={(event) => event.stopPropagation()}
+      >
         <AiOutlineClose onClick={onClose} />
         {children}
       </Content>
@@ -33,14 +39,20 @@ export const Overlay = styled.div`
   align-items: center;
 `;
 
-export const Content = styled.section`
+type ContentProps = {
+  contentWidth?: string;
+  maxWidth?: string;
+};
+
+export const Content = styled.section<ContentProps>`
   background-color: var(--white);
   border-radius: 5px;
   border-color: var(--color-borderbox-line);
   padding: 20px;
-  max-width: 90%;
+  max-width: ${(props) => props.maxWidth || '90%'};
   max-height: 90%;
   overflow: auto;
+  width: ${(props) => props.contentWidth};
 
   display: flex;
   flex-direction: column;

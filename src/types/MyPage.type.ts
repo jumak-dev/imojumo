@@ -16,7 +16,7 @@ export interface MyPageInfoProps {
   comments: MyPageCommnet[];
 }
 
-type MyPageResponseData =
+export type MyPageResponseData =
   | BookDiscussionInfo
   | ProConDiscussionInfo
   | MyPageCommnet;
