@@ -1,55 +1,77 @@
-import styled from 'styled-components';
-import { AiFillHeart } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import styled, { css } from 'styled-components';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { alignCenter, colFlexCenter, rowFlex } from '../../styles/shared';
+import { BookDetailPost } from '../../types';
 
-function RelatedBookDiscussion() {
+interface RelatedBookDiscussionProps {
+  post: BookDetailPost;
+}
+
+function RelatedBookDiscussion({ post }: RelatedBookDiscussionProps) {
+  const discussionDate = dayjs(post.createdAt).format('YYYY-MM-DD');
+
   return (
-    <DiscussionContainer>
+    <DiscussionContainer to={`/book-discussion/${post.id}`}>
       <DiscussionBox>
-        <DiscussionTitle>미드나잇라이브러리 대박</DiscussionTitle>
-        <DiscussionDate>2023. 04. 12</DiscussionDate>
+        <DiscussionTitle>{post.title}</DiscussionTitle>
+        <DiscussionDate>{discussionDate}</DiscussionDate>
       </DiscussionBox>
       <LikeBox>
-        <LikeCount>24</LikeCount>
-        <LikeIcon />
+        <LikeCount>{post.likeCount}</LikeCount>
+        {post.postLikedByUser ? <LikeIcon /> : <UnlikeIcon />}
       </LikeBox>
     </DiscussionContainer>
   );
 }
 
-const DiscussionContainer = styled.article`
+const DiscussionContainer = styled(Link)`
   ${rowFlex}
   justify-content: space-between;
   height: 100px;
   padding: 0 24px;
   border-bottom: 1px solid var(--color-borderbottom-color);
+
+  &:hover {
+    background-color: var(--color-inputbox-bg);
+  }
 `;
 
 const DiscussionBox = styled.div`
   ${colFlexCenter}
+  gap: 12px;
 `;
 
 const DiscussionTitle = styled.span`
-  font-weight: bold;
-  margin-bottom: 12px;
+  font-weight: 700;
 `;
 
 const DiscussionDate = styled.span`
   font-size: var(--font-size-sm);
+  color: var(--color-content-text);
 `;
 
 const LikeBox = styled.div`
   ${alignCenter}
+  gap: 16px;
 `;
 
 const LikeCount = styled.span`
-  margin-right: 16px;
-  font-weight: bold;
+  font-weight: 700;
+`;
+
+const heartCSS = css`
+  font-size: 25px;
+  color: var(--color-heart);
 `;
 
 const LikeIcon = styled(AiFillHeart)`
-  font-size: 25px;
-  color: var(--color-heart);
+  ${heartCSS}
+`;
+
+const UnlikeIcon = styled(AiOutlineHeart)`
+  ${heartCSS}
 `;
 
 export default RelatedBookDiscussion;

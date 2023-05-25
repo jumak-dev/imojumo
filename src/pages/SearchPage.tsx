@@ -1,4 +1,5 @@
 import { useContext, Suspense } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import TAB from '../constants/Tab';
@@ -13,11 +14,13 @@ import Loading from '../components/UI/Loading/Loading';
 
 function SearchPage() {
   const { currentTab } = useContext(TabContext);
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('query');
 
   return (
     <>
-      <SearchNav />
-      <SearchPageMainContainer>
+      {query && <SearchNav />}
+      <MainContainer>
         <SearchPageWarapper>
           <Suspense fallback={<Loading />}>
             {

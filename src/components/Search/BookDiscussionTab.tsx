@@ -19,12 +19,14 @@ function BookDiscussionTab() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page') || 1;
   const query = searchParams.get('query');
+  const isbn = searchParams.get('isbn');
   const [paginate, setPaginate] = useState(Number(currentPage));
   const token = useRecoilValue(jwtAtom);
 
   const { data, handleUpdateLike } = useSearchDiscussion({
     token,
     query: query || '',
+    isbn: isbn || '',
     type: 'book',
     page: Number(currentPage),
     limit: 9,
