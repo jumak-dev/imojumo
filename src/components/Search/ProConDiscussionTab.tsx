@@ -65,13 +65,16 @@ function ProConDiscussionTap() {
 }
 
 const DiscussionPagination = styled(Pagination)`
-  margin-bottom: 30px;
+  margin-bottom: 0;
+  position: absolute;
+  bottom: 40px;
+  left: calc(50% - 80px);
 `;
 
 const ProConDiscussionSearchCardContainer = styled.section`
   ${discussionCardContainerCSS}
+  margin-bottom: 0;
   padding-bottom: 60px;
-  height: 100%;
 `;
 
 export default ProConDiscussionTap;

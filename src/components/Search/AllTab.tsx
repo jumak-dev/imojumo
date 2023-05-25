@@ -49,10 +49,9 @@ function AllTab() {
               />
             ))}
           </BookDiscussionCardContainer>
-          <Divider />
         </>
       )}
-
+      {bookResultsCount > 0 && proConResultsCount > 0 && <Divider />}
       {proConResultsCount > 0 && (
         <>
           <SubtitleSection
