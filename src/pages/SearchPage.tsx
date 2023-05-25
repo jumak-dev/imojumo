@@ -20,7 +20,7 @@ function SearchPage() {
   return (
     <>
       {query && <SearchNav />}
-      <MainContainer>
+      <SearchPageMainContainer>
         <SearchPageWarapper>
           <Suspense fallback={<Loading />}>
             {
