@@ -2,11 +2,9 @@ import styled, { css } from 'styled-components';
 import { GoBook } from 'react-icons/go';
 import { BsFillImageFill, BsChatLeftDots } from 'react-icons/bs';
 import { BiTrash } from 'react-icons/bi';
-import { AiFillHeart } from 'react-icons/ai';
 import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
-import { Link } from 'react-router-dom';
 import { useId, useState } from 'react';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
@@ -14,11 +12,11 @@ import useVisibles from '../hooks/useVisibles';
 import useInputs from '../hooks/useInputs';
 import { inputCSS, alignCenter } from '../styles/shared';
 import Modal from '../components/UI/Modal/Modal';
-import { MyPageContentProps } from '../types';
-import changeDateString from '../utils/changeDateString';
+import ContentList from '../components/MyPage/ContentList';
+import { MyPageInfoProps } from '../types';
 
 // dummyData
-const data = {
+const data: MyPageInfoProps = {
   bookDiscussions: [
     {
       id: 10,
@@ -126,6 +124,7 @@ const data = {
       content: '옴뇸뇸',
       createdAt: '2023-05-19T04:58:42.627Z',
       updatedAt: '2023-05-19T04:58:42.627Z',
+      type: 'book',
     },
     {
       id: 22,
@@ -133,32 +132,10 @@ const data = {
       content: '떡볶이',
       createdAt: '2023-05-19T04:58:28.504Z',
       updatedAt: '2023-05-19T04:58:28.504Z',
+      type: 'proCon',
     },
   ],
 };
-
-function ContentList({ articles }: MyPageContentProps) {
-  return (
-    <ul>
-      {articles.map((obj) => (
-        <ContentContainer key={obj.id}>
-          <ContentTop>
-            <ContentLink to="/">
-              {'title' in obj ? obj.title : obj.content}
-            </ContentLink>
-            {'likeCount' in obj && (
-              <ContentLikeBox>
-                {obj.likeCount}
-                <HeartIcon />
-              </ContentLikeBox>
-            )}
-          </ContentTop>
-          <ContentBottom>{changeDateString(obj.createdAt)}</ContentBottom>
-        </ContentContainer>
-      ))}
-    </ul>
-  );
-}
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -369,11 +346,6 @@ const ChatIcon = styled(BsChatLeftDots)`
   color: var(--black);
 `;
 
-const HeartIcon = styled(AiFillHeart)`
-  ${iconCSS};
-  color: var(--color-heart);
-`;
-
 const PasswordEditIcon = styled(FaUserLock)`
   ${iconCSS};
   color: var(--black);
@@ -460,30 +432,6 @@ const ContentContainer = styled.li`
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--color-inputbox-line);
-`;
-
-const ContentTop = styled.div`
-  ${alignCenter};
-  justify-content: space-between;
-  margin-bottom: 13px;
-`;
-
-const ContentBottom = styled.div`
-  font-size: var(--font-size-sm);
-`;
-
-const ContentLikeBox = styled.div`
-  ${alignCenter};
-`;
-
-const ContentLink = styled(Link)`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  height: 17px;
-  font-size: var(--font-size-m);
-  font-weight: 600;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
 `;
 
 interface HiddenContentProps {

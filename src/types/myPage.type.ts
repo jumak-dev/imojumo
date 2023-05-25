@@ -7,6 +7,7 @@ export interface MyPageCommnet {
   content: string;
   createdAt: string;
   updatedAt: string;
+  type: 'book' | 'proCon';
 }
 
 export interface MyPageInfoProps {

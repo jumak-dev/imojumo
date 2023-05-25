@@ -12,6 +12,8 @@ export interface ProConDiscussionInfo {
   conCount: number;
   proLeader: ProConLeader | null;
   conLeader: ProConLeader | null;
+  isVote: boolean;
+  isPro: boolean;
 }
 
 export interface GetProConDiscussion {
