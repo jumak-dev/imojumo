@@ -9,6 +9,7 @@ import UserProfile from '../UI/UserProfile/UserProfile';
 
 interface DiscussionFormInputsProps {
   avatar: string | null;
+  author: string;
   title: string;
   content: string;
   containerHeight: string;
@@ -21,6 +22,7 @@ interface DiscussionFormInputsProps {
 
 function DiscussionFormInputs({
   avatar,
+  author,
   title,
   content,
   containerHeight,
@@ -36,9 +38,9 @@ function DiscussionFormInputs({
 
       <UserProfile
         avatar={avatar}
-        alt="프로필 이미지"
+        alt={`${author} 프로필 이미지`}
         itemGap="10px"
-        nickname="yua77"
+        nickname={author}
         size="sm"
       />
       <DiscussionInputContainer>
@@ -70,12 +72,14 @@ function DiscussionFormInputs({
           name="title"
           value={title}
           placeholder="토론 제목을 입력하세요..."
+          aria-label="제목"
           onChange={onChange}
         />
         <DiscussionContentInput
           name="content"
           value={content}
           placeholder="내용을 입력하세요..."
+          aria-label="내용"
           onChange={onChange}
         />
       </DiscussionInputContainer>

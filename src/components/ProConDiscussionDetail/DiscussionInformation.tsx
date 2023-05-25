@@ -72,8 +72,7 @@ function DiscussionInformation({
   const conLeaderAvatar = conLeader?.avatarUrl || URL.NONE_AVATA_URL;
 
   const handleEdit = () => {
-    // 게시글 수정 추가 예정
-    navigate('/posts/new/pro-con-discussion');
+    navigate(`/pro-con-discussion/${id}/edit`);
   };
 
   const handleDelete = async () => {
