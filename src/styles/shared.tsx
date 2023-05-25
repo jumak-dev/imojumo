@@ -110,3 +110,14 @@ export const buttonActiveCSS = css`
 export const buttonDeactivateCSS = css`
   filter: brightness(75%);
 `;
+
+export const discussionContentCSS = css`
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  color: var(--color-content-text);
+  background-color: var(--color-inputbox-bg);
+  line-height: 20px;
+  white-space: pre-wrap;
+  word-break: break-all;
+`;

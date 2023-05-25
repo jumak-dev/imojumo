@@ -8,7 +8,12 @@ import { BsDot } from 'react-icons/bs';
 import { Card } from '../UI/Card/Card';
 import Modal from '../UI/Modal/Modal';
 import UserProfile from '../UI/UserProfile/UserProfile';
-import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
+import {
+  alignCenter,
+  colFlex,
+  discussionContentCSS,
+  rowFlex,
+} from '../../styles/shared';
 import useModal from '../../hooks/useModal';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
@@ -185,13 +190,7 @@ const PostLikeButton = styled.button`
 `;
 
 const DiscussionContent = styled.p`
-  width: 100%;
-  height: 100%;
-  padding: 16px;
-  border-radius: 8px;
-  color: var(--color-content-text);
-  background-color: var(--color-inputbox-bg);
-  line-height: 20px;
+  ${discussionContentCSS}
 `;
 
 export default DiscussionInformation;
