@@ -9,8 +9,8 @@ import useInputs from '../../hooks/useInputs';
 import isLoginSelector from '../../recoil/seletors';
 import { jwtAtom } from '../../recoil/atoms';
 import { Comment } from '../../types';
-import { createComment } from '../../apis/comment';
 import PLACEHOLDER from '../../constants/Placeholder';
+import useCreateComment from '../../hooks/comment/useCreateComment';
 
 interface CommentFormProps {
   isVote?: boolean;
@@ -30,6 +30,17 @@ function CommentForm({
 
   const [{ content }, onChange, reset] = useInputs({ content: '' });
 
+  const { mutate: createComment } = useCreateComment({
+    onSuccess: (data) => {
+      if (!data) {
+        return;
+      }
+
+      setComments((prevComments) => [data, ...prevComments]);
+      reset();
+    },
+  });
+
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -37,9 +48,7 @@ function CommentForm({
       return;
     }
 
-    const data = await createComment(postId, token, content);
-    setComments((prevComments) => [data, ...prevComments]);
-    reset();
+    await createComment({ id: Number(postId), content, token });
   };
 
   let disabled = false;
