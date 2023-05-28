@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
@@ -29,13 +29,15 @@ import useDeleteCommentDislike from '../../hooks/comment/useDeleteCommentDislike
 interface CommentItemProps {
   comment: Comment;
   isProConDiscussion?: boolean;
-  setComments: Dispatch<SetStateAction<Comment[]>>;
+  handleUpdateComment: (commentId: number, content: string) => void;
+  handleDeleteComment: (commentId: number) => void;
 }
 
 function CommentItem({
   comment,
   isProConDiscussion = false,
-  setComments,
+  handleUpdateComment,
+  handleDeleteComment,
 }: CommentItemProps) {
   const navigate = useNavigate();
 
@@ -81,22 +83,14 @@ function CommentItem({
         return;
       }
 
-      setComments((prevComments) =>
-        prevComments.map((prevComment) =>
-          prevComment.id === id
-            ? { ...prevComment, content: data.content }
-            : prevComment,
-        ),
-      );
+      handleUpdateComment(id, data.content);
       setIsEdit(false);
     },
   });
 
   const { mutate: deleteComment } = useDeleteComment({
     onSuccess: () => {
-      setComments((prevComments) =>
-        prevComments.filter((prevComment) => prevComment.id !== id),
-      );
+      handleDeleteComment(id);
     },
   });
 

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -15,13 +15,13 @@ import useCreateComment from '../../hooks/comment/useCreateComment';
 interface CommentFormProps {
   isVote?: boolean;
   isProConDiscussion?: boolean;
-  setComments: Dispatch<SetStateAction<Comment[]>>;
+  handleCreateComment: (comment: Comment) => void;
 }
 
 function CommentForm({
   isVote,
   isProConDiscussion,
-  setComments,
+  handleCreateComment,
 }: CommentFormProps) {
   const { postId } = useParams() as { postId: string };
 
@@ -36,7 +36,7 @@ function CommentForm({
         return;
       }
 
-      setComments((prevComments) => [data, ...prevComments]);
+      handleCreateComment(data);
       reset();
     },
   });
