@@ -6,6 +6,7 @@ import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
 import { useId, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
 import useVisibles from '../hooks/useVisibles';
@@ -16,224 +17,9 @@ import ContentList from '../components/MyPage/ContentList';
 import { MyPageInfoProps } from '../types';
 import useModal from '../hooks/useModal';
 import MyPageModal from '../components/UI/Modal/MyPageModal';
-
-// dummyData
-const data: MyPageInfoProps = {
-  bookDiscussions: [
-    {
-      id: 10,
-      author: 'wjdwjdtn92',
-      title: 'ddd',
-      content: 'dddd',
-      views: 0,
-      likeCount: 0,
-      createdAt: '2023-05-18T02:01:42.206Z',
-      updatedAt: '2023-05-18T02:01:42.206Z',
-      avatarUrl: 'your-avatar-url',
-      book: {
-        id: 5,
-        isbn: '9791158392246',
-        title:
-          '도메인 주도 설계 철저 입문 - 코드와 패턴으로 밑바닥부터 이해하는 DDD',
-        author: '나루세 마사노부 (지은이), 심효섭 (옮긴이)',
-        translator: null,
-        description:
-          "에릭 에반스의 《도메인 주도 설계》를 읽고 감명받아 쓰게 된 도메인 주도 설계 입문서이며, 앞으로 《도메인 주도 설계》를 읽으려는 독자, 또는 이미 해당 도서를 읽었더라도 '더 이해하기 쉬운 입문서'를 필요로 하는 엔지니어를 대상으로 한다.",
-        link: 'http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=252622256&amp;partner=openAPI&amp;start=api',
-        cover:
-          'https://image.aladin.co.kr/product/25262/22/coversum/k752633106_2.jpg',
-        publisher: '위키북스',
-        pubDate: '2020-10-14',
-        category: '국내도서>컴퓨터/모바일>컴퓨터 공학>소프트웨어 공학',
-        createdAt: '2023-05-18T01:55:04.067Z',
-        updatedAt: '2023-05-18T01:55:04.067Z',
-      },
-      postLikedByUser: false,
-    },
-    {
-      id: 9,
-      author: 'wjdwjdtn92',
-      title: 'dd',
-      content: 'dd',
-      views: 0,
-      likeCount: 0,
-      createdAt: '2023-05-18T01:55:04.088Z',
-      updatedAt: '2023-05-18T01:55:04.088Z',
-      avatarUrl: 'your-avatar-url',
-      book: {
-        id: 5,
-        isbn: '9791158392246',
-        title:
-          '도메인 주도 설계 철저 입문 - 코드와 패턴으로 밑바닥부터 이해하는 DDD',
-        author: '나루세 마사노부 (지은이), 심효섭 (옮긴이)',
-        translator: null,
-        description:
-          "에릭 에반스의 《도메인 주도 설계》를 읽고 감명받아 쓰게 된 도메인 주도 설계 입문서이며, 앞으로 《도메인 주도 설계》를 읽으려는 독자, 또는 이미 해당 도서를 읽었더라도 '더 이해하기 쉬운 입문서'를 필요로 하는 엔지니어를 대상으로 한다.",
-        link: 'http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=252622256&amp;partner=openAPI&amp;start=api',
-        cover:
-          'https://image.aladin.co.kr/product/25262/22/coversum/k752633106_2.jpg',
-        publisher: '위키북스',
-        pubDate: '2020-10-14',
-        category: '국내도서>컴퓨터/모바일>컴퓨터 공학>소프트웨어 공학',
-        createdAt: '2023-05-18T01:55:04.067Z',
-        updatedAt: '2023-05-18T01:55:04.067Z',
-      },
-      postLikedByUser: false,
-    },
-    {
-      id: 12,
-      author: 'wjdwjdtn92',
-      title: 'ddd',
-      content: 'dddd',
-      views: 0,
-      likeCount: 0,
-      createdAt: '2023-05-18T02:01:42.206Z',
-      updatedAt: '2023-05-18T02:01:42.206Z',
-      avatarUrl: 'your-avatar-url',
-      book: {
-        id: 5,
-        isbn: '9791158392246',
-        title:
-          '도메인 주도 설계 철저 입문 - 코드와 패턴으로 밑바닥부터 이해하는 DDD',
-        author: '나루세 마사노부 (지은이), 심효섭 (옮긴이)',
-        translator: null,
-        description:
-          "에릭 에반스의 《도메인 주도 설계》를 읽고 감명받아 쓰게 된 도메인 주도 설계 입문서이며, 앞으로 《도메인 주도 설계》를 읽으려는 독자, 또는 이미 해당 도서를 읽었더라도 '더 이해하기 쉬운 입문서'를 필요로 하는 엔지니어를 대상으로 한다.",
-        link: 'http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=252622256&amp;partner=openAPI&amp;start=api',
-        cover:
-          'https://image.aladin.co.kr/product/25262/22/coversum/k752633106_2.jpg',
-        publisher: '위키북스',
-        pubDate: '2020-10-14',
-        category: '국내도서>컴퓨터/모바일>컴퓨터 공학>소프트웨어 공학',
-        createdAt: '2023-05-18T01:55:04.067Z',
-        updatedAt: '2023-05-18T01:55:04.067Z',
-      },
-      postLikedByUser: false,
-    },
-    {
-      id: 11,
-      author: 'wjdwjdtn92',
-      title: 'dd',
-      content: 'dd',
-      views: 0,
-      likeCount: 0,
-      createdAt: '2023-05-18T01:55:04.088Z',
-      updatedAt: '2023-05-18T01:55:04.088Z',
-      avatarUrl: 'your-avatar-url',
-      book: {
-        id: 5,
-        isbn: '9791158392246',
-        title:
-          '도메인 주도 설계 철저 입문 - 코드와 패턴으로 밑바닥부터 이해하는 DDD',
-        author: '나루세 마사노부 (지은이), 심효섭 (옮긴이)',
-        translator: null,
-        description:
-          "에릭 에반스의 《도메인 주도 설계》를 읽고 감명받아 쓰게 된 도메인 주도 설계 입문서이며, 앞으로 《도메인 주도 설계》를 읽으려는 독자, 또는 이미 해당 도서를 읽었더라도 '더 이해하기 쉬운 입문서'를 필요로 하는 엔지니어를 대상으로 한다.",
-        link: 'http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=252622256&amp;partner=openAPI&amp;start=api',
-        cover:
-          'https://image.aladin.co.kr/product/25262/22/coversum/k752633106_2.jpg',
-        publisher: '위키북스',
-        pubDate: '2020-10-14',
-        category: '국내도서>컴퓨터/모바일>컴퓨터 공학>소프트웨어 공학',
-        createdAt: '2023-05-18T01:55:04.067Z',
-        updatedAt: '2023-05-18T01:55:04.067Z',
-      },
-      postLikedByUser: false,
-    },
-  ],
-  proConDiscussions: [
-    {
-      id: 14,
-      author: 'wjdwjdtn92',
-      title: '나는 바보이다',
-      content: '멍충이인가?',
-      views: 0,
-      createdAt: '2023-05-19T11:12:45.181Z',
-      updatedAt: '2023-05-19T11:12:45.181Z',
-      proCount: 1,
-      conCount: 0,
-      isVote: true,
-      isPro: true,
-      proLeader: {
-        username: 'wjdwjdtn92',
-        avatarUrl: null,
-      },
-      conLeader: null,
-    },
-    {
-      id: 13,
-      author: 'wjdwjdtn92',
-      title: '아이폰 vs 갤럭시',
-      content: '찬성은 아이폰, 반대는 갤럭시 (역시 아이폰이지)',
-      views: 0,
-      createdAt: '2023-05-19T09:10:28.976Z',
-      updatedAt: '2023-05-19T09:10:28.976Z',
-      proCount: 1,
-      conCount: 0,
-      isVote: true,
-      isPro: true,
-      proLeader: {
-        username: 'wjdwjdtn92',
-        avatarUrl: null,
-      },
-      conLeader: null,
-    },
-    {
-      id: 15,
-      author: 'wjdwjdtn92',
-      title: '나는 바보이다',
-      content: '멍충이인가?',
-      views: 0,
-      createdAt: '2023-05-19T11:12:45.181Z',
-      updatedAt: '2023-05-19T11:12:45.181Z',
-      proCount: 1,
-      conCount: 0,
-      isVote: true,
-      isPro: true,
-      proLeader: {
-        username: 'wjdwjdtn92',
-        avatarUrl: null,
-      },
-      conLeader: null,
-    },
-    {
-      id: 16,
-      author: 'wjdwjdtn92',
-      title: '아이폰 vs 갤럭시',
-      content: '찬성은 아이폰, 반대는 갤럭시 (역시 아이폰이지)',
-      views: 0,
-      createdAt: '2023-05-19T09:10:28.976Z',
-      updatedAt: '2023-05-19T09:10:28.976Z',
-      proCount: 1,
-      conCount: 0,
-      isVote: true,
-      isPro: true,
-      proLeader: {
-        username: 'wjdwjdtn92',
-        avatarUrl: null,
-      },
-      conLeader: null,
-    },
-  ],
-  comments: [
-    {
-      id: 23,
-      postId: 11,
-      content: '옴뇸뇸',
-      createdAt: '2023-05-19T04:58:42.627Z',
-      updatedAt: '2023-05-19T04:58:42.627Z',
-      type: 'book',
-    },
-    {
-      id: 22,
-      postId: 1,
-      content: '떡볶이',
-      createdAt: '2023-05-19T04:58:28.504Z',
-      updatedAt: '2023-05-19T04:58:28.504Z',
-      type: 'proCon',
-    },
-  ],
-};
+import useGetMyPageInfo from '../hooks/myPage/useGetMyPageInfo';
+import { jwtAtom } from '../recoil/atoms';
+import Loading from '../components/UI/Loading/Loading';
 
 // dummyPageInfo
 const pageInfo = {
@@ -259,6 +45,12 @@ function MyPage() {
   const [showMyPageModal, handelMyPageShowModal, handelMyPageCloseModal] =
     useModal();
   const [paginate, setPaginate] = useState(1);
+  const [myPageInfo, setMyPageInfo] = useState<MyPageInfoProps>({
+    bookDiscussions: [],
+    proConDiscussions: [],
+    comments: [],
+  });
+  const token = useRecoilValue(jwtAtom) || '';
 
   function yesCallback() {
     console.log('yes');
@@ -267,6 +59,19 @@ function MyPage() {
   const curruntPasswordId = useId();
   const passwordId = useId();
   const checkPasswordPasswordId = useId();
+
+  const { data: mypageInfo } = useGetMyPageInfo({
+    token,
+    onSuccess: (myInfoData) => {
+      if (myInfoData !== null) {
+        setMyPageInfo(myInfoData);
+      }
+    },
+  });
+
+  if (!mypageInfo) {
+    return <Loading />;
+  }
 
   return (
     <MainContainer>
@@ -318,7 +123,7 @@ function MyPage() {
             더보기 &gt;
           </button>
         </IndexBar>
-        <ContentList articles={data.bookDiscussions} />
+        <ContentList articles={myPageInfo.bookDiscussions} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -330,7 +135,7 @@ function MyPage() {
             더보기 &gt;
           </button>
         </IndexBar>
-        <ContentList articles={data.proConDiscussions} />
+        <ContentList articles={myPageInfo.proConDiscussions} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -342,7 +147,7 @@ function MyPage() {
             더보기 &gt;
           </button>
         </IndexBar>
-        <ContentList articles={data.comments} />
+        <ContentList articles={myPageInfo.comments} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -439,7 +244,7 @@ function MyPage() {
       />
       <MyPageModal
         showModal={showMyPageModal}
-        responseDataArr={data.bookDiscussions}
+        responseDataArr={myPageInfo.bookDiscussions}
         handleCloseModal={handelMyPageCloseModal}
         currentPage={paginate}
         setPagenate={setPaginate}

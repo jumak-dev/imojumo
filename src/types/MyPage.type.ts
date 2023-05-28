@@ -1,4 +1,5 @@
 import { BookDiscussionInfo } from './BookDiscussionPost.type';
+import { APIError } from './Error.type';
 import { ProConDiscussionInfo } from './ProConDiscussionPost.type';
 
 export interface MyPageCommnet {
@@ -29,4 +30,15 @@ export interface MyDataModalProps {
   responseDataArr: MyPageResponseData[];
   showModal: boolean;
   handleCloseModal: () => void;
+}
+
+export interface GetMyPageInfoDetailType {
+  token: string;
+}
+
+export interface UseMyPageInfoDetailProps extends GetMyPageInfoDetailType {
+  isSuspense?: boolean;
+  isErrorBoundary?: boolean;
+  onSuccess?: (data: MyPageInfoProps | null) => void;
+  onError?: (error: Error | APIError) => void;
 }

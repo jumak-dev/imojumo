@@ -1,20 +1,37 @@
+import getMypageInfo, { getMypageInfoProps } from '../../apis/myPage/myPageApi';
 import useQuery from '../useQuery';
-import searchAladinBook from '../../apis/aladin/searchApi';
-import { myPageInfoProps, UseSearchAladinBookType } from '../../types';
+import { MyPageInfoProps, UseMyPageInfoDetailProps } from '../../types';
 
 function useGetMyPageInfo({
-  query,
+  token = '',
+  onSuccess,
   isSuspense = false,
   isErrorBoundary = false,
-}: UseSearchAladinBookType) {
-  const { data, isLoading, error } = useQuery<any, myPageInfoProps>({
-    fetchFn: searchAladinBook,
-    arg: { query },
+}: UseMyPageInfoDetailProps) {
+  const { data, isLoading, error, setData } = useQuery<
+    getMypageInfoProps,
+    MyPageInfoProps
+  >({
+    fetchFn: getMypageInfo,
+    arg: { token },
     isErrorBoundary,
     isSuspense,
+    onSuccess,
   });
 
-  return { data, isLoading, error };
+  const handleMypageInfo = () => {
+    setData((prev) => {
+      if (prev === undefined) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+      };
+    });
+  };
+
+  return { data, isLoading, error, handleMypageInfo };
 }
 
 export default useGetMyPageInfo;
