@@ -1,6 +1,7 @@
 import useQuery from '../useQuery';
 import {
   APIError,
+  Comment,
   GetProConDiscussionDetailType,
   ProConDiscussion,
 } from '../../types';
@@ -50,7 +51,63 @@ function useProConDiscussionDetail({
     });
   };
 
-  return { data, isLoading, error, handleUpdateIsPro, refetch };
+  const handleCreateComment = (comment: Comment) => {
+    setData((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        comments: [comment, ...prev.comments],
+      };
+    });
+  };
+
+  const handleUpdateComment = (commentId: number, content: string) => {
+    setData((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      const updatedComments = prev.comments.map((comment) =>
+        comment.id === commentId ? { ...comment, content } : comment,
+      );
+
+      return {
+        ...prev,
+        comments: updatedComments,
+      };
+    });
+  };
+
+  const handleDeleteComment = (commentId: number) => {
+    setData((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      const updatedComments = prev.comments.filter(
+        (comment) => comment.id !== commentId,
+      );
+
+      return {
+        ...prev,
+        comments: updatedComments,
+      };
+    });
+  };
+
+  return {
+    data,
+    isLoading,
+    error,
+    handleUpdateIsPro,
+    handleCreateComment,
+    handleUpdateComment,
+    handleDeleteComment,
+    refetch,
+  };
 }
 
 export default useProConDiscussionDetail;
