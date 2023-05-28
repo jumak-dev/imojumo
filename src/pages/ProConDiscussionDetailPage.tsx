@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { BsChatLeftDots, BsInfoCircle } from 'react-icons/bs';
@@ -10,7 +9,6 @@ import TopicDescription from '../components/ProConDiscussionDetail/TopicDescript
 import CommentForm from '../components/Comment/CommentForm';
 import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
-import { Comment } from '../types';
 import { jwtAtom } from '../recoil/atoms';
 
 import useProConDiscussionDetail from '../hooks/proConDiscussion/useProConDiscussionDetail';
@@ -20,14 +18,16 @@ import useCreateProConVote from '../hooks/proConVote/useCreateProConVote';
 function ProConDiscussionDetailPage() {
   const { postId } = useParams() as { postId: string };
   const token = useRecoilValue(jwtAtom) ?? '';
-  const [commentsData, setCommentsData] = useState<Comment[]>([]);
 
-  const { data: proConDiscussion, refetch } = useProConDiscussionDetail({
+  const {
+    data: proConDiscussion,
+    handleCreateComment,
+    handleUpdateComment,
+    handleDeleteComment,
+    refetch,
+  } = useProConDiscussionDetail({
     id: Number(postId),
     token,
-    onSuccess: (data) => {
-      setCommentsData(data?.comments || []);
-    },
   });
 
   const { mutate: createProConVote } = useCreateProConVote({
@@ -75,6 +75,7 @@ function ProConDiscussionDetailPage() {
     conLeader,
     isVote,
     isPro,
+    comments,
   } = proConDiscussion;
 
   return (
@@ -107,15 +108,16 @@ function ProConDiscussionDetailPage() {
       <CommentForm
         isVote={isVote}
         isProConDiscussion
-        setComments={setCommentsData}
+        handleCreateComment={handleCreateComment}
       />
       <CommentList>
-        {commentsData.map((comment) => (
+        {comments.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
             isProConDiscussion
-            setComments={setCommentsData}
+            handleUpdateComment={handleUpdateComment}
+            handleDeleteComment={handleDeleteComment}
           />
         ))}
       </CommentList>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { BsChatLeftDots } from 'react-icons/bs';
@@ -13,19 +12,19 @@ import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
 import { jwtAtom } from '../recoil/atoms';
 import useBookDiscussionDetail from '../hooks/bookDiscussion/useBookDiscussionDetail';
-import { Comment } from '../types';
 
 function BookDiscussionDetailPage() {
   const { postId } = useParams() as { postId: string };
   const token = useRecoilValue(jwtAtom) ?? '';
-  const [commentsData, setCommentsData] = useState<Comment[]>([]);
 
-  const { data: bookDiscussion } = useBookDiscussionDetail({
+  const {
+    data: bookDiscussion,
+    handleCreateComment,
+    handleUpdateComment,
+    handleDeleteComment,
+  } = useBookDiscussionDetail({
     id: Number(postId),
     token,
-    onSuccess: (newData) => {
-      setCommentsData(newData?.comments || []);
-    },
   });
 
   if (!bookDiscussion) {
@@ -41,6 +40,7 @@ function BookDiscussionDetailPage() {
     createdAt,
     postLikedByUser,
     book,
+    comments,
   } = bookDiscussion;
 
   return (
@@ -61,13 +61,14 @@ function BookDiscussionDetailPage() {
       <Subtitle>
         댓글 <BsChatLeftDots />
       </Subtitle>
-      <CommentForm setComments={setCommentsData} />
+      <CommentForm handleCreateComment={handleCreateComment} />
       <CommentList>
-        {commentsData.map((comment) => (
+        {comments.map((comment) => (
           <CommentItem
             key={comment.id}
             comment={comment}
-            setComments={setCommentsData}
+            handleUpdateComment={handleUpdateComment}
+            handleDeleteComment={handleDeleteComment}
           />
         ))}
       </CommentList>
