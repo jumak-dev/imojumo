@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../UI/Button/Button';
 import DiscussionFormInputs from '../DiscussionForm/DiscussionFormInputs';
 import DiscussionForm from '../DiscussionForm/DiscussionForm';
 import DiscussionSearchBook from '../DiscussionForm/DiscussionSearchBook';
@@ -13,6 +11,7 @@ import useCreateBookDiscussion from '../../hooks/bookDiscussion/useCreateBookDis
 
 import { AladinBookSearchItem } from '../../types';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
+import DiscussionFormSubmitButton from '../DiscussionForm/DiscussionFormSubmitButton';
 
 function BookDiscussionNewForm() {
   const [{ title, content }, onChange] = useInputs({
@@ -31,7 +30,7 @@ function BookDiscussionNewForm() {
   const disabledSubmitButton =
     isLoading || book === null || title.length === 0 || content.length === 0;
   const token = useRecoilValue(jwtAtom);
-  const { avatarUrl } = useRecoilValue(userInfoAtom);
+  const { avatarUrl, username } = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
 
   const handleFormSubmit = async (
@@ -77,39 +76,21 @@ function BookDiscussionNewForm() {
       <DiscussionSearchBook onSearch={handleSearch} />
       <DiscussionFormInputs
         avatar={avatarUrl}
+        author={username || ''}
         title={title}
         content={content}
         onChange={onChange}
         containerHeight="300px"
       />
 
-      <SubmitButton
-        type="submit"
-        buttonType="button"
-        buttonColor="pink"
-        buttonSize="l"
+      <DiscussionFormSubmitButton
         onClick={handleFormSubmit}
         disabled={disabledSubmitButton}
       >
         등록하기
-      </SubmitButton>
+      </DiscussionFormSubmitButton>
     </DiscussionForm>
   );
 }
-
-const SubmitButton = styled(Button)`
-  align-self: center;
-
-  &:disabled {
-    cursor: default;
-    background: var(--color-placeholder);
-    box-shadow: inset 0px 1px 0px 0px var(--color-placeholder);
-    border-color: var(--color-placeholder);
-
-    &:active {
-      top: 0px;
-    }
-  }
-`;
 
 export default BookDiscussionNewForm;

@@ -73,7 +73,10 @@ function BookDiscussionTab() {
 }
 
 const DiscussionPagination = styled(Pagination)`
-  margin-bottom: 30px;
+  margin-bottom: 0;
+  position: absolute;
+  bottom: 40px;
+  left: calc(50% - 80px);
 `;
 
 const BookDiscussionCardContainer = styled.section`
