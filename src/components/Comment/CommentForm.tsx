@@ -2,9 +2,9 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import Input from '../UI/Input/Input';
+import Textarea from '../UI/Textarea/Textarea';
 import { ButtonBox } from '../UI/Button/Button';
-import { rowFlex } from '../../styles/shared';
+import { colFlex } from '../../styles/shared';
 import useInputs from '../../hooks/useInputs';
 import isLoginSelector from '../../recoil/seletors';
 import { jwtAtom } from '../../recoil/atoms';
@@ -82,7 +82,7 @@ function CommentForm({
       />
       <SubmitButton
         type="submit"
-        buttonType="buttonRight"
+        buttonType="button"
         buttonColor="white"
         buttonSize="sm"
         disabled={disabled}
@@ -95,19 +95,19 @@ function CommentForm({
 }
 
 const CommentFormContainer = styled.form`
-  ${rowFlex}
+  ${colFlex}
+  align-items: flex-end;
+  gap: 12px;
   margin: 40px 20px;
 `;
 
-const CommentInput = styled(Input)`
+const CommentInput = styled(Textarea)`
   width: 100%;
-  border-radius: 5px 0 0 5px;
-  border-right: 0;
 `;
 
 const SubmitButton = styled(ButtonBox)`
-  width: 75px;
-  height: 45px;
+  width: 100px;
+  height: 36px;
   color: var(--black);
 
   &:disabled {

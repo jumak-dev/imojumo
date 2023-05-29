@@ -288,6 +288,8 @@ const Button = styled.button`
 const CommentContent = styled.p`
   line-height: 20px;
   color: var(--color-content-text);
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 const CountText = styled.p`
