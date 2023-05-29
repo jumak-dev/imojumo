@@ -31,7 +31,11 @@ function ProfileModal() {
     <ProfileModalContainer>
       <Profile onClick={handleShowModal}>
         <Nickname>{username}</Nickname>
-        <UserIcon />
+        {avatarUrl ? (
+          <UserAvatar alt={`${username} 프로필 이미지`} src={avatarUrl} />
+        ) : (
+          <UserIcon />
+        )}
       </Profile>
       {showModal && (
         <ProfileModalCard ref={modalRef}>
@@ -73,6 +77,12 @@ const Nickname = styled.span`
 
 const UserIcon = styled(BsPersonCircle)`
   font-size: 24px;
+`;
+
+const UserAvatar = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
 `;
 
 const modalCSS = css`
