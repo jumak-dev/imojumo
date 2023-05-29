@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { colFlex, rowFlex } from '../../styles/shared';
 import { Book } from '../../types';
+import replaceHtml from '../../utils/replaceHtml';
 
 interface BookInformationProps {
   book: Book;
@@ -17,7 +18,11 @@ function BookInformation({ book }: BookInformationProps) {
         <BookInfo>
           {author} | {pubDate} | {publisher} 출판
         </BookInfo>
-        <BookDescription>{description}</BookDescription>
+        <BookDescription>
+          {description.length
+            ? replaceHtml(description)
+            : '해당 도서의 자세한 내용은 곧 업데이트될 예정입니다.'}
+        </BookDescription>
       </BookInfoContainer>
     </InformationContainer>
   );

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
@@ -19,25 +19,25 @@ import useModal from '../../hooks/useModal';
 import Modal from '../UI/Modal/Modal';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
-import {
-  updateComment,
-  deleteComment,
-  likeComment,
-  cancelCommentLike,
-  dislikeComment,
-  cancelCommentDislike,
-} from '../../apis/comment';
+import useUpdateComment from '../../hooks/comment/useUpdateComment';
+import useDeleteComment from '../../hooks/comment/useDeleteComment';
+import useCreateCommentLike from '../../hooks/comment/useCreateCommentLike';
+import useDeleteCommentLike from '../../hooks/comment/useDeleteCommentLike';
+import useCreateCommentDislike from '../../hooks/comment/useCreateCommentDislike';
+import useDeleteCommentDislike from '../../hooks/comment/useDeleteCommentDislike';
 
 interface CommentItemProps {
   comment: Comment;
   isProConDiscussion?: boolean;
-  setComments: Dispatch<SetStateAction<Comment[]>>;
+  handleUpdateComment: (commentId: number, content: string) => void;
+  handleDeleteComment: (commentId: number) => void;
 }
 
 function CommentItem({
   comment,
   isProConDiscussion = false,
-  setComments,
+  handleUpdateComment,
+  handleDeleteComment,
 }: CommentItemProps) {
   const navigate = useNavigate();
 
@@ -49,6 +49,7 @@ function CommentItem({
   const {
     id,
     author,
+    avatarUrl,
     content,
     like,
     dislike,
@@ -58,8 +59,6 @@ function CommentItem({
     isPro,
   } = comment;
 
-  const imageUrl =
-    'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
   const commentDate = dayjs(updatedAt).format('YYYY-MM-DD HH:mm');
 
   const [{ value }, onChange, reset] = useInputs({
@@ -78,23 +77,57 @@ function CommentItem({
     reset();
   };
 
+  const { mutate: updateComment } = useUpdateComment({
+    onSuccess: (data) => {
+      if (!data) {
+        return;
+      }
+
+      handleUpdateComment(id, data.content);
+      setIsEdit(false);
+    },
+  });
+
+  const { mutate: deleteComment } = useDeleteComment({
+    onSuccess: () => {
+      handleDeleteComment(id);
+    },
+  });
+
+  const { mutate: createCommentLike } = useCreateCommentLike({
+    onSuccess: () => {
+      setIsLike(true);
+      setLikeCount((prevCount) => prevCount + 1);
+    },
+  });
+
+  const { mutate: deleteCommentLike } = useDeleteCommentLike({
+    onSuccess: () => {
+      setIsLike(false);
+      setLikeCount((prevCount) => prevCount - 1);
+    },
+  });
+
+  const { mutate: createCommentDislike } = useCreateCommentDislike({
+    onSuccess: () => {
+      setIsDislike(true);
+      setDislikeCount((prevCount) => prevCount + 1);
+    },
+  });
+
+  const { mutate: deleteCommentDislike } = useDeleteCommentDislike({
+    onSuccess: () => {
+      setIsDislike(false);
+      setDislikeCount((prevCount) => prevCount - 1);
+    },
+  });
+
   const handleCommentUpdate = async () => {
-    const data = await updateComment(id, token, value);
-    setComments((prevComments) =>
-      prevComments.map((prevComment) =>
-        prevComment.id === id
-          ? { ...prevComment, content: data.content }
-          : prevComment,
-      ),
-    );
-    setIsEdit(false);
+    await updateComment({ id, content: value, token });
   };
 
   const handleDelete = async () => {
-    await deleteComment(id, token);
-    setComments((prevComments) =>
-      prevComments.filter((prevComment) => prevComment.id !== id),
-    );
+    await deleteComment({ id, token });
   };
 
   const handleLike = async () => {
@@ -104,19 +137,13 @@ function CommentItem({
     }
 
     if (isDislike) {
-      await cancelCommentDislike(id, token);
-      setIsDislike(false);
-      setDislikeCount((prevCount) => prevCount - 1);
+      await deleteCommentDislike({ id, token });
     }
 
     if (isLike) {
-      await cancelCommentLike(id, token);
-      setIsLike(false);
-      setLikeCount((prevCount) => prevCount - 1);
+      await deleteCommentLike({ id, token });
     } else {
-      await likeComment(id, token);
-      setIsLike(true);
-      setLikeCount((prevCount) => prevCount + 1);
+      await createCommentLike({ id, token });
     }
   };
 
@@ -127,19 +154,13 @@ function CommentItem({
     }
 
     if (isLike) {
-      await cancelCommentLike(id, token);
-      setIsLike(false);
-      setLikeCount((prevCount) => prevCount - 1);
+      await deleteCommentLike({ id, token });
     }
 
     if (isDislike) {
-      await cancelCommentDislike(id, token);
-      setIsDislike(false);
-      setDislikeCount((prevCount) => prevCount - 1);
+      await deleteCommentDislike({ id, token });
     } else {
-      await dislikeComment(id, token);
-      setIsDislike(true);
-      setDislikeCount((prevCount) => prevCount + 1);
+      await createCommentDislike({ id, token });
     }
   };
 
@@ -147,7 +168,7 @@ function CommentItem({
     <CommentItemContainer>
       <CommentInformation>
         <InformationContainer>
-          <Profile src={imageUrl} alt="프로필 이미지" />
+          <Profile src={avatarUrl} alt={`${author} 프로필 이미지`} />
           <InformationWrapper>
             <UserInfoBox>
               <Nickname>{author}</Nickname>
@@ -245,7 +266,7 @@ const UserInfoBox = styled.div`
 `;
 
 const Nickname = styled.strong`
-  font-weight: bold;
+  font-weight: 700;
   font-size: var(--font-size-l);
 `;
 
@@ -267,6 +288,8 @@ const Button = styled.button`
 const CommentContent = styled.p`
   line-height: 20px;
   color: var(--color-content-text);
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 const CountText = styled.p`

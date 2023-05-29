@@ -8,7 +8,12 @@ import { BsDot } from 'react-icons/bs';
 import { Card } from '../UI/Card/Card';
 import Modal from '../UI/Modal/Modal';
 import UserProfile from '../UI/UserProfile/UserProfile';
-import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
+import {
+  alignCenter,
+  colFlex,
+  discussionContentCSS,
+  rowFlex,
+} from '../../styles/shared';
 import useModal from '../../hooks/useModal';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
@@ -20,6 +25,7 @@ import useDeleteLike from '../../hooks/postLike/useDeleteLike';
 interface DiscussioninformationProps {
   id: number;
   author: string;
+  avatarUrl: string;
   title: string;
   content: string;
   createdAt: string;
@@ -29,6 +35,7 @@ interface DiscussioninformationProps {
 function DiscussionInformation({
   id,
   author,
+  avatarUrl,
   title,
   content,
   createdAt,
@@ -38,11 +45,8 @@ function DiscussionInformation({
 
   const isLogin = useRecoilValue(isLoginSelector);
   const token = useRecoilValue(jwtAtom) ?? '';
-  const user = useRecoilValue(userInfoAtom);
-  const { username } = user;
+  const { username } = useRecoilValue(userInfoAtom);
 
-  const imageUrl =
-    'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
   const discussionDate = dayjs(createdAt).format('YYYY-MM-DD');
 
   const [showModal, handleShowModal, handleCloseModal] = useModal();
@@ -96,8 +100,8 @@ function DiscussionInformation({
   return (
     <DiscussionContainer>
       <UserProfile
-        avatar={imageUrl}
-        alt="프로필 이미지"
+        avatar={avatarUrl}
+        alt={`${author} 프로필 이미지`}
         itemGap="10px"
         nickname={author}
         size="lz"
@@ -162,7 +166,7 @@ const DiscussionInfo = styled.div`
 `;
 
 const DiscussionTitle = styled.h2`
-  font-weight: bold;
+  font-weight: 700;
   font-size: var(--font-size-xl);
 `;
 
@@ -186,13 +190,7 @@ const PostLikeButton = styled.button`
 `;
 
 const DiscussionContent = styled.p`
-  width: 100%;
-  height: 100%;
-  padding: 16px;
-  border-radius: 8px;
-  color: var(--color-content-text);
-  background-color: var(--color-inputbox-bg);
-  line-height: 20px;
+  ${discussionContentCSS}
 `;
 
 export default DiscussionInformation;
