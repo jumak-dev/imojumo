@@ -15,6 +15,7 @@ function AlarmModal() {
   return (
     <AlarmModalContainer>
       <AlarmButton type="button" aria-label="알람" onClick={handleShowModal}>
+        <AlarmCount>1</AlarmCount>
         {showModal ? <BsBellFill /> : <BsBell />}
       </AlarmButton>
       {showModal && (
@@ -44,10 +45,27 @@ const AlarmModalContainer = styled.div`
 `;
 
 const AlarmButton = styled.button`
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 28px;
+  height: 28px;
   font-size: 22px;
   color: var(--color-primary-pink);
+`;
+
+const AlarmCount = styled.span`
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  line-height: 12px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: var(--font-size-xs);
+  color: white;
+  background-color: red;
 `;
 
 const AlarmModalCard = styled.div`
