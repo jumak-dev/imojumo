@@ -124,7 +124,8 @@ const LogoTitle = styled.h1`
 
 const SearchContainer = styled.div`
   ${alignCenter}
-  width: 440px;
+  flex: 1;
+  min-width: 440px;
   height: 40px;
   padding: 0 8px;
   border: 1px solid var(--color-inputbox-line);
