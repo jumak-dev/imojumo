@@ -114,10 +114,10 @@ const HeaderContainer = styled.div`
 
 const HomeLink = styled(Link)`
   ${alignCenter}
+  gap: 4px;
 `;
 
 const LogoTitle = styled.h1`
-  margin-left: 4px;
   font-weight: 700;
   font-size: var(--font-size-xl);
 `;
@@ -185,7 +185,7 @@ const TabLink = styled(Link)`
 
 const DotIcon = styled(BsDot)`
   font-size: 18px;
-  color: #bdbdbd;
+  color: var(--color-borderbottom-color);
 `;
 
 export default Header;
