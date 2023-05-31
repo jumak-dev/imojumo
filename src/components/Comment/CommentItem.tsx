@@ -13,10 +13,11 @@ import { BsDot } from 'react-icons/bs';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import { alignCenter, colFlex } from '../../styles/shared';
 import { Comment } from '../../types';
-import Input from '../UI/Input/Input';
+import Textarea from '../UI/Textarea/Textarea';
 import useInputs from '../../hooks/useInputs';
 import useModal from '../../hooks/useModal';
 import Modal from '../UI/Modal/Modal';
+import PLACEHOLDER from '../../constants/Placeholder';
 import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
 import isLoginSelector from '../../recoil/seletors';
 import useUpdateComment from '../../hooks/comment/useUpdateComment';
@@ -122,7 +123,11 @@ function CommentItem({
     },
   });
 
-  const handleCommentUpdate = async () => {
+  const handleUpdate = async () => {
+    if (value.length === 0) {
+      return;
+    }
+
     await updateComment({ id, content: value, token });
   };
 
@@ -190,7 +195,7 @@ function CommentItem({
           <ButtonContainer>
             {isEdit ? (
               <>
-                <Button onClick={handleCommentUpdate}>등록</Button>
+                <Button onClick={handleUpdate}>등록</Button>
                 <BsDot />
                 <Button onClick={handleEdit}>취소</Button>
               </>
@@ -205,7 +210,16 @@ function CommentItem({
         )}
       </CommentInformation>
       {isEdit ? (
-        <Input name="value" value={value} onChange={onChange} />
+        <CommentInput
+          name="value"
+          value={value}
+          onChange={onChange}
+          placeholder={
+            isProConDiscussion
+              ? PLACEHOLDER.LOGGED_IN_WITH_VOTE
+              : PLACEHOLDER.LOGGED_IN
+          }
+        />
       ) : (
         <CommentContent>{value}</CommentContent>
       )}
@@ -283,6 +297,11 @@ const ButtonContainer = styled.div`
 const Button = styled.button`
   padding: 2px;
   color: var(--color-content-text);
+`;
+
+const CommentInput = styled(Textarea)`
+  height: 72px;
+  padding: 8px;
 `;
 
 const CommentContent = styled.p`
