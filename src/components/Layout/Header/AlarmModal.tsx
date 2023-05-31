@@ -28,9 +28,9 @@ function AlarmModal() {
   return (
     <AlarmModalContainer>
       <AlarmButton type="button" aria-label="알림" onClick={handleShowModal}>
-        {notifications && notifications?.length !== 0 && (
+        {notifications && notifications.length !== 0 && (
           <AlarmCount>
-            {notifications?.length > 9 ? '9+' : notifications?.length}
+            {notifications.length > 9 ? '9+' : notifications.length}
           </AlarmCount>
         )}
         {showModal ? <BsBellFill /> : <BsBell />}
@@ -38,7 +38,7 @@ function AlarmModal() {
       {showModal && notifications && (
         <AlarmModalCard ref={modalRef}>
           <AlarmList>
-            {!notifications.length ? (
+            {notifications.length === 0 ? (
               <InformationText>새로운 알림이 없습니다</InformationText>
             ) : (
               notifications.map((notification) => (
@@ -104,14 +104,12 @@ const AlarmModalCard = styled.div`
 `;
 
 const AlarmList = styled.ul`
-  && {
-    overflow-y: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
-    ::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera*/
-    }
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
   }
 `;
 
