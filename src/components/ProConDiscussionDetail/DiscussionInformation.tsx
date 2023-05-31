@@ -60,7 +60,7 @@ function DiscussionInformation({
 
   const [showModal, handleShowModal, handleCloseModal] = useModal();
 
-  const discussionDate = dayjs(createdAt).format('YYYY-MM-DD');
+  const discussionDate = dayjs(createdAt).format('YYYY.MM.DD');
 
   const proConSum = proCount + conCount;
   const proConRate = String(getRate(proCount, proConSum));

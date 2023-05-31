@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { colFlex, rowFlex } from '../../styles/shared';
 import { Book } from '../../types';
@@ -8,7 +9,8 @@ interface BookInformationProps {
 }
 
 function BookInformation({ book }: BookInformationProps) {
-  const { title, author, publisher, description, cover, pubDate } = book;
+  const { title, author, publisher, description, cover } = book;
+  const pubDate = dayjs(book.pubDate).format('YYYY.MM.DD');
 
   return (
     <InformationContainer>

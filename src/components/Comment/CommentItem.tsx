@@ -59,7 +59,7 @@ function CommentItem({
     isPro,
   } = comment;
 
-  const commentDate = dayjs(updatedAt).format('YYYY-MM-DD HH:mm');
+  const commentDate = dayjs(updatedAt).format('YYYY.MM.DD HH:mm');
 
   const [{ value }, onChange, reset] = useInputs({
     value: content,
