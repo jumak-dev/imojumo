@@ -58,4 +58,5 @@ export interface GetMyPageComments {
 export type MyPageModalData =
   | GetBookDiscussion
   | GetProConDiscussion
-  | GetMyPageComments;
+  | GetMyPageComments
+  | null;

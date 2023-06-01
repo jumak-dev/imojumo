@@ -4,9 +4,11 @@ import { MyPageModalProps } from '../../../types';
 import ContentList from '../../MyPage/ContentList';
 import Button from '../Button/Button';
 import Pagination from '../Pagination/Pagination';
+import Loading from '../Loading/Loading';
 
 function MyPageModal({
-  responseDataArr,
+  responseDataObj,
+  isLoading,
   showModal,
   handleCloseModal,
   currentPage,
@@ -15,9 +17,19 @@ function MyPageModal({
 }: MyPageModalProps) {
   return (
     <MyPageModalContainer>
-      {showModal && (
+      {showModal && responseDataObj && (
         <ModalPortal width="80%" maxWidth="600px" onClose={handleCloseModal}>
-          <ContentList articles={responseDataArr} />
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <ContentList
+              articles={
+                'comments' in responseDataObj
+                  ? responseDataObj.comments
+                  : responseDataObj.posts
+              }
+            />
+          )}
           <MyPagenation
             currentPage={currentPage}
             setPaginate={setPagenate}

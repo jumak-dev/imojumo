@@ -9,12 +9,17 @@ function useBookDiscussion({
   orderBy = 'lastest',
   isSuspense = false,
   isErrorBoundary = false,
+  myPostsOnly = false,
+  enabled = true,
+  onSuccess,
 }: UseBookDiscussionType) {
   const { data, isLoading, error, setData } = useQuery<any, GetBookDiscussion>({
     fetchFn: getBookDiscussions,
-    arg: { page, limit, token, orderBy },
+    arg: { page, limit, token, orderBy, myPostsOnly },
     isErrorBoundary,
     isSuspense,
+    enabled,
+    onSuccess,
   });
 
   const handleUpdateLike = (postId: number, likeSum: number) => {

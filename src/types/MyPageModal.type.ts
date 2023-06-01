@@ -1,9 +1,10 @@
 import React from 'react';
 import { PageInfo } from './Page.type';
-import { MyPageResponseData } from './MyPage.type';
+import { MyPageModalData } from './MyPage.type';
 
 export interface MyPageModalProps {
-  responseDataArr: MyPageResponseData[];
+  responseDataObj: MyPageModalData;
+  isLoading: boolean;
   showModal: boolean;
   handleCloseModal: () => void;
   currentPage: number;
