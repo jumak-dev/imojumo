@@ -7,15 +7,18 @@ import changeDateString from '../../utils/changeDateString';
 
 function ContentList({ articles }: MyPageContentProps) {
   let path = '';
-  const firstObj = articles[0];
-  if ('postLikedByUser' in firstObj) {
-    path = '/book-discussion';
-  } else if ('proLeader' in firstObj) {
-    path = '/pro-con-discussion';
-  } else if (firstObj.type === 'book') {
-    path = '/book-discussion';
-  } else {
-    path = '/pro-con-discussion';
+
+  if (articles.length > 0) {
+    const firstObj = articles[0];
+    if ('postLikedByUser' in firstObj) {
+      path = '/book-discussion';
+    } else if ('proLeader' in firstObj) {
+      path = '/pro-con-discussion';
+    } else if (firstObj.type === 'book') {
+      path = '/book-discussion';
+    } else {
+      path = '/pro-con-discussion';
+    }
   }
 
   return (
