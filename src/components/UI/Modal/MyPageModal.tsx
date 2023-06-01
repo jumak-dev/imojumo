@@ -8,32 +8,26 @@ import Loading from '../Loading/Loading';
 
 function MyPageModal({
   responseDataObj,
-  isLoading,
   showModal,
   handleCloseModal,
   currentPage,
   setPagenate,
-  pageInfo,
 }: MyPageModalProps) {
   return (
     <MyPageModalContainer>
       {showModal && responseDataObj && (
         <ModalPortal width="80%" maxWidth="600px" onClose={handleCloseModal}>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <ContentList
-              articles={
-                'comments' in responseDataObj
-                  ? responseDataObj.comments
-                  : responseDataObj.posts
-              }
-            />
-          )}
+          <ContentList
+            articles={
+              'comments' in responseDataObj
+                ? responseDataObj.comments
+                : responseDataObj.posts
+            }
+          />
           <MyPagenation
             currentPage={currentPage}
             setPaginate={setPagenate}
-            pageInfo={pageInfo}
+            pageInfo={responseDataObj.pageInfo}
           />
           <Button
             type="button"
