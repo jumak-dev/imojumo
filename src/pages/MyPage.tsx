@@ -5,7 +5,7 @@ import { BiTrash } from 'react-icons/bi';
 import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
-import React, { useEffect, useId, useState } from 'react';
+import React, { useId, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
@@ -21,14 +21,7 @@ import useGetMyPageInfo from '../hooks/myPage/useGetMyPageInfo';
 import { jwtAtom } from '../recoil/atoms';
 import Loading from '../components/UI/Loading/Loading';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
-
-// dummyPageInfo
-const pageInfo = {
-  page: 1,
-  totalCount: 3,
-  currentCount: 3,
-  totalPage: 1,
-};
+import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -44,7 +37,9 @@ function MyPage() {
     handleWithdrawalCloseModal,
   ] = useModal();
   const [showMyPageModal, handelMyPageShowModal, handelMyPageCloseModal] =
-    useModal();
+    useModal(() => {
+      setModalData(null);
+    });
   const [paginate, setPaginate] = useState(1);
   const [myPageInfo, setMyPageInfo] = useState<MyPageInfoProps>({
     bookDiscussions: [],
@@ -81,6 +76,19 @@ function MyPage() {
     onSuccess: (bookData) => {
       if (bookData !== null) {
         setModalData(bookData);
+      }
+    },
+  });
+
+  useProConDiscussion({
+    page: paginate || 1,
+    limit: 4,
+    token: token || '',
+    myPostsOnly: true,
+    enabled: modalCategory === 'proCon',
+    onSuccess: (proConData) => {
+      if (proConData !== null) {
+        setModalData(proConData);
       }
     },
   });
@@ -275,7 +283,6 @@ function MyPage() {
         handleCloseModal={handelMyPageCloseModal}
         currentPage={paginate}
         setPagenate={setPaginate}
-        pageInfo={pageInfo}
       />
     </MainContainer>
   );

@@ -36,14 +36,17 @@ export async function createProConDiscussion({
 export async function getProConDiscussions({
   page,
   limit,
+  myPostsOnly = false,
+  token,
 }: GetProConDiscussionType) {
   const response = await request({
-    url: `${VITE_API_URL}/pro-con-discussions?page=${page}&limit=${limit}`,
+    url: `${VITE_API_URL}/pro-con-discussions?page=${page}&limit=${limit}&myPostsOnly=${myPostsOnly}`,
     options: {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '12',
+        ...(token && { Authorization: token }),
       },
     },
   });
