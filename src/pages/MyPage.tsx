@@ -5,7 +5,7 @@ import { BiTrash } from 'react-icons/bi';
 import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
-import { useId, useState } from 'react';
+import React, { useId, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
@@ -14,12 +14,13 @@ import useInputs from '../hooks/useInputs';
 import { inputCSS, alignCenter } from '../styles/shared';
 import Modal from '../components/UI/Modal/Modal';
 import ContentList from '../components/MyPage/ContentList';
-import { MyPageInfoProps } from '../types';
+import { MyPageInfoProps, MyPageModalData } from '../types';
 import useModal from '../hooks/useModal';
 import MyPageModal from '../components/UI/Modal/MyPageModal';
 import useGetMyPageInfo from '../hooks/myPage/useGetMyPageInfo';
 import { jwtAtom } from '../recoil/atoms';
 import Loading from '../components/UI/Loading/Loading';
+import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 
 // dummyPageInfo
 const pageInfo = {
@@ -50,6 +51,8 @@ function MyPage() {
     proConDiscussions: [],
     comments: [],
   });
+  const [modalData, setModalData] = useState<MyPageModalData | null>(null);
+  const [modalCategory, setModalCategory] = useState('');
   const token = useRecoilValue(jwtAtom) || '';
 
   function yesCallback() {
@@ -68,6 +71,25 @@ function MyPage() {
       }
     },
   });
+
+  const { isLoading } = useBookDiscussion({
+    page: paginate || 1,
+    limit: 4,
+    token: token || '',
+    myPostsOnly: true,
+    enabled: modalCategory === 'book',
+    onSuccess: (bookData) => {
+      if (bookData !== null) {
+        setModalData(bookData);
+      }
+    },
+  });
+
+  const handelSeeMoreButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const category = e.currentTarget.dataset.value || '';
+    setModalCategory(category);
+    handelMyPageShowModal();
+  };
 
   if (!mypageInfo) {
     return <Loading />;
@@ -115,11 +137,7 @@ function MyPage() {
             내가 작성한 독서토론
             <BookIcon />
           </IndexBarTitle>
-          <button
-            type="button"
-            data-value="book"
-            onClick={handelMyPageShowModal}
-          >
+          <button type="button" data-value="book" onClick={handelSeeMoreButton}>
             더보기 &gt;
           </button>
         </IndexBar>
@@ -131,7 +149,11 @@ function MyPage() {
             내가 작성한 찬반토론
             <DiscussionIcon />
           </IndexBarTitle>
-          <button type="button" data-value="proCon">
+          <button
+            type="button"
+            data-value="proCon"
+            onClick={handelSeeMoreButton}
+          >
             더보기 &gt;
           </button>
         </IndexBar>
@@ -143,7 +165,11 @@ function MyPage() {
             내가 작성한 댓글
             <ChatIcon />
           </IndexBarTitle>
-          <button type="button" data-value="comments">
+          <button
+            type="button"
+            data-value="comments"
+            onClick={handelSeeMoreButton}
+          >
             더보기 &gt;
           </button>
         </IndexBar>
@@ -244,7 +270,8 @@ function MyPage() {
       />
       <MyPageModal
         showModal={showMyPageModal}
-        responseDataArr={myPageInfo.bookDiscussions}
+        responseDataObj={modalData}
+        isLoading={isLoading}
         handleCloseModal={handelMyPageCloseModal}
         currentPage={paginate}
         setPagenate={setPaginate}
