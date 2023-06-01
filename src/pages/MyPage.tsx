@@ -38,7 +38,7 @@ function MyPage() {
   ] = useModal();
   const [showMyPageModal, handelMyPageShowModal, handelMyPageCloseModal] =
     useModal(() => {
-      setModalData(null);
+      ModalDataCloseCallBack();
     });
   const [paginate, setPaginate] = useState(1);
   const [myPageInfo, setMyPageInfo] = useState<MyPageInfoProps>({
@@ -57,6 +57,11 @@ function MyPage() {
   const curruntPasswordId = useId();
   const passwordId = useId();
   const checkPasswordPasswordId = useId();
+
+  const ModalDataCloseCallBack = () => {
+    setModalData(null);
+    setPaginate(1);
+  };
 
   const { data: mypageInfo } = useGetMyPageInfo({
     token,
