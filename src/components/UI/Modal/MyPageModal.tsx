@@ -4,7 +4,6 @@ import { MyPageModalProps } from '../../../types';
 import ContentList from '../../MyPage/ContentList';
 import Button from '../Button/Button';
 import Pagination from '../Pagination/Pagination';
-import Loading from '../Loading/Loading';
 
 function MyPageModal({
   responseDataObj,
