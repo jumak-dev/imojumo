@@ -47,7 +47,7 @@ function DiscussionInformation({
   const token = useRecoilValue(jwtAtom) ?? '';
   const { username } = useRecoilValue(userInfoAtom);
 
-  const discussionDate = dayjs(createdAt).format('YYYY-MM-DD');
+  const discussionDate = dayjs(createdAt).format('YYYY.MM.DD');
 
   const [showModal, handleShowModal, handleCloseModal] = useModal();
   const [isLike, setIsLike] = useState(postLikedByUser);

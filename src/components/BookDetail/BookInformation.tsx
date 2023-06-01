@@ -1,6 +1,7 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import dayjs from 'dayjs';
+import styled from 'styled-components';
 import { alignCenter, colFlex, rowFlex } from '../../styles/shared';
 import Button from '../UI/Button/Button';
 import { AladinBookSearchItem } from '../../types';
@@ -14,6 +15,8 @@ interface BookInformationProps {
 function BookInformation({ bookInfo }: BookInformationProps) {
   const navigate = useNavigate();
   const isLogin = useRecoilValue(isLoginSelector);
+
+  const pubDate = dayjs(bookInfo?.pubDate).format('YYYY.MM.DD');
 
   const handleClick = () => {
     if (!isLogin) {
@@ -51,7 +54,7 @@ function BookInformation({ bookInfo }: BookInformationProps) {
           </BookInfoItem>
           <BookInfoItem>
             <InfoLabel>발행일</InfoLabel>
-            <InfoText>{bookInfo?.pubDate}</InfoText>
+            <InfoText>{pubDate}</InfoText>
           </BookInfoItem>
           <BookInfoItem>
             <InfoLabel>페이지</InfoLabel>
