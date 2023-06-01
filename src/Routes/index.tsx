@@ -14,15 +14,12 @@ import ProConDiscussionPage from '../pages/ProConDiscussionPage';
 import ProConDiscussionDetailPage from '../pages/ProConDiscussionDetailPage';
 import PostNewPage from '../pages/PostNewPage';
 import DiscussionEditPage from '../pages/DiscussionEditPage';
+import PrivateRoute from './PrivateRoute';
 
 export default createBrowserRouter([
   {
     element: <Root />,
     children: [
-      {
-        path: '/mypage',
-        element: <MyPage />,
-      },
       {
         path: '/search',
         element: <SearchPage />,
@@ -44,10 +41,6 @@ export default createBrowserRouter([
         element: <BookDiscussionDetailPage />,
       },
       {
-        path: '/book-discussion/:postId/edit',
-        element: <DiscussionEditPage discussionType="book" />,
-      },
-      {
         path: '/pro-con-discussion',
         element: <ProConDiscussionPage />,
       },
@@ -55,20 +48,38 @@ export default createBrowserRouter([
         path: '/pro-con-discussion/:postId',
         element: <ProConDiscussionDetailPage />,
       },
+    ],
+  },
+  {
+    element: <Root />,
+    children: [
       {
-        path: '/pro-con-discussion/:postId/edit',
-        element: <DiscussionEditPage discussionType="proCon" />,
-      },
-      {
-        path: '/posts/new',
+        element: <PrivateRoute />,
         children: [
           {
-            path: 'pro-con-discussion',
-            element: <PostNewPage discussionType="proCon" />,
+            path: '/mypage',
+            element: <MyPage />,
           },
           {
-            path: 'book-discussion',
-            element: <PostNewPage discussionType="book" />,
+            path: '/book-discussion/:postId/edit',
+            element: <DiscussionEditPage discussionType="book" />,
+          },
+          {
+            path: '/pro-con-discussion/:postId/edit',
+            element: <DiscussionEditPage discussionType="proCon" />,
+          },
+          {
+            path: '/posts/new',
+            children: [
+              {
+                path: 'pro-con-discussion',
+                element: <PostNewPage discussionType="proCon" />,
+              },
+              {
+                path: 'book-discussion',
+                element: <PostNewPage discussionType="book" />,
+              },
+            ],
           },
         ],
       },
