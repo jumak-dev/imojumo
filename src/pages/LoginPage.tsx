@@ -17,6 +17,7 @@ function LoginPage() {
   const setJwt = useSetRecoilState(jwtAtom);
   const isLogin = useRecoilValue(isLoginSelector);
   const [displayError, setDisplayError] = useState('');
+  const fromUrl = location.state?.from;
 
   useEffect(() => {
     if (isLogin) {
@@ -29,7 +30,7 @@ function LoginPage() {
       const { jwt, userInfo } = await login(email, password, setDisplayError);
       setJwt(jwt);
       setUserInfo(userInfo);
-      navigate('/');
+      navigate(fromUrl || '/', { replace: true });
     } catch (loginError) {
       console.error(loginError);
       setDisplayError('서버에서 문제가 발생하였습니다.');
