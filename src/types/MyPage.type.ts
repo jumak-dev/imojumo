@@ -1,8 +1,15 @@
-import { BookDiscussionInfo } from './BookDiscussionPost.type';
+import {
+  BookDiscussionInfo,
+  GetBookDiscussion,
+} from './BookDiscussionPost.type';
 import { APIError } from './Error.type';
-import { ProConDiscussionInfo } from './ProConDiscussionPost.type';
+import {
+  ProConDiscussionInfo,
+  GetProConDiscussion,
+} from './ProConDiscussionPost.type';
+import { PageInfo } from './Page.type';
 
-export interface MyPageCommnet {
+export interface MyPageComment {
   id: number;
   postId: number;
   content: string;
@@ -14,13 +21,13 @@ export interface MyPageCommnet {
 export interface MyPageInfoProps {
   bookDiscussions: BookDiscussionInfo[];
   proConDiscussions: ProConDiscussionInfo[];
-  comments: MyPageCommnet[];
+  comments: MyPageComment[];
 }
 
 export type MyPageResponseData =
   | BookDiscussionInfo
   | ProConDiscussionInfo
-  | MyPageCommnet;
+  | MyPageComment;
 
 export interface MyPageContentProps {
   articles: MyPageResponseData[];
@@ -42,3 +49,13 @@ export interface UseMyPageInfoDetailProps extends GetMyPageInfoDetailType {
   onSuccess?: (data: MyPageInfoProps | null) => void;
   onError?: (error: Error | APIError) => void;
 }
+
+export interface GetMyPageComments {
+  comments: MyPageComment[];
+  pageInfo: PageInfo;
+}
+
+export type MyPageModalData =
+  | GetBookDiscussion
+  | GetProConDiscussion
+  | GetMyPageComments;
