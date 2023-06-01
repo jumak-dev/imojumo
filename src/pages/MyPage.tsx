@@ -5,7 +5,7 @@ import { BiTrash } from 'react-icons/bi';
 import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
@@ -72,7 +72,7 @@ function MyPage() {
     },
   });
 
-  const { isLoading } = useBookDiscussion({
+  const { data: myBookDiscussion } = useBookDiscussion({
     page: paginate || 1,
     limit: 4,
     token: token || '',
@@ -87,8 +87,8 @@ function MyPage() {
 
   const handelSeeMoreButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     const category = e.currentTarget.dataset.value || '';
-    setModalCategory(category);
     handelMyPageShowModal();
+    setModalCategory(category);
   };
 
   if (!mypageInfo) {
@@ -271,7 +271,7 @@ function MyPage() {
       <MyPageModal
         showModal={showMyPageModal}
         responseDataObj={modalData}
-        isLoading={isLoading}
+        isLoading={!myBookDiscussion}
         handleCloseModal={handelMyPageCloseModal}
         currentPage={paginate}
         setPagenate={setPaginate}

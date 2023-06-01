@@ -70,7 +70,7 @@ function useQuery<I, T>({
 
   useEffect(() => {
     if (enabled) fetch();
-  }, [serializedArg]);
+  }, [serializedArg, enabled]);
 
   if (isSuspense && status === PROMISE_STATUS.PENDING && promise) {
     throw promise;
