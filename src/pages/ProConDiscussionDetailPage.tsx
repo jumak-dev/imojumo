@@ -14,6 +14,7 @@ import { jwtAtom } from '../recoil/atoms';
 import useProConDiscussionDetail from '../hooks/proConDiscussion/useProConDiscussionDetail';
 import useUpdateProConVote from '../hooks/proConVote/useUpdateProConVote';
 import useCreateProConVote from '../hooks/proConVote/useCreateProConVote';
+import NotFoundPage from './NotFoundPage';
 
 function ProConDiscussionDetailPage() {
   const { postId } = useParams() as { postId: string };
@@ -21,6 +22,7 @@ function ProConDiscussionDetailPage() {
 
   const {
     data: proConDiscussion,
+    error,
     handleCreateComment,
     handleUpdateComment,
     handleDeleteComment,
@@ -57,6 +59,10 @@ function ProConDiscussionDetailPage() {
   const handleProConRevote = async (voteValue: boolean) => {
     await updateProConVote({ id: postId, token, voteValue });
   };
+
+  if (error) {
+    return <NotFoundPage />;
+  }
 
   if (!proConDiscussion) {
     return <Loading />;

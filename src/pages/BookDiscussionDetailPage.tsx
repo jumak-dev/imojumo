@@ -12,6 +12,7 @@ import CommentList from '../components/Comment/CommentList';
 import CommentItem from '../components/Comment/CommentItem';
 import { jwtAtom } from '../recoil/atoms';
 import useBookDiscussionDetail from '../hooks/bookDiscussion/useBookDiscussionDetail';
+import NotFoundPage from './NotFoundPage';
 
 function BookDiscussionDetailPage() {
   const { postId } = useParams() as { postId: string };
@@ -19,6 +20,7 @@ function BookDiscussionDetailPage() {
 
   const {
     data: bookDiscussion,
+    error,
     handleCreateComment,
     handleUpdateComment,
     handleDeleteComment,
@@ -26,6 +28,10 @@ function BookDiscussionDetailPage() {
     id: Number(postId),
     token,
   });
+
+  if (error) {
+    return <NotFoundPage />;
+  }
 
   if (!bookDiscussion) {
     return <Loading />;
