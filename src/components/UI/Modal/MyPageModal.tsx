@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import ModalPortal from './ModalPortal';
 import { MyPageModalProps } from '../../../types';
 import ContentList from '../../MyPage/ContentList';
