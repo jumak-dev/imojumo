@@ -18,7 +18,7 @@ import { MyPageInfoProps, MyPageModalData } from '../types';
 import useModal from '../hooks/useModal';
 import MyPageModal from '../components/UI/Modal/MyPageModal';
 import useGetMyPageInfo from '../hooks/myPage/useGetMyPageInfo';
-import { jwtAtom } from '../recoil/atoms';
+import { jwtAtom, userInfoAtom } from '../recoil/atoms';
 import Loading from '../components/UI/Loading/Loading';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
@@ -50,6 +50,7 @@ function MyPage() {
   const [modalData, setModalData] = useState<MyPageModalData | null>(null);
   const [modalCategory, setModalCategory] = useState('');
   const token = useRecoilValue(jwtAtom) || '';
+  const userInfo = useRecoilValue(userInfoAtom);
 
   function yesCallback() {
     console.log('yes');
@@ -126,14 +127,11 @@ function MyPage() {
     <MainContainer>
       <ProfileContianer>
         <ImageSection>
-          <img
-            src="https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg"
-            alt="profile"
-          />
+          <img src={userInfo.avatarUrl || undefined} alt="profile" />
         </ImageSection>
         <InfoSection>
           <InfoTop>
-            <Nickname>유아유아짱</Nickname>
+            <Nickname>{userInfo.username}</Nickname>
             <EditButton type="button">수정</EditButton>
           </InfoTop>
           <InfoBottom>
