@@ -1,27 +1,27 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import Input from '../UI/Input/Input';
+import Textarea from '../UI/Textarea/Textarea';
 import { ButtonBox } from '../UI/Button/Button';
-import { rowFlex } from '../../styles/shared';
+import { colFlex } from '../../styles/shared';
 import useInputs from '../../hooks/useInputs';
 import isLoginSelector from '../../recoil/seletors';
 import { jwtAtom } from '../../recoil/atoms';
 import { Comment } from '../../types';
-import { createComment } from '../../apis/comment';
 import PLACEHOLDER from '../../constants/Placeholder';
+import useCreateComment from '../../hooks/comment/useCreateComment';
 
 interface CommentFormProps {
   isVote?: boolean;
   isProConDiscussion?: boolean;
-  setComments: Dispatch<SetStateAction<Comment[]>>;
+  handleCreateComment: (comment: Comment) => void;
 }
 
 function CommentForm({
   isVote,
   isProConDiscussion,
-  setComments,
+  handleCreateComment,
 }: CommentFormProps) {
   const { postId } = useParams() as { postId: string };
 
@@ -30,6 +30,17 @@ function CommentForm({
 
   const [{ content }, onChange, reset] = useInputs({ content: '' });
 
+  const { mutate: createComment } = useCreateComment({
+    onSuccess: (data) => {
+      if (!data) {
+        return;
+      }
+
+      handleCreateComment(data);
+      reset();
+    },
+  });
+
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -37,9 +48,7 @@ function CommentForm({
       return;
     }
 
-    const data = await createComment(postId, token, content);
-    setComments((prevComments) => [data, ...prevComments]);
-    reset();
+    await createComment({ id: Number(postId), content, token });
   };
 
   let disabled = false;
@@ -73,7 +82,7 @@ function CommentForm({
       />
       <SubmitButton
         type="submit"
-        buttonType="buttonRight"
+        buttonType="button"
         buttonColor="white"
         buttonSize="sm"
         disabled={disabled}
@@ -86,19 +95,19 @@ function CommentForm({
 }
 
 const CommentFormContainer = styled.form`
-  ${rowFlex}
+  ${colFlex}
+  align-items: flex-end;
+  gap: 12px;
   margin: 40px 20px;
 `;
 
-const CommentInput = styled(Input)`
+const CommentInput = styled(Textarea)`
   width: 100%;
-  border-radius: 5px 0 0 5px;
-  border-right: 0;
 `;
 
 const SubmitButton = styled(ButtonBox)`
-  width: 75px;
-  height: 45px;
+  width: 100px;
+  height: 36px;
   color: var(--black);
 
   &:disabled {

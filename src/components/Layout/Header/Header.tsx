@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import styled, { css } from 'styled-components';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import Button from '../../UI/Button/Button';
@@ -8,13 +9,15 @@ import { alignCenter, rowFlex, rowFlexCenter } from '../../../styles/shared';
 import AlarmModal from './AlarmModal';
 import ProfileModal from './ProfileModal';
 import useInputs from '../../../hooks/useInputs';
+import isLoginSelector from '../../../recoil/seletors';
 
 function Header() {
-  const user = true;
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const paramsQuery = searchParams.get('query');
   const [{ query }, onChange] = useInputs({ query: paramsQuery || '' });
+
+  const isLogin = useRecoilValue(isLoginSelector);
 
   const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (query.length === 0) {
@@ -27,6 +30,11 @@ function Header() {
   };
 
   const handleClick = () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     navigate('/posts/new/book-discussion');
   };
 
@@ -57,7 +65,9 @@ function Header() {
               <CustomLink to="/pro-con-discussion">찬반토론</CustomLink>
             </NavLinkItem>
             <NavLinkItem>
-              <CustomLink to="/likes">찜 목록</CustomLink>
+              <LikesLink to={isLogin ? '/likes' : '/login'} $isLogin={isLogin}>
+                찜 목록
+              </LikesLink>
             </NavLinkItem>
           </NavLinkList>
         </NavContainer>
@@ -70,7 +80,7 @@ function Header() {
         >
           토론하기
         </Button>
-        {user ? (
+        {isLogin ? (
           <ButtonContainer>
             <AlarmModal />
             <ProfileModal />
@@ -104,17 +114,18 @@ const HeaderContainer = styled.div`
 
 const HomeLink = styled(Link)`
   ${alignCenter}
+  gap: 4px;
 `;
 
 const LogoTitle = styled.h1`
-  margin-left: 4px;
   font-weight: 700;
   font-size: var(--font-size-xl);
 `;
 
 const SearchContainer = styled.div`
   ${alignCenter}
-  width: 440px;
+  flex: 1;
+  min-width: 440px;
   height: 40px;
   padding: 0 8px;
   border: 1px solid var(--color-inputbox-line);
@@ -147,11 +158,19 @@ const NavLinkItem = styled.li`
   font-size: var(--font-size-l);
 `;
 
-const CustomLink = styled(NavLink)`
+const linkCSS = css`
   &:hover,
   &.active {
     font-weight: 600;
   }
+`;
+
+const CustomLink = styled(NavLink)`
+  ${linkCSS}
+`;
+
+const LikesLink = styled(NavLink)<{ $isLogin: boolean }>`
+  ${({ $isLogin }) => $isLogin && linkCSS};
 `;
 
 const ButtonContainer = styled.div`
@@ -166,7 +185,7 @@ const TabLink = styled(Link)`
 
 const DotIcon = styled(BsDot)`
   font-size: 18px;
-  color: #bdbdbd;
+  color: var(--color-borderbottom-color);
 `;
 
 export default Header;

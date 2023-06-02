@@ -1,11 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import UserProfile from '../UI/UserProfile/UserProfile';
 import ButtonBox from '../UI/Button/Button';
-import { buttonActiveCSS, buttonDeactivateCSS } from '../../styles/shared';
+import {
+  buttonActiveCSS,
+  buttonDeactivateCSS,
+  colFlex,
+  discussionContentCSS,
+  rowFlex,
+  rowFlexCenter,
+} from '../../styles/shared';
 import isLoginSelector from '../../recoil/seletors';
 
 interface TopicDescriptionProps {
+  author: string;
+  avatarUrl: string;
   content: string;
   isPro: boolean;
   isVote: boolean;
@@ -14,6 +24,8 @@ interface TopicDescriptionProps {
 }
 
 function TopicDescription({
+  author,
+  avatarUrl,
   content,
   isPro,
   isVote,
@@ -39,7 +51,16 @@ function TopicDescription({
 
   return (
     <DescriptionContainer>
-      <DescriptionText>{content}</DescriptionText>
+      <DescriptionBox>
+        <UserProfile
+          avatar={avatarUrl}
+          alt={`${author} 프로필 이미지`}
+          itemGap="10px"
+          nickname={author}
+          size="sm"
+        />
+        <DescriptionText>{content}</DescriptionText>
+      </DescriptionBox>
       <ButtonContainer>
         <ProConButton
           type="button"
@@ -69,20 +90,22 @@ function TopicDescription({
 }
 
 const DescriptionContainer = styled.section`
-  display: flex;
-  flex-direction: column;
+  ${colFlex}
   gap: 24px;
   margin: 40px 20px;
 `;
 
+const DescriptionBox = styled.div`
+  ${rowFlex}
+  gap: 16px;
+`;
+
 const DescriptionText = styled.p`
-  line-height: 20px;
-  color: var(--color-content-text);
+  ${discussionContentCSS}
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  ${rowFlexCenter}
 `;
 
 const ProConButton = styled(ButtonBox)<{ isVote: boolean; isActive: boolean }>`

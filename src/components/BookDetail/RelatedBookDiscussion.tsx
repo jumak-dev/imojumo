@@ -10,7 +10,7 @@ interface RelatedBookDiscussionProps {
 }
 
 function RelatedBookDiscussion({ post }: RelatedBookDiscussionProps) {
-  const discussionDate = dayjs(post.createdAt).format('YYYY-MM-DD');
+  const discussionDate = dayjs(post.createdAt).format('YYYY.MM.DD');
 
   return (
     <DiscussionContainer to={`/book-discussion/${post.id}`}>

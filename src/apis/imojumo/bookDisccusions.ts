@@ -1,6 +1,5 @@
 import {
   GetBookDiscussionType,
-  GetBookDiscussionDetailType,
   UpdateBookDiscussionType,
   CreateBookDiscussionsType,
 } from '../../types';
@@ -42,25 +41,6 @@ export async function getBookDiscussions({
 }: GetBookDiscussionType) {
   const response = await request({
     url: `${VITE_API_URL}/book-discussions?page=${page}&limit=${limit}&orderBy=${orderBy}&myPostsOnly=${myPostsOnly}`,
-    options: {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        ...(token && { Authorization: token }),
-      },
-    },
-  });
-
-  return response;
-}
-
-export async function getBookDiscussionDetail(
-  { id }: GetBookDiscussionDetailType,
-  token?: string,
-) {
-  const response = await request({
-    url: `${VITE_API_URL}/book-discussions/${id}`,
     options: {
       method: 'GET',
       headers: {

@@ -1,6 +1,5 @@
 import {
   GetProConDiscussionType,
-  GetProConDiscussionDetailType,
   UpdateProConDiscussionType,
   CreateProConDiscussionType,
 } from '../../types';
@@ -45,24 +44,6 @@ export async function getProConDiscussions({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': '12',
-        ...(token && { Authorization: token }),
-      },
-    },
-  });
-
-  return response;
-}
-
-export async function getProConDiscussionDetail(
-  { id }: GetProConDiscussionDetailType,
-  token?: string,
-) {
-  const response = await request({
-    url: `${VITE_API_URL}/pro-con-discussions/${id}`,
-    options: {
-      method: 'GET',
-      headers: {
         'ngrok-skip-browser-warning': '12',
         ...(token && { Authorization: token }),
       },
