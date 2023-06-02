@@ -61,6 +61,7 @@ function MyPage() {
 
   const ModalDataCloseCallBack = () => {
     setModalData(null);
+    setModalCategory('');
     setPaginate(1);
   };
 
@@ -73,7 +74,7 @@ function MyPage() {
     },
   });
 
-  const { data: myBookDiscussion } = useBookDiscussion({
+  useBookDiscussion({
     page: paginate || 1,
     limit: 4,
     token: token || '',
@@ -297,7 +298,6 @@ function MyPage() {
       <MyPageModal
         showModal={showMyPageModal}
         responseDataObj={modalData}
-        isLoading={!myBookDiscussion}
         handleCloseModal={handelMyPageCloseModal}
         currentPage={paginate}
         setPagenate={setPaginate}
