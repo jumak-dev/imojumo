@@ -22,6 +22,7 @@ import { jwtAtom } from '../recoil/atoms';
 import Loading from '../components/UI/Loading/Loading';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
+import useMyComments from '../hooks/myPage/useMyComments';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -94,6 +95,18 @@ function MyPage() {
     onSuccess: (proConData) => {
       if (proConData !== null) {
         setModalData(proConData);
+      }
+    },
+  });
+
+  useMyComments({
+    page: paginate || 1,
+    limit: 4,
+    token: token || '',
+    enabled: modalCategory === 'comments',
+    onSuccess: (myComments) => {
+      if (myComments !== null) {
+        setModalData(myComments);
       }
     },
   });

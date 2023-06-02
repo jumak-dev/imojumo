@@ -60,3 +60,19 @@ export type MyPageModalData =
   | GetProConDiscussion
   | GetMyPageComments
   | null;
+
+export interface UseMyCommmentsType {
+  page: number;
+  limit: number;
+  isSuspense?: boolean;
+  isErrorBoundary?: boolean;
+  token: string;
+  enabled?: boolean;
+  onSuccess?: (data: GetMyPageComments | null) => void;
+}
+
+export interface GetMyPageCommentsType {
+  page: number;
+  limit: number;
+  token: string;
+}
