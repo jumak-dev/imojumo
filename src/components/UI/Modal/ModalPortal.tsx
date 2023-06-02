@@ -51,7 +51,6 @@ export const Content = styled.section<ContentProps>`
   padding: 20px;
   max-width: ${(props) => props.maxWidth || '90%'};
   max-height: 90%;
-  min-height: 40%;
   overflow: auto;
   width: ${(props) => props.contentWidth};
   position: relative;
