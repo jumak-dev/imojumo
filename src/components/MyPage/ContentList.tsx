@@ -8,7 +8,7 @@ import changeDateString from '../../utils/changeDateString';
 function ContentList({ articles }: MyPageContentProps) {
   let path = '';
 
-  if (articles.length > 0) {
+  if (articles && articles.length > 0) {
     const firstObj = articles[0];
     if ('postLikedByUser' in firstObj) {
       path = '/book-discussion';
@@ -23,22 +23,23 @@ function ContentList({ articles }: MyPageContentProps) {
 
   return (
     <ContentListWrraper>
-      {articles.map((obj) => (
-        <ContentContainer key={obj.id}>
-          <ContentTop>
-            <ContentLink to={`${path}/${obj.id}`}>
-              {'title' in obj ? obj.title : obj.content}
-            </ContentLink>
-            {'likeCount' in obj && (
-              <ContentLikeBox>
-                {obj.likeCount}
-                <HeartIcon />
-              </ContentLikeBox>
-            )}
-          </ContentTop>
-          <ContentBottom>{changeDateString(obj.createdAt)}</ContentBottom>
-        </ContentContainer>
-      ))}
+      {articles &&
+        articles.map((obj) => (
+          <ContentContainer key={obj.id}>
+            <ContentTop>
+              <ContentLink to={`${path}/${obj.id}`}>
+                {'title' in obj ? obj.title : obj.content}
+              </ContentLink>
+              {'likeCount' in obj && (
+                <ContentLikeBox>
+                  {obj.likeCount}
+                  <HeartIcon />
+                </ContentLikeBox>
+              )}
+            </ContentTop>
+            <ContentBottom>{changeDateString(obj.createdAt)}</ContentBottom>
+          </ContentContainer>
+        ))}
     </ContentListWrraper>
   );
 }

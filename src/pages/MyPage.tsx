@@ -65,7 +65,7 @@ function MyPage() {
     setPaginate(1);
   };
 
-  const { data: mypageInfo } = useGetMyPageInfo({
+  const { isLoading } = useGetMyPageInfo({
     token,
     onSuccess: (myInfoData) => {
       if (myInfoData !== null) {
@@ -74,7 +74,7 @@ function MyPage() {
     },
   });
 
-  useBookDiscussion({
+  const { isLoading: bookDiscussionLoading } = useBookDiscussion({
     page: paginate || 1,
     limit: 4,
     token: token || '',
@@ -87,7 +87,7 @@ function MyPage() {
     },
   });
 
-  useProConDiscussion({
+  const { isLoading: proConDiscussionLoading } = useProConDiscussion({
     page: paginate || 1,
     limit: 4,
     token: token || '',
@@ -100,7 +100,7 @@ function MyPage() {
     },
   });
 
-  useMyComments({
+  const { isLoading: myCommentsLoading } = useMyComments({
     page: paginate || 1,
     limit: 4,
     token: token || '',
@@ -113,12 +113,12 @@ function MyPage() {
   });
 
   const handelSeeMoreButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const category = e.currentTarget.dataset.value || '';
     handelMyPageShowModal();
+    const category = e.currentTarget.dataset.value || '';
     setModalCategory(category);
   };
 
-  if (!mypageInfo) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -301,6 +301,9 @@ function MyPage() {
         handleCloseModal={handelMyPageCloseModal}
         currentPage={paginate}
         setPagenate={setPaginate}
+        isLoading={
+          bookDiscussionLoading || proConDiscussionLoading || myCommentsLoading
+        }
       />
     </MainContainer>
   );

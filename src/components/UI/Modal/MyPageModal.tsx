@@ -37,7 +37,9 @@ function MyPageModal({
               <MyPagenation
                 currentPage={currentPage}
                 setPaginate={setPagenate}
-                pageInfo={responseDataObj && responseDataObj?.pageInfo}
+                pageInfo={
+                  responseDataObj ? responseDataObj?.pageInfo : undefined
+                }
               />
             </>
           )}
@@ -68,7 +70,7 @@ const MyPageModalContainer = styled.section`
 `;
 
 const MyPageButton = styled(Button)`
-  margin-top: ${(props) => props.loading && '200px'};
+  margin-top: ${(props) => props.Loading && '200px'};
 `;
 
 export default MyPageModal;

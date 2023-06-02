@@ -30,7 +30,7 @@ export type MyPageResponseData =
   | MyPageComment;
 
 export interface MyPageContentProps {
-  articles: MyPageResponseData[];
+  articles: MyPageResponseData[] | null;
 }
 
 export interface MyDataModalProps {
@@ -58,8 +58,7 @@ export interface GetMyPageComments {
 export type MyPageModalData =
   | GetBookDiscussion
   | GetProConDiscussion
-  | GetMyPageComments
-  | null;
+  | GetMyPageComments;
 
 export interface UseMyCommmentsType {
   page: number;
