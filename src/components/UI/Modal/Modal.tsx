@@ -1,4 +1,7 @@
+import { useCallback } from 'react';
+import styled from 'styled-components';
 import ModalPortal from './ModalPortal';
+import Button from '../Button/Button';
 
 interface Props {
   title: string;
@@ -15,16 +18,16 @@ function Modal({
   yesCallback,
   handleCloseModal,
 }: Props) {
-  function onClickYesButton() {
+  const onClickYesButton = useCallback(() => {
     if (yesCallback) {
       yesCallback();
     }
     handleCloseModal();
-  }
+  }, [yesCallback, handleCloseModal]);
 
-  function onClickNoButton() {
+  const onClickNoButton = useCallback(() => {
     handleCloseModal();
-  }
+  }, [handleCloseModal]);
 
   return (
     <div>
@@ -32,18 +35,36 @@ function Modal({
         <ModalPortal onClose={handleCloseModal}>
           <h3>{title}</h3>
           <p>{content}</p>
-          <div>
-            <button type="button" name="yes" onClick={onClickYesButton}>
+          <ButtonWrraper>
+            <Button
+              type="button"
+              buttonType="button"
+              buttonColor="mint"
+              name="yes"
+              buttonSize="sm"
+              onClick={onClickYesButton}
+            >
               확인
-            </button>
-            <button type="button" name="no" onClick={onClickNoButton}>
+            </Button>
+            <Button
+              type="button"
+              buttonType="button"
+              name="no"
+              buttonColor="pink"
+              buttonSize="sm"
+              onClick={onClickNoButton}
+            >
               취소
-            </button>
-          </div>
+            </Button>
+          </ButtonWrraper>
         </ModalPortal>
       )}
     </div>
   );
 }
+
+const ButtonWrraper = styled.section`
+  display: flex;
+`;
 
 export default Modal;
