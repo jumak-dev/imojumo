@@ -1,4 +1,4 @@
-import { GetMyPageComments, GetMyPageCommentsType } from '../../types';
+import { DeleteUserAccountType, GetMyPageCommentsType } from '../../types';
 import request from '../api';
 
 const { VITE_API_URL } = import.meta.env;
@@ -34,6 +34,21 @@ export async function getMyPageComments({
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '12',
         ...(token && { Authorization: token }),
+      },
+    },
+  });
+
+  return response;
+}
+
+export async function deleteUserAccount({ token }: DeleteUserAccountType) {
+  const response = await request({
+    url: `${VITE_API_URL}/users`,
+    options: {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
       },
     },
   });

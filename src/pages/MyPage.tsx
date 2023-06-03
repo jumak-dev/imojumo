@@ -6,7 +6,8 @@ import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
 import React, { useId, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
 import useVisibles from '../hooks/useVisibles';
@@ -23,6 +24,7 @@ import Loading from '../components/UI/Loading/Loading';
 import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 import useMyComments from '../hooks/myPage/useMyComments';
+import useDeleteUserAccount from '../hooks/myPage/useDeleteUserAccount';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -51,9 +53,22 @@ function MyPage() {
   const [modalCategory, setModalCategory] = useState('');
   const token = useRecoilValue(jwtAtom) || '';
   const userInfo = useRecoilValue(userInfoAtom);
+  const navigate = useNavigate();
+  const resetJwtAtom = useResetRecoilState(jwtAtom);
+  const resetUserInfo = useResetRecoilState(userInfoAtom);
+  const { mutate: deleteUserAccountMutate } = useDeleteUserAccount({
+    onSuccess: () => {
+      resetJwtAtom();
+      resetUserInfo();
+      navigate(`/`);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   function yesCallback() {
-    console.log('yes');
+    deleteUserAccountMutate({ token });
   }
 
   const curruntPasswordId = useId();

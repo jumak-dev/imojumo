@@ -75,3 +75,12 @@ export interface GetMyPageCommentsType {
   limit: number;
   token: string;
 }
+
+export interface UseDeleteUserAccount {
+  onSuccess?: (data: BookDiscussionInfo) => void;
+  onError?: (error: Error | APIError) => void;
+}
+
+export interface DeleteUserAccountType {
+  token: string;
+}
