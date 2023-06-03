@@ -61,6 +61,9 @@ function MyPageModal({
 
 const MyPagenation = styled(Pagination)`
   margin-top: 20px;
+  button + button {
+    margin-left: 0;
+  }
 `;
 
 const MyPageModalContainer = styled.section`
