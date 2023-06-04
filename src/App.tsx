@@ -1,14 +1,14 @@
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import useLoggedIn from './hooks/useLoggedIn';
+import LoggedInHandler from './components/LoggedInHandler';
 import route from './Routes';
 
 function App() {
-  useLoggedIn();
-
   return (
     <RecoilRoot>
-      <RouterProvider router={route} />
+      <LoggedInHandler>
+        <RouterProvider router={route} />
+      </LoggedInHandler>
     </RecoilRoot>
   );
 }
