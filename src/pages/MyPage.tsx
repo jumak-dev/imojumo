@@ -6,7 +6,7 @@ import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
 import React, { useId, useState } from 'react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
@@ -25,6 +25,7 @@ import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 import useMyComments from '../hooks/myPage/useMyComments';
 import useDeleteUserAccount from '../hooks/myPage/useDeleteUserAccount';
+import useUpdateUserInfo from '../hooks/myPage/useUpdateUserInfo';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -52,7 +53,7 @@ function MyPage() {
   const [modalData, setModalData] = useState<MyPageModalData | null>(null);
   const [modalCategory, setModalCategory] = useState('');
   const token = useRecoilValue(jwtAtom) || '';
-  const userInfo = useRecoilValue(userInfoAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const resetJwtAtom = useResetRecoilState(jwtAtom);
   const resetUserInfo = useResetRecoilState(userInfoAtom);
@@ -66,6 +67,19 @@ function MyPage() {
       console.log(error);
     },
   });
+  const { mutate: updateUserInfoMutate } = useUpdateUserInfo({
+    onSuccess: (responceUserInfo) => {
+      console.log(responceUserInfo);
+      setUserInfo(responceUserInfo);
+      setIsUsernameChange((prev) => !prev);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const [isUsernameChange, setIsUsernameChange] = useState(false);
+  const [username, setUsername] = useState(userInfo.username);
 
   function yesCallback() {
     deleteUserAccountMutate({ token });
@@ -134,6 +148,19 @@ function MyPage() {
     setModalCategory(category);
   };
 
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handleUsernameChangeMode = () => {
+    setUsername(userInfo.username);
+    setIsUsernameChange((prev) => !prev);
+  };
+
+  const handleUsernameChangeButton = () => {
+    updateUserInfoMutate({ token, username: username || '' });
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -146,8 +173,29 @@ function MyPage() {
         </ImageSection>
         <InfoSection>
           <InfoTop>
-            <Nickname>{userInfo.username}</Nickname>
-            <EditButton type="button">수정</EditButton>
+            {isUsernameChange ? (
+              <>
+                <UsernameInput
+                  type="text"
+                  value={username || ''}
+                  onChange={handleUsernameChange}
+                  name="changeUsername"
+                />
+                <EditButton type="button" onClick={handleUsernameChangeButton}>
+                  확인
+                </EditButton>
+                <EditButton type="button" onClick={handleUsernameChangeMode}>
+                  취소
+                </EditButton>
+              </>
+            ) : (
+              <>
+                <Username>{userInfo.username}</Username>
+                <EditButton type="button" onClick={handleUsernameChangeMode}>
+                  수정
+                </EditButton>
+              </>
+            )}
           </InfoTop>
           <InfoBottom>
             <Button
@@ -384,10 +432,22 @@ const InfoTop = styled.div`
   margin-bottom: 28px;
 `;
 
-const Nickname = styled.span`
+const usernameCss = css`
   font-size: var(--font-size-xxl);
   font-weight: 600;
   margin-bottom: 4px;
+`;
+
+const Username = styled.span`
+  ${usernameCss}
+`;
+
+const UsernameInput = styled.input`
+  ${usernameCss}
+  border: 1px solid var(--color-borderbox-line);
+  &:focus {
+    outline: auto;
+  }
 `;
 
 const EditButton = styled.button`

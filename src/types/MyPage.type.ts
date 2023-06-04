@@ -8,6 +8,7 @@ import {
   GetProConDiscussion,
 } from './ProConDiscussionPost.type';
 import { PageInfo } from './Page.type';
+import { UserInfo } from '../recoil/atoms';
 
 export interface MyPageComment {
   id: number;
@@ -82,5 +83,16 @@ export interface UseDeleteUserAccount {
 }
 
 export interface DeleteUserAccountType {
+  token: string;
+}
+
+export interface UseUpdateUserInfo {
+  onSuccess?: (data: UserInfo) => void;
+  onError?: (error: Error | APIError) => void;
+}
+
+export interface UpdateUserInfoType {
+  username?: string;
+  password?: string;
   token: string;
 }

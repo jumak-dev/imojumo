@@ -1,4 +1,8 @@
-import { DeleteUserAccountType, GetMyPageCommentsType } from '../../types';
+import {
+  DeleteUserAccountType,
+  GetMyPageCommentsType,
+  UpdateUserInfoType,
+} from '../../types';
 import request from '../api';
 
 const { VITE_API_URL } = import.meta.env;
@@ -50,6 +54,29 @@ export async function deleteUserAccount({ token }: DeleteUserAccountType) {
         'Content-Type': 'application/json',
         Authorization: `${token}`,
       },
+    },
+  });
+
+  return response;
+}
+
+export async function updateUserInfo({
+  token,
+  username,
+  password,
+}: UpdateUserInfoType) {
+  const response = await request({
+    url: `${VITE_API_URL}/users`,
+    options: {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
     },
   });
 
