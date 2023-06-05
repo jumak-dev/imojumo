@@ -28,10 +28,16 @@ function Footer() {
             href="https://github.com/jumak-dev/imojumo"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="깃허브 이동"
           >
             <AiFillGithub size={36} />
           </NavLogo>
-          <NavLogo>
+          <NavLogo
+            href="https://brassy-budget-f7e.notion.site/b1a3c216578349c29cbbb3b046326e6e"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="노션 이동"
+          >
             <RxNotionLogo size={32} />
           </NavLogo>
         </NavContainer>
@@ -57,6 +63,7 @@ const FooterContainer = styled.div`
 const FooterSignature = styled.div`
   ${colFlex}
   gap: 16px;
+  white-space: nowrap;
 `;
 
 const HomeLink = styled(Link)`
