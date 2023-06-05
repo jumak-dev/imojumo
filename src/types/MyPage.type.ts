@@ -103,5 +103,6 @@ export interface UseUpdateUserPassword {
 
 export interface UpdateUserPasswordType {
   password: string;
+  newPassword: string;
   token: string;
 }

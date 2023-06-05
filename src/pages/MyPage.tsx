@@ -27,15 +27,18 @@ import useMyComments from '../hooks/myPage/useMyComments';
 import useDeleteUserAccount from '../hooks/myPage/useDeleteUserAccount';
 import useUpdateUsername from '../hooks/myPage/useUpdateUsername';
 import passwordValidate from '../utils/auth/passwordValidate';
+import useUpdateUserPassword from '../hooks/myPage/useUpdateUserPassword';
+import goToTop from '../utils/goToTop';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
   const [deleteAccountVisible, toggleDeleteAccountVisible] = useVisibles(false);
-  const [{ curruntPassword, password, checkPassword }, onChange] = useInputs({
-    curruntPassword: '',
-    password: '',
-    checkPassword: '',
-  });
+  const [{ curruntPassword, password, checkPassword }, onChange, reset] =
+    useInputs({
+      curruntPassword: '',
+      password: '',
+      checkPassword: '',
+    });
   const [
     showWithdrawalModal,
     handelWithdrawalShowModal,
@@ -69,12 +72,24 @@ function MyPage() {
     },
   });
   const { mutate: updateUserInfoMutate } = useUpdateUsername({
-    onSuccess: (responceUsername) => {
-      setUserInfo(responceUsername);
+    onSuccess: (responceUserInfo) => {
+      setUserInfo(responceUserInfo);
       setIsUsernameChange((prev) => !prev);
     },
     onError: (error) => {
       console.log(error);
+    },
+  });
+
+  const { mutate: updateUserPasswordMutate } = useUpdateUserPassword({
+    onSuccess: () => {
+      reset();
+      togglePasswordVisible();
+      goToTop();
+    },
+    onError: (error) => {
+      console.log(error);
+      setErrorMessage(String(error.message));
     },
   });
 
@@ -167,7 +182,11 @@ function MyPage() {
       const { isVailed, error } = passwordValidate(password, checkPassword);
       setErrorMessage(error);
       if (isVailed) {
-        updateUserInfoMutate({ token, password });
+        updateUserPasswordMutate({
+          token,
+          password: curruntPassword,
+          newPassword: password,
+        });
       }
     }
   };
