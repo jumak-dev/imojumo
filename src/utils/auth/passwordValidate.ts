@@ -1,6 +1,6 @@
 const passwordValidate = (password: string, checkPassword: string) => {
   const passwordRegex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,20}$/;
 
   const isPasswordValid = passwordRegex.test(password);
 
