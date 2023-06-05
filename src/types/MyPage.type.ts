@@ -106,3 +106,9 @@ export interface UpdateUserPasswordType {
   newPassword: string;
   token: string;
 }
+
+export interface MyPageProfileSectionProps {
+  token: string;
+  userInfo: UserInfo;
+  updateUsernameMutate: (args: UpdateUsernameType) => Promise<void>;
+}
