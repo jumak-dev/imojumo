@@ -25,7 +25,7 @@ import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 import useMyComments from '../hooks/myPage/useMyComments';
 import useDeleteUserAccount from '../hooks/myPage/useDeleteUserAccount';
-import useUpdateUsername from '../hooks/myPage/useUpdateUserInfo';
+import useUpdateUsername from '../hooks/myPage/useUpdateUsername';
 import passwordValidate from '../utils/auth/passwordValidate';
 
 function MyPage() {
