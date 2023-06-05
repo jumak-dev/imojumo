@@ -15,38 +15,45 @@ import ProConDiscussionDetailPage from '../pages/ProConDiscussionDetailPage';
 import PostNewPage from '../pages/PostNewPage';
 import DiscussionEditPage from '../pages/DiscussionEditPage';
 import PrivateRoute from './PrivateRoute';
+import NotFoundPage from '../pages/NotFoundPage';
 
 export default createBrowserRouter([
   {
     element: <Root />,
     children: [
       {
-        path: '/search',
-        element: <SearchPage />,
-      },
-      {
-        path: '/likes',
-        element: <LikeListPage />,
-      },
-      {
-        path: '/books/:bookId',
-        element: <BookDetailPage />,
-      },
-      {
-        path: '/book-discussion',
-        element: <BookDiscussionPage />,
-      },
-      {
-        path: '/book-discussion/:postId',
-        element: <BookDiscussionDetailPage />,
-      },
-      {
-        path: '/pro-con-discussion',
-        element: <ProConDiscussionPage />,
-      },
-      {
-        path: '/pro-con-discussion/:postId',
-        element: <ProConDiscussionDetailPage />,
+        errorElement: <NotFoundPage />,
+        children: [
+          {
+            path: '/search',
+            element: <SearchPage />,
+          },
+          {
+            path: '/likes',
+            element: <LikeListPage />,
+          },
+          {
+            path: '/books/:bookId',
+            element: <BookDetailPage />,
+          },
+          {
+            path: '/book-discussion',
+            element: <BookDiscussionPage />,
+          },
+          {
+            path: '/book-discussion/:postId',
+            element: <BookDiscussionDetailPage />,
+          },
+          {
+            path: '/pro-con-discussion',
+            element: <ProConDiscussionPage />,
+          },
+          {
+            path: '/pro-con-discussion/:postId',
+            element: <ProConDiscussionDetailPage />,
+          },
+          { path: '*', element: <NotFoundPage /> },
+        ],
       },
     ],
   },
@@ -55,6 +62,7 @@ export default createBrowserRouter([
     children: [
       {
         element: <PrivateRoute />,
+        errorElement: <NotFoundPage />,
         children: [
           {
             path: '/mypage',
@@ -85,6 +93,7 @@ export default createBrowserRouter([
       },
     ],
   },
+
   {
     element: <Home />,
     children: [

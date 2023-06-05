@@ -79,8 +79,10 @@ const Bar = styled.span<{ value: string }>`
   left: 0;
   top: 0;
   height: 100%;
-  transition: width 0.4s ease;
-  width: ${({ value }) => value}%;
+  width: 100%;
+  transform: scaleX(${({ value }) => Number(value) / 100});
+  transform-origin: left;
+  transition: transform 0.4s ease;
   background-color: var(--color-primary-mint);
 `;
 

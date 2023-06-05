@@ -1,18 +1,23 @@
-import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
 import { PaginationType } from '../../../types';
 import { flex } from '../../../styles/shared';
+import getPageIndex from '../../../utils/pageIndex';
 
 function Pagination({
   currentPage,
   setPaginate,
   pageInfo,
+  pageLimit,
   className,
 }: PaginationType) {
   const { page, totalPage } = pageInfo || { page: 1, totalPage: 1 };
-  const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
+  const { startPage, endPage } = getPageIndex(page, totalPage, pageLimit);
+  const pageNumbers = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, idx) => startPage + idx,
+  );
 
   const handleClick = (num: number) => {
     setPaginate(num);
