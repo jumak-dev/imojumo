@@ -14,6 +14,7 @@ import ProConDiscussionPage from '../pages/ProConDiscussionPage';
 import ProConDiscussionDetailPage from '../pages/ProConDiscussionDetailPage';
 import PostNewPage from '../pages/PostNewPage';
 import DiscussionEditPage from '../pages/DiscussionEditPage';
+import PrivateRoute from './PrivateRoute';
 import NotFoundPage from '../pages/NotFoundPage';
 
 export default createBrowserRouter([
@@ -23,10 +24,6 @@ export default createBrowserRouter([
       {
         errorElement: <NotFoundPage />,
         children: [
-          {
-            path: '/mypage',
-            element: <MyPage />,
-          },
           {
             path: '/search',
             element: <SearchPage />,
@@ -48,16 +45,32 @@ export default createBrowserRouter([
             element: <BookDiscussionDetailPage />,
           },
           {
-            path: '/book-discussion/:postId/edit',
-            element: <DiscussionEditPage discussionType="book" />,
-          },
-          {
             path: '/pro-con-discussion',
             element: <ProConDiscussionPage />,
           },
           {
             path: '/pro-con-discussion/:postId',
             element: <ProConDiscussionDetailPage />,
+          },
+          { path: '*', element: <NotFoundPage /> },
+        ],
+      },
+    ],
+  },
+  {
+    element: <Root />,
+    children: [
+      {
+        element: <PrivateRoute />,
+        errorElement: <NotFoundPage />,
+        children: [
+          {
+            path: '/mypage',
+            element: <MyPage />,
+          },
+          {
+            path: '/book-discussion/:postId/edit',
+            element: <DiscussionEditPage discussionType="book" />,
           },
           {
             path: '/pro-con-discussion/:postId/edit',
@@ -76,11 +89,11 @@ export default createBrowserRouter([
               },
             ],
           },
-          { path: '*', element: <NotFoundPage /> },
         ],
       },
     ],
   },
+
   {
     element: <Home />,
     children: [
