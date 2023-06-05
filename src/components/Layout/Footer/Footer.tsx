@@ -12,7 +12,7 @@ import {
 function Footer() {
   return (
     <FooterLayout>
-      <FooterWrapper>
+      <FooterContainer>
         <FooterSignature>
           <LogoContainer>
             <AiFillHome size={38} />
@@ -34,7 +34,7 @@ function Footer() {
             <RxNotionLogo size={32} />
           </NavLogo>
         </NavContainer>
-      </FooterWrapper>
+      </FooterContainer>
     </FooterLayout>
   );
 }
@@ -46,7 +46,7 @@ const FooterLayout = styled.footer`
   border-top: 1px solid var(--color-borderbottom-color);
 `;
 
-const FooterWrapper = styled.div`
+const FooterContainer = styled.div`
   ${rowFlex}
   justify-content: space-between;
   width: 1120px;
