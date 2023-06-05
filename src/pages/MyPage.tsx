@@ -376,12 +376,6 @@ const DeleteAccountIcon = styled(FaUserAltSlash)`
   color: var(--black);
 `;
 
-const EditButton = styled.button`
-  font-size: var(--font-size-m);
-  margin-left: 19px;
-  padding: 0;
-`;
-
 const IndexContainer = styled.section`
   margin-bottom: 43px;
 `;
