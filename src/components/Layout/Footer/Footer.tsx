@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 import { AiFillHome, AiFillGithub } from 'react-icons/ai';
 import { RxNotionLogo } from 'react-icons/rx';
+import {
+  alignCenter,
+  colFlex,
+  flex,
+  rowFlex,
+  rowFlexCenter,
+} from '../../../styles/shared';
 
 function Footer() {
   return (
@@ -33,8 +40,7 @@ function Footer() {
 }
 
 const FooterLayout = styled.footer`
-  display: flex;
-  justify-content: center;
+  ${rowFlexCenter}
   width: 100%;
   height: 160px;
   border: 1px solid transparent;
@@ -42,20 +48,18 @@ const FooterLayout = styled.footer`
 `;
 
 const FooterWrapper = styled.div`
-  display: flex;
+  ${rowFlex}
   justify-content: space-between;
   width: 1120px;
   padding: 36px 0;
 `;
 
 const FooterSignature = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${colFlex}
 `;
 
 const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
+  ${alignCenter}
 `;
 
 const LogoTitle = styled.span`
@@ -70,14 +74,11 @@ const CopyrightText = styled.p`
 `;
 
 const NavContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  ${rowFlexCenter}
 `;
 
 const NavLogo = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flex}
   width: 40px;
   height: 40px;
   margin: 4px;
