@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiFillHome, AiFillGithub } from 'react-icons/ai';
 import { RxNotionLogo } from 'react-icons/rx';
@@ -14,10 +15,10 @@ function Footer() {
     <FooterLayout>
       <FooterContainer>
         <FooterSignature>
-          <LogoContainer>
+          <HomeLink to="/">
             <AiFillHome size={38} />
             <LogoTitle>이모저모</LogoTitle>
-          </LogoContainer>
+          </HomeLink>
           <CopyrightText>
             Copyright © 2023 IMOJUMO All Rights Reserved.
           </CopyrightText>
@@ -58,7 +59,7 @@ const FooterSignature = styled.div`
   gap: 16px;
 `;
 
-const LogoContainer = styled.div`
+const HomeLink = styled(Link)`
   ${alignCenter}
   gap: 8px;
 `;
@@ -70,6 +71,7 @@ const LogoTitle = styled.span`
 
 const CopyrightText = styled.p`
   font-size: var(--font-size-m);
+  color: var(--color-content-text);
 `;
 
 const NavContainer = styled.div`
