@@ -95,3 +95,13 @@ export interface UpdateUsernameType {
   username: string;
   token: string;
 }
+
+export interface UseUpdateUserPassword {
+  onSuccess?: (data: UserInfo) => void;
+  onError?: (error: Error | APIError) => void;
+}
+
+export interface UpdateUserPasswordType {
+  password: string;
+  token: string;
+}

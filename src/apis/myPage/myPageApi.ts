@@ -60,7 +60,7 @@ export async function deleteUserAccount({ token }: DeleteUserAccountType) {
   return response;
 }
 
-export async function updateUserInfo({ token, username }: UpdateUsernameType) {
+export async function updateUsername({ token, username }: UpdateUsernameType) {
   const response = await request({
     url: `${VITE_API_URL}/users`,
     options: {
