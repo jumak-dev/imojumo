@@ -86,13 +86,12 @@ export interface DeleteUserAccountType {
   token: string;
 }
 
-export interface UseUpdateUserInfo {
+export interface UseUpdateUsername {
   onSuccess?: (data: UserInfo) => void;
   onError?: (error: Error | APIError) => void;
 }
 
-export interface UpdateUserInfoType {
-  username?: string;
-  password?: string;
+export interface UpdateUsernameType {
+  username: string;
   token: string;
 }

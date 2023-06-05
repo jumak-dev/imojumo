@@ -12,7 +12,7 @@ import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
 import useVisibles from '../hooks/useVisibles';
 import useInputs from '../hooks/useInputs';
-import { inputCSS, alignCenter } from '../styles/shared';
+import { inputCSS, alignCenter, colFlex } from '../styles/shared';
 import Modal from '../components/UI/Modal/Modal';
 import ContentList from '../components/MyPage/ContentList';
 import { MyPageInfoProps, MyPageModalData } from '../types';
@@ -25,7 +25,8 @@ import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
 import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
 import useMyComments from '../hooks/myPage/useMyComments';
 import useDeleteUserAccount from '../hooks/myPage/useDeleteUserAccount';
-import useUpdateUserInfo from '../hooks/myPage/useUpdateUserInfo';
+import useUpdateUsername from '../hooks/myPage/useUpdateUserInfo';
+import passwordValidate from '../utils/auth/passwordValidate';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -67,10 +68,9 @@ function MyPage() {
       console.log(error);
     },
   });
-  const { mutate: updateUserInfoMutate } = useUpdateUserInfo({
-    onSuccess: (responceUserInfo) => {
-      console.log(responceUserInfo);
-      setUserInfo(responceUserInfo);
+  const { mutate: updateUserInfoMutate } = useUpdateUsername({
+    onSuccess: (responceUsername) => {
+      setUserInfo(responceUsername);
       setIsUsernameChange((prev) => !prev);
     },
     onError: (error) => {
@@ -94,6 +94,7 @@ function MyPage() {
     setModalCategory('');
     setPaginate(1);
   };
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { isLoading } = useGetMyPageInfo({
     token,
@@ -159,6 +160,16 @@ function MyPage() {
 
   const handleUsernameChangeButton = () => {
     updateUserInfoMutate({ token, username: username || '' });
+  };
+
+  const handleChangePasswordButton = () => {
+    if (password.length > 0 && checkPassword.length > 0) {
+      const { isVailed, error } = passwordValidate(password, checkPassword);
+      setErrorMessage(error);
+      if (isVailed) {
+        updateUserInfoMutate({ token, password });
+      }
+    }
   };
 
   if (isLoading) {
@@ -275,6 +286,9 @@ function MyPage() {
         </IndexBar>
         <HiddenContent visible={passwordVisible}>
           <ContentContainer>
+            <DisplayErrorWrraper>
+              {errorMessage.length > 0 && errorMessage}
+            </DisplayErrorWrraper>
             <InputContainer>
               <label htmlFor={curruntPasswordId}>현재 비밀번호</label>
               <Input
@@ -310,6 +324,7 @@ function MyPage() {
               buttonType="button"
               buttonColor="mint"
               buttonSize="m"
+              onClick={handleChangePasswordButton}
               isBold
             >
               비밀번호 변경
@@ -518,6 +533,14 @@ const Input = styled.input`
 
 const Paragraph = styled.p`
   margin-bottom: 10px;
+`;
+
+const DisplayErrorWrraper = styled.ul`
+  ${colFlex}
+  margin-bottom: 15px;
+  color: var(--color-heart);
+  font-size: var(--font-size-m);
+  line-height: 20px;
 `;
 
 export default MyPage;

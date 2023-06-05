@@ -1,9 +1,9 @@
 import { updateUserInfo } from '../../apis/myPage/myPageApi';
-import { UpdateUserInfoType, UseUpdateUserInfo } from '../../types';
+import { UpdateUsernameType, UseUpdateUsername } from '../../types';
 import useMutate from '../useMutate';
 
-function useUpdateUserInfo({ onSuccess, onError }: UseUpdateUserInfo) {
-  const { mutate, data, error, isLoading } = useMutate<UpdateUserInfoType, any>(
+function useUpdateUsername({ onSuccess, onError }: UseUpdateUsername) {
+  const { mutate, data, error, isLoading } = useMutate<UpdateUsernameType, any>(
     {
       fetchFn: updateUserInfo,
       onSuccess,
@@ -14,4 +14,4 @@ function useUpdateUserInfo({ onSuccess, onError }: UseUpdateUserInfo) {
   return { mutate, data, error, isLoading };
 }
 
-export default useUpdateUserInfo;
+export default useUpdateUsername;

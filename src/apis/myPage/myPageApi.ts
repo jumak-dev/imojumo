@@ -1,7 +1,7 @@
 import {
   DeleteUserAccountType,
   GetMyPageCommentsType,
-  UpdateUserInfoType,
+  UpdateUsernameType,
 } from '../../types';
 import request from '../api';
 
@@ -60,11 +60,7 @@ export async function deleteUserAccount({ token }: DeleteUserAccountType) {
   return response;
 }
 
-export async function updateUserInfo({
-  token,
-  username,
-  password,
-}: UpdateUserInfoType) {
+export async function updateUserInfo({ token, username }: UpdateUsernameType) {
   const response = await request({
     url: `${VITE_API_URL}/users`,
     options: {
@@ -75,7 +71,6 @@ export async function updateUserInfo({
       },
       body: JSON.stringify({
         username,
-        password,
       }),
     },
   });
