@@ -43,8 +43,7 @@ const FooterLayout = styled.footer`
   ${rowFlexCenter}
   width: 100%;
   height: 160px;
-  border: 1px solid transparent;
-  border-top-color: var(--color-borderbottom-color);
+  border-top: 1px solid var(--color-borderbottom-color);
 `;
 
 const FooterWrapper = styled.div`
@@ -56,20 +55,20 @@ const FooterWrapper = styled.div`
 
 const FooterSignature = styled.div`
   ${colFlex}
+  gap: 16px;
 `;
 
 const LogoContainer = styled.div`
   ${alignCenter}
+  gap: 8px;
 `;
 
 const LogoTitle = styled.span`
-  margin-left: 8px;
+  font-weight: 700;
   font-size: var(--font-size-xxl);
-  font-weight: bold;
 `;
 
 const CopyrightText = styled.p`
-  margin-top: 16px;
   font-size: var(--font-size-m);
 `;
 
