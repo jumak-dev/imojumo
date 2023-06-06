@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { BiTrash } from 'react-icons/bi';
 import { BsFillImageFill } from 'react-icons/bs';
@@ -10,9 +10,34 @@ function MyPageProfileSection({
   userInfo,
   updateUsernameMutate,
   deleteUserAvataMutate,
+  changeUserAvataMutate,
 }: MyPageProfileSectionProps) {
   const [isUsernameChange, setIsUsernameChange] = useState(false);
   const [username, setUsername] = useState(userInfo.username);
+  const avataInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+
+    if (!fileList) {
+      // eslint-disable-next-line no-alert
+      window.alert('프로필 사진을 업로드해 주세요');
+      return;
+    }
+
+    if (fileList) {
+      const getedFile = fileList[0];
+      const fileExt = getedFile.name.split('.').pop();
+      if (
+        !['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt || '')
+      ) {
+        // eslint-disable-next-line no-alert
+        window.alert('jpeg, png, jpg 파일만 업로드가 가능합니다.');
+        return;
+      }
+      changeUserAvataMutate({ file: getedFile, token });
+    }
+  };
 
   const handleUsernameChangeMode = () => {
     setUsername(userInfo.username);
@@ -25,12 +50,24 @@ function MyPageProfileSection({
 
   const handleUsernameChangeButton = () => {
     updateUsernameMutate({ token, username: username || '' });
+    setIsUsernameChange((prev) => !prev);
+  };
+
+  const handleButtonClick = () => {
+    avataInputRef.current?.click();
   };
 
   return (
     <ProfileContianer>
       <ImageSection>
         <img src={userInfo.avatarUrl || undefined} alt="profile" />
+        <FileInput
+          type="file"
+          accept="image/*"
+          name="profile_Img"
+          onChange={handleFileChange}
+          ref={avataInputRef}
+        />
       </ImageSection>
       <InfoSection>
         <InfoTop>
@@ -64,6 +101,7 @@ function MyPageProfileSection({
             buttonType="button"
             buttonColor="mint"
             buttonSize="m"
+            onClick={handleButtonClick}
           >
             <BsFillImageFill size={17} />
             이미지 업로드
@@ -138,6 +176,10 @@ const EditButton = styled.button`
   font-size: var(--font-size-m);
   margin-left: 19px;
   padding: 0;
+`;
+
+const FileInput = styled.input`
+  display: none;
 `;
 
 export default MyPageProfileSection;
