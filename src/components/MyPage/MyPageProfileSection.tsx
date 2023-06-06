@@ -9,14 +9,15 @@ function MyPageProfileSection({
   token,
   userInfo,
   updateUsernameMutate,
-  deleteUserAvataMutate,
-  changeUserAvataMutate,
+  deleteUserAvatarMutate,
+  changeUserAvatarMutate,
 }: MyPageProfileSectionProps) {
   const [isUsernameChange, setIsUsernameChange] = useState(false);
   const [username, setUsername] = useState(userInfo.username);
   const avataInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const form = new FormData();
     const fileList = e.target.files;
 
     if (!fileList) {
@@ -35,7 +36,8 @@ function MyPageProfileSection({
         window.alert('jpeg, png, jpg 파일만 업로드가 가능합니다.');
         return;
       }
-      changeUserAvataMutate({ file: getedFile, token });
+      form.append('file', getedFile);
+      changeUserAvatarMutate({ file: form, token });
     }
   };
 
@@ -111,7 +113,7 @@ function MyPageProfileSection({
             buttonType="button"
             buttonColor="pink"
             buttonSize="m"
-            onClick={deleteUserAvataMutate}
+            onClick={() => deleteUserAvatarMutate({ token })}
           >
             <BiTrash size={22} />
             이미지 제거
@@ -133,6 +135,7 @@ const ImageSection = styled.section`
 
   img {
     width: 128px;
+    height: 128px;
     border-radius: 50%;
     margin-right: 27px;
   }

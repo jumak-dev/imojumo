@@ -30,7 +30,8 @@ import passwordValidate from '../utils/auth/passwordValidate';
 import useUpdateUserPassword from '../hooks/myPage/useUpdateUserPassword';
 import goToTop from '../utils/goToTop';
 import MyPageProfileSection from '../components/MyPage/MyPageProfileSection';
-import useDeleteUserAvata from '../hooks/myPage/useDeleteUserAvata';
+import useDeleteUserAvatar from '../hooks/myPage/useDeleteUserAvatar';
+import useChangeUserAvatar from '../hooks/myPage/useChangeUserAvatar';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -94,8 +95,18 @@ function MyPage() {
     },
   });
 
-  const { mutate: deleteUserAvataMutate } = useDeleteUserAvata({
+  const { mutate: deleteUserAvatarMutate } = useDeleteUserAvatar({
     onSuccess: (responseUserInfo) => {
+      setUserInfo(responseUserInfo);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: changeUserAvatarMutate } = useChangeUserAvatar({
+    onSuccess: (responseUserInfo) => {
+      console.log(responseUserInfo);
       setUserInfo(responseUserInfo);
     },
     onError: (error) => {
@@ -195,7 +206,8 @@ function MyPage() {
         token={token}
         userInfo={userInfo}
         updateUsernameMutate={updateUsernameMutate}
-        deleteUserAvataMutate={deleteUserAvataMutate}
+        deleteUserAvatarMutate={deleteUserAvatarMutate}
+        changeUserAvatarMutate={changeUserAvatarMutate}
       />
       <IndexContainer>
         <IndexBar>

@@ -111,7 +111,8 @@ export interface MyPageProfileSectionProps {
   token: string;
   userInfo: UserInfo;
   updateUsernameMutate: (args: UpdateUsernameType) => Promise<void>;
-  deleteUserAvataMutate: (args: DeleteUserAvataType) => Promise<void>;
+  deleteUserAvatarMutate: (args: DeleteUserAvatarType) => Promise<void>;
+  changeUserAvatarMutate: (args: ChangeUserAvatarType) => Promise<void>;
 }
 
 export interface UseDeleteUserAvata {
@@ -119,6 +120,16 @@ export interface UseDeleteUserAvata {
   onError?: (error: Error | APIError) => void;
 }
 
-export interface DeleteUserAvataType {
+export interface DeleteUserAvatarType {
   token: string;
+}
+
+export interface UseChangeUserAvatar {
+  onSuccess?: (data: UserInfo) => void;
+  onError?: (error: Error | APIError) => void;
+}
+
+export interface ChangeUserAvatarType {
+  token: string;
+  file: FormData;
 }
