@@ -30,6 +30,7 @@ import passwordValidate from '../utils/auth/passwordValidate';
 import useUpdateUserPassword from '../hooks/myPage/useUpdateUserPassword';
 import goToTop from '../utils/goToTop';
 import MyPageProfileSection from '../components/MyPage/MyPageProfileSection';
+import useDeleteUserAvata from '../hooks/myPage/useDeleteUserAvata';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
@@ -90,6 +91,15 @@ function MyPage() {
     onError: (error) => {
       console.log(error);
       setErrorMessage(String(error.message));
+    },
+  });
+
+  const { mutate: deleteUserAvataMutate } = useDeleteUserAvata({
+    onSuccess: (responseUserInfo) => {
+      setUserInfo(responseUserInfo);
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 
@@ -185,6 +195,7 @@ function MyPage() {
         token={token}
         userInfo={userInfo}
         updateUsernameMutate={updateUsernameMutate}
+        deleteUserAvataMutate={deleteUserAvataMutate}
       />
       <IndexContainer>
         <IndexBar>

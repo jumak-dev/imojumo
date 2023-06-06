@@ -111,4 +111,14 @@ export interface MyPageProfileSectionProps {
   token: string;
   userInfo: UserInfo;
   updateUsernameMutate: (args: UpdateUsernameType) => Promise<void>;
+  deleteUserAvataMutate: (args: DeleteUserAvataType) => Promise<void>;
+}
+
+export interface UseDeleteUserAvata {
+  onSuccess?: (data: UserInfo) => void;
+  onError?: (error: Error | APIError) => void;
+}
+
+export interface DeleteUserAvataType {
+  token: string;
 }

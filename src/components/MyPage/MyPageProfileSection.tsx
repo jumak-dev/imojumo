@@ -9,6 +9,7 @@ function MyPageProfileSection({
   token,
   userInfo,
   updateUsernameMutate,
+  deleteUserAvataMutate,
 }: MyPageProfileSectionProps) {
   const [isUsernameChange, setIsUsernameChange] = useState(false);
   const [username, setUsername] = useState(userInfo.username);
@@ -72,6 +73,7 @@ function MyPageProfileSection({
             buttonType="button"
             buttonColor="pink"
             buttonSize="m"
+            onClick={deleteUserAvataMutate}
           >
             <BiTrash size={22} />
             이미지 제거
