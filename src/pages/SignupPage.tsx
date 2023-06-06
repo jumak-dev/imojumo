@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
-import { signup } from '../apis/auth';
 import validate from '../utils/auth/signupValidate';
+import useSignup from '../hooks/auth/useSignup';
 
 function SignupPage() {
   const location = useLocation();
@@ -12,19 +12,23 @@ function SignupPage() {
   const { pathname } = location;
   const [displayError, setDisplayError] = useState('');
 
+  const { mutate: signupMutate } = useSignup({
+    onSuccess: () => {
+      navigate('/login');
+    },
+    onError: (error) => {
+      console.log(error);
+      setDisplayError(String(error.message));
+    },
+  });
+
   const handleSignup = async (
     email: string,
     password: string,
     checkPassword: string,
   ) => {
-    try {
-      if (validate(email, password, checkPassword, setDisplayError)) {
-        await signup(email, password, setDisplayError);
-        navigate('/login');
-      }
-    } catch (signupError) {
-      console.error(signupError);
-      setDisplayError('서버에서 문제가 발생하였습니다.');
+    if (validate(email, password, checkPassword, setDisplayError)) {
+      signupMutate({ email, password });
     }
   };
 
