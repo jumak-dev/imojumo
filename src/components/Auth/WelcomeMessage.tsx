@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import bookVector from '../../assets/bookVector.jpg';
+import bookVector from '../../assets/BookVector.png';
 import { colFlex } from '../../styles/shared';
 
 function WelcomeMessage() {
