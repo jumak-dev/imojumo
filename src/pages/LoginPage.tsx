@@ -7,7 +7,7 @@ import MainContainer from '../styles/layout';
 import { userInfoAtom, jwtAtom } from '../recoil/atoms';
 import isLoginSelector from '../recoil/seletors';
 import { alignCenter, colFlexCenter } from '../styles/shared';
-import { login } from '../apis/auth';
+import useLogin from '../hooks/auth/useLogin';
 
 function LoginPage() {
   const location = useLocation();
@@ -17,7 +17,18 @@ function LoginPage() {
   const setJwt = useSetRecoilState(jwtAtom);
   const isLogin = useRecoilValue(isLoginSelector);
   const [displayError, setDisplayError] = useState('');
-  const fromUrl = location.state?.from;
+  const { mutate: loginMutate } = useLogin({
+    onSuccess: ({ response, responseJson }) => {
+      const jwt = response.headers.get('authorization');
+      setUserInfo(responseJson);
+      setJwt(jwt);
+      navigate('/');
+    },
+    onError: (error) => {
+      console.log(error);
+      setDisplayError(String(error.message));
+    },
+  });
 
   useEffect(() => {
     if (isLogin) {
@@ -26,15 +37,7 @@ function LoginPage() {
   }, []);
 
   const handleLogin = async (email: string, password: string) => {
-    try {
-      const { jwt, userInfo } = await login(email, password, setDisplayError);
-      setJwt(jwt);
-      setUserInfo(userInfo);
-      navigate(fromUrl || '/', { replace: true });
-    } catch (loginError) {
-      console.error(loginError);
-      setDisplayError('서버에서 문제가 발생하였습니다.');
-    }
+    loginMutate({ email, password });
   };
 
   return (
