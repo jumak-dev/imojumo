@@ -65,8 +65,10 @@ function MyPageProfileSection({
   };
 
   const handleUsernameChangeButton = () => {
-    updateUsernameMutate({ token, username: username || '' });
-    setIsUsernameChange((prev) => !prev);
+    if (username) {
+      updateUsernameMutate({ token, username });
+      setIsUsernameChange((prev) => !prev);
+    }
   };
 
   const handleButtonClick = () => {
