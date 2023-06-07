@@ -12,3 +12,4 @@ export * from './MyPage.type';
 export * from './ProConVote.type';
 export * from './MyPageModal.type';
 export * from './Notification.type';
+export * from './Auth.type';

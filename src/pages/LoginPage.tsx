@@ -6,8 +6,9 @@ import FormBox from '../components/LoginSignupForm/Form';
 import MainContainer from '../styles/layout';
 import { userInfoAtom, jwtAtom } from '../recoil/atoms';
 import isLoginSelector from '../recoil/seletors';
-import { alignCenter, colFlexCenter } from '../styles/shared';
-import { login } from '../apis/auth';
+import { alignCenter } from '../styles/shared';
+import useLogin from '../hooks/auth/useLogin';
+import WelcomeMessage from '../components/Auth/WelcomeMessage';
 
 function LoginPage() {
   const location = useLocation();
@@ -17,7 +18,18 @@ function LoginPage() {
   const setJwt = useSetRecoilState(jwtAtom);
   const isLogin = useRecoilValue(isLoginSelector);
   const [displayError, setDisplayError] = useState('');
-  const fromUrl = location.state?.from;
+  const { mutate: loginMutate } = useLogin({
+    onSuccess: ({ response, responseJson }) => {
+      const jwt = response.headers.get('authorization');
+      setUserInfo(responseJson);
+      setJwt(jwt);
+      navigate('/');
+    },
+    onError: (error) => {
+      console.log(error);
+      setDisplayError(String(error.message));
+    },
+  });
 
   useEffect(() => {
     if (isLogin) {
@@ -26,24 +38,12 @@ function LoginPage() {
   }, []);
 
   const handleLogin = async (email: string, password: string) => {
-    try {
-      const { jwt, userInfo } = await login(email, password, setDisplayError);
-      setJwt(jwt);
-      setUserInfo(userInfo);
-      navigate(fromUrl || '/', { replace: true });
-    } catch (loginError) {
-      console.error(loginError);
-      setDisplayError('서버에서 문제가 발생하였습니다.');
-    }
+    loginMutate({ email, password });
   };
 
   return (
     <PageContainer>
-      <TextVectorContainer>
-        <p>이모저모에 오신 것을 환영합니다.</p>
-        <p>자유롭게 토론해보세요.</p>
-        <Img alt="bookLogo" src="src/assets/bookVector.png" />
-      </TextVectorContainer>
+      <WelcomeMessage />
       <FormBox
         pathname={pathname}
         onSubmit={handleLogin}
@@ -57,20 +57,6 @@ const PageContainer = styled(MainContainer)`
   ${alignCenter}
   height: 100vh;
   justify-content: space-evenly;
-`;
-
-const TextVectorContainer = styled.section`
-  ${colFlexCenter}
-  font-size: var(--font-size-xxl);
-
-  p {
-    margin-bottom: 5px;
-  }
-`;
-
-const Img = styled.img`
-  width: 210px;
-  height: 185px;
 `;
 
 export default LoginPage;
