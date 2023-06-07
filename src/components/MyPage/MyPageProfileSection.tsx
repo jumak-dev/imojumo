@@ -9,6 +9,7 @@ import {
   DeleteUserAvatarType,
   UpdateUsernameType,
 } from '../../apis/myPage/myPageApi';
+import URL from '../../constants/URL';
 
 export interface MyPageProfileSectionProps {
   token: string;
@@ -75,7 +76,7 @@ function MyPageProfileSection({
   return (
     <ProfileContianer>
       <ImageSection>
-        <img src={userInfo.avatarUrl || undefined} alt="profile" />
+        <img src={userInfo.avatarUrl || URL.DEFAULT_AVATA_URL} alt="profile" />
         <FileInput
           type="file"
           accept="image/*"
