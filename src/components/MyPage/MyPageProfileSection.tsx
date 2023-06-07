@@ -3,7 +3,20 @@ import styled, { css } from 'styled-components';
 import { BiTrash } from 'react-icons/bi';
 import { BsFillImageFill } from 'react-icons/bs';
 import Button from '../UI/Button/Button';
-import { MyPageProfileSectionProps } from '../../types';
+import { UserInfo } from '../../recoil/atoms';
+import {
+  ChangeUserAvatarType,
+  DeleteUserAvatarType,
+  UpdateUsernameType,
+} from '../../apis/myPage/myPageApi';
+
+export interface MyPageProfileSectionProps {
+  token: string;
+  userInfo: UserInfo;
+  updateUsernameMutate: (args: UpdateUsernameType) => Promise<void>;
+  deleteUserAvatarMutate: (args: DeleteUserAvatarType) => Promise<void>;
+  changeUserAvatarMutate: (args: ChangeUserAvatarType) => Promise<void>;
+}
 
 function MyPageProfileSection({
   token,

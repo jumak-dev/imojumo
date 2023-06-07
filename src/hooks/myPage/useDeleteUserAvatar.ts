@@ -1,6 +1,15 @@
-import { deleteUserAvata } from '../../apis/myPage/myPageApi';
-import { DeleteUserAvatarType, UseDeleteUserAvata } from '../../types';
+import {
+  deleteUserAvata,
+  DeleteUserAvatarType,
+} from '../../apis/myPage/myPageApi';
+import { UserInfo } from '../../recoil/atoms';
+import { APIError } from '../../types';
 import useMutate from '../useMutate';
+
+export interface UseDeleteUserAvata {
+  onSuccess?: (data: UserInfo) => void;
+  onError?: (error: Error | APIError) => void;
+}
 
 function useDeleteUserAvatar({ onSuccess, onError }: UseDeleteUserAvata) {
   const { mutate, data, error, isLoading } = useMutate<

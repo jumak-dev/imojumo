@@ -1,20 +1,12 @@
-import { ChangeUserAvatarType } from '../../types/MyPage.type';
-import {
-  DeleteUserAccountType,
-  DeleteUserAvatarType,
-  GetMyPageCommentsType,
-  UpdateUsernameType,
-  UpdateUserPasswordType,
-} from '../../types';
 import request from '../api';
 
 const { VITE_API_URL } = import.meta.env;
 
-export interface getMypageInfoProps {
+export interface getMypageInfoType {
   token: string;
 }
 
-async function getMypageInfo({ token }: getMypageInfoProps) {
+async function getMypageInfo({ token }: getMypageInfoType) {
   const response = await request({
     url: `${VITE_API_URL}/mypage`,
     options: {
@@ -26,6 +18,12 @@ async function getMypageInfo({ token }: getMypageInfoProps) {
   });
 
   return response;
+}
+
+export interface GetMyPageCommentsType {
+  page: number;
+  limit: number;
+  token: string;
 }
 
 export async function getMyPageComments({
@@ -48,6 +46,10 @@ export async function getMyPageComments({
   return response;
 }
 
+export interface DeleteUserAccountType {
+  token: string;
+}
+
 export async function deleteUserAccount({ token }: DeleteUserAccountType) {
   const response = await request({
     url: `${VITE_API_URL}/users`,
@@ -61,6 +63,11 @@ export async function deleteUserAccount({ token }: DeleteUserAccountType) {
   });
 
   return response;
+}
+
+export interface UpdateUsernameType {
+  username: string;
+  token: string;
 }
 
 export async function updateUsername({ token, username }: UpdateUsernameType) {
@@ -79,6 +86,12 @@ export async function updateUsername({ token, username }: UpdateUsernameType) {
   });
 
   return response;
+}
+
+export interface UpdateUserPasswordType {
+  password: string;
+  newPassword: string;
+  token: string;
 }
 
 export async function updateUserPassword({
@@ -104,6 +117,10 @@ export async function updateUserPassword({
   return response;
 }
 
+export interface DeleteUserAvatarType {
+  token: string;
+}
+
 export async function deleteUserAvata({ token }: DeleteUserAvatarType) {
   const response = await request({
     url: `${VITE_API_URL}/users/avatar`,
@@ -117,6 +134,11 @@ export async function deleteUserAvata({ token }: DeleteUserAvatarType) {
   });
 
   return response;
+}
+
+export interface ChangeUserAvatarType {
+  token: string;
+  file: FormData;
 }
 
 export async function changeUserAvatar({ token, file }: ChangeUserAvatarType) {

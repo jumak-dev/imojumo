@@ -8,7 +8,6 @@ import {
   GetProConDiscussion,
 } from './ProConDiscussionPost.type';
 import { PageInfo } from './Page.type';
-import { UserInfo } from '../recoil/atoms';
 
 export interface MyPageComment {
   id: number;
@@ -32,12 +31,6 @@ export type MyPageResponseData =
 
 export interface MyPageContentProps {
   articles: MyPageResponseData[] | null;
-}
-
-export interface MyDataModalProps {
-  responseDataArr: MyPageResponseData[];
-  showModal: boolean;
-  handleCloseModal: () => void;
 }
 
 export interface GetMyPageInfoDetailType {
@@ -69,67 +62,4 @@ export interface UseMyCommmentsType {
   token: string;
   enabled?: boolean;
   onSuccess?: (data: GetMyPageComments | null) => void;
-}
-
-export interface GetMyPageCommentsType {
-  page: number;
-  limit: number;
-  token: string;
-}
-
-export interface UseDeleteUserAccount {
-  onSuccess?: (data: BookDiscussionInfo) => void;
-  onError?: (error: Error | APIError) => void;
-}
-
-export interface DeleteUserAccountType {
-  token: string;
-}
-
-export interface UseUpdateUsername {
-  onSuccess?: (data: UserInfo) => void;
-  onError?: (error: Error | APIError) => void;
-}
-
-export interface UpdateUsernameType {
-  username: string;
-  token: string;
-}
-
-export interface UseUpdateUserPassword {
-  onSuccess?: (data: UserInfo) => void;
-  onError?: (error: Error | APIError) => void;
-}
-
-export interface UpdateUserPasswordType {
-  password: string;
-  newPassword: string;
-  token: string;
-}
-
-export interface MyPageProfileSectionProps {
-  token: string;
-  userInfo: UserInfo;
-  updateUsernameMutate: (args: UpdateUsernameType) => Promise<void>;
-  deleteUserAvatarMutate: (args: DeleteUserAvatarType) => Promise<void>;
-  changeUserAvatarMutate: (args: ChangeUserAvatarType) => Promise<void>;
-}
-
-export interface UseDeleteUserAvata {
-  onSuccess?: (data: UserInfo) => void;
-  onError?: (error: Error | APIError) => void;
-}
-
-export interface DeleteUserAvatarType {
-  token: string;
-}
-
-export interface UseChangeUserAvatar {
-  onSuccess?: (data: UserInfo) => void;
-  onError?: (error: Error | APIError) => void;
-}
-
-export interface ChangeUserAvatarType {
-  token: string;
-  file: FormData;
 }
