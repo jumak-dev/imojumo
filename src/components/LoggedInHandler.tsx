@@ -13,16 +13,19 @@ function LoggedInHandler({
   const resetUserInfo = useResetRecoilState(userInfoAtom);
   const resetJwt = useResetRecoilState(jwtAtom);
 
-  useEffect(() => {
-    const isStayLoggedIn =
-      localStorage.getItem('stayLoggedIn') === 'true' || false;
+  useEffect(
+    () => () => {
+      const isStayLoggedIn =
+        localStorage.getItem('stayLoggedIn') === 'true' || false;
 
-    if (!isStayLoggedIn) {
-      logout();
-      resetUserInfo();
-      resetJwt();
-    }
-  }, []);
+      if (!isStayLoggedIn) {
+        logout();
+        resetUserInfo();
+        resetJwt();
+      }
+    },
+    [],
+  );
 
   return React.isValidElement(children) ? children : null;
 }
