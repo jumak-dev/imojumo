@@ -42,10 +42,8 @@ function MyPageProfileSection({
 
     if (fileList) {
       const getedFile = fileList[0];
-      const fileExt = getedFile.name.split('.').pop();
-      if (
-        !['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt || '')
-      ) {
+      const fileExt = getedFile.name.split('.').pop() || '';
+      if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
         // eslint-disable-next-line no-alert
         window.alert('jpeg, png, jpg 파일만 업로드가 가능합니다.');
         return;
