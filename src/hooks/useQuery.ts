@@ -26,7 +26,9 @@ function useQuery<I, T>({
   delay = 0,
 }: UseQueryProps<I, T>) {
   const [promise, setPromise] = useState<Promise<void>>();
-  const [status, setStatus] = useState<PromiseStatusType>(PROMISE_STATUS.IDLE);
+  const [status, setStatus] = useState<PromiseStatusType>(
+    enabled ? PROMISE_STATUS.PENDING : PROMISE_STATUS.IDLE,
+  );
   const [result, setResult] = useState<T>();
   const [error, setError] = useState<Error>();
   const serializedArg = JSON.stringify(arg);
@@ -70,7 +72,7 @@ function useQuery<I, T>({
 
   useEffect(() => {
     if (enabled) fetch();
-  }, [serializedArg]);
+  }, [serializedArg, enabled]);
 
   if (isSuspense && status === PROMISE_STATUS.PENDING && promise) {
     throw promise;

@@ -8,6 +8,8 @@ export * from './LikeList.type';
 export * from './Comment.type';
 export * from './Promise.type';
 export * from './Error.type';
+export * from './MyPage.type';
 export * from './ProConVote.type';
+export * from './MyPageModal.type';
 export * from './Notification.type';
 export * from './Auth.type';

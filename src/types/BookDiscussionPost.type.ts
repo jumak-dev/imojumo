@@ -26,6 +26,7 @@ export interface GetBookDiscussionType {
   limit: number;
   token?: string;
   orderBy?: OrderBy;
+  myPostsOnly?: boolean;
 }
 
 export interface CreateBookDiscussionType {
@@ -42,6 +43,9 @@ export interface GetBookDiscussionDetailType {
 export interface UseBookDiscussionType extends GetBookDiscussionType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+  myPostsOnly?: boolean;
+  enabled?: boolean;
+  onSuccess?: (data: GetBookDiscussion | null) => void;
 }
 
 export interface UpdateBookDiscussionType {

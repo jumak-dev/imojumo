@@ -37,9 +37,10 @@ export async function getBookDiscussions({
   limit,
   token = '',
   orderBy = 'lastest',
+  myPostsOnly = false,
 }: GetBookDiscussionType) {
   const response = await request({
-    url: `${VITE_API_URL}/book-discussions?page=${page}&limit=${limit}&orderBy=${orderBy}`,
+    url: `${VITE_API_URL}/book-discussions?page=${page}&limit=${limit}&orderBy=${orderBy}&myPostsOnly=${myPostsOnly}`,
     options: {
       method: 'GET',
       headers: {

@@ -13,6 +13,8 @@ export interface ProConDiscussionInfo {
   conCount: number;
   proLeader: ProConLeader | null;
   conLeader: ProConLeader | null;
+  isVote: boolean;
+  isPro: boolean;
 }
 
 export interface GetProConDiscussion {
@@ -23,6 +25,8 @@ export interface GetProConDiscussion {
 export interface GetProConDiscussionType {
   page: number;
   limit: number;
+  myPostsOnly?: boolean;
+  token?: string;
 }
 
 export interface ProConLeader {
@@ -44,6 +48,10 @@ export interface GetProConDiscussionDetailType {
 export interface UseProConDiscussionType extends GetProConDiscussionType {
   isSuspense?: boolean;
   isErrorBoundary?: boolean;
+  myPostsOnly?: boolean;
+  token?: string;
+  enabled?: boolean;
+  onSuccess?: (data: GetProConDiscussion | null) => void;
 }
 
 export interface UpdateProConDiscussionType {

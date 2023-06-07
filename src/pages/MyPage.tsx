@@ -1,172 +1,225 @@
 import styled, { css } from 'styled-components';
 import { GoBook } from 'react-icons/go';
-import { BsFillImageFill, BsChatLeftDots } from 'react-icons/bs';
-import { BiTrash } from 'react-icons/bi';
-import { AiFillHeart } from 'react-icons/ai';
+import { BsChatLeftDots } from 'react-icons/bs';
+
 import { FaUserLock, FaUserAltSlash } from 'react-icons/fa';
 import { GiDiscussion } from 'react-icons/gi';
 import { IoIosArrowDown } from 'react-icons/io';
-import { Link } from 'react-router-dom';
-import { useId, useState } from 'react';
+import React, { useId, useState } from 'react';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import MainContainer from '../styles/layout';
 import Button from '../components/UI/Button/Button';
 import useVisibles from '../hooks/useVisibles';
 import useInputs from '../hooks/useInputs';
-import { inputCSS, alignCenter } from '../styles/shared';
+import { inputCSS, alignCenter, colFlex } from '../styles/shared';
 import Modal from '../components/UI/Modal/Modal';
-
-// dummyData
-const data = {
-  bookDiscussion: [
-    {
-      id: 0,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
-      likes: 24,
-    },
-    {
-      id: 1,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
-      likes: 24,
-    },
-  ],
-  proConDiscussion: [
-    {
-      id: 0,
-      title:
-        '갑자기 불상한척? 한탕해서 편하게 살려고 주식투자해서 손실난걸 왜 불상한양 기사쓰냐? 잔고 5000만원 남아서 라면 먹는게 불',
-      path: '#',
-      date: '2023.02.04',
-    },
-    {
-      id: 1,
-      title:
-        '갑자기 불상한척? 한탕해서 편하게 살려고 주식투자해서 손실난걸 왜 불상한양 기사쓰냐? 잔고 5000만원 남아서 라면 먹는게 불',
-      path: '#',
-      date: '2023.02.04',
-    },
-  ],
-  myComent: [
-    {
-      id: 0,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
-    },
-    {
-      id: 1,
-      title: '미드나잇라이브러리는 울랄라솰랄라라',
-      path: '#',
-      date: '2023.02.04',
-    },
-  ],
-};
-
-interface ContentListProps {
-  articles: Array<{
-    path: string;
-    title: string;
-    likes?: number;
-    date: string;
-    id: number;
-  }>;
-}
-
-function ContentList({ articles }: ContentListProps) {
-  return (
-    <ul>
-      {articles.map((obj) => (
-        <ContentContainer key={obj.id}>
-          <ContentTop>
-            <ContentLink to={obj.path}>{obj.title}</ContentLink>
-            {obj.likes && (
-              <ContentLikeBox>
-                {obj.likes}
-                <HeartIcon />
-              </ContentLikeBox>
-            )}
-          </ContentTop>
-          <ContentBottom>{obj.date}</ContentBottom>
-        </ContentContainer>
-      ))}
-    </ul>
-  );
-}
+import ContentList from '../components/MyPage/ContentList';
+import { MyPageInfoProps, MyPageModalData } from '../types';
+import useModal from '../hooks/useModal';
+import MyPageModal from '../components/UI/Modal/MyPageModal';
+import useGetMyPageInfo from '../hooks/myPage/useGetMyPageInfo';
+import { jwtAtom, userInfoAtom } from '../recoil/atoms';
+import Loading from '../components/UI/Loading/Loading';
+import useBookDiscussion from '../hooks/bookDiscussion/useBookDiscussion';
+import useProConDiscussion from '../hooks/proConDiscussion/useProConDiscussion';
+import useMyComments from '../hooks/myPage/useMyComments';
+import useDeleteUserAccount from '../hooks/myPage/useDeleteUserAccount';
+import useUpdateUsername from '../hooks/myPage/useUpdateUsername';
+import passwordValidate from '../utils/auth/passwordValidate';
+import useUpdateUserPassword from '../hooks/myPage/useUpdateUserPassword';
+import goToTop from '../utils/goToTop';
+import MyPageProfileSection from '../components/MyPage/MyPageProfileSection';
+import useDeleteUserAvatar from '../hooks/myPage/useDeleteUserAvatar';
+import useChangeUserAvatar from '../hooks/myPage/useChangeUserAvatar';
 
 function MyPage() {
   const [passwordVisible, togglePasswordVisible] = useVisibles(false);
   const [deleteAccountVisible, toggleDeleteAccountVisible] = useVisibles(false);
-  const [{ curruntPassword, password, checkPassword }, onChange] = useInputs({
-    curruntPassword: '',
-    password: '',
-    checkPassword: '',
+  const [{ curruntPassword, password, checkPassword }, onChange, reset] =
+    useInputs({
+      curruntPassword: '',
+      password: '',
+      checkPassword: '',
+    });
+  const [
+    showWithdrawalModal,
+    handelWithdrawalShowModal,
+    handleWithdrawalCloseModal,
+  ] = useModal();
+  const [showMyPageModal, handelMyPageShowModal, handelMyPageCloseModal] =
+    useModal(() => {
+      ModalDataCloseCallBack();
+    });
+  const [paginate, setPaginate] = useState(1);
+  const [myPageInfo, setMyPageInfo] = useState<MyPageInfoProps>({
+    bookDiscussions: [],
+    proConDiscussions: [],
+    comments: [],
   });
-  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState<MyPageModalData | null>(null);
+  const [modalCategory, setModalCategory] = useState('');
+  const token = useRecoilValue(jwtAtom) || '';
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const navigate = useNavigate();
+  const resetJwtAtom = useResetRecoilState(jwtAtom);
+  const resetUserInfo = useResetRecoilState(userInfoAtom);
+  const { mutate: deleteUserAccountMutate } = useDeleteUserAccount({
+    onSuccess: () => {
+      resetJwtAtom();
+      resetUserInfo();
+      navigate(`/`);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const { mutate: updateUsernameMutate } = useUpdateUsername({
+    onSuccess: (responceUserInfo) => {
+      setUserInfo(responceUserInfo);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
+  const { mutate: updateUserPasswordMutate } = useUpdateUserPassword({
+    onSuccess: () => {
+      reset();
+      togglePasswordVisible();
+      goToTop();
+    },
+    onError: (error) => {
+      console.log(error);
+      setErrorMessage(String(error.message));
+    },
+  });
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const { mutate: deleteUserAvatarMutate } = useDeleteUserAvatar({
+    onSuccess: (responseUserInfo) => {
+      setUserInfo(responseUserInfo);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: changeUserAvatarMutate } = useChangeUserAvatar({
+    onSuccess: (responseUserInfo) => {
+      console.log(responseUserInfo);
+      setUserInfo(responseUserInfo);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   function yesCallback() {
-    console.log('yes');
+    deleteUserAccountMutate({ token });
   }
 
   const curruntPasswordId = useId();
   const passwordId = useId();
   const checkPasswordPasswordId = useId();
 
+  const ModalDataCloseCallBack = () => {
+    setModalData(null);
+    setModalCategory('');
+    setPaginate(1);
+  };
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { isLoading } = useGetMyPageInfo({
+    token,
+    onSuccess: (myInfoData) => {
+      if (myInfoData !== null) {
+        setMyPageInfo(myInfoData);
+      }
+    },
+  });
+
+  const { isLoading: bookDiscussionLoading } = useBookDiscussion({
+    page: paginate || 1,
+    limit: 4,
+    token: token || '',
+    myPostsOnly: true,
+    enabled: modalCategory === 'book',
+    onSuccess: (bookData) => {
+      if (bookData !== null) {
+        setModalData(bookData);
+      }
+    },
+  });
+
+  const { isLoading: proConDiscussionLoading } = useProConDiscussion({
+    page: paginate || 1,
+    limit: 4,
+    token: token || '',
+    myPostsOnly: true,
+    enabled: modalCategory === 'proCon',
+    onSuccess: (proConData) => {
+      if (proConData !== null) {
+        setModalData(proConData);
+      }
+    },
+  });
+
+  const { isLoading: myCommentsLoading } = useMyComments({
+    page: paginate || 1,
+    limit: 4,
+    token: token || '',
+    enabled: modalCategory === 'comments',
+    onSuccess: (myComments) => {
+      if (myComments !== null) {
+        setModalData(myComments);
+      }
+    },
+  });
+
+  const handelSeeMoreButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    handelMyPageShowModal();
+    const category = e.currentTarget.dataset.value || '';
+    setModalCategory(category);
+  };
+
+  const handleChangePasswordButton = () => {
+    if (password.length > 0 && checkPassword.length > 0) {
+      const { isVailed, error } = passwordValidate(password, checkPassword);
+      setErrorMessage(error);
+      if (isVailed) {
+        updateUserPasswordMutate({
+          token,
+          password: curruntPassword,
+          newPassword: password,
+        });
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <MainContainer>
-      <ProfileContianer>
-        <ImageSection>
-          <img
-            src="https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg"
-            alt="profile"
-          />
-        </ImageSection>
-        <InfoSection>
-          <InfoTop>
-            <Nickname>유아유아짱</Nickname>
-            <EditButton type="button">수정</EditButton>
-          </InfoTop>
-          <InfoBottom>
-            <Button
-              type="button"
-              buttonType="button"
-              buttonColor="mint"
-              buttonSize="m"
-            >
-              <BsFillImageFill size={17} />
-              이미지 업로드
-            </Button>
-            <Button
-              type="button"
-              buttonType="button"
-              buttonColor="pink"
-              buttonSize="m"
-            >
-              <BiTrash size={22} />
-              이미지 제거
-            </Button>
-          </InfoBottom>
-        </InfoSection>
-      </ProfileContianer>
+      <MyPageProfileSection
+        token={token}
+        userInfo={userInfo}
+        updateUsernameMutate={updateUsernameMutate}
+        deleteUserAvatarMutate={deleteUserAvatarMutate}
+        changeUserAvatarMutate={changeUserAvatarMutate}
+      />
       <IndexContainer>
         <IndexBar>
           <IndexBarTitle>
             내가 작성한 독서토론
             <BookIcon />
           </IndexBarTitle>
-          <button type="button">더보기 &gt;</button>
+          <button type="button" data-value="book" onClick={handelSeeMoreButton}>
+            더보기 &gt;
+          </button>
         </IndexBar>
-        <ContentList articles={data.bookDiscussion} />
+        <ContentList articles={myPageInfo.bookDiscussions} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -174,9 +227,15 @@ function MyPage() {
             내가 작성한 찬반토론
             <DiscussionIcon />
           </IndexBarTitle>
-          <button type="button">더보기 &gt;</button>
+          <button
+            type="button"
+            data-value="proCon"
+            onClick={handelSeeMoreButton}
+          >
+            더보기 &gt;
+          </button>
         </IndexBar>
-        <ContentList articles={data.proConDiscussion} />
+        <ContentList articles={myPageInfo.proConDiscussions} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -184,9 +243,15 @@ function MyPage() {
             내가 작성한 댓글
             <ChatIcon />
           </IndexBarTitle>
-          <button type="button">더보기 &gt;</button>
+          <button
+            type="button"
+            data-value="comments"
+            onClick={handelSeeMoreButton}
+          >
+            더보기 &gt;
+          </button>
         </IndexBar>
-        <ContentList articles={data.myComent} />
+        <ContentList articles={myPageInfo.comments} />
       </IndexContainer>
       <IndexContainer>
         <IndexBar>
@@ -200,6 +265,9 @@ function MyPage() {
         </IndexBar>
         <HiddenContent visible={passwordVisible}>
           <ContentContainer>
+            <DisplayErrorWrraper>
+              {errorMessage.length > 0 && errorMessage}
+            </DisplayErrorWrraper>
             <InputContainer>
               <label htmlFor={curruntPasswordId}>현재 비밀번호</label>
               <Input
@@ -235,6 +303,7 @@ function MyPage() {
               buttonType="button"
               buttonColor="mint"
               buttonSize="m"
+              onClick={handleChangePasswordButton}
               isBold
             >
               비밀번호 변경
@@ -266,7 +335,7 @@ function MyPage() {
               buttonType="button"
               buttonColor="pink"
               buttonSize="m"
-              onClick={handleShowModal}
+              onClick={handelWithdrawalShowModal}
               isBold
             >
               회원 탈퇴
@@ -275,11 +344,21 @@ function MyPage() {
         </HiddenContent>
       </IndexContainer>
       <Modal
-        showModal={showModal}
-        handleCloseModal={handleCloseModal}
+        showModal={showWithdrawalModal}
+        handleCloseModal={handleWithdrawalCloseModal}
         title="정말로 삭제하시겠습니까?"
         content="사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다."
         yesCallback={() => yesCallback()}
+      />
+      <MyPageModal
+        showModal={showMyPageModal}
+        responseDataObj={modalData}
+        handleCloseModal={handelMyPageCloseModal}
+        currentPage={paginate}
+        setPagenate={setPaginate}
+        isLoading={
+          bookDiscussionLoading || proConDiscussionLoading || myCommentsLoading
+        }
       />
     </MainContainer>
   );
@@ -305,11 +384,6 @@ const ChatIcon = styled(BsChatLeftDots)`
   color: var(--black);
 `;
 
-const HeartIcon = styled(AiFillHeart)`
-  ${iconCSS};
-  color: var(--color-heart);
-`;
-
 const PasswordEditIcon = styled(FaUserLock)`
   ${iconCSS};
   color: var(--black);
@@ -323,50 +397,6 @@ const DownWardIcon = styled(IoIosArrowDown)`
 const DeleteAccountIcon = styled(FaUserAltSlash)`
   ${iconCSS};
   color: var(--black);
-`;
-
-const ProfileContianer = styled.section`
-  display: flex;
-  margin-top: 64px;
-  margin-bottom: 64px;
-`;
-
-const ImageSection = styled.section`
-  border-right: 1px solid var(--color-inputbox-line);
-
-  img {
-    width: 128px;
-    border-radius: 50%;
-    margin-right: 27px;
-  }
-`;
-
-const InfoSection = styled.section`
-  margin-left: 27px;
-`;
-
-const InfoTop = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-top: 6px;
-  margin-bottom: 28px;
-`;
-
-const Nickname = styled.span`
-  font-size: var(--font-size-xxl);
-  font-weight: 600;
-  margin-bottom: 4px;
-`;
-
-const EditButton = styled.button`
-  font-size: var(--font-size-m);
-  margin-left: 19px;
-  padding: 0;
-`;
-
-const InfoBottom = styled.div`
-  display: flex;
-  gap: 32px;
 `;
 
 const IndexContainer = styled.section`
@@ -398,30 +428,6 @@ const ContentContainer = styled.li`
   border-bottom: 1px solid var(--color-inputbox-line);
 `;
 
-const ContentTop = styled.div`
-  ${alignCenter};
-  justify-content: space-between;
-  margin-bottom: 13px;
-`;
-
-const ContentBottom = styled.div`
-  font-size: var(--font-size-sm);
-`;
-
-const ContentLikeBox = styled.div`
-  ${alignCenter};
-`;
-
-const ContentLink = styled(Link)`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  height: 17px;
-  font-size: var(--font-size-m);
-  font-weight: 600;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-`;
-
 interface HiddenContentProps {
   visible: boolean;
 }
@@ -450,6 +456,14 @@ const Input = styled.input`
 
 const Paragraph = styled.p`
   margin-bottom: 10px;
+`;
+
+const DisplayErrorWrraper = styled.ul`
+  ${colFlex}
+  margin-bottom: 15px;
+  color: var(--color-heart);
+  font-size: var(--font-size-m);
+  line-height: 20px;
 `;
 
 export default MyPage;

@@ -7,7 +7,7 @@ const validate = (
   let errorMessage = '';
   const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const passwordRegex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,20}$/;
 
   const isEmailValid = emailRegex.test(email);
   const isPasswordValid = passwordRegex.test(password);
