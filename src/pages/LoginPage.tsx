@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -66,7 +66,6 @@ function LoginPage({ authType }: LoginPageProps) {
     onSuccess: async ({ code }) => {
       try {
         const { response, responseJson } = await googleLogin(code);
-        console.log(response);
         const jwt = response.headers.get('authorization');
 
         setUserInfo(responseJson);
@@ -78,7 +77,9 @@ function LoginPage({ authType }: LoginPageProps) {
         if (typeof error === 'object' && error !== null && 'message' in error) {
           setDisplayError(String((error as APIError).message));
         } else {
-          setDisplayError(String(error));
+          setDisplayError(
+            '서버에서 일시적인 오류가 발생했습니다. 다시 요청해주세요.',
+          );
         }
       }
     },
@@ -88,15 +89,15 @@ function LoginPage({ authType }: LoginPageProps) {
     },
   });
 
+  const handleLogin = async (email: string, password: string) => {
+    loginMutate({ email, password });
+  };
+
   useEffect(() => {
     if (isLogin) {
       navigate(-1);
     }
   }, []);
-
-  const handleLogin = async (email: string, password: string) => {
-    loginMutate({ email, password });
-  };
 
   return (
     <PageContainer>
