@@ -4,9 +4,11 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import LoggedInHandler from './components/LoggedInHandler';
 import route from './Routes';
 
+const { VITE_GOOGLE_CLIENTID } = import.meta.env;
+
 function App() {
   return (
-    <GoogleOAuthProvider clientId="418129859233-1o5p4gnkqdmhgise9i2iv00qioigb2ms.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={VITE_GOOGLE_CLIENTID}>
       <RecoilRoot>
         <LoggedInHandler>
           <RouterProvider router={route} />
