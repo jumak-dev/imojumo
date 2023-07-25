@@ -3,7 +3,6 @@ import { Root, LoginRoot, Home } from './route';
 
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
-import SignupPage from '../pages/SignupPage';
 import MyPage from '../pages/MyPage';
 import SearchPage from '../pages/SearchPage';
 import LikeListPage from '../pages/LikeListPage';
@@ -108,11 +107,11 @@ export default createBrowserRouter([
     children: [
       {
         path: '/login',
-        element: <LoginPage />,
+        element: <LoginPage authType="login" />,
       },
       {
         path: '/signup',
-        element: <SignupPage />,
+        element: <LoginPage authType="signup" />,
       },
     ],
   },
