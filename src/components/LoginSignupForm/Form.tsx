@@ -169,6 +169,7 @@ const PathChangeButton = styled(NavLink)`
 
   &.active {
     background-color: var(--white);
+    pointer-events: none;
   }
 `;
 
