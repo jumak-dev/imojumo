@@ -1,21 +1,25 @@
 import React, { useId, useState } from 'react';
 import styled from 'styled-components';
-import { Form, useNavigate } from 'react-router-dom';
+import { Form, NavLink } from 'react-router-dom';
 import Button from '../UI/Button/Button';
-import { colFlex, rowFlex } from '../../styles/shared';
+import { colFlex, flex, rowFlex } from '../../styles/shared';
 
 interface FormProps {
-  pathname: string;
-  onSubmit: (email: string, password: string, checkPassword: string) => void;
+  isLoginPage: boolean;
   displayError: string;
+  onSubmit: (email: string, password: string, checkPassword: string) => void;
+  onGoogleSubmit: () => void;
 }
 
-function FormBox({ pathname, onSubmit, displayError }: FormProps) {
+function FormBox({
+  isLoginPage,
+  displayError,
+  onSubmit,
+  onGoogleSubmit,
+}: FormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
-  const isLogin = pathname.includes('login');
-  const navigate = useNavigate();
   const [isStayLoggedIn, setIsStayLoggedIn] = useState(
     localStorage.getItem('stayLoggedIn') === 'true' || false,
   );
@@ -36,14 +40,6 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
     setCheckPassword(value);
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const path = (e.target as HTMLButtonElement).value;
-    if (path === pathname) {
-      return;
-    }
-    navigate(path);
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(email, password, checkPassword);
@@ -57,22 +53,8 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
   return (
     <FormContainer>
       <ButtonsWrapper>
-        <PathChangeButton
-          onClick={handleClick}
-          isLogin={isLogin}
-          value="/login"
-          type="button"
-        >
-          로그인
-        </PathChangeButton>
-        <PathChangeButton
-          onClick={handleClick}
-          isLogin={isLogin}
-          value="/signup"
-          type="button"
-        >
-          회원가입
-        </PathChangeButton>
+        <PathChangeButton to="/login">로그인</PathChangeButton>
+        <PathChangeButton to="/signup">회원가입</PathChangeButton>
       </ButtonsWrapper>
       <FormWrraper>
         <DisplayErrorWrraper>
@@ -99,7 +81,7 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
             required
             onChange={onChange}
           />
-          {!isLogin && (
+          {!isLoginPage && (
             <Input
               type="password"
               name="checkPassword"
@@ -107,7 +89,7 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
               onChange={onChange}
             />
           )}
-          {isLogin && (
+          {isLoginPage && (
             <StayLoggedInContainer>
               <Input
                 type="checkbox"
@@ -119,7 +101,6 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
               <label htmlFor="stayLoggedIn">로그인 상태 유지</label>
             </StayLoggedInContainer>
           )}
-
           <Button
             buttonType="button"
             type="submit"
@@ -127,7 +108,7 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
             buttonColor="mint"
             margin="0 0 24px 0"
           >
-            {isLogin ? '로그인 하기' : '회원가입 하기'}
+            {isLoginPage ? '로그인 하기' : '회원가입 하기'}
           </Button>
           <Button
             type="button"
@@ -135,8 +116,9 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
             buttonSize="xl"
             buttonColor="pink"
             margin="0 0 36px 0"
+            onClick={onGoogleSubmit}
           >
-            {isLogin ? '구글 로그인' : '구글 회원가입'}
+            {isLoginPage ? '구글 로그인' : '구글 회원가입'}
           </Button>
         </InnerForm>
       </FormWrraper>
@@ -147,6 +129,7 @@ function FormBox({ pathname, onSubmit, displayError }: FormProps) {
 const StayLoggedInContainer = styled.section`
   ${rowFlex}
   align-items: center;
+
   input {
     margin-bottom: 3px;
     margin-right: 5px;
@@ -169,6 +152,7 @@ const FormContainer = styled.article`
 `;
 
 const ButtonsWrapper = styled.section`
+  ${flex};
   border: 1px solid var(--color-inputbox-line);
   border-bottom: none;
   width: 100%;
@@ -176,18 +160,14 @@ const ButtonsWrapper = styled.section`
   border-radius: 20px 20px 0 0;
 `;
 
-interface PathChangeButtonProps {
-  isLogin: boolean;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-}
-
-const PathChangeButton = styled.button<PathChangeButtonProps>`
+const PathChangeButton = styled(NavLink)`
+  ${flex}
   width: 50%;
   height: 72px;
   border-radius: 20px 20px 0 0;
   font-size: var(--font-size-l);
 
-  &:nth-child(${(props) => (props.isLogin ? '1' : '2')}) {
+  &.active {
     background-color: var(--white);
   }
 `;
