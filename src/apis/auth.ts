@@ -47,3 +47,20 @@ export async function signup({ password, email }: SignupType) {
 
   return response;
 }
+
+export async function googleLogin(code: string) {
+  const response = await requestResponse({
+    url: `${VITE_API_URL}/auth/google-login`,
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code,
+      }),
+    },
+  });
+
+  return response;
+}

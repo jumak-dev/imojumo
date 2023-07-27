@@ -17,10 +17,12 @@ jobs:
           echo "VITE_API_URL=$VITE_API_URL" >> .env
           echo "VITE_ALADIN_TTBKEY=$VITE_ALADIN_TTBKEY" >> .env
           echo "VITE_ALADIN_URL=$VITE_ALADIN_URL" >> .env
+          echo "VITE_GOOGLE_CLIENTID=$VITE_GOOGLE_CLIENTID" >> .env
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_ALADIN_TTBKEY: ${{ secrets.VITE_ALADIN_TTBKEY }}
           VITE_ALADIN_URL: ${{ secrets.VITE_ALADIN_URL }}
+          VITE_GOOGLE_CLIENTID: ${{ secrets.VITE_GOOGLE_CLIENTID }}
       - name: Build
         run: npm run build
         working-directory: ./
