@@ -40,7 +40,7 @@
       <ul>
         <li>Post New Page</li>
         <li>Search Page</li>
-        <li>Discussion Edit Page Page</li>
+        <li>Discussion Edit Page</li>
       </ul>
     </details>
     <details>
@@ -188,7 +188,7 @@
 |   <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/2c2ca120-0ddb-4599-8df9-31bdc5da8308"/>    |    <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/2c47798d-c653-4a70-bf18-a0eaa1c3f2f1"/>     |
 |        **찬반토론 목록 화면**        |      **찬반토론 상세 화면**           |
 |   <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/684ac6bf-c83d-4b8e-a050-a483b276d5b5"/>    |      <img width="450px" height="300px"  src="https://github.com/jumak-dev/imojumo/assets/19286161/562b7c1c-a4c4-4655-add8-61d8264c7576"/>    |
-|           **마이페지 화면**           |        **찜 목록 화면**           |
+|           **마이페이지 화면**           |        **찜 목록 화면**           |
 |   <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/8033a244-9ecf-4856-a38b-6b919443d275"/>    |    <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/e51e9e60-ccca-4c92-a949-f852daf06477"/>     |
 |         **토론검색 화면**         |       **도서 상세 화면**        |
 |   <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/08396d9a-6d5b-488b-921f-b41779ee994f"/>    |    <img width="450px" height="300px" src="https://github.com/jumak-dev/imojumo/assets/19286161/63011778-c334-4313-9cda-75e5d04de397"/>     |
@@ -202,7 +202,7 @@
 <details>
 <summary>🖼️ Wireframe</summary>
 <ul>
-    <li><a style="text-decoration: none;" href="https://www.figma.com/file/jCKejYpqT7MROn3zbvIMHj/Untitled?type=design&node-id=0-1&mode=design&t=fgssVimefdjYUOou-0">figma 링크</a></li>
+    <li><a style="text-decoration: none;" href="https://www.figma.com/file/b4I4mTfSGHniMnxxfHVriU/IMOJUMO?type=design&node-id=0-1&mode=design">figma 링크</a></li>
 </ul>
 </details>
 
