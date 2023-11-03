@@ -1,29 +1,43 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-import { Book } from '../../types';
+import { AladinBookSearchItem } from '../../types';
 import Button from '../UI/Button/Button';
-import { AlignCenter, ColFlex, truncateTextCSS } from '../../styles/shared';
+import { alignCenter, colFlex, truncateTextCSS } from '../../styles/shared';
 
 interface BookSearchListItemProps {
-  book: Book;
-  onClick: (book: Book) => void;
+  book: AladinBookSearchItem;
+  onClick: (book: AladinBookSearchItem) => void;
 }
 
 function BookSearchListItem({ book, onClick }: BookSearchListItemProps) {
+  const getDisplayAuthorText = useCallback(() => {
+    const authorList = book.author.split(', ');
+
+    if (authorList.length > 3) {
+      return `${authorList.slice(0, 3).join(', ')} 저 외 ${
+        authorList.length - 3
+      }명`;
+    }
+
+    return book.author;
+  }, [book.author]);
+
   const handleClick = () => {
     onClick(book);
   };
 
   return (
     <BookItemContainer>
-      <BookImage src={book.image} alt={`${book.title} 표지 이미지`} />
-      <BookInfoContainer>
-        <BookInfos>
+      <BookImage src={book.cover} alt={`${book.title} 표지 이미지`} />
+      <BookInfoContainer onClick={handleClick}>
+        <BookInfoHeader>
           <BookTitle>{book.title}</BookTitle>
-          <BookInfo>{book.author}</BookInfo>
-          <BookInfo>{book.publisher}</BookInfo>
-        </BookInfos>
+          <BookInfos>
+            <BookInfo>{getDisplayAuthorText()}</BookInfo>
+            <BookInfo>{book.publisher}</BookInfo>
+          </BookInfos>
+        </BookInfoHeader>
         <BookDescription>{book.description}</BookDescription>
       </BookInfoContainer>
       <Button
@@ -40,7 +54,7 @@ function BookSearchListItem({ book, onClick }: BookSearchListItemProps) {
 }
 
 const BookItemContainer = styled.li`
-  ${AlignCenter}
+  ${alignCenter}
   height: 132px;
   width: 100%;
   gap: 20px;
@@ -57,25 +71,35 @@ const BookImage = styled.img`
 `;
 
 const BookInfoContainer = styled.div`
-  ${ColFlex}
+  ${colFlex}
   flex: 1 1 0;
+  gap: 8px;
+  cursor: pointer;
+`;
+
+const BookInfoHeader = styled.div`
+  ${colFlex}
+  gap: 1px;
 `;
 
 const BookInfos = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
+  font-size: var(--font-size-sm);
   gap: 12px;
 `;
 
 const BookTitle = styled.h2`
-  ${AlignCenter}
+  ${alignCenter}
+  ${truncateTextCSS}
+  -webkit-line-clamp: 1;
   font-weight: 700;
-  font-size: var(font-size-l);
+  font-size: 18px;
   line-height: 24px;
   letter-spacing: -0.02em;
 `;
 
 const BookInfo = styled.p`
-  ${AlignCenter}
+  ${alignCenter}
   font-size: var(font-size-sm);
   line-height: 16px;
   letter-spacing: -0.02em;

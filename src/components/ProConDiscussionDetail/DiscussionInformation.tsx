@@ -1,49 +1,113 @@
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { BsDot } from 'react-icons/bs';
 import { Card } from '../UI/Card/Card';
+import Modal from '../UI/Modal/Modal';
 import UserProfile from '../UI/UserProfile/UserProfile';
 import ProgressBar from '../UI/ProgressBar/ProgressBar';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
 import {
-  ColFlex,
-  AlignCenter,
-  RowFlexCenter,
+  colFlex,
+  colFlexCenter,
+  alignCenter,
+  rowFlexCenter,
   profileBoxCSS,
 } from '../../styles/shared';
+import useModal from '../../hooks/useModal';
+import URL from '../../constants/URL';
+import { ProConLeader } from '../../types';
+import getRate from '../../utils/Rate';
+import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
+import useDeleteProConDiscussion from '../../hooks/proConDiscussion/useDeleteProConDiscussion';
 
-function DiscussionInformation() {
-  const userImageUrl =
-    'https://www.thechooeok.com/common/img/default_profile.png';
-  const noneImageUrl =
-    'https://www.pngitem.com/pimgs/m/80-806189_red-x-circle-icon-hd-png-download.png';
+interface DiscussioninformationProps {
+  id: number;
+  author: string;
+  title: string;
+  createdAt: string;
+  proCount: number;
+  conCount: number;
+  proLeader: ProConLeader | null;
+  conLeader: ProConLeader | null;
+}
+
+function DiscussionInformation({
+  id,
+  author,
+  title,
+  createdAt,
+  proCount,
+  conCount,
+  proLeader,
+  conLeader,
+}: DiscussioninformationProps) {
+  const navigate = useNavigate();
+
+  const { mutate: deleteProConDiscussion } = useDeleteProConDiscussion({
+    onSuccess: () => {
+      navigate('/pro-con-discussion');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const token = useRecoilValue(jwtAtom) ?? '';
+  const user = useRecoilValue(userInfoAtom);
+  const { username } = user;
+
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
+
+  const discussionDate = dayjs(createdAt).format('YYYY.MM.DD');
+
+  const proConSum = proCount + conCount;
+  const proConRate = String(getRate(proCount, proConSum));
+
+  const proLeaderName = proLeader?.username;
+  const proLeaderAvatar = proLeader?.avatarUrl || URL.NONE_AVATA_URL;
+
+  const conLeaderName = conLeader?.username;
+  const conLeaderAvatar = conLeader?.avatarUrl || URL.NONE_AVATA_URL;
+
+  const handleEdit = () => {
+    navigate(`/pro-con-discussion/${id}/edit`);
+  };
+
+  const handleDelete = async () => {
+    await deleteProConDiscussion({ id: String(id), token });
+  };
 
   return (
     <DiscussionContainer>
-      <ButtonContainer>
-        <Button>수정</Button>
-        <BsDot />
-        <Button>삭제</Button>
-      </ButtonContainer>
+      {username === author && (
+        <ButtonContainer>
+          <Button onClick={handleEdit}>수정</Button>
+          <BsDot />
+          <Button onClick={handleShowModal}>삭제</Button>
+        </ButtonContainer>
+      )}
       <DiscussionInfoContainer>
         <ProfileBox>
           <ProConLeaderTag isAgree tagSize="m">
             찬성측
           </ProConLeaderTag>
           <UserProfile
-            avatar={noneImageUrl}
+            avatar={proLeaderAvatar}
             alt="찬성측 프로필 이미지"
             itemGap="24px"
-            nickname=""
+            nickname={proLeaderName}
             size="md"
           />
         </ProfileBox>
         <DiscussionInfo>
-          <DiscussionTitle>5억년 버튼을 누를 것인가?</DiscussionTitle>
-          <DiscussionDate>2023.04.10</DiscussionDate>
+          <DiscussionTitle>{title}</DiscussionTitle>
+          <DiscussionDate>{discussionDate}</DiscussionDate>
           <ProgressBar
             barWidth="520px"
             barHeight="30px"
-            value="53"
+            value={proConRate}
             size="md"
             isDisplayContent
           />
@@ -53,39 +117,46 @@ function DiscussionInformation() {
             반대측
           </ProConLeaderTag>
           <UserProfile
-            avatar={userImageUrl}
+            avatar={conLeaderAvatar}
             alt="반대측 프로필 이미지"
             itemGap="24px"
-            nickname="yua77"
+            nickname={conLeaderName}
             size="md"
           />
         </ProfileBox>
       </DiscussionInfoContainer>
+      <Modal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        title="토론 삭제"
+        content="토론을 삭제하시겠습니까?"
+        yesCallback={handleDelete}
+      />
     </DiscussionContainer>
   );
 }
 
 const DiscussionContainer = styled.section`
   ${Card}
-  ${ColFlex}
+  ${colFlex}
   padding: 32px;
   margin: 40px 20px;
   gap: 24px;
 `;
 
 const DiscussionInfoContainer = styled.div`
-  ${RowFlexCenter}
+  ${rowFlexCenter}
   gap: 80px;
 `;
 
 const DiscussionInfo = styled.div`
-  ${ColFlex}
+  ${colFlexCenter}
   align-items: center;
   gap: 12px;
 `;
 
 const DiscussionTitle = styled.h2`
-  font-weight: bold;
+  font-weight: 700;
   font-size: var(--font-size-xxl);
 `;
 
@@ -95,7 +166,7 @@ const DiscussionDate = styled.span`
 `;
 
 const ButtonContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   margin-left: auto;
 `;
 

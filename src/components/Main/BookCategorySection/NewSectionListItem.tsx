@@ -1,33 +1,30 @@
 import styled from 'styled-components';
-import { Flex, truncateTextCSS } from '../../../styles/shared';
-
-interface BookInfo {
-  id: number;
-  imageUrl: string;
-  title: string;
-  description: string;
-}
+import { Link } from 'react-router-dom';
+import { Book, AladinBookSearchItem } from '../../../types';
+import { flex, truncateTextCSS } from '../../../styles/shared';
 
 interface NewSectionListItemProps {
-  bookInfo: BookInfo;
+  bookInfo: Book | AladinBookSearchItem | undefined;
+  path: string;
 }
 
-function NewSectionListItem({ bookInfo }: NewSectionListItemProps) {
+function NewSectionListItem({ bookInfo, path }: NewSectionListItemProps) {
   return (
     <ListItem>
-      <ListItemThumnail src={bookInfo.imageUrl} alt="썸네일 이미지" />
+      <ListItemThumnail src={bookInfo?.cover} alt="썸네일 이미지" />
       <ListItemInfo>
-        <ListItemTitle>{bookInfo.title}</ListItemTitle>
-        <ListItemDescription>{bookInfo.description}</ListItemDescription>
+        <ListItemTitle to={path}>{bookInfo?.title}</ListItemTitle>
+        <ListItemDescription>{bookInfo?.description}</ListItemDescription>
       </ListItemInfo>
     </ListItem>
   );
 }
 
 export const ListItem = styled.li`
-  ${Flex}
+  ${flex}
   flex: 1;
   border-bottom: 1px solid var(--color-borderbottom-color);
+  padding: 20px 10px;
 
   &:last-child {
     border-bottom: none;
@@ -35,12 +32,12 @@ export const ListItem = styled.li`
 `;
 
 const ListItemThumnail = styled.img`
-  width: 50px;
+  width: 40px;
   height: 50px;
   object-fit: cover;
 `;
 
-export const ListItemTitle = styled.p`
+export const ListItemTitle = styled(Link)`
   ${truncateTextCSS}
 
   font-size: var(--font-size-m);

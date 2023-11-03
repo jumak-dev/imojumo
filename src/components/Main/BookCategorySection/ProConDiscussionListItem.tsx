@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FiUser } from 'react-icons/fi';
-import { ColFlex } from '../../../styles/shared';
+import { colFlex } from '../../../styles/shared';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import { ListItem, ListItemTitle } from './NewSectionListItem';
 
@@ -18,9 +18,11 @@ function ProConDiscussionListItem({
 }: ProConDiscussionListItemProps) {
   return (
     <ListItem>
-      <UserIcon isPro />
+      <UserIcon $isPro />
       <ListItemInfo>
-        <ListItemTitle>{proConDiscussionInfo.title}</ListItemTitle>
+        <ListItemTitle to={`/pro-con-discussion/${proConDiscussionInfo.id}`}>
+          {proConDiscussionInfo.title}
+        </ListItemTitle>
         <ProgressBar
           isDisplayContent
           barWidth="100%"
@@ -29,20 +31,20 @@ function ProConDiscussionListItem({
           size="sm"
         />
       </ListItemInfo>
-      <UserIcon isPro={false} />
+      <UserIcon $isPro={false} />
     </ListItem>
   );
 }
 
-const UserIcon = styled(FiUser)<{ isPro: boolean }>`
+const UserIcon = styled(FiUser)<{ $isPro: boolean }>`
   margin: 0 10px;
   font-size: 45px;
-  color: ${({ isPro }) =>
-    isPro ? 'var(--color-primary-mint)' : ' var(--color-primary-pink)'};
+  color: ${({ $isPro }) =>
+    $isPro ? 'var(--color-primary-mint)' : ' var(--color-primary-pink)'};
 `;
 
 const ListItemInfo = styled.div`
-  ${ColFlex}
+  ${colFlex}
   width: 80%;
 `;
 

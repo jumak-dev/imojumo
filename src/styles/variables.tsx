@@ -15,9 +15,9 @@ const variables = css`
     --color-borderbottom-color: #bdbdbd;
     --color-subtitle-bg-color: #f8f8f8;
 
-    --font-size-xxl: 30px;
-    --font-size-xl: 24px;
-    --font-size-l: 20px;
+    --font-size-xxl: 26px;
+    --font-size-xl: 22px;
+    --font-size-l: 18px;
     --font-size-m: 16px;
     --font-size-sm: 13px;
     --font-size-xs: 10px;

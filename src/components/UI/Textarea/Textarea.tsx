@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { InputCSS } from '../../../styles/shared';
+import { inputCSS } from '../../../styles/shared';
 
 interface TextareaProps {
   [rest: string]: any;
@@ -11,7 +10,7 @@ function Textarea({ ...rest }: TextareaProps) {
 }
 
 const StyledTextarea = styled.textarea`
-  ${InputCSS};
+  ${inputCSS};
   padding: 16px;
   resize: none;
 `;

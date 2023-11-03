@@ -1,7 +1,9 @@
 import { useContext } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
+import { alignCenter, fontCSS } from '../../styles/shared';
+
 import TAB from '../../constants/Tab';
-import { AlignCenter } from '../../styles/shared';
 import { TabContext } from '../../context/TabContext';
 
 interface SubtitleSectionProps {
@@ -18,33 +20,29 @@ function SubtitleSection({ subtitle, postCount }: SubtitleSectionProps) {
     } else {
       setCurrentTab(TAB.PROCON_DISCUSSION);
     }
-    window.scrollTo(0, 0);
   };
 
   return (
     <SubtitleBlock>
       <Subtitle>{subtitle}</Subtitle>
       <PostCount>{new Intl.NumberFormat().format(postCount)}</PostCount>
-      <MoreButton
-        isShow={currentTab === TAB.ALL}
-        aria-label="더 보기"
-        onClick={() => haldleMoreButton(subtitle)}
-      >
-        더보기
-      </MoreButton>
+      {postCount > 3 && (
+        <MoreButton
+          isShow={currentTab === TAB.ALL}
+          aria-label="더 보기"
+          onClick={() => haldleMoreButton(subtitle)}
+        >
+          더보기
+        </MoreButton>
+      )}
     </SubtitleBlock>
   );
 }
 
 const SubtitleBlock = styled.div`
-  ${AlignCenter}
-  margin: 50px 10px;
+  ${alignCenter}
+  margin: 52px 10px 32px 10px;
   position: relative;
-`;
-
-const fontCSS = css`
-  font-weight: 700;
-  font-size: var(--font-size-l);
 `;
 
 const Subtitle = styled.h2`

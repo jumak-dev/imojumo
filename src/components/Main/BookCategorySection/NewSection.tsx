@@ -1,49 +1,50 @@
 import styled from 'styled-components';
-import { Flex, ColFlex } from '../../../styles/shared';
+import { flex, colFlex } from '../../../styles/shared';
 import NewSectionListItem from './NewSectionListItem';
 import ProConDiscussionListItem from './ProConDiscussionListItem';
+import {
+  BookDiscussionInfo,
+  ProConDiscussionInfo,
+  AladinBookSearchItem,
+} from '../../../types';
 
 interface NewSectionProps {
   subtitle: string;
-  isProConDiscussion: boolean;
+  bookDiscussion?: BookDiscussionInfo[] | undefined;
+  proConDiscussion?: ProConDiscussionInfo[] | undefined;
+  newBook?: AladinBookSearchItem[] | undefined;
+  imageUrl: string;
 }
 
-function NewSection({ subtitle, isProConDiscussion }: NewSectionProps) {
-  const image =
-    'https://image.aladin.co.kr/product/28448/6/cover500/k212835618_2.jpg';
-
-  const list = [
-    { id: 0, imageUrl: image, title: '울랄라', description: '솰랄라' },
-    {
-      id: 1,
-      imageUrl: image,
-      title: '졸릴 때 보는 책',
-      description: '님들 골라봐요',
-    },
-    { id: 2, imageUrl: image, title: '세비지', description: '쯔쯔쯔쯔' },
-  ];
-
-  const proConDiscussionList = [
-    { id: 0, title: '다나카' },
-    { id: 1, title: '다나카는 일본인인가' },
-    { id: 2, title: '진매 vs 순매' },
-  ];
-
+function NewSection({
+  subtitle,
+  bookDiscussion,
+  proConDiscussion,
+  newBook,
+  imageUrl,
+}: NewSectionProps) {
   return (
     <NewSectionContainer>
       <Subtitle>{subtitle}</Subtitle>
-      <ThumnailImage src={image} alt="썸네일 이미지" />
+      <ThumnailImage src={imageUrl} alt="썸네일 이미지" />
       <ListContainer>
-        {isProConDiscussion
-          ? proConDiscussionList.map((item) => (
-              <ProConDiscussionListItem
-                key={item.id}
-                proConDiscussionInfo={item}
-              />
-            ))
-          : list.map((item) => (
-              <NewSectionListItem key={item.id} bookInfo={item} />
-            ))}
+        {proConDiscussion?.map((post) => (
+          <ProConDiscussionListItem key={post.id} proConDiscussionInfo={post} />
+        ))}
+        {bookDiscussion?.map((post) => (
+          <NewSectionListItem
+            key={post.id}
+            bookInfo={post.book}
+            path={`/book-discussion/${post.id}`}
+          />
+        ))}
+        {newBook?.map((item) => (
+          <NewSectionListItem
+            key={item.itemId}
+            bookInfo={item}
+            path={`/books/${item.isbn}`}
+          />
+        ))}
       </ListContainer>
     </NewSectionContainer>
   );
@@ -51,12 +52,14 @@ function NewSection({ subtitle, isProConDiscussion }: NewSectionProps) {
 
 const NewSectionContainer = styled.section`
   width: 300px;
-  height: 400px;
-  margin: 60px 20px;
+  height: 490px;
+  margin: 80px 30px;
+  border: 1px solid var(--color-inputbox-line);
+  border-radius: 10px;
 `;
 
 const Subtitle = styled.h3`
-  ${Flex}
+  ${flex}
   height: 10%;
   margin: 10px 0;
   font-weight: bold;
@@ -66,12 +69,14 @@ const Subtitle = styled.h3`
 const ThumnailImage = styled.img`
   width: 100%;
   height: 30%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background-color: var(--color-subtitle-bg-color);
 `;
 
 const ListContainer = styled.ul`
-  ${ColFlex}
-  height: 60%;
+  ${colFlex};
 `;
 
 export default NewSection;

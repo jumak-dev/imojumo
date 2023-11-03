@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Flex } from '../../styles/shared';
+import { flex } from '../../styles/shared';
 
 interface BookSearchListProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ function BookSearchList({ children }: BookSearchListProps) {
 }
 
 const BookListContainer = styled.ul`
-  ${Flex}
+  ${flex}
   flex-direction: column;
   width: 100%;
 `;

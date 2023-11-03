@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { InputCSS } from '../../../styles/shared';
+import { inputCSS } from '../../../styles/shared';
 
 interface InputProps {
   [rest: string]: any;
@@ -11,7 +10,7 @@ function Input({ ...rest }: InputProps) {
 }
 
 const StyledInput = styled.input`
-  ${InputCSS};
+  ${inputCSS};
   padding: 12px 16px;
 `;
 

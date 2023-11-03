@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import dayjs from 'dayjs';
 import styled, { css } from 'styled-components';
 import {
   AiFillDislike,
@@ -8,87 +11,241 @@ import {
 } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
 import ProConLeaderTag from '../UI/Tag/ProConLeaderTag';
-import { AlignCenter, ColFlex } from '../../styles/shared';
-
-interface Comment {
-  id: number;
-  author: string;
-  content: string;
-  like: number;
-  dislike: number;
-  createdAt: string;
-  updatedAt: string;
-  isPro?: boolean;
-}
+import { alignCenter, colFlex } from '../../styles/shared';
+import { Comment } from '../../types';
+import Textarea from '../UI/Textarea/Textarea';
+import useInputs from '../../hooks/useInputs';
+import useModal from '../../hooks/useModal';
+import Modal from '../UI/Modal/Modal';
+import PLACEHOLDER from '../../constants/Placeholder';
+import { jwtAtom, userInfoAtom } from '../../recoil/atoms';
+import isLoginSelector from '../../recoil/seletors';
+import useUpdateComment from '../../hooks/comment/useUpdateComment';
+import useDeleteComment from '../../hooks/comment/useDeleteComment';
+import useCreateCommentLike from '../../hooks/comment/useCreateCommentLike';
+import useDeleteCommentLike from '../../hooks/comment/useDeleteCommentLike';
+import useCreateCommentDislike from '../../hooks/comment/useCreateCommentDislike';
+import useDeleteCommentDislike from '../../hooks/comment/useDeleteCommentDislike';
 
 interface CommentItemProps {
   comment: Comment;
   isProConDiscussion?: boolean;
+  handleUpdateComment: (commentId: number, content: string) => void;
+  handleDeleteComment: (commentId: number) => void;
 }
 
 function CommentItem({
   comment,
   isProConDiscussion = false,
+  handleUpdateComment,
+  handleDeleteComment,
 }: CommentItemProps) {
-  const imageUrl =
-    'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
+  const navigate = useNavigate();
 
-  const [isLike, setIsLike] = useState(false);
-  const [isDislike, setIsDislike] = useState(false);
+  const isLogin = useRecoilValue(isLoginSelector);
+  const token = useRecoilValue(jwtAtom) ?? '';
+  const user = useRecoilValue(userInfoAtom);
+  const { username } = user;
 
-  const handleLikeClick = () => {
-    setIsLike(!isLike);
+  const {
+    id,
+    author,
+    avatarUrl,
+    content,
+    like,
+    dislike,
+    updatedAt,
+    likedByUser,
+    dislikedByUser,
+    isPro,
+  } = comment;
+
+  const commentDate = dayjs(updatedAt).format('YYYY.MM.DD HH:mm');
+
+  const [{ value }, onChange, reset] = useInputs({
+    value: content,
+  });
+  const [showModal, handleShowModal, handleCloseModal] = useModal();
+
+  const [isEdit, setIsEdit] = useState(false);
+  const [isLike, setIsLike] = useState(likedByUser);
+  const [isDislike, setIsDislike] = useState(dislikedByUser);
+  const [likeCount, setLikeCount] = useState(like);
+  const [dislikeCount, setDislikeCount] = useState(dislike);
+
+  const handleEdit = () => {
+    setIsEdit(!isEdit);
+    reset();
   };
 
-  const handleDislikeClick = () => {
-    setIsDislike(!isDislike);
+  const { mutate: updateComment } = useUpdateComment({
+    onSuccess: (data) => {
+      if (!data) {
+        return;
+      }
+
+      handleUpdateComment(id, data.content);
+      setIsEdit(false);
+    },
+  });
+
+  const { mutate: deleteComment } = useDeleteComment({
+    onSuccess: () => {
+      handleDeleteComment(id);
+    },
+  });
+
+  const { mutate: createCommentLike } = useCreateCommentLike({
+    onSuccess: () => {
+      setIsLike(true);
+      setLikeCount((prevCount) => prevCount + 1);
+    },
+  });
+
+  const { mutate: deleteCommentLike } = useDeleteCommentLike({
+    onSuccess: () => {
+      setIsLike(false);
+      setLikeCount((prevCount) => prevCount - 1);
+    },
+  });
+
+  const { mutate: createCommentDislike } = useCreateCommentDislike({
+    onSuccess: () => {
+      setIsDislike(true);
+      setDislikeCount((prevCount) => prevCount + 1);
+    },
+  });
+
+  const { mutate: deleteCommentDislike } = useDeleteCommentDislike({
+    onSuccess: () => {
+      setIsDislike(false);
+      setDislikeCount((prevCount) => prevCount - 1);
+    },
+  });
+
+  const handleUpdate = async () => {
+    if (value.length === 0) {
+      return;
+    }
+
+    await updateComment({ id, content: value, token });
+  };
+
+  const handleDelete = async () => {
+    await deleteComment({ id, token });
+  };
+
+  const handleLike = async () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
+    if (isDislike) {
+      await deleteCommentDislike({ id, token });
+    }
+
+    if (isLike) {
+      await deleteCommentLike({ id, token });
+    } else {
+      await createCommentLike({ id, token });
+    }
+  };
+
+  const handleDislike = async () => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
+    if (isLike) {
+      await deleteCommentLike({ id, token });
+    }
+
+    if (isDislike) {
+      await deleteCommentDislike({ id, token });
+    } else {
+      await createCommentDislike({ id, token });
+    }
   };
 
   return (
     <CommentItemContainer>
-      <CommentInfomation>
+      <CommentInformation>
         <InformationContainer>
-          <Profile src={imageUrl} alt="프로필 이미지" />
+          <Profile src={avatarUrl} alt={`${author} 프로필 이미지`} />
           <InformationWrapper>
             <UserInfoBox>
-              <Nickname>{comment.author}</Nickname>
+              <Nickname>{author}</Nickname>
               {isProConDiscussion &&
-                (comment.isPro ? (
+                (isPro ? (
                   <ProConLeaderTag isAgree tagSize="sm">
                     찬성측
                   </ProConLeaderTag>
                 ) : (
-                  <ProConLeaderTag isAgree tagSize="sm">
+                  <ProConLeaderTag isAgree={false} tagSize="sm">
                     반대측
                   </ProConLeaderTag>
                 ))}
             </UserInfoBox>
-            <CommentDate>{comment.updatedAt}</CommentDate>
+            <CommentDate>{commentDate}</CommentDate>
           </InformationWrapper>
         </InformationContainer>
-        <ButtonContainer>
-          <Button>수정</Button>
-          <BsDot />
-          <Button>삭제</Button>
-        </ButtonContainer>
-      </CommentInfomation>
-      <CommentContent>{comment.content}</CommentContent>
+        {username === author && (
+          <ButtonContainer>
+            {isEdit ? (
+              <>
+                <Button onClick={handleUpdate}>등록</Button>
+                <BsDot />
+                <Button onClick={handleEdit}>취소</Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={handleEdit}>수정</Button>
+                <BsDot />
+                <Button onClick={handleShowModal}>삭제</Button>
+              </>
+            )}
+          </ButtonContainer>
+        )}
+      </CommentInformation>
+      {isEdit ? (
+        <CommentInput
+          name="value"
+          value={value}
+          onChange={onChange}
+          placeholder={
+            isProConDiscussion
+              ? PLACEHOLDER.LOGGED_IN_WITH_VOTE
+              : PLACEHOLDER.LOGGED_IN
+          }
+        />
+      ) : (
+        <CommentContent>{value}</CommentContent>
+      )}
       <ButtonContainer>
-        <LikeButton aria-label="좋아요" onClick={handleLikeClick}>
+        <LikeButton aria-label="좋아요" onClick={handleLike}>
           {isLike ? <AiFillLike /> : <AiOutlineLike />}
         </LikeButton>
-        <CountText>{comment.like}</CountText>
-        <DislikeButton aria-label="싫어요" onClick={handleDislikeClick}>
+        <CountText>{likeCount}</CountText>
+        <DislikeButton aria-label="싫어요" onClick={handleDislike}>
           {isDislike ? <AiFillDislike /> : <AiOutlineDislike />}
         </DislikeButton>
-        <CountText>{comment.dislike}</CountText>
+        <CountText>{dislikeCount}</CountText>
       </ButtonContainer>
+      <Modal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        title="댓글 삭제"
+        content="댓글을 삭제하시겠습니까?"
+        yesCallback={handleDelete}
+      />
     </CommentItemContainer>
   );
 }
 
 const CommentItemContainer = styled.li`
-  ${ColFlex}
+  ${colFlex}
   gap: 16px;
   border-bottom: 1px solid var(--color-borderbottom-color);
   &:last-child {
@@ -96,13 +253,13 @@ const CommentItemContainer = styled.li`
   }
 `;
 
-const CommentInfomation = styled.div`
-  ${AlignCenter}
+const CommentInformation = styled.div`
+  ${alignCenter}
   justify-content: space-between;
 `;
 
 const InformationContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 16px;
 `;
 
@@ -113,17 +270,17 @@ const Profile = styled.img`
 `;
 
 const InformationWrapper = styled.div`
-  ${ColFlex}
+  ${colFlex}
   gap: 8px;
 `;
 
 const UserInfoBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   gap: 8px;
 `;
 
 const Nickname = styled.strong`
-  font-weight: bold;
+  font-weight: 700;
   font-size: var(--font-size-l);
 `;
 
@@ -133,7 +290,7 @@ const CommentDate = styled.p`
 `;
 
 const ButtonContainer = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   justify-content: flex-end;
 `;
 
@@ -142,9 +299,16 @@ const Button = styled.button`
   color: var(--color-content-text);
 `;
 
+const CommentInput = styled(Textarea)`
+  height: 72px;
+  padding: 8px;
+`;
+
 const CommentContent = styled.p`
   line-height: 20px;
   color: var(--color-content-text);
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 const CountText = styled.p`

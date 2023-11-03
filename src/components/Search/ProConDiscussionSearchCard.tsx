@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+import { flex, colFlex, truncateTextCSS } from '../../styles/shared';
+
+import getRate from '../../utils/Rate';
 import { ProConDiscussionInfo } from '../../types';
-import { Flex, ColFlex, truncateTextCSS } from '../../styles/shared';
 
 interface ProConDiscussionSearchCardProps {
   procondiscussionData: ProConDiscussionInfo;
@@ -10,27 +13,25 @@ interface ProConDiscussionSearchCardProps {
 function ProConDiscussionSearchCard({
   procondiscussionData,
 }: ProConDiscussionSearchCardProps) {
-  const proCount = procondiscussionData.agreeCount;
-  const conCount = procondiscussionData.disagreeCount;
-  const proRate = String((proCount / (proCount + conCount)) * 100);
-  const conRate = String((conCount / (proCount + conCount)) * 100);
+  const { proCount, conCount } = procondiscussionData;
+  const proConSum = proCount + conCount;
 
   return (
-    <CardContainer to="/search">
+    <CardContainer to={`/pro-con-discussion/${procondiscussionData.id}`}>
       <DiscussionTitle>{procondiscussionData.title}</DiscussionTitle>
       <ProConBlockBox>
         <ProConBlock isPro>
           <ProConRateText>
             찬성
             <br />
-            {`${proRate}%`}
+            {`${getRate(proCount, proConSum)}%`}
           </ProConRateText>
         </ProConBlock>
         <ProConBlock isPro={false}>
           <ProConRateText>
             반대
             <br />
-            {`${conRate}%`}
+            {`${getRate(conCount, proConSum)}%`}
           </ProConRateText>
         </ProConBlock>
       </ProConBlockBox>
@@ -39,7 +40,7 @@ function ProConDiscussionSearchCard({
 }
 
 const CardContainer = styled(Link)`
-  ${ColFlex}
+  ${colFlex}
   width: 320px;
   height: 275px;
   border: none;
@@ -56,12 +57,12 @@ const DiscussionTitle = styled.h3`
 `;
 
 const ProConBlockBox = styled.div`
-  ${Flex};
+  ${flex};
   flex: 1;
 `;
 
 const ProConBlock = styled.div<{ isPro: boolean }>`
-  ${Flex}
+  ${flex}
   flex: 1;
   height: 100%;
 

@@ -1,41 +1,41 @@
 import { css } from 'styled-components';
 
-export const Flex = css`
+export const flex = css`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const AlignCenter = css`
+export const alignCenter = css`
   display: flex;
   align-items: center;
 `;
 
-export const JustifyEnd = css`
+export const justifyEnd = css`
   display: flex;
   justify-content: end;
 `;
 
-export const RowFlex = css`
+export const rowFlex = css`
   display: flex;
 `;
 
-export const RowFlexCenter = css`
-  ${RowFlex}
+export const rowFlexCenter = css`
+  ${rowFlex}
   justify-content: center;
 `;
 
-export const ColFlex = css`
+export const colFlex = css`
   display: flex;
   flex-direction: column;
 `;
 
-export const ColFlexCenter = css`
-  ${ColFlex}
+export const colFlexCenter = css`
+  ${colFlex}
   justify-content: center;
 `;
 
-export const InputCSS = css`
+export const inputCSS = css`
   background-color: var(--color-inputbox-bg);
   border: 1px solid var(--color-inputbox-line);
   border-radius: 5px;
@@ -49,7 +49,7 @@ export const InputCSS = css`
   }
 `;
 
-export const ScreenReaderTextCSS = css`
+export const screenReaderTextCSS = css`
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
@@ -78,13 +78,13 @@ export const likeIconCSS = css`
 `;
 
 export const proConCSS = css`
-  ${Flex}
+  ${flex}
   color: white;
   border-radius: 20px;
 `;
 
 export const profileBoxCSS = css`
-  ${ColFlex}
+  ${colFlex}
   align-items: center;
   flex-shrink: 0;
   gap: 24px;
@@ -94,6 +94,30 @@ export const discussionCardContainerCSS = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
-  gap: 40px;
+  gap: 80px;
   margin-bottom: 60px;
+`;
+
+export const fontCSS = css`
+  font-weight: 700;
+  font-size: var(--font-size-l);
+`;
+
+export const buttonActiveCSS = css`
+  pointer-events: none;
+`;
+
+export const buttonDeactivateCSS = css`
+  filter: brightness(75%);
+`;
+
+export const discussionContentCSS = css`
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  color: var(--color-content-text);
+  background-color: var(--color-inputbox-bg);
+  line-height: 20px;
+  white-space: pre-wrap;
+  word-break: break-all;
 `;

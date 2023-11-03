@@ -1,33 +1,38 @@
-import React from 'react';
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
-import { PageInfo } from '../../../types';
-import { Flex } from '../../../styles/shared';
-
-interface PaginationProps {
-  paginationInfo: PageInfo;
-  currentPage: number;
-  setPaginate: React.Dispatch<React.SetStateAction<number>>;
-}
+import { PaginationType } from '../../../types';
+import { flex } from '../../../styles/shared';
+import getPageIndex from '../../../utils/pageIndex';
 
 function Pagination({
   currentPage,
   setPaginate,
-  paginationInfo,
-}: PaginationProps) {
-  const { page, totalPage } = paginationInfo;
-  const pageNumbers = Array.from({ length: totalPage }, (_, idx) => idx + 1);
+  pageInfo,
+  pageLimit,
+  className,
+}: PaginationType) {
+  const { page, totalPage } = pageInfo || { page: 1, totalPage: 1 };
+  const { startPage, endPage } = getPageIndex(page, totalPage, pageLimit);
+  const pageNumbers = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, idx) => startPage + idx,
+  );
+
+  const handleClick = (num: number) => {
+    setPaginate(num);
+    window.scrollTo(0, 0);
+  };
 
   return (
-    <PaginationContainer>
-      <PageButton aria-label="처음" onClick={() => setPaginate(1)}>
+    <PaginationContainer className={className}>
+      <PageButton aria-label="처음" onClick={() => handleClick(1)}>
         <RxDoubleArrowLeft size={11} />
       </PageButton>
       <PageButton
         aria-label="이전"
         onClick={() =>
-          currentPage === 1 ? setPaginate(1) : setPaginate(page - 1)
+          currentPage === 1 ? handleClick(1) : handleClick(page - 1)
         }
       >
         <IoIosArrowBack size={11} />
@@ -36,7 +41,7 @@ function Pagination({
         <ButtonNav
           aria-label={`${num} 페이지`}
           key={num}
-          onClick={() => setPaginate(num)}
+          onClick={() => handleClick(num)}
           isCurrentPage={num === page}
         >
           {num}
@@ -46,13 +51,13 @@ function Pagination({
         aria-label="다음"
         onClick={() =>
           currentPage === totalPage
-            ? setPaginate(totalPage)
-            : setPaginate(page + 1)
+            ? handleClick(totalPage)
+            : handleClick(page + 1)
         }
       >
         <IoIosArrowForward size={11} />
       </PageButton>
-      <PageButton aria-label="끝" onClick={() => setPaginate(totalPage)}>
+      <PageButton aria-label="끝" onClick={() => handleClick(totalPage)}>
         <RxDoubleArrowRight size={11} />
       </PageButton>
     </PaginationContainer>
@@ -60,13 +65,13 @@ function Pagination({
 }
 
 const PaginationContainer = styled.div`
-  ${Flex}
+  ${flex}
   margin-bottom: 80px;
   font-size: var(--font-size-sm);
 `;
 
 const PageButton = styled.button`
-  ${Flex}
+  ${flex}
   border: 0;
   width: 30px;
   height: 30px;
@@ -76,7 +81,8 @@ const PageButton = styled.button`
   font-size: var(--font-size-sm);
 
   &:hover {
-    color: var(--color-primary-pink);
+    background-color: var(--color-primary-pink);
+    color: var(--white);
   }
 `;
 

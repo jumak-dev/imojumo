@@ -1,38 +1,70 @@
 // 외부 API의 검색 결과 데이터 타입
-export interface InterparkBookSearchResult {
+
+export interface Book {
+  id?: number;
+  isbn: string;
+  title: string;
+  author: string;
+  translator?: string | null;
+  description: string;
+  link: string;
+  cover: string;
+  publisher: string;
+  pubDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+  category?: string;
+}
+
+export interface AladinBookSearchResult {
+  version: string;
+  logo: string;
+  title: string;
+  link: string;
+  pubDate: string;
   totalResults: number;
   startIndex: number;
   itemsPerPage: number;
-  items: InterparkBookSearchItem[];
+  query: string;
+  searchCategoryId: number;
+  searchCategoryName: string;
+  item: AladinBookSearchItem[];
 }
 
-export interface InterparkBookSearchItem {
+export interface AladinBookSearchItem {
   title: string;
+  link: string;
   author: string;
-  publisher: string;
   pubDate: string;
-  coverSmallUrl: string;
-  coverLargeUrl: string;
   description: string;
   isbn: string;
-  categoryCode: string;
-  categoryName: string;
+  isbn13: string;
+  itemId: number;
   priceSales: number;
   priceStandard: number;
-  priceMileage: number;
-  saleStatus: string;
+  mallType: string;
   stockStatus: string;
+  mileage: number;
+  cover: string;
+  categoryId: number;
+  categoryName: string;
+  publisher: string;
+  salesPoint: number;
+  adult: false;
+  fixedPrice: true;
+  customerReviewRank: number;
+  seriesInfo?: SeriesInfo;
+  subInfo: SubInfo | never;
 }
 
-export interface Book {
-  isbn: number;
-  title: string;
-  author: string;
-  translator: string;
-  description: string;
-  url: string;
-  image: string;
-  publisher: string;
-  pubdate: string;
-  category: string;
+interface SeriesInfo {
+  seriesId: number;
+  seriesLink: string;
+  seriesName: string;
+}
+
+interface SubInfo {
+  subTitle: string;
+  originalTitle: string;
+  itemPage: number;
 }

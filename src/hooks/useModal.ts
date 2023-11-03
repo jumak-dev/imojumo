@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-function useModal(): [boolean, () => void, () => void] {
+type CloseCallback = () => void;
+
+function useModal(
+  closeCallBack?: CloseCallback,
+): [boolean, () => void, () => void] {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -9,6 +13,7 @@ function useModal(): [boolean, () => void, () => void] {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    if (closeCallBack) closeCallBack();
   };
 
   return [showModal, handleShowModal, handleCloseModal];

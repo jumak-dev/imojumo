@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookDiscussionForm from '../components/PostNew/BookDiscussionForm';
-import DiscussionTab from '../components/PostNew/DiscussionTab';
-import ProConDiscussionForm from '../components/PostNew/ProConDiscussionForm';
+import BookDiscussionForm from '../components/BookDiscussionNewForm/BookDiscussionNewForm';
+import DiscussionFormTab from '../components/DiscussionForm/DiscussionFormTab';
+import ProConDiscussionForm from '../components/ProConDiscussionNewForm/ProConDiscussionNewForm';
 import MainContainer from '../styles/layout';
-import { Flex, ScreenReaderTextCSS } from '../styles/shared';
+import { flex, screenReaderTextCSS } from '../styles/shared';
 
 interface PostNewPageProps {
   discussionType: 'proCon' | 'book';
@@ -15,18 +15,15 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
     proCon: '찬반 토론 게시글 작성하기',
     book: '독서 토론 게시글 작성하기',
   }[discussionType];
-
-  const handleSubmit = () => {};
-
   return (
     <MainContainer>
       <PostNewPageContainer>
         <PostNewPageTitle>{title}</PostNewPageTitle>
-        <DiscussionTab />
+        <DiscussionFormTab />
         {
           {
-            proCon: <ProConDiscussionForm onSubmit={handleSubmit} />,
-            book: <BookDiscussionForm onSubmit={handleSubmit} />,
+            proCon: <ProConDiscussionForm />,
+            book: <BookDiscussionForm />,
           }[discussionType]
         }
       </PostNewPageContainer>
@@ -35,7 +32,7 @@ function PostNewPage({ discussionType }: PostNewPageProps) {
 }
 
 const PostNewPageContainer = styled.article`
-  ${Flex}
+  ${flex}
   width: 100%;
   flex-direction: column;
   gap: 48px;
@@ -43,7 +40,7 @@ const PostNewPageContainer = styled.article`
 `;
 
 const PostNewPageTitle = styled.h2`
-  ${ScreenReaderTextCSS};
+  ${screenReaderTextCSS};
 `;
 
 export default PostNewPage;

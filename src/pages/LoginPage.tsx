@@ -1,46 +1,121 @@
-import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import FormBox from '../components/LoginSignupForm/Form';
-import MainContainer from '../styles/layout';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 
-function LoginPage() {
-  const location = useLocation();
-  const { pathname } = location;
+import { APIError } from '../types';
+import MainContainer from '../styles/layout';
+import { alignCenter } from '../styles/shared';
+import FormBox from '../components/LoginSignupForm/Form';
+import WelcomeMessage from '../components/Auth/WelcomeMessage';
+import { userInfoAtom, jwtAtom } from '../recoil/atoms';
+import isLoginSelector from '../recoil/seletors';
+import { googleLogin } from '../apis/auth';
+import useLogin from '../hooks/auth/useLogin';
+import useSignup from '../hooks/auth/useSignup';
+import validate from '../utils/auth/signupValidate';
+
+interface LoginPageProps {
+  authType: 'login' | 'signup';
+}
+
+function LoginPage({ authType }: LoginPageProps) {
+  const navigate = useNavigate();
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const setJwt = useSetRecoilState(jwtAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
+  const [displayError, setDisplayError] = useState('');
+  const isLoginPage = authType === 'login';
+
+  const { mutate: loginMutate } = useLogin({
+    onSuccess: ({ response, responseJson }) => {
+      const jwt = response.headers.get('authorization');
+      setUserInfo(responseJson);
+      setJwt(jwt);
+      navigate('/');
+    },
+    onError: (error) => {
+      console.log(error);
+      setDisplayError(String(error.message));
+    },
+  });
+
+  const { mutate: signupMutate } = useSignup({
+    onSuccess: () => {
+      navigate('/login');
+    },
+    onError: (error) => {
+      console.log(error);
+      setDisplayError(String(error.message));
+    },
+  });
+
+  const handleSignup = async (
+    email: string,
+    password: string,
+    checkPassword: string,
+  ) => {
+    if (validate(email, password, checkPassword, setDisplayError)) {
+      signupMutate({ email, password });
+    }
+  };
+
+  const handleGoogleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: async ({ code }) => {
+      try {
+        const { response, responseJson } = await googleLogin(code);
+        const jwt = response.headers.get('authorization');
+
+        setUserInfo(responseJson);
+        setJwt(jwt);
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+          setDisplayError(String((error as APIError).message));
+        } else {
+          setDisplayError(
+            '서버에서 일시적인 오류가 발생했습니다. 다시 요청해주세요.',
+          );
+        }
+      }
+    },
+    onError: (errorResponse) => {
+      console.log(errorResponse.error);
+      setDisplayError(String(errorResponse.error_description));
+    },
+  });
+
+  const handleLogin = async (email: string, password: string) => {
+    loginMutate({ email, password });
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate(-1);
+    }
+  }, []);
 
   return (
     <PageContainer>
-      <TextVectorContainer>
-        <p>이모저모에 오신 것을 환영합니다.</p>
-        <p>자유롭게 토론해보세요.</p>
-        <Img alt="bookLogo" src="src/assets/bookVector.png" />
-      </TextVectorContainer>
-      <FormBox pathname={pathname} />
+      <WelcomeMessage />
+      <FormBox
+        isLoginPage={isLoginPage}
+        onSubmit={isLoginPage ? handleLogin : handleSignup}
+        onGoogleSubmit={handleGoogleLogin}
+        displayError={displayError}
+      />
     </PageContainer>
   );
 }
 
 const PageContainer = styled(MainContainer)`
-  display: flex;
+  ${alignCenter}
   height: 100vh;
-  align-items: center;
   justify-content: space-evenly;
-`;
-
-const TextVectorContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: var(--font-size-xxl);
-
-  p {
-    margin-bottom: 5px;
-  }
-`;
-
-const Img = styled.img`
-  width: 210px;
-  height: 185px;
 `;
 
 export default LoginPage;

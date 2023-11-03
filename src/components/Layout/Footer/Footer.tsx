@@ -1,16 +1,24 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiFillHome, AiFillGithub } from 'react-icons/ai';
 import { RxNotionLogo } from 'react-icons/rx';
+import {
+  alignCenter,
+  colFlex,
+  flex,
+  rowFlex,
+  rowFlexCenter,
+} from '../../../styles/shared';
 
 function Footer() {
   return (
     <FooterLayout>
-      <FooterWrapper>
+      <FooterContainer>
         <FooterSignature>
-          <LogoContainer>
+          <HomeLink to="/">
             <AiFillHome size={38} />
             <LogoTitle>이모저모</LogoTitle>
-          </LogoContainer>
+          </HomeLink>
           <CopyrightText>
             Copyright © 2023 IMOJUMO All Rights Reserved.
           </CopyrightText>
@@ -20,64 +28,65 @@ function Footer() {
             href="https://github.com/jumak-dev/imojumo"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="깃허브 이동"
           >
             <AiFillGithub size={36} />
           </NavLogo>
-          <NavLogo>
+          <NavLogo
+            href="https://brassy-budget-f7e.notion.site/b1a3c216578349c29cbbb3b046326e6e"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="노션 이동"
+          >
             <RxNotionLogo size={32} />
           </NavLogo>
         </NavContainer>
-      </FooterWrapper>
+      </FooterContainer>
     </FooterLayout>
   );
 }
 
 const FooterLayout = styled.footer`
-  display: flex;
-  justify-content: center;
+  ${rowFlexCenter}
   width: 100%;
   height: 160px;
-  border: 1px solid transparent;
-  border-top-color: var(--color-borderbottom-color);
+  border-top: 1px solid var(--color-borderbottom-color);
 `;
 
-const FooterWrapper = styled.div`
-  display: flex;
+const FooterContainer = styled.div`
+  ${rowFlex}
   justify-content: space-between;
   width: 1120px;
   padding: 36px 0;
 `;
 
 const FooterSignature = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${colFlex}
+  gap: 16px;
+  white-space: nowrap;
 `;
 
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
+const HomeLink = styled(Link)`
+  ${alignCenter}
+  gap: 8px;
 `;
 
 const LogoTitle = styled.span`
-  margin-left: 8px;
+  font-weight: 700;
   font-size: var(--font-size-xxl);
-  font-weight: bold;
 `;
 
 const CopyrightText = styled.p`
-  margin-top: 16px;
   font-size: var(--font-size-m);
+  color: var(--color-content-text);
 `;
 
 const NavContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  ${rowFlexCenter}
 `;
 
 const NavLogo = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flex}
   width: 40px;
   height: 40px;
   margin: 4px;

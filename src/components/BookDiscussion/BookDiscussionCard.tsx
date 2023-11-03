@@ -1,48 +1,100 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
+import { useRecoilValue } from 'recoil';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import styled from 'styled-components';
 import { AiFillHeart } from 'react-icons/ai';
+import isLoginSelector from '../../recoil/seletors';
+
 import { Card } from '../UI/Card/Card';
 import LikeIcon from '../UI/Icon/LikeIcon';
 import UnlikeIcon from '../UI/Icon/UnlikeIcon';
 import { BookDiscussionInfo } from '../../types';
-import { AlignCenter, truncateTextCSS } from '../../styles/shared';
+import { alignCenter, truncateTextCSS } from '../../styles/shared';
+
+import { jwtAtom } from '../../recoil/atoms';
+
+import useCreateLike from '../../hooks/postLike/useCreateLike';
+import useDeleteLike from '../../hooks/postLike/useDeleteLike';
 
 interface BookDiscussionCardProps {
   bookDiscussionData: BookDiscussionInfo;
+  handleUpdateLike: (postId: number, likeCount: number) => void;
 }
-
-// 임시로 사용하는 이미지 URL입니다!
-export const imageUrl =
-  'https://image.aladin.co.kr/product/28448/6/cover500/k212835618_2.jpg';
 
 export const profileUrl =
   'https://blog.kakaocdn.net/dn/MBm88/btquzG0dVpE/GODaepUxVikHoWEkClaPV1/img.png';
 
-function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
+function BookDiscussionCard({
+  bookDiscussionData,
+  handleUpdateLike,
+}: BookDiscussionCardProps) {
+  const [isLiked, setIsLiked] = useState(bookDiscussionData.postLikedByUser);
   const bookDiscussionDate = dayjs(bookDiscussionData.createdAt).format(
     'YYYY.MM.DD',
   );
 
-  const handleLikeClick = (e: React.MouseEvent) => {
+  const postId = bookDiscussionData.id;
+  const token = useRecoilValue(jwtAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
+
+  const { mutate: createLike } = useCreateLike({
+    onSuccess: (likeCount) => {
+      if (!likeCount) return;
+      handleUpdateLike(postId, likeCount.likeCount);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const { mutate: deleteLike } = useDeleteLike({
+    onSuccess: (likeCount) => {
+      if (!likeCount) return;
+      handleUpdateLike(postId, likeCount?.likeCount);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleCreateLike = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (!isLiked) {
+      await createLike({
+        postId: bookDiscussionData.id,
+        token,
+      });
+    }
+
     setIsLiked(!isLiked);
   };
 
+  const handleDeleteLike = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (isLiked) {
+      await deleteLike({
+        postId: bookDiscussionData.id,
+        token,
+      });
+    }
+
+    setIsLiked(!isLiked);
+  };
+
+  // ! 프로필 업데이트 되면 추가하기
   return (
     <CardContainer
-      // ! id가 아닌 discussionId로 수정되야 함
-      to={`/book-discussions/${bookDiscussionData.id}`}
+      to={`/book-discussion/${bookDiscussionData.id}`}
       radius="8px"
     >
-      {!isLiked ? (
-        <UnlikeIcon onClick={handleLikeClick} size={25} />
-      ) : (
-        <LikeIcon onClick={handleLikeClick} size={25} />
+      {isLogin && !isLiked && (
+        <UnlikeIcon onClick={handleCreateLike} size={25} />
       )}
-      <BookImage src={imageUrl} />
+      {isLogin && isLiked && <LikeIcon onClick={handleDeleteLike} size={25} />}
+      <BookImage src={bookDiscussionData.book?.cover} />
       <DiscussionInfoContainer>
         <DiscussionInfoBox>
           <DiscussionTitle>{bookDiscussionData.title}</DiscussionTitle>
@@ -56,7 +108,9 @@ function BookDiscussionCard({ bookDiscussionData }: BookDiscussionCardProps) {
           <AuthorNickname>{bookDiscussionData.author}</AuthorNickname>
           <DiscussionLikeBox>
             <DiscussionLikeIcon />
-            <DiscussionLikeCount>{bookDiscussionData.like}</DiscussionLikeCount>
+            <DiscussionLikeCount>
+              {bookDiscussionData.likeCount}
+            </DiscussionLikeCount>
           </DiscussionLikeBox>
         </UserInfoBox>
       </DiscussionInfoContainer>
@@ -89,14 +143,13 @@ const DiscussionInfoBox = styled.div`
 `;
 
 const UserInfoBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   height: 25%;
   padding: 10px;
 `;
 
 const DiscussionTitle = styled.h3`
   ${truncateTextCSS}
-  height: 20%;
   font-size: var(--font-size-l);
   font-weight: bold;
   margin-bottom: 20px;
@@ -130,7 +183,7 @@ const AuthorNickname = styled.span`
 `;
 
 const DiscussionLikeBox = styled.div`
-  ${AlignCenter}
+  ${alignCenter}
   position: absolute;
   right: 10px;
   bottom: 10px;
